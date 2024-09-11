@@ -1,28 +1,28 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 :root {
   --primary-color: #3b71ca;
-  --secondary-color: #9fa6b2;
+  --secondary-color: #dedede;
   --negative-color: #dc4c64;
   --success-color: #14a44d;
   --warning-color: #e4a11b;
   --info-color: #54b4d3;
-  --light-color: #fbfbfb;
+  --light-color: #ffffff;
   --dark-color: #332d2d;
 }
 
 .dark-theme {
   --primary-color: #3b71ca;
-  --secondary-color: #9fa6b2;
+  --secondary-color: #dedede;
   --negative-color: #dc4c64;
   --success-color: #14a44d;
   --warning-color: #e4a11b;
   --info-color: #54b4d3;
-  --light-color: #fbfbfb;
+  --light-color: #0a0a04;
   --dark-color: #332d2d;
 }
 
@@ -33,4 +33,38 @@ html {
 
 body {
   font-size: 1rem;
+}
+
+h1 {
+  font-weight: 700; /* Bold */
+  font-size: 2.5rem; /* ~40px */
+}
+
+h2 {
+  font-weight: 600; /* Semi-bold */
+  font-size: 2rem; /* ~32px */
+}
+
+h3 {
+  font-weight: 600; /* Semi-bold */
+  font-size: 1.75rem; /* ~28px */
+}
+
+h4 {
+  font-weight: 500; /* Medium */
+  font-size: 1.5rem; /* ~24px */
+}
+
+h5 {
+  font-weight: 500; /* Medium */
+  font-size: 1.25rem; /* ~20px */
+}
+
+h6 {
+  font-weight: 500; /* Medium */
+  font-size: 1rem; /* ~16px */
+}
+
+button {
+  padding: 0.25rem 0.5rem;
 }
