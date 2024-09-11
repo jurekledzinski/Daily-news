@@ -1,0 +1,15 @@
+.container {
+  width: 100%;
+}
+
+
+
+.main {
+  padding: 0.5rem;
+}
+
+.footer {
+  background: var(--dark-color);
+  padding: 0.75rem 0.5rem;
+  color: var(--secondary-color);
+}
