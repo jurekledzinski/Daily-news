@@ -1,11 +1,10 @@
 import { useFormContext } from 'react-hook-form';
 import { FormLoginValues, LoginFormProps } from '../../types';
-import { ErrorMessage } from '../Messages';
+import { ErrorMessage } from '../messages';
 
 export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   const methods = useFormContext<FormLoginValues>();
   const { errors } = methods.formState;
-  console.log('errors login', errors);
 
   return (
     <form id="form" onSubmit={methods.handleSubmit(onSubmit)} noValidate>
