@@ -16,3 +16,11 @@ export type RegisterFormProps = {
 export type LoginFormProps = {
   onSubmit: SubmitHandler<FormLoginValues>;
 };
+
+export type useLoginFormProps = {
+  onSuccess: () => void;
+};
+
+export type useRegisterFormProps = {
+  onSuccess: () => void;
+};
