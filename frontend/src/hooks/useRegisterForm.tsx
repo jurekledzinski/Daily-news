@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { FormResigsterValues } from '../types';
+import { FormResigsterValues, useRegisterFormProps } from '../types';
 // import { useMutation } from '@tanstack/react-query';
 
-export const useRegisterForm = () => {
+export const useRegisterForm = ({ onSuccess }: useRegisterFormProps) => {
   const formMethods = useForm<FormResigsterValues>({
     defaultValues: {
       name: '',
@@ -16,6 +16,7 @@ export const useRegisterForm = () => {
     formMethods,
     onSubmit: (data: FormResigsterValues) => {
       console.log('DATA ------------', data);
+      onSuccess();
     },
   };
 };
