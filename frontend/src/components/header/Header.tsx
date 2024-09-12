@@ -8,27 +8,16 @@ import { FormProvider } from 'react-hook-form';
 export const Header = () => {
   const dialogLoginRef = useRef<HTMLDialogElement | null>(null);
   const dialogRegisterRef = useRef<HTMLDialogElement | null>(null);
+  const timeout1 = useRef<number | null>(null);
+  const timeout2 = useRef<number | null>(null);
   const [controlDialog, setControlDialog] = useState<null | boolean>(null);
 
-  const formSignUpControl = useRegisterForm();
-  const formSignInControl = useLoginForm();
-  console.log('controlDialog', controlDialog);
-
-  //   useEffect(() => {
-  //     if (controlDialog) {
-  //       if (!dialogRegisterRef.current) return;
-  //       dialogRegisterRef.current.showModal();
-  //     }
-
-  //     if (!controlDialog && controlDialog !== null) {
-  //       if (!dialogLoginRef.current) return;
-  //       dialogLoginRef.current.showModal();
-  //     }
-  //   }, [controlDialog]);
-
-  //   TODO: Jesli tak z useEffect to jeszcze jeden hook dla tej logiki
-
-  //   dialogRegisterRef.current.open by sprawdzic czy zamkniety dialog
+  const formSignUpControl = useRegisterForm({
+    onSuccess: () => dialogRegisterRef.current?.close(),
+  });
+  const formSignInControl = useLoginForm({
+    onSuccess: () => dialogLoginRef.current?.close(),
+  });
 
   return (
     <>
@@ -40,13 +29,13 @@ export const Header = () => {
             <button
               className="header__button"
               onClick={() => {
+                if (timeout1.current) clearTimeout(timeout1.current);
                 setControlDialog(false);
-                // if (!dialogLoginRef.current) return;
-                // dialogLoginRef.current.showModal();
-                setTimeout(() => {
+
+                timeout1.current = setTimeout(() => {
                   if (!dialogLoginRef.current) return;
                   dialogLoginRef.current.showModal();
-                }, 10);
+                });
               }}
             >
               Sign in
@@ -54,13 +43,13 @@ export const Header = () => {
             <button
               className="header__button"
               onClick={() => {
+                if (timeout2.current) clearTimeout(timeout2.current);
                 setControlDialog(true);
-                // if (!dialogRegisterRef.current) return;
-                // dialogRegisterRef.current.showModal();
-                setTimeout(() => {
+
+                timeout2.current = setTimeout(() => {
                   if (!dialogRegisterRef.current) return;
                   dialogRegisterRef.current.showModal();
-                }, 10);
+                });
               }}
             >
               Sign up
@@ -70,13 +59,21 @@ export const Header = () => {
       </header>
 
       {controlDialog === null ? null : controlDialog ? (
-        <Modal ref={dialogRegisterRef} title="Sign up">
+        <Modal
+          ref={dialogRegisterRef}
+          onClose={formSignUpControl.formMethods.reset}
+          title="Sign up"
+        >
           <FormProvider {...formSignUpControl.formMethods}>
             <RegisterForm onSubmit={formSignUpControl.onSubmit} />
           </FormProvider>
         </Modal>
       ) : (
-        <Modal ref={dialogLoginRef} title="Sign in">
+        <Modal
+          ref={dialogLoginRef}
+          onClose={formSignInControl.formMethods.reset}
+          title="Sign in"
+        >
           <FormProvider {...formSignInControl.formMethods}>
             <LoginForm onSubmit={formSignInControl.onSubmit} />
           </FormProvider>
