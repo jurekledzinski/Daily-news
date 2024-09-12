@@ -1,7 +1,13 @@
+form {
+  gap: 0.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
 label {
   display: block;
-  font-size: 0.75rem;
   margin-bottom: 0.15rem;
+  font-size: 0.75rem;
 }
 
 input {
@@ -10,12 +16,6 @@ input {
 }
 
 fieldset {
-  border: none;
   margin-bottom: 0.25rem;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  border: none;
 }
