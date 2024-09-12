@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { FormLoginValues } from '../types';
+import { FormLoginValues, useLoginFormProps } from '../types';
 // import { useMutation } from '@tanstack/react-query';
 
-export const useLoginForm = () => {
+export const useLoginForm = ({ onSuccess }: useLoginFormProps) => {
   const formMethods = useForm<FormLoginValues>({
     defaultValues: {
       email: '',
@@ -14,6 +14,7 @@ export const useLoginForm = () => {
     formMethods,
     onSubmit: (data: FormLoginValues) => {
       console.log('DATA ------------ login', data);
+      onSuccess();
     },
   };
 };
