@@ -1,18 +1,16 @@
 import { useFormContext } from 'react-hook-form';
 import { FormResigsterValues, RegisterFormProps } from '../../types';
-import { ErrorMessage } from '../Messages';
+import { ErrorMessage } from '../messages';
 
 export const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
   const methods = useFormContext<FormResigsterValues>();
   const { errors } = methods.formState;
-  console.log('errors register', errors);
 
   return (
     <form id="form" onSubmit={methods.handleSubmit(onSubmit)} noValidate>
       <fieldset>
         <label>Name:</label>
         <input
-          id="name"
           type="text"
           {...methods.register('name', {
             required: { message: 'Name is required', value: true },
