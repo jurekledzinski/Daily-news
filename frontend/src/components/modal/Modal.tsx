@@ -3,18 +3,14 @@ import { forwardRef, Ref, useImperativeHandle, useRef } from 'react';
 type ModalProps = {
   children: React.ReactNode;
   title: string;
+  onClose?: () => void;
 };
 
 export const Modal = forwardRef<HTMLDialogElement, ModalProps>(
-  ({ children, title }, ref: Ref<HTMLDialogElement>) => {
+  ({ children, title, onClose }, ref: Ref<HTMLDialogElement>) => {
     const localRef = useRef<HTMLDialogElement>(null);
 
     useImperativeHandle(ref, () => localRef.current!);
-
-    const handleCloseModal = () => {
-      if (!localRef.current) return;
-      localRef.current.close();
-    };
 
     return (
       <dialog className="modal" role="dialog" ref={localRef}>
@@ -29,7 +25,11 @@ export const Modal = forwardRef<HTMLDialogElement, ModalProps>(
           <button
             autoFocus
             className="modal__button"
-            onClick={handleCloseModal}
+            onClick={() => {
+              if (!localRef.current) return;
+              localRef.current.close();
+              onClose && onClose();
+            }}
           >
             Cancel
           </button>
