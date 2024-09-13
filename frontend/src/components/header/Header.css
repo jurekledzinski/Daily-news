@@ -1,6 +1,7 @@
 .header {
-  box-shadow: 0 0px 0px 1px var(--secondary-color);
+  /* box-shadow: 0 0px 0px 1px var(--secondary-color); */
   width: 100%;
+  border-bottom: 1px solid #ddd;
 }
 
 .header__nav {
