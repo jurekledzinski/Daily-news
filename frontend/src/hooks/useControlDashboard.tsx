@@ -125,10 +125,3 @@ export const useControlDashboard = ({
     handleResizeStop,
   };
 };
-
-// useControlDashboard({
-//     onChangeBreakpoint: (breakpoint) => {
-//       setCurrentBreakPoint(breakpoint);
-//     },
-//     onDrop: (newLayouts) => {},
-//   });
