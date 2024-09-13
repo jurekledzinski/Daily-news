@@ -2,10 +2,10 @@
   width: 100%;
 }
 
-
-
 .main {
   padding: 0.5rem;
+  background-color: #f9f9f9;
+  min-height: calc(100vh - 103px);
 }
 
 .footer {
