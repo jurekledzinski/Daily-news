@@ -48,7 +48,7 @@ export const useControlDashboard = ({
 
     const startY = item.y;
 
-    const copy = cloneDeep(layout).map((item) => {
+    const copyLayout = cloneDeep(layout).map((item) => {
       if (item.i === tempId) {
         return { ui: { ...item, i: newId } };
       }
@@ -57,7 +57,7 @@ export const useControlDashboard = ({
 
     for (const breakpoint in data) {
       if (breakpoint === currentBreakPoint) {
-        newLayouts[breakpoint] = copy;
+        newLayouts[breakpoint] = copyLayout;
       } else {
         const position = findPosition({
           data: newLayouts[breakpoint],
