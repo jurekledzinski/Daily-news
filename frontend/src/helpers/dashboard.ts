@@ -15,7 +15,7 @@ type fnCanPlaceItemParams = {
   h: number;
 };
 
-//     for (let y = startY; y < 100; y++) {
+// for (let y = startY; y < 100; y++) {
 
 export const canPlaceItem = (params: fnCanPlaceItemParams) => {
   const { layout, h, w, x, y } = params;
@@ -46,26 +46,3 @@ export const findPosition = (params: fnFindPositionParams) => {
   }
   return null;
 };
-
-// const findFirstAvailablePosition = (
-//   data: LayoutData[0],
-//   cols: number,
-//   item: LayoutItem['ui'],
-//   startY: number
-// ) => {
-//   console.log('find data', data);
-//   console.log('find cols', cols);
-//   console.log('find item', item);
-//   console.log('find startY', startY);
-
-//   //     for (let y = startY; y < 100; y++) {
-
-//   for (let y = 0; y < 100; y++) {
-//     for (let x = 0; x < cols; x++) {
-//       if (canPlaceItem(data, x, y, item.w, item.h)) {
-//         return { x, y };
-//       }
-//     }
-//   }
-//   return null;
-// };
