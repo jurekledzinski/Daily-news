@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import type ReactGridLayout from 'react-grid-layout';
+import { GridCard } from './GridCard';
 
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import { TbGridDots } from 'react-icons/tb';
 import { useControlDashboard } from '../../hooks';
 
 import 'react-grid-layout/css/styles.css';
@@ -15,7 +15,8 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 import { LayoutData } from '../../types';
 
 export const GridLayout = () => {
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
+  const gridCardRef = React.useRef<HTMLDivElement>(null);
 
   const [data, setData] = useState<LayoutData>({
     lg: [],
@@ -78,21 +79,16 @@ export const GridLayout = () => {
       >
         {data[currentBreakPoint as keyof typeof data].map((item, index) => {
           return (
-            <div
-              key={item.ui.i}
+            <GridCard
               className="box"
-              data-grid={item.ui}
-              onClick={() => {
-                navigate({ pathname: `categories/science/articles` });
+              gridItem={item}
+              index={index}
+              key={item.ui.i}
+              onClick={(value) => {
+                console.log('value grid card', value);
               }}
-            >
-              <span className={'handle'}>
-                <TbGridDots />
-              </span>
-              <p>
-                {index} -- {item.ui.i.slice(0, 3)}
-              </p>
-            </div>
+              ref={gridCardRef}
+            />
           );
         })}
       </ResponsiveGridLayout>
@@ -145,3 +141,19 @@ export const GridLayout = () => {
     </div>
   );
 };
+
+// <div
+//   key={item.ui.i}
+//   className="box"
+//   data-grid={item.ui}
+//   onClick={() => {
+//     navigate({ pathname: `categories/science/articles` });
+//   }}
+// >
+//   <span className={'handle'}>
+//     <TbGridDots />
+//   </span>
+//   <p>
+//     {index} -- {item.ui.i.slice(0, 3)}
+//   </p>
+// </div>
