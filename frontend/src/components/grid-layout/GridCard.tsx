@@ -9,37 +9,33 @@ import 'react-resizable/css/styles.css';
 type GridCardProps = {
   children?: React.ReactNode;
   className: string;
-  index: number;
   gridItem: LayoutItem;
   onClick: (value: string) => void;
 };
 
 export const GridCard = forwardRef<HTMLDivElement, GridCardProps>(
-  (
-    { index, gridItem, onClick, children, ...props },
-    ref: Ref<HTMLDivElement>
-  ) => {
-    const { ui } = gridItem;
+  ({ gridItem, onClick, children, ...props }, ref: Ref<HTMLDivElement>) => {
+    const { id, ui, title } = gridItem;
 
     return (
       <div
         ref={ref}
         data-grid={ui}
-        onClick={() => onClick('science')}
+        onClick={() => onClick(id ?? '')}
         {...props}
       >
-        <span className={'handle'} onClick={(e) => e.stopPropagation()}>
+        <span
+          className={'grid-card__handle'}
+          onClick={(e) => e.stopPropagation()}
+          onDragEnd={() => {
+            console.log('start');
+          }}
+        >
           <FontAwesomeIcon icon={faGripVertical} />
         </span>
-        <p>
-          {index} -- {ui.i.slice(0, 3)}
-        </p>
+        <h6>{title}</h6>
         {children}
       </div>
     );
   }
 );
-
-// onClick={() => {
-//     navigate({ pathname: `categories/science/articles` });
-//   }}
