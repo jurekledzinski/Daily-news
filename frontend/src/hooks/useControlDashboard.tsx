@@ -34,8 +34,12 @@ export const useControlDashboard = ({
 
   const handleDrop = (
     layout: ReactGridLayout.Layout[],
-    newItem: ReactGridLayout.Layout
+    newItem: ReactGridLayout.Layout,
+    e: DragEvent
   ) => {
+    const dataTransfer = e.dataTransfer?.getData('text/plain') ?? '';
+    const tranformedData = JSON.parse(dataTransfer);
+
     const tempId = '__dropping-elem__';
     const newId = uuidv4();
 
@@ -50,9 +54,18 @@ export const useControlDashboard = ({
 
     const copyLayout = cloneDeep(layout).map((item) => {
       if (item.i === tempId) {
-        return { ui: { ...item, i: newId } };
+        return { ...tranformedData, ui: { ...item, i: newId } };
       }
-      return { ui: { ...item } };
+
+      const prevItem = newLayouts[currentBreakPoint].find(
+        (el) => el.ui.i === item.i
+      );
+
+      return {
+        id: prevItem?.id ?? '',
+        title: prevItem?.title ?? '',
+        ui: { ...item },
+      };
     });
 
     for (const breakpoint in data) {
@@ -71,7 +84,7 @@ export const useControlDashboard = ({
           item.y = position.y;
           newLayouts[breakpoint] = [
             ...newLayouts[breakpoint],
-            { ui: { ...item } },
+            { ...tranformedData, ui: { ...item } },
           ];
         }
       }
@@ -89,7 +102,7 @@ export const useControlDashboard = ({
         const sameItem = layout.find((el) => el.i === item.ui.i);
 
         if (sameItem) {
-          return { ui: sameItem, id: sameItem.i };
+          return { id: item.id, ui: sameItem, title: item.title };
         }
 
         return item;
@@ -108,7 +121,7 @@ export const useControlDashboard = ({
         const sameItem = layout.find((el) => el.i === item.ui.i);
 
         if (sameItem) {
-          return { ui: sameItem, id: sameItem.i };
+          return { id: item.id, ui: sameItem, title: item.title };
         }
 
         return item;
