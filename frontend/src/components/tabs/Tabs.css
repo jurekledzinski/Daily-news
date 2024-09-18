@@ -14,7 +14,7 @@
   visibility: hidden;
   padding: 0 0.25rem;
   cursor: pointer;
-  transition: opacity 0.3s linear;
+  transition: opacity 0.5s linear;
   opacity: 0;
   background-color: #555;
   color: white;
