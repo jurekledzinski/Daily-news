@@ -78,7 +78,8 @@ export const CategoriesArticles = () => {
     e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
     id: string
   ) => {
-    const copyState = Object.entries(cloneDeep(categories));
+    e.stopPropagation();
+    const copyState = Object.entries(cloneDeep(state));
     const objState = Object.fromEntries(
       copyState.map((item) => [item[1].id, { articles: item[1].articles }])
     );
@@ -86,14 +87,31 @@ export const CategoriesArticles = () => {
     const index = articles.findIndex((i) => i.id === id);
     const filterArticles = articles.filter((i) => i.id !== id);
     const move = index <= 0 ? 0 : Math.min(index, filterArticles.length - 1);
-    console.log('move sub', move);
 
     if (filterArticles.length) {
       const name = filterArticles[move].id;
-      const copy = activeTabs;
+      const copy = cloneDeep(activeTabs);
       copy[1] = name;
       setActiveTabs([...copy]);
+      setState((prev) =>
+        prev.map((item) => {
+          if (item.id === category) {
+            return { ...item, articles: filterArticles };
+          }
+          return item;
+        })
+      );
+      navigate(`/categories/${category}/articles/article/${name}`);
     } else {
+      setActiveTabs((prev) => [prev[0]]);
+      setState((prev) =>
+        prev.map((item) => {
+          if (item.id === category) {
+            return { ...item, articles: [] };
+          }
+          return item;
+        })
+      );
       navigate(`/categories/${category}/articles`);
     }
   };
