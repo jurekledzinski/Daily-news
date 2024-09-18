@@ -3,8 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { LayoutItem } from '../../types';
 import './GridCard.css';
-import 'react-grid-layout/css/styles.css';
-import 'react-resizable/css/styles.css';
 
 type GridCardProps = {
   children?: React.ReactNode;
@@ -15,25 +13,22 @@ type GridCardProps = {
 
 export const GridCard = forwardRef<HTMLDivElement, GridCardProps>(
   ({ gridItem, onClick, children, ...props }, ref: Ref<HTMLDivElement>) => {
-    const { id, ui, title } = gridItem;
-
     return (
       <div
         ref={ref}
-        data-grid={ui}
-        onClick={() => onClick(id ?? '')}
+        data-grid={gridItem.ui}
+        onClick={() => onClick(gridItem.id ?? '')}
         {...props}
       >
         <span
           className={'grid-card__handle'}
-          onClick={(e) => e.stopPropagation()}
-          onDragEnd={() => {
-            console.log('start');
+          onClick={(e) => {
+            e.stopPropagation();
           }}
         >
           <FontAwesomeIcon icon={faGripVertical} />
         </span>
-        <h6>{title}</h6>
+        <h6>{gridItem.title}</h6>
         {children}
       </div>
     );
