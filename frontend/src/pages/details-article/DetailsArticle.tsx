@@ -1,3 +1,10 @@
+import { useParams } from 'react-router-dom';
+
 export const DetailsArticle = () => {
-  return <section className="section">Details article</section>;
+  const { category, id } = useParams();
+  return (
+    <section className="section">
+      Details article {category} {id}
+    </section>
+  );
 };
