@@ -8,18 +8,23 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
+    errorElement: <div>Error page home</div>,
     children: [
       {
         index: true,
         element: <Dashboard />,
+        errorElement: <div>Error page dashboard index</div>,
       },
       {
         path: 'categories/:category/articles',
         element: <CategoriesArticles />,
-      },
-      {
-        path: 'categories/:category/articles/article/:id',
-        element: <DetailsArticle />,
+        errorElement: <div>Error page categories</div>,
+        children: [
+          {
+            path: 'article/:id',
+            element: <DetailsArticle />,
+          },
+        ],
       },
     ],
   },
