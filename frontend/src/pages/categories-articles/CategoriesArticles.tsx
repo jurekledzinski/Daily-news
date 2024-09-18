@@ -8,8 +8,10 @@ import {
   TabClose,
   TabText,
 } from '../../components/tabs';
-import { MouseEvent, useState } from 'react';
+import GridArticles from '../../components/grid-articles';
+import { useState } from 'react';
 import { cloneDeep } from 'lodash';
+import { useControlCloseSubTabs, useControlCloseTabs } from '../../hooks';
 
 const categories = [
   {
@@ -43,78 +45,53 @@ const categories = [
 ];
 
 export const CategoriesArticles = () => {
-  const { category, id } = useParams();
   const navigate = useNavigate();
+  const { category, id } = useParams();
   const [state, setState] = useState(cloneDeep(categories));
   const [activeTabs, setActiveTabs] = useState(
     category && id ? [category, id] : category ? [category] : []
   );
 
-  console.log('activeTabs ---', activeTabs);
-  console.log('state', state);
-
-  const handleCloseTab = (
-    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
-    id: string
-  ) => {
-    e.stopPropagation();
-    const index = state.findIndex((i) => i.id === id);
-    const filterState = cloneDeep(state).filter((i) => i.id !== id);
-    const move = index <= 0 ? 0 : Math.min(index, filterState.length - 1);
-
-    if (filterState.length) {
-      const name = filterState[move].id;
-      setActiveTabs([name]);
-      setState(filterState);
-      navigate(`/categories/${name}/articles`, { replace: true });
-    } else {
-      setActiveTabs([]);
-      setState([]);
+  const { handleCloseTab } = useControlCloseTabs({
+    data: state,
+    onChangeData: (data) => {
+      setState(data);
+    },
+    onRedirectOne: (category) => {
+      navigate(`/categories/${category}/articles`, { replace: true });
+    },
+    onRedirectTwo: () => {
       navigate('/');
-    }
-  };
+    },
+    onSetActiveTabs: (value) => {
+      setActiveTabs(value);
+    },
+  });
 
-  const handleCloseSubTab = (
-    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
-    id: string
-  ) => {
-    e.stopPropagation();
-    const copyState = Object.entries(cloneDeep(state));
-    const objState = Object.fromEntries(
-      copyState.map((item) => [item[1].id, { articles: item[1].articles }])
-    );
-    const articles = objState[category as keyof typeof objState].articles;
-    const index = articles.findIndex((i) => i.id === id);
-    const filterArticles = articles.filter((i) => i.id !== id);
-    const move = index <= 0 ? 0 : Math.min(index, filterArticles.length - 1);
-
-    if (filterArticles.length) {
-      const name = filterArticles[move].id;
-      const copy = cloneDeep(activeTabs);
-      copy[1] = name;
-      setActiveTabs([...copy]);
+  const { handleCloseSubTab } = useControlCloseSubTabs({
+    activeTabs,
+    data: state,
+    category: category ?? '',
+    onChangeData: (data) => {
       setState((prev) =>
         prev.map((item) => {
           if (item.id === category) {
-            return { ...item, articles: filterArticles };
+            return { ...item, articles: data };
           }
           return item;
         })
       );
+    },
+    onRedirectOne: (category, name) => {
       navigate(`/categories/${category}/articles/article/${name}`);
-    } else {
-      setActiveTabs((prev) => [prev[0]]);
-      setState((prev) =>
-        prev.map((item) => {
-          if (item.id === category) {
-            return { ...item, articles: [] };
-          }
-          return item;
-        })
-      );
+    },
+    onRedirectTwo: (category) => {
       navigate(`/categories/${category}/articles`);
-    }
-  };
+    },
+    onSetActiveTabs: (value) => {
+      setActiveTabs(value);
+    },
+  });
 
   return (
     <section className="section">
@@ -163,7 +140,9 @@ export const CategoriesArticles = () => {
             <Outlet />
           </TabsPanel>
         ) : (
-          <TabsPanel>Grid articles</TabsPanel>
+          <TabsPanel>
+            <GridArticles />
+          </TabsPanel>
         )}
       </Tabs>
     </section>
