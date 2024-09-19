@@ -1,5 +1,5 @@
 import './GridTemplateCard.css';
-import { categories } from '../../dummy-api';
+import { categories } from '../../../../dummy-api';
 
 export type GridTemplateCardProps = {
   data: (typeof categories)[0];

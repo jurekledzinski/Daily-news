@@ -1,8 +1,8 @@
 import './Header.css';
 import { useRef, useState } from 'react';
-import Modal from '../modal';
+import { Modal } from '../../../shared';
 import { RegisterForm, LoginForm } from '../forms';
-import { useRegisterForm, useLoginForm } from '../../hooks';
+import { useRegisterForm, useLoginForm } from '../../../../hooks';
 import { FormProvider } from 'react-hook-form';
 
 export const Header = () => {

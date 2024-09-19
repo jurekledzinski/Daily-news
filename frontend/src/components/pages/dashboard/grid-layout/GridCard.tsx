@@ -1,7 +1,7 @@
 import { forwardRef, Ref } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import { LayoutItem } from '../../types';
+import { LayoutItem } from '../../../../types';
 import './GridCard.css';
 
 type GridCardProps = {

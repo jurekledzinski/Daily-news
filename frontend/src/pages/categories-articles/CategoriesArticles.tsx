@@ -7,8 +7,8 @@ import {
   TabsPanel,
   TabClose,
   TabText,
-} from '../../components/tabs';
-import GridArticles from '../../components/grid-articles';
+} from '../../components/shared';
+import { GridArticles } from '../../components/pages';
 import { useState } from 'react';
 import { cloneDeep } from 'lodash';
 import { useControlCloseSubTabs, useControlCloseTabs } from '../../hooks';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import GridLayout from '../../components/grid-layout';
-import { GridTemplateCard } from '../../components/grid-layout';
+import { GridLayout } from '../../components/pages';
+import { GridTemplateCard } from '../../components/pages';
 import { categories } from '../../dummy-api';
 import './Dashboard.css';
 import { LayoutData } from '../../types';

@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
-import { FormResigsterValues, RegisterFormProps } from '../../types';
-import { ErrorMessage } from '../messages';
+import { FormResigsterValues, RegisterFormProps } from '../../../../types';
+import { ErrorMessage } from '../../../shared';
 
 export const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
   const methods = useFormContext<FormResigsterValues>();

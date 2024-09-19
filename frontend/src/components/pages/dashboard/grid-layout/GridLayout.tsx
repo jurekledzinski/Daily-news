@@ -4,7 +4,7 @@ import type ReactGridLayout from 'react-grid-layout';
 import { GridCard } from './GridCard';
 
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import { useControlDashboard } from '../../hooks';
+import { useControlDashboard } from '../../../../hooks';
 
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
@@ -12,7 +12,7 @@ import './GridLayout.css';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-import { LayoutData } from '../../types';
+import { LayoutData } from '../../../../types';
 
 type GridLayoutProps = {
   data: LayoutData;
