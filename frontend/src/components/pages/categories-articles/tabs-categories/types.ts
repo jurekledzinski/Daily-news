@@ -1,15 +1,8 @@
-export type DataCategories = {
-  id: string;
-  category: string;
-  articles: {
-    id: string;
-    title: string;
-  }[];
-};
+import { LocalData } from '../../dashboard';
 
 export type TabsCategoriesArticlesProps = {
   activeTabs: string[];
-  state: DataCategories[];
+  state: LocalData[];
   handleCloseTab: (
     e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
     id: string
