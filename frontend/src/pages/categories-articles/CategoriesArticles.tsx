@@ -1,47 +1,23 @@
 import './CategoriesArticles.css';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { cloneDeep } from 'lodash';
-import { TabsCategoriesArticles } from '../../components/pages';
+import { LocalData, TabsCategoriesArticles } from '../../components/pages';
 import { useControlCloseSubTabs, useControlCloseTabs } from '../../hooks';
-
-const categories = [
-  {
-    id: 'about',
-    category: 'About',
-    articles: [
-      { id: 'id1', title: 'About 1' },
-      { id: 'id2', title: 'About 2' },
-    ],
-  },
-  {
-    id: 'news',
-    category: 'News',
-    articles: [
-      { id: 'id11', title: 'News 1' },
-      { id: 'id22', title: 'News 2' },
-      { id: 'id33', title: 'News 3' },
-      { id: 'id44', title: 'News 4' },
-    ],
-  },
-  {
-    id: 'sport',
-    category: 'Sport',
-    articles: [{ id: 'id111', title: 'Sport 1' }],
-  },
-  {
-    id: 'animals-farmed',
-    category: 'Animal farmed',
-    articles: [{ id: 'id555', title: 'Animal 1' }],
-  },
-];
 
 export const CategoriesArticles = () => {
   const navigate = useNavigate();
   const { category, id } = useParams();
-  const [state, setState] = useState(cloneDeep(categories));
+  const localData: LocalData[] =
+    JSON.parse(localStorage.getItem('categories') ?? 'null') || [];
+  const [state, setState] = useState(cloneDeep(localData));
   const [activeTabs, setActiveTabs] = useState(
     category && id ? [category, id] : category ? [category] : []
+  );
+
+  const active = useMemo(
+    () => (category && id ? [category, id] : category ? [category] : []),
+    [category, id]
   );
 
   const { handleCloseTab } = useControlCloseTabs({
@@ -59,6 +35,8 @@ export const CategoriesArticles = () => {
       setActiveTabs(value);
     },
   });
+
+  console.log('activeTabs', activeTabs, active);
 
   const { handleCloseSubTab } = useControlCloseSubTabs({
     activeTabs,
@@ -88,7 +66,8 @@ export const CategoriesArticles = () => {
   return (
     <section className="section">
       <TabsCategoriesArticles
-        activeTabs={activeTabs}
+        activeTabs={active}
+        // activeTabs={activeTabs}
         handleCloseSubTab={handleCloseSubTab}
         handleCloseTab={handleCloseTab}
         onRedirectOne={(category) => {
