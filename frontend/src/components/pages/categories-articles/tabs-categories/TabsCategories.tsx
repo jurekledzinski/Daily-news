@@ -9,6 +9,7 @@ import {
 } from '../../../shared';
 import { GridArticles } from '../grid-articles';
 import { TabsCategoriesArticlesProps } from './types';
+import { LocalData } from '../../dashboard';
 
 export const TabsCategoriesArticles = ({
   activeTabs,
@@ -25,24 +26,33 @@ export const TabsCategoriesArticles = ({
         {state.map((item) => (
           <Tab
             activeTab={activeTabs[0]}
-            id={item.id}
+            id={item.id ?? ''}
             key={item.id}
             onClick={() => {
+              if (!item.id) return;
               onSetActiveTabs([item.id]);
               onRedirectOne(item.id);
             }}
           >
-            <TabText>{item.category}</TabText>
-            <TabClose onClose={(e) => handleCloseTab(e, item.id)}>x</TabClose>
+            <TabText>{item.title}</TabText>
+            <TabClose onClose={(e) => handleCloseTab(e, item.id ?? '')}>
+              x
+            </TabClose>
           </Tab>
         ))}
       </TabsList>
       <TabsList>
-        {Object.fromEntries(
-          Object.entries(state).map((item) => [
-            item[1].id,
-            { articles: item[1].articles },
-          ])
+        {(
+          Object.fromEntries(
+            Object.entries(state).map((item) => [
+              item[1].id,
+              { articles: item[1].articles },
+            ])
+          ) as {
+            [id: string]: {
+              articles: LocalData['articles'];
+            };
+          }
         )[activeTabs[0]].articles.map(({ id, title }) => (
           <Tab
             activeTab={activeTabs[1]}
