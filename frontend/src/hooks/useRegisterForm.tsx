@@ -1,5 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { FormResigsterValues, useRegisterFormProps } from '../types';
+import {
+  FormResigsterValues,
+  useRegisterFormProps,
+} from '../components/pages/';
 // import { useMutation } from '@tanstack/react-query';
 
 export const useRegisterForm = ({ onSuccess }: useRegisterFormProps) => {

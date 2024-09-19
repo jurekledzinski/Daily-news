@@ -1,4 +1,4 @@
-import { LayoutData, LayoutItem } from '../types';
+import { LayoutData, LayoutItem } from '../components/pages';
 
 type fnFindPositionParams = {
   data: LayoutData[0];

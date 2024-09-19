@@ -1,15 +1,8 @@
 import { forwardRef, Ref } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import { LayoutItem } from '../../../../types';
+import { GridCardProps } from './types';
 import './GridCard.css';
-
-type GridCardProps = {
-  children?: React.ReactNode;
-  className: string;
-  gridItem: LayoutItem;
-  onClick: (value: string) => void;
-};
 
 export const GridCard = forwardRef<HTMLDivElement, GridCardProps>(
   ({ gridItem, onClick, children, ...props }, ref: Ref<HTMLDivElement>) => {

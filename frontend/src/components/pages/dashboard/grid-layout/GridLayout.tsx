@@ -12,12 +12,7 @@ import './GridLayout.css';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-import { LayoutData } from '../../../../types';
-
-type GridLayoutProps = {
-  data: LayoutData;
-  setData: React.Dispatch<React.SetStateAction<LayoutData>>;
-};
+import { GridLayoutProps } from './types';
 
 export const GridLayout = ({ data, setData }: GridLayoutProps) => {
   const gridCardRef = React.useRef<HTMLDivElement>(null);

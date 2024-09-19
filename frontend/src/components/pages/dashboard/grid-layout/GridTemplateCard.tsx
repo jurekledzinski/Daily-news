@@ -1,10 +1,5 @@
 import './GridTemplateCard.css';
-import { categories } from '../../../../dummy-api';
-
-export type GridTemplateCardProps = {
-  data: (typeof categories)[0];
-  isDisabled: boolean;
-};
+import { GridTemplateCardProps } from './types';
 
 export const GridTemplateCard = ({
   data,

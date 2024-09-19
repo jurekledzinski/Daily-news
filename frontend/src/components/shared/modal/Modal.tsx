@@ -1,10 +1,5 @@
 import { forwardRef, Ref, useImperativeHandle, useRef } from 'react';
-
-type ModalProps = {
-  children: React.ReactNode;
-  title: string;
-  onClose?: () => void;
-};
+import { ModalProps } from './types';
 
 export const Modal = forwardRef<HTMLDialogElement, ModalProps>(
   ({ children, title, onClose }, ref: Ref<HTMLDialogElement>) => {

@@ -1,16 +1,8 @@
 import './CategoriesArticles.css';
-import { useParams, useNavigate, Outlet } from 'react-router-dom';
-import {
-  Tabs,
-  TabsList,
-  Tab,
-  TabsPanel,
-  TabClose,
-  TabText,
-} from '../../components/shared';
-import { GridArticles } from '../../components/pages';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { cloneDeep } from 'lodash';
+import { TabsCategoriesArticles } from '../../components/pages';
 import { useControlCloseSubTabs, useControlCloseTabs } from '../../hooks';
 
 const categories = [
@@ -95,56 +87,21 @@ export const CategoriesArticles = () => {
 
   return (
     <section className="section">
-      <Tabs>
-        <TabsList>
-          {state.map((item) => (
-            <Tab
-              activeTab={activeTabs[0]}
-              id={item.id}
-              key={item.id}
-              onClick={() => {
-                setActiveTabs([item.id]);
-                navigate(`/categories/${item.id}/articles`);
-              }}
-            >
-              <TabText>{item.category}</TabText>
-              <TabClose onClose={(e) => handleCloseTab(e, item.id)}>x</TabClose>
-            </Tab>
-          ))}
-        </TabsList>
-        <TabsList>
-          {Object.fromEntries(
-            Object.entries(state).map((item) => [
-              item[1].id,
-              { articles: item[1].articles },
-            ])
-          )[activeTabs[0]].articles.map(({ id, title }) => (
-            <Tab
-              activeTab={activeTabs[1]}
-              id={id}
-              key={id}
-              onClick={() => {
-                const copy = activeTabs;
-                copy[1] = id;
-                setActiveTabs([...copy]);
-                navigate(`/categories/${activeTabs[0]}/articles/article/${id}`);
-              }}
-            >
-              <TabText>{title}</TabText>
-              <TabClose onClose={(e) => handleCloseSubTab(e, id)}>x</TabClose>
-            </Tab>
-          ))}
-        </TabsList>
-        {activeTabs.length > 1 ? (
-          <TabsPanel>
-            <Outlet />
-          </TabsPanel>
-        ) : (
-          <TabsPanel>
-            <GridArticles />
-          </TabsPanel>
-        )}
-      </Tabs>
+      <TabsCategoriesArticles
+        activeTabs={activeTabs}
+        handleCloseSubTab={handleCloseSubTab}
+        handleCloseTab={handleCloseTab}
+        onRedirectOne={(category) => {
+          navigate(`/categories/${category}/articles`);
+        }}
+        onRedirectTwo={(category, id) => {
+          navigate(`/categories/${category}/articles/article/${id}`);
+        }}
+        onSetActiveTabs={(value) => {
+          setActiveTabs(value);
+        }}
+        state={state}
+      />
     </section>
   );
 };

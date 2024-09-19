@@ -1,6 +1,4 @@
-type TabsListProps = {
-  children: React.ReactNode;
-};
+import { TabsListProps } from './types';
 
 export const TabsList = ({ children }: TabsListProps) => {
   return (

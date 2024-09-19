@@ -4,3 +4,4 @@ export * from './GridTemplateCard.css';
 export * from './GridTemplateCard';
 export * from './GridLayout.css';
 export * from './GridLayout';
+export * from './types';

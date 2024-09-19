@@ -1,9 +1,4 @@
-import { MouseEvent } from 'react';
-
-type TabCloseProps = {
-  children: React.ReactNode;
-  onClose: (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
-};
+import { TabCloseProps } from './types';
 
 export const TabClose = ({ children, onClose }: TabCloseProps) => {
   return (

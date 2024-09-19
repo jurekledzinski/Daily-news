@@ -1,9 +1,4 @@
-export type TabProps = {
-  activeTab: string;
-  children: React.ReactNode;
-  id: string;
-  onClick: (id: string) => void;
-};
+import { TabProps } from './types';
 
 export const Tab = ({
   activeTab,

@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { FormLoginValues, useLoginFormProps } from '../types';
+import { FormLoginValues, useLoginFormProps } from '../components/pages';
 // import { useMutation } from '@tanstack/react-query';
 
 export const useLoginForm = ({ onSuccess }: useLoginFormProps) => {
