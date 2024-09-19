@@ -1,18 +1,10 @@
 import { cloneDeep } from 'lodash';
 import { MouseEvent } from 'react';
-
-type Data = {
-  id: string;
-  category: string;
-  articles: {
-    id: string;
-    title: string;
-  }[];
-};
+import { LocalData } from '../components/pages';
 
 type UseControlTabsProps = {
-  data: Data[];
-  onChangeData: (data: Data[] | []) => void;
+  data: LocalData[];
+  onChangeData: (data: LocalData[] | []) => void;
   onRedirectOne: (category: string) => void;
   onRedirectTwo: () => void;
   onSetActiveTabs: (value: string[] | []) => void;
@@ -35,7 +27,7 @@ export const useControlCloseTabs = ({
     const move = index <= 0 ? 0 : Math.min(index, filterState.length - 1);
 
     if (filterState.length) {
-      const name = filterState[move].id;
+      const name = filterState[move].id ?? '';
       //   setActiveTabs([name]);
       onSetActiveTabs([name]);
       //   setState(filterState);

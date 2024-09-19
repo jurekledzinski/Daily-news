@@ -1,23 +1,21 @@
 import { cloneDeep } from 'lodash';
 import { MouseEvent } from 'react';
-
-type Data = {
-  id: string;
-  category: string;
-  articles: {
-    id: string;
-    title: string;
-  }[];
-};
+import { LocalData } from '../components/pages';
 
 type UseControlCloseSubTabs = {
   activeTabs: string[];
   category: string;
-  data: Data[];
-  onChangeData: (data: Data['articles'] | []) => void;
+  data: LocalData[];
+  onChangeData: (data: LocalData['articles'] | []) => void;
   onRedirectOne: (category: string, name: string) => void;
   onRedirectTwo: (category: string) => void;
   onSetActiveTabs: (value: string[] | []) => void;
+};
+
+type ObjStateType = {
+  [id: string]: {
+    articles: LocalData['articles'];
+  };
 };
 
 export const useControlCloseSubTabs = ({
@@ -35,7 +33,7 @@ export const useControlCloseSubTabs = ({
   ) => {
     e.stopPropagation();
     const copyState = Object.entries(cloneDeep(data));
-    const objState = Object.fromEntries(
+    const objState: ObjStateType = Object.fromEntries(
       copyState.map((item) => [item[1].id, { articles: item[1].articles }])
     );
     const articles = objState[category as keyof typeof objState].articles;
