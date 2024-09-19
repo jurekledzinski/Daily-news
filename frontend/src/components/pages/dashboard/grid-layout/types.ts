@@ -3,7 +3,6 @@ import { categories } from '../../../../dummy-api';
 
 export type LayoutItem = {
   id?: string | undefined;
-  isDropped?: boolean;
   ui: ReactGridLayout.Layout;
   title: string;
 };
@@ -19,7 +18,7 @@ export type GridTemplateCardProps = {
 
 export type GridLayoutProps = {
   data: LayoutData;
-  setData: React.Dispatch<React.SetStateAction<LayoutData>>;
+  setData: (data: LayoutData) => void;
 };
 
 export type GridCardProps = {
