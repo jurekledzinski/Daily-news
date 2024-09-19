@@ -1,20 +1,9 @@
 import './Dashboard.css';
 import { useEffect, useState } from 'react';
-import { GridLayout, LayoutItem } from '../../components/pages';
+import { GridLayout } from '../../components/pages';
 import { GridTemplateCard } from '../../components/pages';
 import { categories } from '../../dummy-api';
-import { LayoutData } from '../../components/pages';
-
-export type LocalData = LayoutData[0][0] & { articles: string[] };
-
-type Arr = {
-  id: string;
-  title: string;
-  ui: {
-    [P: string]: LayoutItem['ui'];
-  };
-  articles: string[] | [];
-};
+import { LayoutData, LocalData } from '../../components/pages';
 
 export const Dashboard = () => {
   const [data, setData] = useState<LayoutData>({
@@ -25,10 +14,10 @@ export const Dashboard = () => {
   });
 
   const handleSetData = (dataLayout: LayoutData) => {
-    const localData: Arr[] =
+    const localData: LocalData[] =
       JSON.parse(localStorage.getItem('categories') ?? 'null') || [];
 
-    const transformData = Object.entries(dataLayout).reduce<Arr[]>(
+    const transformData = Object.entries(dataLayout).reduce<LocalData[]>(
       (acc, curr) => {
         curr[1].forEach((category) => {
           const isExist = acc.find((item) => item.id === category.id);
@@ -66,7 +55,7 @@ export const Dashboard = () => {
   };
 
   useEffect(() => {
-    const localData: Arr[] =
+    const localData: LocalData[] =
       JSON.parse(localStorage.getItem('categories') ?? 'null') || [];
     if (!localData.length) return;
 
