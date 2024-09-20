@@ -28,10 +28,16 @@ export type GridCardProps = {
   onClick: (value: string) => void;
 };
 
-export type LocalData = Omit<LayoutItem, 'ui'> & {
+export interface LocalData extends Omit<LayoutItem, 'ui'> {
   ui: { [P: string]: LayoutItem['ui'] };
   articles: {
     id: string;
     title: string;
   }[];
+}
+
+export type ObjArticles = {
+  [id: string]: {
+    articles: LocalData['articles'];
+  };
 };
