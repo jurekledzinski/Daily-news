@@ -1,9 +1,9 @@
-import './Header.css';
-import { useRef, useState } from 'react';
-import { Modal } from '../../../shared';
-import { RegisterForm, LoginForm } from '../forms';
-import { useRegisterForm, useLoginForm } from '../../../../hooks';
 import { FormProvider } from 'react-hook-form';
+import { LoginForm, RegisterForm } from '../forms';
+import { Modal } from '../../../shared';
+import { useLoginForm, useRegisterForm } from '../../../../hooks';
+import { useRef, useState } from 'react';
+import './Header.css';
 
 export const Header = () => {
   const dialogLoginRef = useRef<HTMLDialogElement | null>(null);

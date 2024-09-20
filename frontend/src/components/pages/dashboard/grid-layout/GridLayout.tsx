@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import type ReactGridLayout from 'react-grid-layout';
 import { GridCard } from './GridCard';
-
+import { GridLayoutProps } from './types';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import { useControlDashboard } from '../../../../hooks';
-
+import { useNavigate } from 'react-router-dom';
+import './GridLayout.css';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import './GridLayout.css';
+
+import type ReactGridLayout from 'react-grid-layout';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
-
-import { GridLayoutProps } from './types';
 
 export const GridLayout = ({ data, setData }: GridLayoutProps) => {
   const gridCardRef = React.useRef<HTMLDivElement>(null);

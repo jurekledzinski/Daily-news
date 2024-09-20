@@ -1,6 +1,6 @@
-import { forwardRef, Ref } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { forwardRef, Ref } from 'react';
 import { GridCardProps } from './types';
 import './GridCard.css';
 

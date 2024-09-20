@@ -1,9 +1,13 @@
-import './Dashboard.css';
-import { useEffect, useState } from 'react';
-import { GridLayout } from '../../components/pages';
-import { GridTemplateCard } from '../../components/pages';
 import { categories } from '../../dummy-api';
-import { LayoutData, LocalData } from '../../components/pages';
+import { useEffect, useState } from 'react';
+import './Dashboard.css';
+
+import {
+  GridLayout,
+  GridTemplateCard,
+  LayoutData,
+  LocalData,
+} from '../../components/pages';
 
 export const Dashboard = () => {
   const [data, setData] = useState<LayoutData>({

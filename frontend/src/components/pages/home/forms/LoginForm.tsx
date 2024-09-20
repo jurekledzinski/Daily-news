@@ -1,6 +1,6 @@
-import { useFormContext } from 'react-hook-form';
-import { FormLoginValues, LoginFormProps } from './types';
 import { ErrorMessage } from '../../../shared/messages';
+import { FormLoginValues, LoginFormProps } from './types';
+import { useFormContext } from 'react-hook-form';
 
 export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   const methods = useFormContext<FormLoginValues>();

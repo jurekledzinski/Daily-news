@@ -1,5 +1,5 @@
-import './GridTemplateCard.css';
 import { GridTemplateCardProps } from './types';
+import './GridTemplateCard.css';
 
 export const GridTemplateCard = ({
   data,

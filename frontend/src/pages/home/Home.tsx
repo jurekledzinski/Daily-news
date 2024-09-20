@@ -1,5 +1,5 @@
-import { Outlet } from 'react-router-dom';
 import { Header } from '../../components/pages';
+import { Outlet } from 'react-router-dom';
 import './Home.css';
 
 export const Home = () => {
