@@ -1,21 +1,15 @@
 import { cloneDeep } from 'lodash';
 import { MouseEvent } from 'react';
-import { LocalData } from '../components/pages';
+import { LocalData, ObjArticles } from '../components/pages';
 
 type UseControlCloseSubTabs = {
   activeTabs: string[];
   category: string;
   data: LocalData[];
-  onChangeData: (data: LocalData['articles'] | []) => void;
-  onRedirectOne: (category: string, name: string) => void;
+  onChangeData: (data: LocalData['articles'] | [], id?: string) => void;
+  onRedirectOne: (category: string, id: string) => void;
   onRedirectTwo: (category: string) => void;
   onSetActiveTabs: (value: string[] | []) => void;
-};
-
-type ObjStateType = {
-  [id: string]: {
-    articles: LocalData['articles'];
-  };
 };
 
 export const useControlCloseSubTabs = ({
@@ -33,7 +27,7 @@ export const useControlCloseSubTabs = ({
   ) => {
     e.stopPropagation();
     const copyState = Object.entries(cloneDeep(data));
-    const objState: ObjStateType = Object.fromEntries(
+    const objState: ObjArticles = Object.fromEntries(
       copyState.map((item) => [item[1].id, { articles: item[1].articles }])
     );
     const articles = objState[category as keyof typeof objState].articles;
@@ -46,7 +40,7 @@ export const useControlCloseSubTabs = ({
       const copy = cloneDeep(activeTabs);
       copy[1] = name;
       onSetActiveTabs([...copy]);
-      onChangeData(filterArticles);
+      onChangeData(filterArticles, id);
       onRedirectOne(category, name);
     } else {
       onSetActiveTabs([activeTabs[0]]);
