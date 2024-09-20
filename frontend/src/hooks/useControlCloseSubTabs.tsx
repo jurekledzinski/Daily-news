@@ -44,7 +44,7 @@ export const useControlCloseSubTabs = ({
       onRedirectOne(category, name);
     } else {
       onSetActiveTabs([activeTabs[0]]);
-      onChangeData([]);
+      onChangeData([], id);
       onRedirectTwo(category);
     }
   };
