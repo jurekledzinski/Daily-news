@@ -9,7 +9,7 @@ import {
 } from '../../../shared';
 import { GridArticles } from '../grid-articles';
 import { TabsCategoriesArticlesProps } from './types';
-import { LocalData } from '../../dashboard';
+import { ObjArticles } from '../../dashboard';
 
 export const TabsCategoriesArticles = ({
   activeTabs,
@@ -48,11 +48,7 @@ export const TabsCategoriesArticles = ({
               item[1].id,
               { articles: item[1].articles },
             ])
-          ) as {
-            [id: string]: {
-              articles: LocalData['articles'];
-            };
-          }
+          ) as ObjArticles
         )[activeTabs[0]].articles.map(({ id, title }) => (
           <Tab
             activeTab={activeTabs[1]}
