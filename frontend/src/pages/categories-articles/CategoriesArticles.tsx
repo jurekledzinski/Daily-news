@@ -1,9 +1,9 @@
-import './CategoriesArticles.css';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useMemo, useState } from 'react';
 import { cloneDeep } from 'lodash';
 import { LocalData, TabsCategoriesArticles } from '../../components/pages';
 import { useControlCloseSubTabs, useControlCloseTabs } from '../../hooks';
+import { useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import './CategoriesArticles.css';
 
 export const CategoriesArticles = () => {
   const navigate = useNavigate();
@@ -52,15 +52,13 @@ export const CategoriesArticles = () => {
         }
         return itemCategory;
       });
+
       localStorage.setItem('categories', JSON.stringify(filteredData));
 
       setState((prev) =>
-        prev.map((item) => {
-          if (item.id === category) {
-            return { ...item, articles: data };
-          }
-          return item;
-        })
+        prev.map((item) =>
+          item.id === category ? { ...item, articles: data } : item
+        )
       );
     },
     onRedirectOne: (category, id) => {
@@ -74,10 +72,44 @@ export const CategoriesArticles = () => {
     },
   });
 
+  const handleAddSubArticle = (value: { id: string; title: string }) => {
+    const localData: LocalData[] =
+      JSON.parse(localStorage.getItem('categories') ?? 'null') || [];
+
+    const filteredData = localData.map((itemCategory) =>
+      itemCategory.id === category
+        ? {
+            ...itemCategory,
+            articles: itemCategory.articles.some(
+              (article) => article.id === value.id
+            )
+              ? itemCategory.articles
+              : [...itemCategory.articles, value],
+          }
+        : itemCategory
+    );
+
+    localStorage.setItem('categories', JSON.stringify(filteredData));
+
+    setState((prev) =>
+      prev.map((item) =>
+        item.id === category
+          ? {
+              ...item,
+              articles: item.articles.some((article) => article.id === value.id)
+                ? item.articles
+                : [...item.articles, value],
+            }
+          : item
+      )
+    );
+  };
+
   return (
     <section className="section">
       <TabsCategoriesArticles
         activeTabs={currentActiveTab}
+        handleAddSubArticle={handleAddSubArticle}
         handleCloseSubTab={handleCloseSubTab}
         handleCloseTab={handleCloseTab}
         onRedirectOne={(category) => {
