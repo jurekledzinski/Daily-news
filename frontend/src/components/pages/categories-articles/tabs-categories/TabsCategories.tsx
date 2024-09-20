@@ -1,19 +1,20 @@
+import { ObjArticles } from '../../dashboard';
 import { Outlet } from 'react-router-dom';
+import { TabsCategoriesArticlesProps } from './types';
+
 import {
+  Tab,
+  TabClose,
   Tabs,
   TabsList,
-  Tab,
   TabsPanel,
-  TabClose,
   TabText,
 } from '../../../shared';
-import { GridArticles } from '../grid-articles';
-import { TabsCategoriesArticlesProps } from './types';
-import { ObjArticles } from '../../dashboard';
 
 export const TabsCategoriesArticles = ({
   activeTabs,
   state,
+  handleAddSubArticle,
   handleCloseTab,
   handleCloseSubTab,
   onSetActiveTabs,
@@ -72,7 +73,7 @@ export const TabsCategoriesArticles = ({
         </TabsPanel>
       ) : (
         <TabsPanel>
-          <GridArticles />
+          <Outlet context={{ handleAddSubArticle }} />
         </TabsPanel>
       )}
     </Tabs>
