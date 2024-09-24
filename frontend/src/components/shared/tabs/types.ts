@@ -25,3 +25,7 @@ export type TabsPanelProps = {
 export type TabTextProps = {
   children: React.ReactNode;
 };
+
+export type TabsListContainerProps = {
+  children: React.ReactNode;
+};
