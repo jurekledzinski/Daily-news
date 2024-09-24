@@ -1,39 +1,50 @@
+import DOMPurify from 'dompurify';
+import { CardProps } from './types';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import { Loader } from '../../shared';
+import { useState } from 'react';
 import './Card.css';
-
-type CardProps = {
-  article: {
-    content: string;
-    id: string;
-    image: string;
-    title: string;
-  };
-  handleAddSubArticle: (value: { id: string; title: string }) => void;
-};
 
 export const Card = ({ article, handleAddSubArticle }: CardProps) => {
   const { content, id, image, title } = article;
+  const cleanContent = DOMPurify.sanitize(content);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   return (
     <div className="card">
-      <div
-        className="card__header"
-        style={{
-          backgroundImage: image
-            ? `url(${image})`
-            : `url(https://cdn.pixabay.com/photo/2018/06/12/19/59/football-3471371_1280.jpg)`,
-        }}
-      >
+      <div className="card__header">
         <Link
-          to={`article/${id}`}
+          to={`article/${encodeURIComponent(id)}`}
           onClick={() => {
-            handleAddSubArticle({ id, title });
+            handleAddSubArticle && handleAddSubArticle({ id, title });
           }}
-        ></Link>
+        >
+          {image && loading && !error && <Loader />}
+          {image && !error ? (
+            <img
+              alt={title}
+              className="card__img"
+              src={image}
+              onLoad={() => setLoading(false)}
+              onError={() => {
+                setLoading(false);
+                setError(true);
+              }}
+            />
+          ) : (
+            <FontAwesomeIcon icon={faImage} />
+          )}
+        </Link>
       </div>
       <div className="card__body">
         <h6 className="card__title">{title}</h6>
-        <p className="card__content">{content}</p>
+        <p
+          className="card__content"
+          dangerouslySetInnerHTML={{ __html: cleanContent }}
+        ></p>
       </div>
     </div>
   );
