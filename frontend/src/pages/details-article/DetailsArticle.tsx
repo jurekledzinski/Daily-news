@@ -8,8 +8,6 @@ export const DetailsArticle = () => {
     ReturnType<ReturnType<typeof loaderDetailsArticle>>
   >;
 
-  console.log('data', data);
-
   return (
     <section className="section section--details-article">
       <ArticleDetails
