@@ -1,11 +1,7 @@
-.section {
-  min-height: inherit;
-}
-
 .section--dashboard {
-  width: 100%;
-  min-height: inherit;
-  display: flex;
   gap: 0.5rem;
-  height: 100%;
+  display: flex;
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
 }
