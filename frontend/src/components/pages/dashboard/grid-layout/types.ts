@@ -1,5 +1,6 @@
 import type ReactGridLayout from 'react-grid-layout';
-import { categories } from '../../../../dummy-api';
+// import { categories } from '../../../../dummy-api';
+import { IDataCategories } from '../../../../api';
 
 export type LayoutItem = {
   id?: string | undefined;
@@ -12,13 +13,14 @@ export type LayoutData = {
 };
 
 export type GridTemplateCardProps = {
-  data: (typeof categories)[0];
+  //   data: (typeof categories)[0];
+  data: IDataCategories;
   isDisabled: boolean;
 };
 
 export type GridLayoutProps = {
-  data: LayoutData;
-  setData: (data: LayoutData) => void;
+  layout: LayoutData;
+  setLayout: (data: LayoutData) => void;
 };
 
 export type GridCardProps = {

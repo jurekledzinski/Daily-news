@@ -12,7 +12,7 @@ import type ReactGridLayout from 'react-grid-layout';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-export const GridLayout = ({ data, setData }: GridLayoutProps) => {
+export const GridLayout = ({ layout, setLayout }: GridLayoutProps) => {
   const gridCardRef = React.useRef<HTMLDivElement>(null);
   const [currentBreakPoint, setCurrentBreakPoint] = useState('lg');
   const navigate = useNavigate();
@@ -24,18 +24,18 @@ export const GridLayout = ({ data, setData }: GridLayoutProps) => {
     handleResizeStop,
   } = useControlDashboard({
     currentBreakPoint,
-    data,
+    layoutData: layout,
     onChangeBreakpoint: (breakpoint) => {
       setCurrentBreakPoint(breakpoint);
     },
     onDrop: (newLayouts) => {
-      setData(newLayouts);
+      setLayout(newLayouts);
     },
     onDropStop: (newLayouts) => {
-      setData(newLayouts);
+      setLayout(newLayouts);
     },
     onResizeStop: (newLayouts) => {
-      setData(newLayouts);
+      setLayout(newLayouts);
     },
   });
 
@@ -53,7 +53,7 @@ export const GridLayout = ({ data, setData }: GridLayoutProps) => {
       isDroppable={true}
       layouts={
         Object.fromEntries(
-          Object.entries(data).map((layout) => [
+          Object.entries(layout).map((layout) => [
             layout[0],
             layout[1].map((i) => i.ui),
           ])
@@ -73,7 +73,7 @@ export const GridLayout = ({ data, setData }: GridLayoutProps) => {
       })}
       rowHeight={30}
     >
-      {data[currentBreakPoint as keyof typeof data].map((item) => {
+      {layout[currentBreakPoint as keyof typeof layout].map((item) => {
         return (
           <GridCard
             className="grid-card"

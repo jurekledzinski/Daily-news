@@ -16,19 +16,14 @@ export const GridTemplateCard = ({
       onDragStart={(e) => {
         if (isDisabled) e.preventDefault();
 
-        const transferData = {
-          id: data.id,
-          title: data.webTitle,
-        };
-
-        e.dataTransfer.setData('text/plain', `${JSON.stringify(transferData)}`);
+        e.dataTransfer.setData('text/plain', `${JSON.stringify(data)}`);
       }}
       onTouchStart={(e: React.TouchEvent) => {
         console.log('touch start', e);
       }}
       unselectable="on"
     >
-      <h6>{data.webTitle}</h6>
+      <h6>{data.title}</h6>
     </div>
   );
 };
