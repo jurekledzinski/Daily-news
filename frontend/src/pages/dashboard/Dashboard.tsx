@@ -1,23 +1,18 @@
-import { categories } from '../../dummy-api';
 import { useEffect, useState } from 'react';
 import './Dashboard.css';
+import { Aside } from '../../components/pages';
 
-import {
-  GridLayout,
-  GridTemplateCard,
-  LayoutData,
-  LocalData,
-} from '../../components/pages';
+import { GridLayout, LayoutData, LocalData } from '../../components/pages';
 
 export const Dashboard = () => {
-  const [data, setData] = useState<LayoutData>({
+  const [layout, setLayout] = useState<LayoutData>({
     lg: [],
     md: [],
     sm: [],
     xs: [],
   });
 
-  const handleSetData = (dataLayout: LayoutData) => {
+  const handleSetLayout = (dataLayout: LayoutData) => {
     const localData: LocalData[] =
       JSON.parse(localStorage.getItem('categories') ?? 'null') || [];
 
@@ -55,7 +50,7 @@ export const Dashboard = () => {
     );
 
     localStorage.setItem('categories', JSON.stringify(transformData));
-    setData(dataLayout);
+    setLayout(dataLayout);
   };
 
   useEffect(() => {
@@ -84,24 +79,13 @@ export const Dashboard = () => {
       }
     }, {});
 
-    setData(transformedData);
+    setLayout(transformedData);
   }, []);
 
   return (
     <section className="section section--dashboard">
-      <GridLayout data={data} setData={handleSetData} />
-      <div className="aside">
-        {categories.map((section) => {
-          const card = data.lg.find((cardItem) => cardItem.id === section.id);
-          return (
-            <GridTemplateCard
-              data={section}
-              key={section.id}
-              isDisabled={card ? true : false}
-            />
-          );
-        })}
-      </div>
+      <GridLayout layout={layout} setLayout={handleSetLayout} />
+      <Aside layout={layout} />
     </section>
   );
 };
