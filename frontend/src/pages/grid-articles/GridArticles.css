@@ -2,9 +2,7 @@
   gap: 0.5rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   display: grid;
-  max-height: calc(100vh - 170px);
   margin: 0.5rem 0;
   overflow-x: clip;
   overflow-y: auto;
 }
-
