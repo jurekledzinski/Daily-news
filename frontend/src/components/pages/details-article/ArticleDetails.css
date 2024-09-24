@@ -1,0 +1,93 @@
+.details-article {
+  max-width: 1366px;
+  margin: 1rem auto;
+  padding: 1rem;
+}
+
+.details-article ul {
+  list-style-type: none;
+}
+
+.details-article__header {
+  margin-bottom: 1rem;
+}
+
+.details-article__title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.details-article__trail {
+  font-size: 1rem;
+  color: #555;
+  font-style: italic;
+}
+
+.details-article__figure {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.details-article__figure img {
+  width: 100%;
+  height: auto;
+  max-height: 450px;
+  object-fit: cover;
+  display: block;
+}
+
+.details-article__image {
+  position: relative;
+}
+
+.details-article__image > span {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.5rem;
+  color: white;
+  font-size: 0.5rem;
+}
+
+.details-article__figure > figcaption {
+  padding: 0.5rem;
+  color: white;
+  font-size: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.details-article__body p {
+  line-height: 1.2;
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.details-article__body h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.details-article__footer {
+  font-size: 14px;
+  color: #888;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .article-title {
+    font-size: 24px;
+  }
+
+  .article-trail {
+    font-size: 14px;
+  }
+
+  .article-body p {
+    font-size: 16px;
+  }
+}
