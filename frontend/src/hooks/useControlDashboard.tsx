@@ -13,7 +13,7 @@ export const colsLayouts = {
 
 type useControlDashboardProps = {
   currentBreakPoint: string;
-  data: LayoutData;
+  layoutData: LayoutData;
   onChangeBreakpoint: (breakpoint: string) => void;
   onDrop: (newLayouts: LayoutData) => void;
   onDropStop: (newLayouts: LayoutData) => void;
@@ -22,7 +22,7 @@ type useControlDashboardProps = {
 
 export const useControlDashboard = ({
   currentBreakPoint,
-  data,
+  layoutData,
   onChangeBreakpoint,
   onDrop,
   onDropStop,
@@ -48,7 +48,7 @@ export const useControlDashboard = ({
       i: newId,
     };
 
-    const newLayouts = cloneDeep(data);
+    const newLayouts = cloneDeep(layoutData);
 
     const startY = item.y;
 
@@ -68,7 +68,7 @@ export const useControlDashboard = ({
       };
     });
 
-    for (const breakpoint in data) {
+    for (const breakpoint in layoutData) {
       if (breakpoint === currentBreakPoint) {
         newLayouts[breakpoint] = copyLayout;
       } else {
@@ -94,7 +94,7 @@ export const useControlDashboard = ({
   };
 
   const handleDropStop = (layout: ReactGridLayout.Layout[]) => {
-    const copyData = cloneDeep(data);
+    const copyData = cloneDeep(layoutData);
 
     const updateData = {
       ...copyData,
@@ -113,7 +113,7 @@ export const useControlDashboard = ({
   };
 
   const handleResizeStop = (layout: ReactGridLayout.Layout[]) => {
-    const copyData = cloneDeep(data);
+    const copyData = cloneDeep(layoutData);
 
     const updateData = {
       ...copyData,
