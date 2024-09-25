@@ -74,7 +74,7 @@ export const TabsCategoriesArticles = ({
       </TabsListConainer>
       {activeTabs.length > 1 ? (
         <TabsPanel>
-          <Outlet />
+          <Outlet context={{ handleAddSubArticle }} />
         </TabsPanel>
       ) : (
         <TabsPanel>
