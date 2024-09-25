@@ -1,9 +1,12 @@
+import React, { forwardRef, Ref, useRef, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { LoginForm, RegisterForm } from '../forms';
 import { Modal } from '../../../shared';
 import { useLoginForm, useRegisterForm } from '../../../../hooks';
-import { useRef, useState } from 'react';
+
 import './Header.css';
+
+// TODO: Forward ref header
 
 export const Header = () => {
   const dialogLoginRef = useRef<HTMLDialogElement | null>(null);

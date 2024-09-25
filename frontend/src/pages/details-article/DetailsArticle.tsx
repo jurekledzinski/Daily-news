@@ -1,12 +1,26 @@
 import { ArticleDetails } from '../../components/pages';
 import { getDetailsArticleImageData } from '../../helpers';
 import { loaderDetailsArticle } from '../../api';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useOutletContext } from 'react-router-dom';
+import { UseOutletContext } from '../../types/global';
+import { useFetchOnScroll } from '../../hooks';
 
 export const DetailsArticle = () => {
   const data = useLoaderData() as Awaited<
     ReturnType<ReturnType<typeof loaderDetailsArticle>>
   >;
+
+  const context = useOutletContext<UseOutletContext>();
+
+  console.log('a DetailsArticle', context);
+
+  useFetchOnScroll({
+    onChangeVisible: (value) => {
+      console.log('value scroll details article', value);
+    },
+    target: context.footerRef,
+    threshold: 0,
+  });
 
   return (
     <section className="section section--details-article">
