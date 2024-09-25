@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
 import { GridCard } from './GridCard';
 import { GridLayoutProps } from './types';
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import { useControlDashboard } from '../../../../hooks';
 import { useNavigate } from 'react-router-dom';
+import { useRef, useState } from 'react';
 import './GridLayout.css';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
+import {
+  colsLayouts,
+  useControlDashboard,
+  breakpoints,
+} from '../../../../hooks';
 
 import type ReactGridLayout from 'react-grid-layout';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export const GridLayout = ({ layout, setLayout }: GridLayoutProps) => {
-  const gridCardRef = React.useRef<HTMLDivElement>(null);
-  const [currentBreakPoint, setCurrentBreakPoint] = useState('lg');
   const navigate = useNavigate();
+  const gridCardRef = useRef<HTMLDivElement>(null);
+  const [currentBreakPoint, setCurrentBreakPoint] = useState('lg');
 
   const {
     handleBreakPointChange,
@@ -42,13 +46,10 @@ export const GridLayout = ({ layout, setLayout }: GridLayoutProps) => {
   return (
     <ResponsiveGridLayout
       breakpoints={{
-        lg: 1200 - 266,
-        md: 996 - 266,
-        sm: 768 - 266,
-        xs: 500 - 266,
+        ...breakpoints,
       }}
       className="grid-layout"
-      cols={{ lg: 4, md: 3, sm: 2, xs: 1 }}
+      cols={{ ...colsLayouts }}
       draggableHandle=".grid-card__handle"
       isDroppable={true}
       layouts={
@@ -80,7 +81,10 @@ export const GridLayout = ({ layout, setLayout }: GridLayoutProps) => {
             gridItem={item}
             key={item.ui.i}
             onClick={(value) => {
-              navigate({ pathname: `categories/${value}/articles` });
+              navigate({
+                pathname: `categories/${value}/articles`,
+                search: 'page=1',
+              });
             }}
             ref={gridCardRef}
           />
