@@ -4,7 +4,7 @@ import DetailsArticle from '../pages/details-article';
 import GridArticles from '../pages/grid-articles';
 import Home from '../pages/home';
 import { createBrowserRouter } from 'react-router-dom';
-import { loaderCategories, loaderArticles, loaderDetailsArticle } from '../api';
+import { loaderArticles, loaderCategories, loaderDetailsArticle } from '../api';
 import { QueryClient } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
