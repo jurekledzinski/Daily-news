@@ -1,5 +1,5 @@
 import { ObjArticles } from '../../dashboard';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useOutletContext } from 'react-router-dom';
 import { TabsCategoriesArticlesProps } from './types';
 
 import {
@@ -12,6 +12,8 @@ import {
   TabsListConainer,
 } from '../../../shared';
 
+import { UseOutletContext } from '../../../../types/global';
+
 export const TabsCategoriesArticles = ({
   activeTabs,
   state,
@@ -22,6 +24,8 @@ export const TabsCategoriesArticles = ({
   onRedirectOne,
   onRedirectTwo,
 }: TabsCategoriesArticlesProps) => {
+  const { footerRef } = useOutletContext<UseOutletContext>();
+
   return (
     <Tabs>
       <TabsListConainer>
@@ -74,11 +78,11 @@ export const TabsCategoriesArticles = ({
       </TabsListConainer>
       {activeTabs.length > 1 ? (
         <TabsPanel>
-          <Outlet context={{ handleAddSubArticle }} />
+          <Outlet context={{ handleAddSubArticle, footerRef: footerRef }} />
         </TabsPanel>
       ) : (
         <TabsPanel>
-          <Outlet context={{ handleAddSubArticle }} />
+          <Outlet context={{ handleAddSubArticle, footerRef: footerRef }} />
         </TabsPanel>
       )}
     </Tabs>
