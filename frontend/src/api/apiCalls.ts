@@ -21,9 +21,9 @@ export const getCategoriesArticles = async () => {
   return data;
 };
 
-export const getArticles = async (category: string) => {
+export const getArticles = async (category: string, page: string) => {
   const response = await fetch(
-    `https://content.guardianapis.com/${category}?show-fields=body,headline,trailText&show-elements=image&api-key=${
+    `https://content.guardianapis.com/${category}?show-fields=body,headline,trailText&show-elements=image&page=${page}&page-size=12&api-key=${
       import.meta.env.VITE_API_KEY
     }`
   );

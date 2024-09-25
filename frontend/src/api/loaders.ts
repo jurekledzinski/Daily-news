@@ -30,11 +30,15 @@ export const loaderArticles =
   (queryClient: QueryClient) =>
   async ({
     params,
+    request,
   }: LoaderFunctionArgs): Promise<
     APIResponsePagniationSuccess<IArticles[]>
   > => {
+    const url = new URL(request.url);
+    const page = url.searchParams.get('page') || '1';
+
     const { category } = params as Params;
-    const query = getArticlesQuery(category ?? '');
+    const query = getArticlesQuery(category ?? '', page);
 
     return (
       queryClient.getQueryData(query.queryKey) ??
