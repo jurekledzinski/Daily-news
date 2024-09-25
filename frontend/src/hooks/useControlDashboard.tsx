@@ -11,6 +11,8 @@ export const colsLayouts = {
   xs: 1,
 };
 
+export const breakpoints = { lg: 1200, md: 996, sm: 768, xs: 500 };
+
 type useControlDashboardProps = {
   currentBreakPoint: string;
   layoutData: LayoutData;
