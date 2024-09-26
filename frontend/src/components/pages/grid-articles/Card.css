@@ -24,13 +24,6 @@
   font-size: 3rem;
 }
 
-.card__img {
-  object-fit: cover;
-  display: block;
-  width: inherit;
-  height: inherit;
-}
-
 .card__title {
   margin-bottom: 0.5rem;
   overflow: hidden;

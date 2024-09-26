@@ -1,39 +1,24 @@
-import DOMPurify from 'dompurify';
 import { CardProps } from './types';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Image } from '../../shared';
 import { Link } from 'react-router-dom';
-import { Loader } from '../../shared';
-import { useState } from 'react';
+import { sanitizeContent } from '../../../helpers';
 import './Card.css';
 
 export const Card = ({ article, handleAddSubArticle }: CardProps) => {
   const { content, id, image, title } = article;
-  const cleanContent = DOMPurify.sanitize(content);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const cleanContent = sanitizeContent(content);
 
   return (
     <div className="card">
       <div className="card__header">
         <Link
           to={`article/${encodeURIComponent(id)}`}
-          onClick={() => {
-            handleAddSubArticle && handleAddSubArticle({ id, title });
-          }}
+          onClick={() => handleAddSubArticle({ id, title })}
         >
-          {image && loading && !error && <Loader />}
-          {image && !error ? (
-            <img
-              alt={title}
-              className="card__img"
-              src={image}
-              onLoad={() => setLoading(false)}
-              onError={() => {
-                setLoading(false);
-                setError(true);
-              }}
-            />
+          {image ? (
+            <Image className="image" altText={title} src={image} />
           ) : (
             <FontAwesomeIcon icon={faImage} />
           )}
