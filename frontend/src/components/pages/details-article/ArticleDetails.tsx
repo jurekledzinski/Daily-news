@@ -1,10 +1,10 @@
-import DOMPurify from 'dompurify';
 import { ArticleDetailsProps } from './types';
 import './ArticleDetails.css';
+import { sanitizeContent } from '../../../helpers';
 
 export const ArticleDetails = ({ data }: ArticleDetailsProps) => {
-  const cleanCaption = DOMPurify.sanitize(data.caption);
-  const cleanContent = DOMPurify.sanitize(data.content);
+  const cleanCaption = sanitizeContent(data.caption);
+  const cleanContent = sanitizeContent(data.content);
 
   return (
     <div className="details-article">
