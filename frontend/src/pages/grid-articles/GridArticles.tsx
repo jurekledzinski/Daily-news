@@ -1,21 +1,30 @@
-import { Card } from '../../components/pages';
-import { IArticles, loaderArticles } from '../../api';
+import { Card, LocalData } from '../../components/pages';
+import { loaderArticles } from '../../api';
 import { uniqBy } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFetchOnScroll } from '../../hooks';
 import { UseOutletContext } from '../../types/global';
 import './GridArticles.css';
 import {
+  getCurrentCategory,
+  getFormatedData,
+  getLocalData,
+  setLocalData,
+} from '../../helpers';
+import {
   useLoaderData,
   useOutletContext,
   useSearchParams,
+  useParams,
+  Params,
 } from 'react-router-dom';
 
 export const GridArticles = () => {
-  const context = useOutletContext<UseOutletContext>();
+  const { category } = useParams() as Params;
   const [searchParams, setSearchParams] = useSearchParams();
-  const [state, setState] = useState<IArticles[]>([]);
+  const [state, setState] = useState<LocalData['listArticles']>([]);
   const page = useRef<number>(1);
+  const context = useOutletContext<UseOutletContext>();
 
   const data = useLoaderData() as Awaited<
     ReturnType<ReturnType<typeof loaderArticles>>
@@ -24,113 +33,63 @@ export const GridArticles = () => {
   useFetchOnScroll({
     onChangeVisible: useCallback(
       (value) => {
+        if (!state.length) return;
         const currentPage = Number(searchParams.get('page'));
         if (data.response.pages === currentPage) return;
-
+        page.current = currentPage;
         page.current += 1;
 
-        if (value) setSearchParams({ page: `${page.current}` });
+        if (value) {
+          setSearchParams({ page: `${page.current}` }, { replace: true });
+        }
       },
-      [data.response.pages, searchParams, setSearchParams]
+      [data.response.pages, setSearchParams, searchParams, state]
     ),
     target: context.footerRef,
     threshold: 0,
   });
 
   useEffect(() => {
-    setState((prev) => uniqBy([...prev, ...data.response.results], 'id'));
-  }, [data]);
+    const formatedData = data.response.results.map((i) => getFormatedData(i));
+    setState((prev) => uniqBy([...prev, ...formatedData], 'id'));
+
+    const localData = getLocalData();
+
+    const updateData = localData.map((itemCategory) => {
+      return itemCategory.id === category
+        ? {
+            ...itemCategory,
+            listArticles: uniqBy(
+              [...itemCategory.listArticles, ...formatedData],
+              'id'
+            ),
+            page: searchParams.get('page'),
+          }
+        : itemCategory;
+    });
+
+    setLocalData(updateData);
+  }, [category, data, searchParams]);
+
+  useEffect(() => {
+    const currentCategory = getCurrentCategory(category ?? '');
+
+    if (currentCategory) {
+      setState(uniqBy([...currentCategory.listArticles], 'id'));
+    } else {
+      setState([]);
+    }
+  }, [category]);
 
   return (
     <div className="grid-articles">
-      {state
-        .map((article) => {
-          const transformedData = {
-            content: article.fields.trailText,
-            id: article.id,
-            title: article.webTitle,
-            sectionId: article.sectionId,
-          };
-
-          if (article.elements && article.elements.length) {
-            const main = article.elements.sort((a, b) =>
-              a.relation.localeCompare(b.relation)
-            );
-
-            const mainImage =
-              main[0].assets && main[0].assets.length
-                ? main[0].assets.sort(
-                    (a, b) =>
-                      parseFloat(b.typeData.width) -
-                      parseFloat(a.typeData.width)
-                  )[main[0].assets.length - 2]
-                : '';
-
-            return {
-              ...transformedData,
-              image: mainImage ? mainImage.file : '',
-              altText: mainImage ? mainImage.typeData.altText : '',
-              credit: mainImage ? mainImage.typeData.credit : '',
-              caption: mainImage ? mainImage.typeData.caption : '',
-            };
-          }
-
-          return {
-            ...transformedData,
-            image: '',
-            altText: '',
-            credit: '',
-            caption: '',
-          };
-        })
-        .map((article) => (
-          <Card
-            key={article.id}
-            handleAddSubArticle={context.handleAddSubArticle}
-            article={article}
-          />
-        ))}
+      {state.map((article) => (
+        <Card
+          key={article.id}
+          handleAddSubArticle={context.handleAddSubArticle}
+          article={article}
+        />
+      ))}
     </div>
   );
 };
-
-// TODO: create function to return transformed data
-
-function transformData(article: IArticles) {
-  const transformedData = {
-    content: article.fields.trailText,
-    id: article.id,
-    title: article.webTitle,
-    sectionId: article.sectionId,
-  };
-
-  if (article.elements && article.elements.length) {
-    const main = article.elements.sort((a, b) =>
-      a.relation.localeCompare(b.relation)
-    );
-
-    const mainImage =
-      main[0].assets && main[0].assets.length
-        ? main[0].assets.sort(
-            (a, b) =>
-              parseFloat(b.typeData.width) - parseFloat(a.typeData.width)
-          )[main[0].assets.length - 2]
-        : '';
-
-    return {
-      ...transformedData,
-      image: mainImage ? mainImage.file : '',
-      altText: mainImage ? mainImage.typeData.altText : '',
-      credit: mainImage ? mainImage.typeData.credit : '',
-      caption: mainImage ? mainImage.typeData.caption : '',
-    };
-  }
-
-  return {
-    ...transformedData,
-    image: '',
-    altText: '',
-    credit: '',
-    caption: '',
-  };
-}
