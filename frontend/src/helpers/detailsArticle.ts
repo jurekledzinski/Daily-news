@@ -1,6 +1,6 @@
 import { IElements } from '../api';
 
-export function getDetailsArticleImageData(elements: IElements[]) {
+export const getDetailsArticleImageData = (elements: IElements[]) => {
   if (elements && elements.length) {
     const main = elements.sort((a, b) => a.relation.localeCompare(b.relation));
 
@@ -26,4 +26,4 @@ export function getDetailsArticleImageData(elements: IElements[]) {
     credit: '',
     caption: '',
   };
-}
+};
