@@ -37,7 +37,11 @@ export const Dashboard = () => {
             id: category.id ?? '',
             title: category.title,
             ui: { [curr[0]]: category.ui },
-            articles: localData.length ? inLocal?.articles ?? [] : [],
+            articles: localData.length && inLocal ? inLocal.articles : [],
+            scroll: localData.length && inLocal ? inLocal.scroll : 0,
+            listArticles:
+              localData.length && inLocal ? inLocal.listArticles : [],
+            page: localData.length && inLocal ? inLocal.page : '1',
           };
 
           const accData = [...acc, singleCategory];
