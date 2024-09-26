@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash';
-import { LocalData, TabsCategoriesArticles } from '../../components/pages';
+import { getCurrentCategory, getLocalData, setLocalData } from '../../helpers';
+import { TabsCategoriesArticles } from '../../components/pages';
 import { useControlCloseSubTabs, useControlCloseTabs } from '../../hooks';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -9,10 +10,7 @@ export const CategoriesArticles = () => {
   const { category, id } = useParams();
   const decId = decodeURIComponent(id ?? '');
 
-  const localData: LocalData[] =
-    JSON.parse(localStorage.getItem('categories') ?? 'null') || [];
-
-  const [state, setState] = useState(cloneDeep(localData));
+  const [state, setState] = useState(cloneDeep(getLocalData()));
   const [activeTabs, setActiveTabs] = useState<string[]>([]);
 
   const currentActiveTab = useMemo(
@@ -23,12 +21,16 @@ export const CategoriesArticles = () => {
   const { handleCloseTab } = useControlCloseTabs({
     data: state,
     onChangeData: (data, id) => {
+      const localData = getLocalData();
       const filteredData = localData.filter((category) => category.id !== id);
-      localStorage.setItem('categories', JSON.stringify(filteredData));
+      setLocalData(filteredData);
       setState(data);
     },
     onRedirectOne: (category) => {
-      navigate(`/categories/${category}/articles`, { replace: true });
+      const page = getCurrentCategory(category)?.page ?? '1';
+      navigate(`/categories/${category}/articles?page=${page}`, {
+        replace: true,
+      });
     },
     onRedirectTwo: () => {
       navigate('/');
@@ -43,6 +45,7 @@ export const CategoriesArticles = () => {
     data: state,
     category: category ?? '',
     onChangeData: (data, id) => {
+      const localData = getLocalData();
       const filteredData = localData.map((itemCategory) => {
         if (itemCategory.id === category) {
           return {
@@ -53,7 +56,7 @@ export const CategoriesArticles = () => {
         return itemCategory;
       });
 
-      localStorage.setItem('categories', JSON.stringify(filteredData));
+      setLocalData(filteredData);
 
       setState((prev) =>
         prev.map((item) =>
@@ -67,7 +70,8 @@ export const CategoriesArticles = () => {
       );
     },
     onRedirectTwo: (category) => {
-      navigate(`/categories/${category}/articles`);
+      const page = getCurrentCategory(category)?.page ?? '1';
+      navigate(`/categories/${category}/articles?page=${page}`);
     },
     onSetActiveTabs: (value) => {
       setActiveTabs(value);
@@ -75,8 +79,7 @@ export const CategoriesArticles = () => {
   });
 
   const handleAddSubArticle = (value: { id: string; title: string }) => {
-    const localData: LocalData[] =
-      JSON.parse(localStorage.getItem('categories') ?? 'null') || [];
+    const localData = getLocalData();
 
     const filteredData = localData.map((itemCategory) =>
       itemCategory.id === category
@@ -91,7 +94,7 @@ export const CategoriesArticles = () => {
         : itemCategory
     );
 
-    localStorage.setItem('categories', JSON.stringify(filteredData));
+    setLocalData(filteredData);
 
     setState((prev) =>
       prev.map((item) =>
@@ -115,16 +118,15 @@ export const CategoriesArticles = () => {
         handleCloseSubTab={handleCloseSubTab}
         handleCloseTab={handleCloseTab}
         onRedirectOne={(category) => {
-          navigate(`/categories/${category}/articles`);
+          const page = getCurrentCategory(category)?.page ?? '1';
+          navigate(`/categories/${category}/articles?page=${page}`);
         }}
         onRedirectTwo={(category, id) => {
           navigate(
             `/categories/${category}/articles/article/${encodeURIComponent(id)}`
           );
         }}
-        onSetActiveTabs={(value) => {
-          setActiveTabs(value);
-        }}
+        onSetActiveTabs={(value) => setActiveTabs(value)}
         state={state}
       />
     </section>
