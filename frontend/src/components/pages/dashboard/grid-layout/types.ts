@@ -36,6 +36,9 @@ export interface LocalData extends Omit<LayoutItem, 'ui'> {
     id: string;
     title: string;
   }[];
+  listArticles: { content: string; id: string; title: string; image: string }[];
+  scroll: number;
+  page: string;
 }
 
 export type ObjArticles = {
