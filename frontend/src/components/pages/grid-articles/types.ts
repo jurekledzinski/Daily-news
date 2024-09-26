@@ -1,6 +1,6 @@
-import { IDataArticle } from '../../../api';
+import { LocalData } from '../dashboard';
 
 export type CardProps = {
-  article: IDataArticle;
+  article: LocalData['listArticles'][0];
   handleAddSubArticle: (value: { id: string; title: string }) => void;
 };
