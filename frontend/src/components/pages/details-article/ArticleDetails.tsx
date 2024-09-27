@@ -1,6 +1,6 @@
 import { ArticleDetailsProps } from './types';
-import './ArticleDetails.css';
 import { sanitizeContent } from '../../../helpers';
+import './ArticleDetails.css';
 
 export const ArticleDetails = ({ data }: ArticleDetailsProps) => {
   const cleanCaption = sanitizeContent(data.caption);
