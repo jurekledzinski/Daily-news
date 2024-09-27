@@ -1,7 +1,7 @@
 import { Card, LocalData } from '../../components/pages';
 import { loaderArticles } from '../../api';
 import { uniqBy } from 'lodash';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useFetchOnScroll } from '../../hooks';
 import { UseOutletContext } from '../../types/global';
 import './GridArticles.css';
@@ -10,6 +10,7 @@ import {
   getFormatedData,
   getLocalData,
   setLocalData,
+  updateLocalData,
 } from '../../helpers';
 import {
   useLoaderData,
@@ -23,7 +24,6 @@ export const GridArticles = () => {
   const { category } = useParams() as Params;
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, setState] = useState<LocalData['listArticles']>([]);
-  const page = useRef<number>(1);
   const context = useOutletContext<UseOutletContext>();
 
   const data = useLoaderData() as Awaited<
@@ -34,52 +34,40 @@ export const GridArticles = () => {
     onChangeVisible: useCallback(
       (value) => {
         if (!state.length) return;
-        const currentPage = Number(searchParams.get('page'));
+        const currentPage = Number(searchParams.get('page')) || 1;
         if (data.response.pages === currentPage) return;
-        page.current = currentPage;
-        page.current += 1;
 
         if (value) {
-          setSearchParams({ page: `${page.current}` }, { replace: true });
+          const nextPage = currentPage + 1;
+          setSearchParams({ page: `${nextPage}` }, { replace: true });
         }
       },
       [data.response.pages, setSearchParams, searchParams, state]
     ),
     target: context.footerRef,
-    threshold: 0,
   });
 
   useEffect(() => {
+    if (!category) return;
+    const currentCategory = getCurrentCategory(category ?? '');
+    if (!currentCategory) return;
     const formatedData = data.response.results.map((i) => getFormatedData(i));
-    setState((prev) => uniqBy([...prev, ...formatedData], 'id'));
+
+    setState((prev) =>
+      uniqBy([...prev, ...currentCategory.listArticles, ...formatedData], 'id')
+    );
 
     const localData = getLocalData();
 
-    const updateData = localData.map((itemCategory) => {
-      return itemCategory.id === category
-        ? {
-            ...itemCategory,
-            listArticles: uniqBy(
-              [...itemCategory.listArticles, ...formatedData],
-              'id'
-            ),
-            page: searchParams.get('page'),
-          }
-        : itemCategory;
-    });
+    const updateData = updateLocalData(
+      localData,
+      category,
+      formatedData,
+      searchParams
+    );
 
     setLocalData(updateData);
   }, [category, data, searchParams]);
-
-  useEffect(() => {
-    const currentCategory = getCurrentCategory(category ?? '');
-
-    if (currentCategory) {
-      setState(uniqBy([...currentCategory.listArticles], 'id'));
-    } else {
-      setState([]);
-    }
-  }, [category]);
 
   return (
     <div className="grid-articles">
