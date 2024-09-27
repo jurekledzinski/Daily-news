@@ -1,4 +1,6 @@
-import { IArticles } from '../api';
+import { uniqBy } from 'lodash';
+import { IArticles, IDataArticle } from '../api';
+import { LocalData } from '../components/pages';
 
 export const getFormatedData = (article: IArticles) => {
   const transformedData = {
@@ -31,3 +33,25 @@ export const getFormatedData = (article: IArticles) => {
     image: '',
   };
 };
+
+export function updateLocalData(
+  localData: LocalData[],
+  category: string,
+  formatedData: Pick<IDataArticle, 'content' | 'id' | 'image' | 'title'>[],
+  searchParams: URLSearchParams
+) {
+  const updateData = localData.map((itemCategory) => {
+    return itemCategory.id === category
+      ? {
+          ...itemCategory,
+          listArticles: uniqBy(
+            [...itemCategory.listArticles, ...formatedData],
+            'id'
+          ),
+          page: searchParams.get('page'),
+        }
+      : itemCategory;
+  });
+
+  return updateData;
+}
