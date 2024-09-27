@@ -6,7 +6,7 @@ export const useFetchOnScroll = ({
   onChangeVisible,
   root = null,
   rootMargin = '0px',
-  threshold,
+  threshold = 0,
 }: useFetchOnScrollProps) => {
   useEffect(() => {
     if (!target.current) return;
