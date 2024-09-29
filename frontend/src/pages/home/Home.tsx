@@ -1,8 +1,8 @@
 import { Header } from '../../components/pages';
 import { loaderCategories } from '../../api';
 import { Outlet, useLoaderData } from 'react-router-dom';
-import './Home.css';
 import { useRef } from 'react';
+import './Home.css';
 
 export const Home = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
@@ -13,14 +13,14 @@ export const Home = () => {
 
   return (
     <div className="container">
-      <Header />
+      <Header ref={headerRef} />
       <Outlet
         context={{
           categories: (data.response.results ?? []).map((c) => ({
             id: c.id,
             title: c.webTitle,
           })),
-          header: headerRef,
+          headerRef: headerRef,
           footerRef: footerRef,
         }}
       />

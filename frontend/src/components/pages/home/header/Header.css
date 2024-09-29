@@ -25,3 +25,23 @@
 .header__button {
   padding: 0.35rem 0.75rem;
 }
+
+.header.slide {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  animation: moveDown 0.5s forwards ease;
+  border-bottom: 1px solid #ddd;
+  z-index: 10;
+  background: white;
+}
+
+@keyframes moveDown {
+  from {
+    transform: translateY(-30px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}
