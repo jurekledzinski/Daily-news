@@ -35,9 +35,9 @@ export interface LocalData extends Omit<LayoutItem, 'ui'> {
   articles: {
     id: string;
     title: string;
+    scroll?: number;
   }[];
   listArticles: { content: string; id: string; title: string; image: string }[];
-  scroll: number;
   page: string;
 }
 
