@@ -1,6 +1,8 @@
 export type UseOutletContext = {
+  headerRef: React.MutableRefObject<HTMLDivElement | null>;
   footerRef: React.MutableRefObject<HTMLDivElement | null>;
   handleAddSubArticle: (value: { id: string; title: string }) => void;
+  tabsListContainerRef: React.MutableRefObject<HTMLDivElement | null>;
 };
 
 export type UseScrollToggleProps = {
