@@ -35,9 +35,7 @@ export const getArticles = async (category: string, page: string) => {
   return data;
 };
 
-export const getDetailsArticle = async (category: string, id: string) => {
-  console.log('Get details article fn', category, id);
-
+export const getDetailsArticle = async (_: string, id: string) => {
   const response = await fetch(
     `https://content.guardianapis.com/${id}?show-fields=body,trailText&show-elements=image&api-key=${
       import.meta.env.VITE_API_KEY
