@@ -11,9 +11,9 @@ export type UseScrollToggleProps = {
 export const useScrollToggle = ({
   target,
   onChangeVisible,
-  root,
-  rootMargin,
-  threshold,
+  root = null,
+  rootMargin = '0px',
+  threshold = 0,
 }: UseScrollToggleProps) => {
   useEffect(() => {
     if (!target.current) return;
