@@ -78,7 +78,11 @@ export const CategoriesArticles = () => {
     },
   });
 
-  const handleAddSubArticle = (value: { id: string; title: string }) => {
+  const handleAddSubArticle = (value: {
+    id: string;
+    title: string;
+    scroll: number;
+  }) => {
     const localData = getLocalData();
 
     const filteredData = localData.map((itemCategory) =>
