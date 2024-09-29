@@ -7,10 +7,10 @@
 }
 
 .tabs__list-container {
-  overflow-x: auto;
+  /* overflow-x: auto; */
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  max-width: 100%;
 }
 
 .tabs__tab {
