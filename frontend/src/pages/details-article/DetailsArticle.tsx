@@ -1,39 +1,39 @@
 import { ArticleDetails } from '../../components/pages';
 import { getDetailsArticleImageData } from '../../helpers';
 import { loaderDetailsArticle } from '../../api';
-import { useEffect } from 'react';
-import { useFetchOnScroll } from '../../hooks';
 import { useLoaderData, useOutletContext } from 'react-router-dom';
 import { UseOutletContext } from '../../types/global';
+import { useRef } from 'react';
+import { useScrollToggle } from '../../hooks';
 
 export const DetailsArticle = () => {
   const data = useLoaderData() as Awaited<
     ReturnType<ReturnType<typeof loaderDetailsArticle>>
   >;
+  const articleHeaderRef = useRef<HTMLDivElement | null>(null);
+  const context = useOutletContext<UseOutletContext>();
 
-  //   const context = useOutletContext<UseOutletContext>();
+  useScrollToggle({
+    onChangeVisible: (value) => {
+      if (!context.headerRef.current) return;
+      if (!context.tabsListContainerRef.current) return;
 
-  //   console.log('a DetailsArticle', context);
-
-  //   useFetchOnScroll({
-  //     onChangeVisible: (value) => {
-  //       console.log('value scroll details article', value);
-  //     },
-  //     target: context.footerRef,
-  //     threshold: 0,
-  //   });
-
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, []);
+      if (value) {
+        context.headerRef.current.classList.remove('slide');
+        context.tabsListContainerRef.current.classList.remove('slide');
+      } else {
+        context.headerRef.current.classList.add('slide');
+        context.tabsListContainerRef.current.classList.add('slide');
+      }
+    },
+    target: articleHeaderRef,
+    threshold: [0.5, 1.0],
+  });
 
   return (
     <section className="section section--details-article">
       <ArticleDetails
+        headerRef={articleHeaderRef}
         data={{
           id: data.response.content.id,
           sectionId: data.response.content.sectionId,

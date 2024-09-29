@@ -1,17 +1,19 @@
 import { ArticleDetailsProps } from './types';
+import { Header } from './Header';
 import { sanitizeContent } from '../../../helpers';
 import './ArticleDetails.css';
 
-export const ArticleDetails = ({ data }: ArticleDetailsProps) => {
+export const ArticleDetails = ({ data, headerRef }: ArticleDetailsProps) => {
   const cleanCaption = sanitizeContent(data.caption);
   const cleanContent = sanitizeContent(data.content);
 
   return (
     <div className="details-article">
-      <header className="details-article__header">
-        <h1 className="details-article__title">{data.title}</h1>
-        <p className="details-article__trail">{data.trailText}</p>
-      </header>
+      <Header
+        ref={headerRef}
+        title={data.title}
+        trailText={data.trailText ?? ''}
+      />
 
       {data.image ? (
         <figure className="details-article__figure">
