@@ -75,6 +75,11 @@ button {
   border: 1px solid #ddd;
 }
 
+textarea {
+  width: 100%;
+  resize: none;
+}
+
 ::-webkit-scrollbar {
   width: 12px;
 }
