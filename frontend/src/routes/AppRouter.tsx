@@ -4,7 +4,12 @@ import DetailsArticle from '../pages/details-article';
 import GridArticles from '../pages/grid-articles';
 import Home from '../pages/home';
 import { createBrowserRouter } from 'react-router-dom';
-import { loaderArticles, loaderCategories, loaderDetailsArticle } from '../api';
+import {
+  actionCreateComment,
+  loaderArticles,
+  loaderCategories,
+  loaderDetailsArticle,
+} from '../api';
 import { QueryClient } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
@@ -37,6 +42,7 @@ const router = createBrowserRouter([
             element: <DetailsArticle />,
             errorElement: <div>Error page details article</div>,
             loader: loaderDetailsArticle(queryClient),
+            action: actionCreateComment,
           },
         ],
       },
