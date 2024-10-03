@@ -2,8 +2,16 @@ import { ArticleDetailsProps } from './types';
 import { Header } from './Header';
 import { sanitizeContent } from '../../../helpers';
 import './ArticleDetails.css';
+import { SectionComments, Form } from '../../shared';
+import { comments } from '../../../dummy-api/comments';
 
-export const ArticleDetails = ({ data, headerRef }: ArticleDetailsProps) => {
+export const ArticleDetails = ({
+  data,
+  headerRef,
+  onSubmit,
+  onReply,
+  onLikes,
+}: ArticleDetailsProps) => {
   const cleanCaption = sanitizeContent(data.caption);
   const cleanContent = sanitizeContent(data.content);
 
@@ -33,8 +41,18 @@ export const ArticleDetails = ({ data, headerRef }: ArticleDetailsProps) => {
       ></div>
 
       <div className="details-article__footer">
-        <p>Published on: {data.webPublicationDate}</p>
+        {data.webPublicationDate ? (
+          <p>
+            Published on: {new Date(data.webPublicationDate).toLocaleString()}
+          </p>
+        ) : null}
       </div>
+      <Form buttonText="Add comment" onSubmit={onSubmit} />
+      <SectionComments
+        comments={[...comments]}
+        onLikes={() => {}}
+        onReply={() => {}}
+      />
     </div>
   );
 };
