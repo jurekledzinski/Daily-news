@@ -1,11 +1,8 @@
+require('dotenv').config();
 import { MongoClient } from 'mongodb';
-// import { IUser } from '../models/user';
 
-// const url = 'your_mongodb_connection_string';
-// mongodb://localhost:27017
-// lub
-// mongodb://127.0.0.1:27017
-const url = 'mongodb://localhost:27017';
+const url = process.env.MONGO_DB_ATLAS_URL!;
+
 const client = new MongoClient(url);
 
 async function connectDB() {
@@ -17,10 +14,7 @@ async function connectDB() {
   }
 }
 
-// const db = client.db('your_database_name'); Mern_security_tests
-const db = client.db('Mern_security_tests');
-
-// const userCollection = db.collection<IUser>('users');
+const db = client.db('news');
 
 const getCollectionDb = <T extends object>(name: string) => {
   return db && db.collection<T>(name);
