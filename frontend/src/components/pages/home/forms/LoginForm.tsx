@@ -20,7 +20,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
             },
           })}
         />
-        {errors.email && <ErrorMessage text={errors.email.message} />}
+        {errors.email && <ErrorMessage> {errors.email.message}</ErrorMessage>}
       </fieldset>
       <fieldset>
         <label>Password:</label>
@@ -30,7 +30,9 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
             required: { message: 'Password is required', value: true },
           })}
         />
-        {errors.password && <ErrorMessage text={errors.password.message} />}
+        {errors.password && (
+          <ErrorMessage> {errors.password.message}</ErrorMessage>
+        )}
       </fieldset>
     </form>
   );

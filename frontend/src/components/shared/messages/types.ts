@@ -1,3 +1,3 @@
 export type ErrorMessageProps = {
-  text: string | undefined;
+  children: React.ReactNode;
 };

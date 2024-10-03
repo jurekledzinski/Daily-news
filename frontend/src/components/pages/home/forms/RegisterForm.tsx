@@ -20,7 +20,7 @@ export const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
             },
           })}
         />
-        {errors.name && <ErrorMessage text={errors.name.message} />}
+        {errors.name && <ErrorMessage>{errors.name.message} </ErrorMessage>}
       </fieldset>
       <fieldset>
         <label>Email:</label>
@@ -34,7 +34,7 @@ export const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
             },
           })}
         />
-        {errors.email && <ErrorMessage text={errors.email.message} />}
+        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
       </fieldset>
       <fieldset>
         <label>Password:</label>
@@ -44,7 +44,9 @@ export const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
             required: { message: 'Password is required', value: true },
           })}
         />
-        {errors.password && <ErrorMessage text={errors.password.message} />}
+        {errors.password && (
+          <ErrorMessage>{errors.password.message}</ErrorMessage>
+        )}
       </fieldset>
       <fieldset>
         <label>Confrim password:</label>
@@ -55,7 +57,7 @@ export const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
           })}
         />
         {errors.confirmPassword && (
-          <ErrorMessage text={errors.confirmPassword.message} />
+          <ErrorMessage>{errors.confirmPassword.message}</ErrorMessage>
         )}
       </fieldset>
     </form>
