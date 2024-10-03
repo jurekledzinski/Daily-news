@@ -1,19 +1,31 @@
 import { ArticleDetails } from '../../components/pages';
 import { getDetailsArticleImageData } from '../../helpers';
 import { loaderDetailsArticle } from '../../api';
-import { useLoaderData, useOutletContext } from 'react-router-dom';
+import { useAddComment, useScrollToggle } from '../../hooks';
 import { UseOutletContext } from '../../types/global';
 import { useRef } from 'react';
-import { useScrollToggle } from '../../hooks';
+import { v4 as uuidv4 } from 'uuid';
+import {
+  Params,
+  useLoaderData,
+  useOutletContext,
+  useParams,
+} from 'react-router-dom';
 
 export const DetailsArticle = () => {
+  const { id } = useParams() as Params;
   const data = useLoaderData() as Awaited<
     ReturnType<ReturnType<typeof loaderDetailsArticle>>
   >;
   const articleHeaderRef = useRef<HTMLDivElement | null>(null);
   const context = useOutletContext<UseOutletContext>();
+  const methodSubmit = useAddComment({
+    user: `user-${uuidv4().slice(0, 6)}`,
+    userId: uuidv4(),
+    artId: id,
+  });
 
-  console.log('data --- ', data);
+  console.log('data', data);
 
   useScrollToggle({
     onChangeVisible: (value) => {
@@ -57,10 +69,8 @@ export const DetailsArticle = () => {
             data.detailsArticle.response.content.elements
           ).credit,
         }}
-        onSubmit={() => {}}
-        onReply={() => {}}
-        onLikes={() => {}}
-        comments={[]}
+        methodSubmit={methodSubmit}
+        comments={data.comments.payload.result}
       />
     </section>
   );

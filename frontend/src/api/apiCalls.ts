@@ -5,6 +5,7 @@ import {
   APIResponseDetailsSuccess,
   IDetailsArticle,
   APIResponsePagniationSuccess,
+  IComment,
 } from './types';
 
 export const getCategoriesArticles = async () => {
@@ -93,13 +94,12 @@ export const getCommentReplies = async (
   return data;
 };
 
-export const createComment = async (body: unknown) => {
-  console.log('body create comment', body);
+export const createComment = async (body: IComment) => {
   const response = await fetch('http://localhost:5000/api/v1/comments/create', {
     method: 'POST',
     mode: 'cors',
     credentials: 'include',
-    body: JSON.stringify({ ...body }),
+    body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -108,8 +108,6 @@ export const createComment = async (body: unknown) => {
   if (!response.ok) throw new Error('Something went wrong, please try later.');
 
   const data = await response.json();
-
-  console.log('create res', data);
 
   return data;
 };

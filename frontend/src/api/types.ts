@@ -88,3 +88,16 @@ export type IDataArticle = {
 };
 
 export interface IDetailsArticle extends IData {}
+
+export type IComment = {
+  id: string;
+  createdAt: string;
+  idArticle: string;
+  likes: number;
+  parentCommentId: string | null;
+  text: string;
+  user: string;
+  userId: string;
+};
+
+export type ICommentCreate = Omit<IComment, 'id'>;

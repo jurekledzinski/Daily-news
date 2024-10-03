@@ -19,6 +19,7 @@ export const Header = forwardRef<HTMLDivElement>(
     const formSignUpControl = useRegisterForm({
       onSuccess: () => dialogRegisterRef.current?.close(),
     });
+
     const formSignInControl = useLoginForm({
       onSuccess: () => dialogLoginRef.current?.close(),
     });

@@ -1,18 +1,17 @@
-import { SubmitHandler } from 'react-hook-form';
-import { IComment } from '../../../api';
+import { SubmitHandler, UseFormReset } from 'react-hook-form';
 
 export type Comment = {
   id: string;
   idArticle: string;
-  user: string;
-  userId: string;
+  userFrom: string;
+  userFromId: string;
   userTo?: string;
   text: string;
   likes: number;
 };
 
-export interface CommentWithReplies extends IComment {
-  replies?: IComment[];
+export interface CommentWithReplies extends Comment {
+  replies?: Comment[];
 }
 
 export type SectionCommentsProps = {
@@ -24,8 +23,9 @@ export type SectionCommentsProps = {
 export type HeaderProps = {
   commentId: string;
   likes: number;
-  user: string;
+  userFrom: string;
   onLikes: SectionCommentsProps['onLikes'];
+  userTo?: string;
 };
 
 export type CommentInput = {

@@ -1,19 +1,19 @@
 import { ArticleDetailsProps } from './types';
+import { Form, SectionComments } from '../../shared';
 import { Header } from './Header';
 import { sanitizeContent } from '../../../helpers';
 import './ArticleDetails.css';
-import { SectionComments, Form } from '../../shared';
-import { comments } from '../../../dummy-api/comments';
 
 export const ArticleDetails = ({
   data,
   headerRef,
-  onSubmit,
-  onReply,
-  onLikes,
+  methodSubmit,
+  comments,
 }: ArticleDetailsProps) => {
   const cleanCaption = sanitizeContent(data.caption);
   const cleanContent = sanitizeContent(data.content);
+
+  console.log('mm', comments);
 
   return (
     <div className="details-article">
@@ -47,12 +47,24 @@ export const ArticleDetails = ({
           </p>
         ) : null}
       </div>
-      <Form buttonText="Add comment" onSubmit={onSubmit} />
+
+      <Form buttonText="Add comment" onSubmit={(data) => methodSubmit(data)} />
+
       <SectionComments
-        comments={[...comments]}
+        comments={comments.map((comment) => {
+          return { ...comment, replies: [] };
+        })}
         onLikes={() => {}}
-        onReply={() => {}}
-      />
+      >
+        {(commentId) => {
+          return (
+            <Form
+              buttonText="Reply to comment"
+              onSubmit={(data) => methodSubmit(data, commentId)}
+            />
+          );
+        }}
+      </SectionComments>
     </div>
   );
 };

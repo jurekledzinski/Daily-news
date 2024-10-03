@@ -1,41 +1,25 @@
-import { useForm } from 'react-hook-form';
-import { Form, useSubmit } from 'react-router-dom';
-import { CommentInput, FormProps } from './types';
+import { CommentInput } from './types';
 import { ErrorMessage } from '../messages';
+import { Form } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-const FormAddComment = ({ buttonText }: FormProps) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<CommentInput>();
+export type FormProps = {
+  buttonText: string;
+  onSubmit: SubmitHandler<CommentInput>;
+};
 
-  const submit = useSubmit();
-
-  const onSubmit = (data: CommentInput) => {
-    const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-    formData.append('createdAt', new Date().toISOString());
-    formData.append('parentCommentId', 'null');
-    formData.append('user', 'Bob');
-    formData.append('userId', '123');
-    formData.append('idArticle', '444');
-    formData.append('likes', '44');
-
-    submit(formData, { method: 'post' });
-    reset();
-  };
+const FormAddComment = ({ buttonText, onSubmit }: FormProps) => {
+  const formMethods = useForm<CommentInput>();
+  const { formState } = formMethods;
+  const { errors } = formState;
 
   return (
     <div className="comment-form">
-      <Form method="post" onSubmit={handleSubmit(onSubmit)}>
+      <Form method="post" onSubmit={formMethods.handleSubmit(onSubmit)}>
         <textarea
           cols={40}
           rows={8}
-          {...register('text', {
+          {...formMethods.register('text', {
             required: { message: 'Comment is required', value: true },
           })}
         />

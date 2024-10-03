@@ -1,17 +1,13 @@
-import { LoaderFunctionArgs, redirect } from 'react-router-dom';
+import { LoaderFunctionArgs } from 'react-router-dom';
 import { createComment } from './apiCalls';
+import { IComment } from './types';
 
 export const actionCreateComment = async ({
   request,
-  params,
-  context,
 }: LoaderFunctionArgs<unknown>) => {
-  console.log('fire action add comment', request);
-  console.log('fire action params', params);
-  console.log('fire action context', context);
   const data = await request.formData();
-  const newComment = Object.fromEntries(data);
-  console.log('newComment', newComment);
-  const comment = await createComment(newComment);
+  const newComment = Object.fromEntries(data) as IComment;
+  const result = await createComment(newComment);
+  console.log('result action create from fetch', result);
   return true;
 };

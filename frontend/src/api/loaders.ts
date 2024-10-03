@@ -6,6 +6,7 @@ import {
   APIResponseDetailsSuccess,
   IDetailsArticle,
   APIResponsePagniationSuccess,
+  IComment,
 } from './types';
 import {
   getArticlesQuery,
@@ -55,7 +56,7 @@ export const loaderDetailsArticle =
     request,
   }: LoaderFunctionArgs): Promise<{
     detailsArticle: APIResponseDetailsSuccess<IDetailsArticle>;
-    comments: unknown;
+    comments: { payload: { result: IComment[]; success: boolean } };
     commentReplies: unknown;
   }> => {
     const { category, id } = params as Params;
@@ -71,7 +72,7 @@ export const loaderDetailsArticle =
     const [detailsArticle, comments, commentReplies] = await Promise.all<
       [
         APIResponseDetailsSuccess<IDetailsArticle>,
-        { payload: unknown; success: boolean },
+        { payload: { result: IComment[]; success: boolean } },
         { payload: unknown; success: boolean }
       ]
     >([
