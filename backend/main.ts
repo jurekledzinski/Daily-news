@@ -1,11 +1,17 @@
 require('dotenv').config();
-import express, { Request, Response, NextFunction } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
+import commentRoutes from './routes/comments';
 import cors from 'cors';
-import session from 'express-session';
+import csrfRoutes from './routes/csrfRoute';
+import CustomError from './error/error';
+import loginRoutes from './routes/login';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
+import postRoutes from './routes/posts';
+import registerRoutes from './routes/register';
+import session from 'express-session';
+import userRoutes from './routes/users';
 import { z } from 'zod';
-import CustomError from './error/error';
 
 const app = express();
 
@@ -15,25 +21,12 @@ const mongoStore = new MongoStore({
 });
 
 app.use(express.json());
-// app.use(
-//   cors({
-//     origin:
-//       'http://localhost:3000',
-//     ,
-//     credentials: true,
-//   })
-// );
-
-// Dla testów jak działa atak drugi url trzeba kopiować i dodać po wlaczeniu csrf_attack.html
-
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:57183'],
+    origin: 'http://localhost:3000',
     credentials: true,
   })
 );
-
-app.options('*', cors());
 
 app.use(
   session({
@@ -42,10 +35,10 @@ app.use(
     saveUninitialized: false,
     store: mongoStore,
     cookie: {
-      //   domain: 'localhost',
-      //   path: '/',
+      domain: 'localhost',
+      path: '/',
       secure: false,
-      //   sameSite: 'strict',
+      sameSite: 'strict',
       httpOnly: true,
       maxAge: 1000 * 60 * 5,
     },
@@ -57,23 +50,13 @@ app.use(passport.session());
 
 // get routes
 // crsfRoutes musza być za session
-import csrfRoutes from './routes/csrfRoute';
-
-import loginRoutes from './routes/login';
-import registerRoutes from './routes/register';
-import userRoutes from './routes/users';
-import postRoutes from './routes/posts';
 
 // use routes
 app.use('/csrf-token', csrfRoutes);
 app.use('/api/v1/login', loginRoutes);
 app.use('/api/v1/register', registerRoutes);
 app.use('/api/v1/users', userRoutes);
-// app.use((req, res, next) => {
-//   console.log('Session ID:', req.session.id);
-//   console.log('Session:', req.session);
-//   next();
-// });
+app.use('/api/v1/comments', commentRoutes);
 app.use('/api/v1/posts', postRoutes);
 
 app.use(
