@@ -1,3 +1,4 @@
+import { LoaderFunctionArgs, Params } from 'react-router-dom';
 import {
   APIResponseSuccess,
   ICategories,
@@ -6,11 +7,12 @@ import {
   IDetailsArticle,
   APIResponsePagniationSuccess,
 } from './types';
-import { LoaderFunctionArgs, Params } from 'react-router-dom';
 import {
   getArticlesQuery,
   getCategoriesArticlesQuery,
   getDetailsArticleQuery,
+  getCommentsQuery,
+  getCommentRepliesQuery,
 } from './queries';
 
 import type { QueryClient } from '@tanstack/react-query';
@@ -50,14 +52,36 @@ export const loaderDetailsArticle =
   (queryClient: QueryClient) =>
   async ({
     params,
-  }: LoaderFunctionArgs): Promise<
-    APIResponseDetailsSuccess<IDetailsArticle>
-  > => {
+    request,
+  }: LoaderFunctionArgs): Promise<{
+    detailsArticle: APIResponseDetailsSuccess<IDetailsArticle>;
+    comments: unknown;
+    commentReplies: unknown;
+  }> => {
     const { category, id } = params as Params;
-    const query = getDetailsArticleQuery(category ?? '', id ?? '');
+    const articleId = id ?? '';
+    const url = new URL(request.url);
+    const commentId = url.searchParams.get('comment_id') ?? 'initial';
+    const page = url.searchParams.get('page') ?? '1';
 
-    return (
+    const query = getDetailsArticleQuery(category ?? '', articleId);
+    const queryComments = getCommentsQuery(articleId, page);
+    const queryCommentReplies = getCommentRepliesQuery(articleId, commentId);
+
+    const [detailsArticle, comments, commentReplies] = await Promise.all<
+      [
+        APIResponseDetailsSuccess<IDetailsArticle>,
+        { payload: unknown; success: boolean },
+        { payload: unknown; success: boolean }
+      ]
+    >([
       queryClient.getQueryData(query.queryKey) ??
-      (await queryClient.fetchQuery(query))
-    );
+        (await queryClient.fetchQuery(query)),
+      queryClient.getQueryData(queryComments.queryKey) ??
+        (await queryClient.fetchQuery(queryComments)),
+      queryClient.getQueryData(queryCommentReplies.queryKey) ??
+        (await queryClient.fetchQuery(queryCommentReplies)),
+    ]);
+
+    return { detailsArticle, comments, commentReplies };
   };

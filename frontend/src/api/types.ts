@@ -20,6 +20,13 @@ export type APIResponsePagniationSuccess<T> = {
   };
 };
 
+export type APIOwnResponsePagniationSuccess<T> = {
+  success: boolean;
+  payload: {
+    result: T;
+  };
+};
+
 export type APIResponseDetailsSuccess<T> = {
   response: {
     status: string;
