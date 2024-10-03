@@ -13,6 +13,8 @@ export const DetailsArticle = () => {
   const articleHeaderRef = useRef<HTMLDivElement | null>(null);
   const context = useOutletContext<UseOutletContext>();
 
+  console.log('data --- ', data);
+
   useScrollToggle({
     onChangeVisible: (value) => {
       if (!context.headerRef.current) return;
@@ -35,21 +37,30 @@ export const DetailsArticle = () => {
       <ArticleDetails
         headerRef={articleHeaderRef}
         data={{
-          id: data.response.content.id,
-          sectionId: data.response.content.sectionId,
-          title: data.response.content.webTitle,
-          content: data.response.content.fields.body,
-          trailText: data.response.content.fields.trailText,
-          webPublicationDate: data.response.content.webPublicationDate,
-          image: getDetailsArticleImageData(data.response.content.elements)
-            .image,
-          altText: getDetailsArticleImageData(data.response.content.elements)
-            .altText,
-          caption: getDetailsArticleImageData(data.response.content.elements)
-            .caption,
-          credit: getDetailsArticleImageData(data.response.content.elements)
-            .credit,
+          id: data.detailsArticle.response.content.id,
+          sectionId: data.detailsArticle.response.content.sectionId,
+          title: data.detailsArticle.response.content.webTitle,
+          content: data.detailsArticle.response.content.fields.body,
+          trailText: data.detailsArticle.response.content.fields.trailText,
+          webPublicationDate:
+            data.detailsArticle.response.content.webPublicationDate,
+          image: getDetailsArticleImageData(
+            data.detailsArticle.response.content.elements
+          ).image,
+          altText: getDetailsArticleImageData(
+            data.detailsArticle.response.content.elements
+          ).altText,
+          caption: getDetailsArticleImageData(
+            data.detailsArticle.response.content.elements
+          ).caption,
+          credit: getDetailsArticleImageData(
+            data.detailsArticle.response.content.elements
+          ).credit,
         }}
+        onSubmit={() => {}}
+        onReply={() => {}}
+        onLikes={() => {}}
+        comments={[]}
       />
     </section>
   );
