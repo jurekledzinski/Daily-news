@@ -4,6 +4,14 @@
   padding: 1rem;
 }
 
+.details-article img {
+  width: 100%;
+  height: auto;
+  max-height: 450px;
+  object-fit: cover;
+  display: block;
+}
+
 .details-article ul {
   list-style-type: none;
 }
@@ -78,7 +86,7 @@
   text-align: right;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .article-title {
     font-size: 24px;
   }
@@ -90,4 +98,4 @@
   .article-body p {
     font-size: 16px;
   }
-}
+} */
