@@ -1,7 +1,7 @@
-import { ObjectId, WithId } from "mongodb";
-import { IComment } from "../models/comments";
+import { ObjectId, WithId } from 'mongodb';
+import { IComment } from '../models/comments';
 
-export const transformDocument = <T extends WithId<IComment>(
+export const transformDocument = <T extends WithId<IComment>>(
   result: T[]
 ): (T & { id: ObjectId | string })[] => {
   if (!result || !Array.isArray(result)) return [];
@@ -16,4 +16,4 @@ export const transformDocument = <T extends WithId<IComment>(
 
     return item as T & { id: ObjectId | string };
   });
-}
+};
