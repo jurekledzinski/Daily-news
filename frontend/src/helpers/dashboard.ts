@@ -15,8 +15,6 @@ type fnCanPlaceItemParams = {
   h: number;
 };
 
-// for (let y = startY; y < 100; y++) {
-
 export const canPlaceItem = (params: fnCanPlaceItemParams) => {
   const { layout, h, w, x, y } = params;
 
