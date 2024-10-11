@@ -1,6 +1,6 @@
-import { uniqBy } from 'lodash';
 import { IArticles, IDataArticle } from '../api';
 import { LocalData } from '../components/pages';
+import { uniqBy } from 'lodash';
 
 export const getFormatedData = (article: IArticles) => {
   const transformedData = {
