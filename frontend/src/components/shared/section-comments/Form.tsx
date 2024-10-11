@@ -1,12 +1,7 @@
-import { CommentInput } from './types';
+import { CommentInput, FormProps } from './types';
 import { ErrorMessage } from '../messages';
 import { Form } from 'react-router-dom';
-import { SubmitHandler, useForm } from 'react-hook-form';
-
-export type FormProps = {
-  buttonText: string;
-  onSubmit: SubmitHandler<CommentInput>;
-};
+import { useForm } from 'react-hook-form';
 
 const FormAddComment = ({ buttonText, onSubmit }: FormProps) => {
   const formMethods = useForm<CommentInput>();
@@ -15,7 +10,13 @@ const FormAddComment = ({ buttonText, onSubmit }: FormProps) => {
 
   return (
     <div className="comment-form">
-      <Form method="post" onSubmit={formMethods.handleSubmit(onSubmit)}>
+      <Form
+        method="post"
+        onSubmit={(event) => {
+          formMethods.handleSubmit(onSubmit)(event);
+          formMethods.reset();
+        }}
+      >
         <textarea
           cols={40}
           rows={8}

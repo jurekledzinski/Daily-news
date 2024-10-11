@@ -1,17 +1,14 @@
 import { useState } from 'react';
-import { CommentPanel, Content, Footer, Header, SectionCommentsProps } from '.';
-
-export type CommentSectionProps = Omit<SectionCommentsProps, 'comments'> & {
-  comment: SectionCommentsProps['comments'][0];
-  className?: string;
-  children: (commentId: string) => React.ReactNode | null;
-};
+import { CommentPanel, Content, Footer, Header, CommentSectionProps } from '.';
 
 const CommentSection = ({
   className,
   comment,
-  onLikes,
   children,
+  onShowReplies,
+  onShowMoreReplies,
+  onShowPreviousReplies,
+  onSubmitLike,
 }: CommentSectionProps) => {
   const [showReplies, setShowReplies] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -20,24 +17,28 @@ const CommentSection = ({
     <div className={['comment-section', className].join(' ')}>
       <CommentPanel key={comment.id}>
         <Header
-          commentId={comment.id ?? ''}
+          commentId={comment.id}
           likes={comment.likes}
           user={comment.user}
-          onLikes={onLikes}
+          parentCommentId={comment.parentCommentId}
+          onSubmitLike={onSubmitLike}
         />
+
         <Content text={comment.text} />
+
         <Footer
-          amountReplies={comment.replies?.length}
+          amountReplies={comment.replyCount ?? 0}
           onShowForm={() => {
             setShowForm((prev) => !prev);
           }}
           onShowReplies={() => {
             setShowReplies((prev) => !prev);
+            onShowReplies(comment.id);
           }}
         />
       </CommentPanel>
 
-      {showForm ? children(comment.id) : null}
+      {showForm && children ? children(comment.id) : null}
 
       {showReplies &&
         comment.replies &&
@@ -45,12 +46,31 @@ const CommentSection = ({
           <CommentSection
             key={reply.id}
             className="nested"
-            comment={{ ...reply }}
-            onLikes={onLikes}
+            comment={reply}
+            onShowReplies={onShowReplies}
+            onShowMoreReplies={onShowMoreReplies}
+            onSubmitLike={onSubmitLike}
+            onShowPreviousReplies={onShowPreviousReplies}
           >
-            {children}
+            {children ?? null}
           </CommentSection>
         ))}
+
+      {showReplies &&
+      comment.pageReply &&
+      comment.totalReplyPages &&
+      comment.pageReply < comment.totalReplyPages &&
+      comment.replyCount !== comment.replies?.length ? (
+        <button
+          onClick={() => {
+            if (!comment.replies) return;
+            if (comment.pageReply === comment.totalReplyPages) return;
+            onShowMoreReplies(comment.id, comment.pageReply ?? 1);
+          }}
+        >
+          Show more comments
+        </button>
+      ) : null}
     </div>
   );
 };

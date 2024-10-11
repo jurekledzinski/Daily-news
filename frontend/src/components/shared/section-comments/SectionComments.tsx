@@ -1,23 +1,27 @@
 import CommentSection from './CommentSection';
+import { SectionCommentsProps } from './types';
 import './SectionComments.css';
-import { CommentWithReplies } from './types';
-
-export type SectionCommentsProps = {
-  comments: CommentWithReplies[];
-  onLikes: (commentId: string) => void;
-  children: (commentId: string) => React.ReactNode;
-};
 
 const SectionComments = ({
   comments,
-  onLikes,
   children,
+  onShowReplies,
+  onShowMoreReplies,
+  onSubmitLike,
+  onShowPreviousReplies,
 }: SectionCommentsProps) => (
   <div className="section-comments">
     {comments.map((comment) => {
       return (
-        <CommentSection key={comment.id} comment={comment} onLikes={onLikes}>
-          {children}
+        <CommentSection
+          key={comment.id}
+          comment={comment}
+          onShowReplies={onShowReplies}
+          onShowMoreReplies={onShowMoreReplies}
+          onSubmitLike={onSubmitLike}
+          onShowPreviousReplies={onShowPreviousReplies}
+        >
+          {children ?? null}
         </CommentSection>
       );
     })}

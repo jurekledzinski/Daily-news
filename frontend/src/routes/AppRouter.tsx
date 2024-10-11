@@ -4,13 +4,14 @@ import DetailsArticle from '../pages/details-article';
 import GridArticles from '../pages/grid-articles';
 import Home from '../pages/home';
 import { createBrowserRouter } from 'react-router-dom';
+import { ErrorPage } from '../components/pages';
+import { QueryClient } from '@tanstack/react-query';
 import {
-  actionCreateComment,
+  actionDetailsArticle,
   loaderArticles,
   loaderCategories,
   loaderDetailsArticle,
 } from '../api';
-import { QueryClient } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
-    errorElement: <div>Error home page</div>,
+    errorElement: <ErrorPage />,
     loader: loaderCategories(queryClient),
     children: [
       {
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
             element: <DetailsArticle />,
             errorElement: <div>Error page details article</div>,
             loader: loaderDetailsArticle(queryClient),
-            action: actionCreateComment,
+            action: actionDetailsArticle(queryClient),
           },
         ],
       },

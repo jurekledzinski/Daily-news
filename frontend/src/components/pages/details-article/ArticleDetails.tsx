@@ -2,18 +2,19 @@ import { ArticleDetailsProps } from './types';
 import { Form, SectionComments } from '../../shared';
 import { Header } from './Header';
 import { sanitizeContent } from '../../../helpers';
+import { useSearchParams } from 'react-router-dom';
 import './ArticleDetails.css';
 
 export const ArticleDetails = ({
+  comments,
   data,
   headerRef,
   methodSubmit,
-  comments,
+  methodSubmitLike,
 }: ArticleDetailsProps) => {
   const cleanCaption = sanitizeContent(data.caption);
   const cleanContent = sanitizeContent(data.content);
-
-  console.log('mm', comments);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <div className="details-article">
@@ -51,10 +52,25 @@ export const ArticleDetails = ({
       <Form buttonText="Add comment" onSubmit={(data) => methodSubmit(data)} />
 
       <SectionComments
-        comments={comments.map((comment) => {
-          return { ...comment, replies: [] };
-        })}
-        onLikes={() => {}}
+        comments={comments}
+        onShowReplies={async (commentId) => {
+          console.log('commentId show replies', commentId);
+          setSearchParams({ comment_id: commentId, page_reply: '1' });
+        }}
+        onShowMoreReplies={(parentCommentId, page) => {
+          console.log('click more replies', parentCommentId, page);
+          const currentParams = new URLSearchParams(searchParams);
+          currentParams.set('comment_id', parentCommentId);
+          currentParams.set('page_reply', (page + 1).toString());
+          setSearchParams(currentParams);
+        }}
+        onShowPreviousReplies={(parentCommentId, pageReply) => {
+          const currentParams = new URLSearchParams(searchParams);
+          currentParams.set('comment_id', parentCommentId);
+          currentParams.set('page_reply', (pageReply - 1).toString());
+          setSearchParams(currentParams);
+        }}
+        onSubmitLike={methodSubmitLike}
       >
         {(commentId) => {
           return (

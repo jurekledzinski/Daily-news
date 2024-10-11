@@ -17,6 +17,9 @@ export const useAddComment = ({ artId, user, userId }: UseAddCommentProps) => {
       formData.append(key, value);
     });
 
+    const nameAction = commentId ? 'create-reply' : 'create-comment';
+
+    formData.append('actionType', nameAction);
     formData.append('createdAt', new Date().toISOString());
     formData.append('parentCommentId', commentId ?? 'null');
     formData.append('user', user);

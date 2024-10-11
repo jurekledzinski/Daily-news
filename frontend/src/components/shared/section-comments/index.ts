@@ -1,3 +1,4 @@
+export * from './ButtonLikes';
 export * from './Content';
 export * from './Footer';
 export * from './Header';
@@ -6,6 +7,7 @@ export * from './CommentPanel';
 export * from './CommentSection';
 export * from './Form';
 export * from './types';
+export { default as ButtonLikes } from './ButtonLikes';
 export { default as Header } from './Header';
 export { default as Footer } from './Footer';
 export { default as Content } from './Content';
