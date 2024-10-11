@@ -6,3 +6,4 @@ export * from './useControlCloseSubTabs';
 export * from './useFetchOnScroll';
 export * from './useScrollToggle';
 export * from './useAddComment';
+export * from './useUpdateLikes';
