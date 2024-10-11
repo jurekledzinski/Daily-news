@@ -28,8 +28,11 @@ export const getCommentsQuery = (articleId: string, page: string) => ({
 
 export const getCommentRepliesQuery = (
   articleId: string,
-  commentId: string
-) => ({
-  queryKey: ['list-comment-replies'],
-  queryFn: async () => getCommentReplies(articleId, commentId),
-});
+  commentId: string,
+  page: string
+) => {
+  return {
+    queryKey: ['list-comment-replies', articleId, page, commentId],
+    queryFn: async () => getCommentReplies(articleId, commentId, page),
+  };
+};

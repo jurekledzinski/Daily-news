@@ -1,39 +1,59 @@
-export type APIResponseSuccess<T> = {
-  response: {
-    results: T;
-    status: string;
-    total: number;
-    userTier: string;
-  };
+type GuardianResponse<T> = {
+  results: T;
+  status: string;
+  total: number;
+  userTier: string;
+  content: T;
+  startIndex: number;
+  pageSize: number;
+  currentPage: number;
+  pages: number;
+};
+
+export type APIGuardianResponseSuccess<T> = {
+  response: Pick<
+    GuardianResponse<T>,
+    'results' | 'status' | 'total' | 'userTier'
+  >;
+};
+
+export type APIGuardianResponsePagniationSuccess<T> = {
+  response: Pick<
+    GuardianResponse<T>,
+    | 'results'
+    | 'status'
+    | 'total'
+    | 'userTier'
+    | 'startIndex'
+    | 'pageSize'
+    | 'currentPage'
+    | 'pages'
+  >;
+};
+
+export type APIResponseDetailsSuccess<T> = {
+  response: Pick<
+    GuardianResponse<T>,
+    'status' | 'total' | 'userTier' | 'content'
+  >;
 };
 
 export type APIResponsePagniationSuccess<T> = {
-  response: {
-    results: T;
-    status: string;
-    total: number;
-    userTier: string;
-    startIndex: number;
-    pageSize: number;
-    currentPage: number;
-    pages: number;
-  };
-};
-
-export type APIOwnResponsePagniationSuccess<T> = {
   success: boolean;
   payload: {
     result: T;
   };
+  page: number;
+  totalPages: number;
+  replyCount?: number;
 };
 
-export type APIResponseDetailsSuccess<T> = {
-  response: {
-    status: string;
-    total: number;
-    userTier: string;
-    content: T;
-  };
+export type APICreateResponseSuccess = {
+  success: true;
+};
+
+export type APIUpdateResponseSuccess = {
+  success: true;
 };
 
 export type IElements = {
@@ -93,11 +113,18 @@ export type IComment = {
   id: string;
   createdAt: string;
   idArticle: string;
-  likes: number;
+  likes: string;
   parentCommentId: string | null;
   text: string;
   user: string;
   userId: string;
+  replyCount?: number;
 };
 
 export type ICommentCreate = Omit<IComment, 'id'>;
+
+export type ILikes = {
+  commentId: string;
+  likes: number;
+  parentCommentId?: string | null;
+};
