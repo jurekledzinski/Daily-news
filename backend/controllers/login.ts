@@ -15,7 +15,7 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
           }
           if (!user) {
             return reject(
-              new CustomError(`Authentication failed, ${info?.message}`, 500)
+              new CustomError(`Authentication failed, ${info.message}`, 500)
             );
           }
           resolve({ user, info });
@@ -27,15 +27,14 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
 
 export const loginUser = tryCatch<{ message: '' }>(
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log('Login');
-
     const { user } = await authenticateUser(req, res, next);
 
     req.login(user, (error) => {
       if (error) {
         throw new CustomError('Login failed', 500);
       }
-      return res.status(200).json({ message: 'Login succesfull' });
+
+      return res.status(200).json({ success: true });
     });
   }
 );
