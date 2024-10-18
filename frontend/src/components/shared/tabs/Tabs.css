@@ -1,5 +1,6 @@
 .tabs {
   position: relative;
+  height: 100%;
 }
 
 .tabs__list {
@@ -7,7 +8,6 @@
 }
 
 .tabs__list-container {
-  /* overflow-x: auto; */
   display: flex;
   flex-direction: column;
   max-width: 100%;
@@ -39,14 +39,4 @@
 
 .tabs__tab--active {
   background-color: orange;
-  /* position: sticky;
-  left: 0;
-  top: 0; */
 }
-
-/* .tabs__tab--active.tabs__tab:hover .tabs__close {
-  visibility: visible;
-  opacity: 1;
-  background-color: white;
-  color: #555555;
-} */
