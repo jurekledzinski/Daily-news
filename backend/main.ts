@@ -1,13 +1,12 @@
 require('dotenv').config();
-import express, { NextFunction, Request, Response } from 'express';
 import commentRoutes from './routes/comments';
 import cors from 'cors';
 import csrfRoutes from './routes/csrfRoute';
 import CustomError from './error/error';
+import express, { NextFunction, Request, Response } from 'express';
 import loginRoutes from './routes/login';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
-import postRoutes from './routes/posts';
 import registerRoutes from './routes/register';
 import session from 'express-session';
 import userRoutes from './routes/users';
@@ -57,7 +56,6 @@ app.use('/api/v1/login', loginRoutes);
 app.use('/api/v1/register', registerRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/comments', commentRoutes);
-app.use('/api/v1/posts', postRoutes);
 
 app.use(
   (error: CustomError, req: Request, res: Response, next: NextFunction) => {
@@ -75,7 +73,8 @@ app.use(
       console.log('error normal', error.message);
       res.status(error.statusCode || 500);
       res.json({
-        error: { message: error.message, statusCode: error.statusCode },
+        message: error.message,
+        success: error.success,
       });
     }
 
