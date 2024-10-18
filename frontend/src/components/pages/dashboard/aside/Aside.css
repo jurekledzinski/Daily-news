@@ -1,4 +1,5 @@
 .aside {
+  position: relative;
   width: 250px;
   padding: 8px;
   overflow-x: hidden;
