@@ -1,8 +1,8 @@
+import { CommentCreate, Likes } from './types';
 import { createComment, updateLikesComment } from './apiCalls';
-import { ICommentCreate, ILikes } from './types';
+import { invalidateQueries, refetchQueries } from '../helpers';
 import { LoaderFunctionArgs, Params, redirect } from 'react-router-dom';
 import { QueryClient } from '@tanstack/react-query';
-import { invalidateQueries, refetchQueries } from '../helpers';
 
 export const actionDetailsArticle =
   (queryClient: QueryClient) =>
@@ -32,7 +32,7 @@ export const actionCreateComment = async (
   page: string
 ) => {
   data.delete('actionType');
-  const newComment = Object.fromEntries(data) as unknown as ICommentCreate;
+  const newComment = Object.fromEntries(data) as unknown as CommentCreate;
   await createComment(newComment);
 
   await invalidateQueries(queryClient, ['list-comments', articleId, page]);
@@ -49,7 +49,7 @@ export const actionCreateCommentReply = async (
   pageReply: string
 ) => {
   data.delete('actionType');
-  const newReply = Object.fromEntries(data) as unknown as ICommentCreate;
+  const newReply = Object.fromEntries(data) as unknown as CommentCreate;
   await createComment(newReply);
   const parentId = newReply.parentCommentId ?? '';
 
@@ -81,13 +81,9 @@ export const actionUpdateLikesComment = async (
   pageReply: string
 ) => {
   data.delete('actionType');
-  const comment = Object.fromEntries(data) as unknown as ILikes;
-
-  console.log('comment action', comment);
+  const comment = Object.fromEntries(data) as unknown as Likes;
 
   await updateLikesComment(articleId, comment);
-
-  console.log('like action', window.location.pathname);
 
   if (comment.parentCommentId === 'null') {
     return redirect(`${window.location.pathname}?page=${page}`);
