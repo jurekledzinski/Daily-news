@@ -1,4 +1,4 @@
-import { IArticles, IDataArticle } from '../api';
+import { IArticles, ArticleData } from '../api';
 import { LocalData } from '../components/pages';
 import { uniqBy } from 'lodash';
 
@@ -37,7 +37,7 @@ export const getFormatedData = (article: IArticles) => {
 export function updateLocalData(
   localData: LocalData[],
   category: string,
-  formatedData: Pick<IDataArticle, 'content' | 'id' | 'image' | 'title'>[],
+  formatedData: Pick<ArticleData, 'content' | 'id' | 'image' | 'title'>[],
   searchParams: URLSearchParams
 ) {
   const updateData = localData.map((itemCategory) => {
