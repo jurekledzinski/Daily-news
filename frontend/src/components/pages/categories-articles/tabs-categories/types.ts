@@ -3,11 +3,7 @@ import { LocalData } from '../../dashboard';
 export type TabsCategoriesArticlesProps = {
   activeTabs: string[];
   state: LocalData[];
-  handleAddSubArticle: (value: {
-    id: string;
-    title: string;
-    scroll: number;
-  }) => void;
+  handleAddSubArticle: (value: { id: string; title: string }) => void;
   handleCloseTab: (
     e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
     id: string
@@ -19,4 +15,5 @@ export type TabsCategoriesArticlesProps = {
   onSetActiveTabs: (value: string[] | []) => void;
   onRedirectOne: (category: string) => void;
   onRedirectTwo: (category: string, id: string) => void;
+  onRedirectThree: () => void;
 };
