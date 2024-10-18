@@ -3,12 +3,12 @@ import { getValueLike, setLikes } from '../../../helpers';
 import { Form } from 'react-router-dom';
 
 import { useState } from 'react';
-import { ILikes } from '../../../api';
+import { Likes } from '../../../api';
 
 type ButtonLikesProps = {
   commentId: string;
   likes: string;
-  onSubmitLike: (data: ILikes) => void;
+  onSubmitLike: (data: Likes) => void;
   parentCommentId: string | null;
 };
 
