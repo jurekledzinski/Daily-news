@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 import { getCollectionDb } from '../config/db';
 import CustomError from '../error/error';
 
-// import { userSchema, IUser } from '../types/types.js';
 import { UserSchema, User } from '../models/user';
 
 export const registerUser = tryCatch(async (req: Request, res: Response) => {
@@ -14,16 +13,10 @@ export const registerUser = tryCatch(async (req: Request, res: Response) => {
     throw new CustomError('Internal server error', 500);
   }
 
-  const count = await collection.countDocuments();
-
   const user = await collection.findOne({ email: req.body.email });
 
   if (user) {
     throw new CustomError('User already exist', 409);
-  }
-
-  if (count > 0) {
-    throw new CustomError('Operation forbidden', 403);
   }
 
   const userData = UserSchema.parse(req.body);
@@ -44,5 +37,5 @@ export const registerUser = tryCatch(async (req: Request, res: Response) => {
     throw new CustomError('Internal server error', 500);
   }
 
-  return res.status(200).json({ message: 'Register success' });
+  return res.status(200).json({ success: true });
 });
