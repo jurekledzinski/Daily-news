@@ -2,19 +2,19 @@ import { ArticleDetailsProps } from './types';
 import { Form, SectionComments } from '../../shared';
 import { Header } from './Header';
 import { sanitizeContent } from '../../../helpers';
-import { useSearchParams } from 'react-router-dom';
 import './ArticleDetails.css';
 
 export const ArticleDetails = ({
   comments,
   data,
   headerRef,
-  methodSubmit,
+  methodSubmitComment,
   methodSubmitLike,
+  onShowReplies,
+  onShowMoreReplies,
 }: ArticleDetailsProps) => {
   const cleanCaption = sanitizeContent(data.caption);
   const cleanContent = sanitizeContent(data.content);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <div className="details-article">
@@ -49,34 +49,22 @@ export const ArticleDetails = ({
         ) : null}
       </div>
 
-      <Form buttonText="Add comment" onSubmit={(data) => methodSubmit(data)} />
+      <Form
+        buttonText="Add comment"
+        onSubmit={(data) => methodSubmitComment(data)}
+      />
 
       <SectionComments
         comments={comments}
-        onShowReplies={async (commentId) => {
-          console.log('commentId show replies', commentId);
-          setSearchParams({ comment_id: commentId, page_reply: '1' });
-        }}
-        onShowMoreReplies={(parentCommentId, page) => {
-          console.log('click more replies', parentCommentId, page);
-          const currentParams = new URLSearchParams(searchParams);
-          currentParams.set('comment_id', parentCommentId);
-          currentParams.set('page_reply', (page + 1).toString());
-          setSearchParams(currentParams);
-        }}
-        onShowPreviousReplies={(parentCommentId, pageReply) => {
-          const currentParams = new URLSearchParams(searchParams);
-          currentParams.set('comment_id', parentCommentId);
-          currentParams.set('page_reply', (pageReply - 1).toString());
-          setSearchParams(currentParams);
-        }}
+        onShowReplies={onShowReplies}
+        onShowMoreReplies={onShowMoreReplies}
         onSubmitLike={methodSubmitLike}
       >
         {(commentId) => {
           return (
             <Form
               buttonText="Reply to comment"
-              onSubmit={(data) => methodSubmit(data, commentId)}
+              onSubmit={(data) => methodSubmitComment(data, commentId)}
             />
           );
         }}
