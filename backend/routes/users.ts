@@ -1,8 +1,8 @@
+import { checkAuthentication } from '../middlewares/authorization';
+import { getUser } from '../controllers/users';
 import { Router } from 'express';
 const router = Router();
-import { getAllUsers, createUser } from '../controllers/users';
 
-router.get('/', getAllUsers);
-router.post('/create', createUser);
+router.get('/', checkAuthentication, getUser);
 
 export default router;
