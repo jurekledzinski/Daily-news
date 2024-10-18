@@ -1,12 +1,12 @@
 import { LoaderFunctionArgs, Params } from 'react-router-dom';
 import {
   APIGuardianResponseSuccess,
-  ICategories,
+  CategoriesData,
   IArticles,
   APIResponseDetailsSuccess,
   IDetailsArticle,
   APIGuardianResponsePagniationSuccess,
-  IComment,
+  Comment,
   APIResponsePagniationSuccess,
 } from './types';
 import {
@@ -21,10 +21,10 @@ import type { QueryClient } from '@tanstack/react-query';
 
 export const loaderCategories =
   (queryClient: QueryClient) =>
-  async (): Promise<APIGuardianResponseSuccess<ICategories[]>> => {
+  async (): Promise<APIGuardianResponseSuccess<CategoriesData[]>> => {
     const query = getCategoriesArticlesQuery();
 
-    const result: APIGuardianResponseSuccess<ICategories[]> =
+    const result: APIGuardianResponseSuccess<CategoriesData[]> =
       queryClient.getQueryData(query.queryKey) ??
       (await queryClient.fetchQuery(query));
 
@@ -64,8 +64,8 @@ export const loaderDetailsArticle =
     request,
   }: LoaderFunctionArgs): Promise<{
     detailsArticle: APIResponseDetailsSuccess<IDetailsArticle>;
-    comments: APIResponsePagniationSuccess<IComment[]>;
-    commentReplies: APIResponsePagniationSuccess<IComment[]>;
+    comments: APIResponsePagniationSuccess<Comment[]>;
+    commentReplies: APIResponsePagniationSuccess<Comment[]>;
   }> => {
     const { category, id } = params as Params;
     const articleId = decodeURIComponent(id ?? '');
@@ -73,9 +73,6 @@ export const loaderDetailsArticle =
     const commentId = url.searchParams.get('comment_id') ?? 'initial';
     const page = url.searchParams.get('page') ?? '1';
     const pageReply = url.searchParams.get('page_reply') ?? '1';
-    console.log('loader ----  articleId', articleId);
-    console.log('loader ----  comment_id', commentId);
-    console.log('loader ---- pageReply', pageReply);
 
     const query = getDetailsArticleQuery(category ?? '', articleId);
 
@@ -99,16 +96,14 @@ export const loaderDetailsArticle =
     >(query.queryKey, () => queryClient.fetchQuery(query));
 
     const comments = await fetchOrCache<
-      APIResponsePagniationSuccess<IComment[]>
+      APIResponsePagniationSuccess<Comment[]>
     >(queryComments.queryKey, () => queryClient.fetchQuery(queryComments));
 
     const commentReplies = await fetchOrCache<
-      APIResponsePagniationSuccess<IComment[]>
+      APIResponsePagniationSuccess<Comment[]>
     >(queryCommentReplies.queryKey, () =>
       queryClient.fetchQuery(queryCommentReplies)
     );
-
-    console.log('reslut commentReplies loader', commentReplies);
 
     return { detailsArticle, comments, commentReplies };
   };
