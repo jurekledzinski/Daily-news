@@ -9,7 +9,6 @@ export const CategoriesArticles = () => {
   const navigate = useNavigate();
   const { category, id } = useParams();
   const decId = decodeURIComponent(id ?? '');
-
   const [state, setState] = useState(cloneDeep(getLocalData()));
   const [activeTabs, setActiveTabs] = useState<string[]>([]);
 
@@ -28,9 +27,8 @@ export const CategoriesArticles = () => {
     },
     onRedirectOne: (category) => {
       const page = getCurrentCategory(category)?.page ?? '1';
-      navigate(`/categories/${category}/articles?page=${page}`, {
-        replace: true,
-      });
+      const url = `/categories/${category}/articles?page=${page}`;
+      navigate(url, { replace: true });
     },
     onRedirectTwo: () => {
       navigate('/');
@@ -65,9 +63,9 @@ export const CategoriesArticles = () => {
       );
     },
     onRedirectOne: (category, id) => {
-      navigate(
-        `/categories/${category}/articles/article/${encodeURIComponent(id)}`
-      );
+      const articleId = encodeURIComponent(id);
+      const url = `/categories/${category}/articles/article/${articleId}`;
+      navigate(url);
     },
     onRedirectTwo: (category) => {
       const page = getCurrentCategory(category)?.page ?? '1';
@@ -78,11 +76,7 @@ export const CategoriesArticles = () => {
     },
   });
 
-  const handleAddSubArticle = (value: {
-    id: string;
-    title: string;
-    scroll: number;
-  }) => {
+  const handleAddSubArticle = (value: { id: string; title: string }) => {
     const localData = getLocalData();
 
     const filteredData = localData.map((itemCategory) =>
@@ -123,13 +117,15 @@ export const CategoriesArticles = () => {
         handleCloseTab={handleCloseTab}
         onRedirectOne={(category) => {
           const page = getCurrentCategory(category)?.page ?? '1';
-          navigate(`/categories/${category}/articles?page=${page}`);
+          const url = `/categories/${category}/articles?page=${page}`;
+          navigate(url, { preventScrollReset: true });
         }}
         onRedirectTwo={(category, id) => {
-          navigate(
-            `/categories/${category}/articles/article/${encodeURIComponent(id)}`
-          );
+          const articleId = encodeURIComponent(id);
+          const url = `/categories/${category}/articles/article/${articleId}?page=1`;
+          navigate(url, { preventScrollReset: true });
         }}
+        onRedirectThree={() => navigate('/', { preventScrollReset: true })}
         onSetActiveTabs={(value) => setActiveTabs(value)}
         state={state}
       />
