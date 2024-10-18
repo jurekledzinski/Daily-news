@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
-import './Dashboard.css';
 import { Aside } from '../../components/pages';
-
+import { getLocalData, setLocalData } from '../../helpers';
 import { GridLayout, LayoutData, LocalData } from '../../components/pages';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Dashboard.css';
 
 export const Dashboard = () => {
+  const navigate = useNavigate();
   const [layout, setLayout] = useState<LayoutData>({
     lg: [],
     md: [],
@@ -13,8 +15,7 @@ export const Dashboard = () => {
   });
 
   const handleSetLayout = (dataLayout: LayoutData) => {
-    const localData: LocalData[] =
-      JSON.parse(localStorage.getItem('categories') ?? 'null') || [];
+    const localData = getLocalData();
 
     const transformData = Object.entries(dataLayout).reduce<LocalData[]>(
       (acc, curr) => {
@@ -52,13 +53,12 @@ export const Dashboard = () => {
       []
     );
 
-    localStorage.setItem('categories', JSON.stringify(transformData));
+    setLocalData(transformData);
     setLayout(dataLayout);
   };
 
   useEffect(() => {
-    const localData: LocalData[] =
-      JSON.parse(localStorage.getItem('categories') ?? 'null') || [];
+    const localData = getLocalData();
     if (!localData.length) return;
 
     const transformedData = localData.reduce<LayoutData>((acc, curr) => {
@@ -67,7 +67,14 @@ export const Dashboard = () => {
       Object.entries(curr.ui).forEach((item) => {
         tempAcc = {
           ...tempAcc,
-          [item[0]]: [{ id: curr.id ?? '', title: curr.title, ui: item[1] }],
+          [item[0]]: [
+            {
+              id: curr.id ?? '',
+              title: curr.title,
+              ui: item[1],
+              page: curr.page,
+            },
+          ],
         };
       });
 
@@ -87,7 +94,15 @@ export const Dashboard = () => {
 
   return (
     <section className="section section--dashboard">
-      <GridLayout layout={layout} setLayout={handleSetLayout} />
+      <GridLayout
+        layout={layout}
+        setLayout={handleSetLayout}
+        onNavigate={(category, page) => {
+          const url = `categories/${category}/articles`;
+          const query = `page=${page ?? '1'}`;
+          navigate({ pathname: url, search: query });
+        }}
+      />
       <Aside layout={layout} />
     </section>
   );
