@@ -18,9 +18,9 @@ export const GridTemplateCard = ({
 
         e.dataTransfer.setData('text/plain', `${JSON.stringify(data)}`);
       }}
-      onTouchStart={(e: React.TouchEvent) => {
-        console.log('touch start', e);
-      }}
+      //   onTouchStart={(e: React.TouchEvent) => {
+      //     console.log('touch start', e);
+      //   }}
       unselectable="on"
     >
       <h6>{data.title}</h6>
