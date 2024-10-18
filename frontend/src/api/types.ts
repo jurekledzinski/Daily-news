@@ -38,25 +38,31 @@ export type APIResponseDetailsSuccess<T> = {
   >;
 };
 
-export type APIResponsePagniationSuccess<T> = {
+export type APISuccessResponse<T> = {
   success: boolean;
   payload: {
     result: T;
   };
+};
+
+export interface APIResponsePagniationSuccess<T> extends APISuccessResponse<T> {
   page: number;
   totalPages: number;
   replyCount?: number;
+}
+
+export interface APICreateResponseSuccess<T = unknown>
+  extends Omit<APISuccessResponse<T>, 'payload'> {}
+
+export interface APIUpdateResponseSuccess<T = unknown>
+  extends Omit<APISuccessResponse<T>, 'payload'> {}
+
+export type APIErrorResponse = {
+  message?: string;
+  success: boolean;
 };
 
-export type APICreateResponseSuccess = {
-  success: true;
-};
-
-export type APIUpdateResponseSuccess = {
-  success: true;
-};
-
-export type IElements = {
+export type ArticleDetailsElements = {
   id: string;
   relation: string;
   type: string;
@@ -68,11 +74,11 @@ export type IElements = {
   }[];
 };
 
-export type IData = {
+export type ArticleDetails = {
   apiUrl: string;
   id: string;
   webTitle: string;
-  elements: IElements[];
+  elements: ArticleDetailsElements[];
   sectionId: string;
   fields: {
     headline: string;
@@ -82,9 +88,9 @@ export type IData = {
   webPublicationDate: string;
 };
 
-export interface ICategories
-  extends Omit<IData, 'elements' | 'fields' | 'webPublicationDate'> {
-  editions: IData[];
+export interface CategoriesData
+  extends Omit<ArticleDetails, 'elements' | 'fields' | 'webPublicationDate'> {
+  editions: ArticleDetails[];
 }
 
 export type IDataCategories = {
@@ -92,9 +98,9 @@ export type IDataCategories = {
   title: string;
 };
 
-export interface IArticles extends Omit<IData, 'webPublicationDate'> {}
+export interface IArticles extends Omit<ArticleDetails, 'webPublicationDate'> {}
 
-export type IDataArticle = {
+export type ArticleData = {
   id: string;
   content: string;
   image: string;
@@ -107,9 +113,9 @@ export type IDataArticle = {
   webPublicationDate?: string;
 };
 
-export interface IDetailsArticle extends IData {}
+export interface IDetailsArticle extends ArticleDetails {}
 
-export type IComment = {
+export type Comment = {
   id: string;
   createdAt: string;
   idArticle: string;
@@ -121,9 +127,15 @@ export type IComment = {
   replyCount?: number;
 };
 
-export type ICommentCreate = Omit<IComment, 'id'>;
+export type CommentCreate = Omit<Comment, 'id'>;
 
-export type ILikes = {
+export interface CommentAndReplies extends Comment {
+  pageReply?: number;
+  totalReplyPages?: number;
+  replies: CommentAndReplies[];
+}
+
+export type Likes = {
   commentId: string;
   likes: number;
   parentCommentId?: string | null;
