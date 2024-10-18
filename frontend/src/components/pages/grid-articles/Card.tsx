@@ -1,11 +1,11 @@
 import { CardProps } from './types';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { forwardRef, Ref } from 'react';
 import { Image } from '../../shared';
 import { Link } from 'react-router-dom';
 import { sanitizeContent } from '../../../helpers';
 import './Card.css';
-import { forwardRef, Ref } from 'react';
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ article, handleAddSubArticle }, ref: Ref<HTMLDivElement>) => {
@@ -16,10 +16,8 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       <div className="card" ref={ref}>
         <div className="card__header">
           <Link
-            to={`article/${encodeURIComponent(id)}`}
-            onClick={(e) => {
-              handleAddSubArticle({ id, title, scroll: e.pageY });
-            }}
+            to={`article/${encodeURIComponent(id)}?page=1`}
+            onClick={() => handleAddSubArticle({ id, title })}
           >
             {image ? (
               <Image className="image" altText={title} src={image} />
