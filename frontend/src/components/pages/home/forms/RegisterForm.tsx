@@ -42,6 +42,10 @@ export const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
           type="password"
           {...methods.register('password', {
             required: { message: 'Password is required', value: true },
+            minLength: {
+              message: 'Password required at least 8 characters',
+              value: 8,
+            },
           })}
         />
         {errors.password && (
@@ -54,6 +58,15 @@ export const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
           type="confirmPassword"
           {...methods.register('confirmPassword', {
             required: { message: 'Confirm password is required', value: true },
+            minLength: {
+              message: 'Confirm password required at least 8 characters',
+              value: 8,
+            },
+            validate: (value, formValues) => {
+              return (
+                formValues.password === value || "Passwords aren't the same"
+              );
+            },
           })}
         />
         {errors.confirmPassword && (
