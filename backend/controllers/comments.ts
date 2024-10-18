@@ -55,10 +55,12 @@ export const getComments = tryCatch<IComment[]>(
 
     const formatResults = transformDocument<WithId<IComment>>(result);
 
+    const totalPages = Math.ceil(total / pageSize);
+
     return res.status(200).json({
       payload: { result: formatResults },
       success: true,
-      totalPages: Math.ceil(total / pageSize),
+      totalPages: totalPages ? totalPages : 1,
       page: parseInt(page.toString()),
     });
   }
@@ -114,12 +116,12 @@ export const getCommentReplies = tryCatch<IComment[]>(
 
     const formatResults = transformDocument<WithId<IComment>>(result);
 
-    console.log('all replies for parentId', comment_id, total);
+    const totalPages = Math.ceil(total / pageSize);
 
     return res.status(200).json({
       payload: { result: formatResults },
       success: true,
-      totalPages: Math.ceil(total / pageSize),
+      totalPages: totalPages ? totalPages : 1,
       page: parseInt(page.toString()),
       replyCount: total,
     });
