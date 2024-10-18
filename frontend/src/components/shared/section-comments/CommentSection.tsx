@@ -7,7 +7,6 @@ const CommentSection = ({
   children,
   onShowReplies,
   onShowMoreReplies,
-  onShowPreviousReplies,
   onSubmitLike,
 }: CommentSectionProps) => {
   const [showReplies, setShowReplies] = useState(false);
@@ -50,7 +49,6 @@ const CommentSection = ({
             onShowReplies={onShowReplies}
             onShowMoreReplies={onShowMoreReplies}
             onSubmitLike={onSubmitLike}
-            onShowPreviousReplies={onShowPreviousReplies}
           >
             {children ?? null}
           </CommentSection>

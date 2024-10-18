@@ -1,26 +1,19 @@
+import { CommentAndReplies, Likes } from '../../../api';
 import { SubmitHandler } from 'react-hook-form';
-import { IComment, ILikes } from '../../../api';
 
-export interface CommentWithReplies extends IComment {
-  pageReply?: number;
-  totalReplyPages?: number;
+export interface CommentsWithReplies extends CommentAndReplies {
   page?: number;
   totalPages?: number;
   replyCount?: number;
-  replies?: IComment[];
+  replies: CommentAndReplies[];
 }
 
 export type SectionCommentsProps = {
-  comments: CommentWithReplies[];
+  comments: CommentsWithReplies[];
   children?: ((commentId: string) => React.ReactNode) | null;
   onShowReplies: (commendId: string) => void;
   onShowMoreReplies: (commendId: string, pageReply: number) => void;
-  onShowPreviousReplies: (
-    commendId: string,
-    pageReply: number,
-    totalReplyPages: number
-  ) => void;
-  onSubmitLike: (data: ILikes) => void;
+  onSubmitLike: (data: Likes) => void;
 };
 
 export type HeaderProps = {
@@ -56,7 +49,6 @@ export type CommentSectionProps = Omit<SectionCommentsProps, 'comments'> & {
   children: ((commentId: string) => React.ReactNode) | null;
   onShowReplies: SectionCommentsProps['onShowReplies'];
   onShowMoreReplies: SectionCommentsProps['onShowMoreReplies'];
-  onShowPreviousReplies: SectionCommentsProps['onShowPreviousReplies'];
   onSubmitLike: SectionCommentsProps['onSubmitLike'];
 };
 

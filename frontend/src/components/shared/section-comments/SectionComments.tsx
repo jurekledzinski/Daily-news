@@ -8,7 +8,6 @@ const SectionComments = ({
   onShowReplies,
   onShowMoreReplies,
   onSubmitLike,
-  onShowPreviousReplies,
 }: SectionCommentsProps) => (
   <div className="section-comments">
     {comments.map((comment) => {
@@ -19,7 +18,6 @@ const SectionComments = ({
           onShowReplies={onShowReplies}
           onShowMoreReplies={onShowMoreReplies}
           onSubmitLike={onSubmitLike}
-          onShowPreviousReplies={onShowPreviousReplies}
         >
           {children ?? null}
         </CommentSection>
