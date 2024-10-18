@@ -3,7 +3,7 @@ import CustomError from '../error/error';
 
 export const checkAuthentication = (
   req: Request,
-  res: Response,
+  _: Response,
   next: NextFunction
 ) => {
   if (req.isAuthenticated()) {
