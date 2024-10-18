@@ -2,3 +2,26 @@
   color: var(--negative-color);
   font-size: 0.75rem;
 }
+
+.no-data {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #555555;
+  text-align: center;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%);
+}
+
+.no-data p {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+.no-data.aside-message > p {
+  font-size: 0.5rem;
+}
+
+.no-data.articles svg {
+  font-size: 6rem;
+}
