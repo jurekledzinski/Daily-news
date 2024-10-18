@@ -1,11 +1,11 @@
 import type ReactGridLayout from 'react-grid-layout';
-// import { categories } from '../../../../dummy-api';
 import { IDataCategories } from '../../../../api';
 
 export type LayoutItem = {
   id?: string | undefined;
   ui: ReactGridLayout.Layout;
   title: string;
+  page: string;
 };
 
 export type LayoutData = {
@@ -13,7 +13,6 @@ export type LayoutData = {
 };
 
 export type GridTemplateCardProps = {
-  //   data: (typeof categories)[0];
   data: IDataCategories;
   isDisabled: boolean;
 };
@@ -21,6 +20,7 @@ export type GridTemplateCardProps = {
 export type GridLayoutProps = {
   layout: LayoutData;
   setLayout: (data: LayoutData) => void;
+  onNavigate: (category: string, page: string) => void;
 };
 
 export type GridCardProps = {
@@ -35,7 +35,6 @@ export interface LocalData extends Omit<LayoutItem, 'ui'> {
   articles: {
     id: string;
     title: string;
-    scroll?: number;
   }[];
   listArticles: { content: string; id: string; title: string; image: string }[];
   page: string;
