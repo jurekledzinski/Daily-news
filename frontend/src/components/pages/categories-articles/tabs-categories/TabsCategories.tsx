@@ -1,5 +1,6 @@
+import { Backdrop, Loader } from '../../../shared';
 import { ObjArticles } from '../../dashboard';
-import { Outlet, useOutletContext } from 'react-router-dom';
+import { Outlet, useNavigation, useOutletContext } from 'react-router-dom';
 import { TabsCategoriesArticlesProps } from './types';
 import { UseOutletContext } from '../../../../types/global';
 import { useRef } from 'react';
@@ -24,14 +25,17 @@ export const TabsCategoriesArticles = ({
   onSetActiveTabs,
   onRedirectOne,
   onRedirectTwo,
+  onRedirectThree,
 }: TabsCategoriesArticlesProps) => {
   const context = useOutletContext<UseOutletContext>();
   const tabsListContainerRef = useRef<HTMLDivElement | null>(null);
+  const navigation = useNavigation();
 
   return (
     <Tabs>
       <TabsListConainer ref={tabsListContainerRef}>
         <TabsList>
+          <button onClick={onRedirectThree}>Home</button>
           {state.map((item) => (
             <Tab
               activeTab={activeTabs[0]}
@@ -80,6 +84,12 @@ export const TabsCategoriesArticles = ({
       </TabsListConainer>
 
       <TabsPanel>
+        {navigation.state === 'loading' && (
+          <Backdrop>
+            <Loader className="fixed" />
+          </Backdrop>
+        )}
+
         <Outlet
           context={{
             handleAddSubArticle,

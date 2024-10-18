@@ -1,19 +1,9 @@
-.tabs__list-container.slide {
+.tabs__list-container {
   position: fixed;
-  top: 45px;
-  left: 0;
   width: 100%;
-  animation: moveDown 0.5s forwards ease;
-  z-index: 10;
+  top: 45px;
+  left: 0px;
+  z-index: 3;
   background-color: #f9f9f9;
   padding: 0.5rem;
-}
-
-@keyframes moveDown {
-  from {
-    transform: translateY(-30px);
-  }
-  to {
-    transform: translateY(0px);
-  }
 }
