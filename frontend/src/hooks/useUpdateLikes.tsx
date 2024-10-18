@@ -1,15 +1,14 @@
+import { Likes } from '../api';
 import { useSubmit } from 'react-router-dom';
-import { ILikes } from '../api';
 
 type UseUpdateLikesProps = {
-  onLikes: (data: ILikes) => void;
+  onLikes: (data: Likes) => void;
 };
 
 export const useUpdateLikes = ({ onLikes }: UseUpdateLikesProps) => {
   const submit = useSubmit();
 
-  const onSubmit = (data: ILikes) => {
-    console.log('data use update likes', data);
+  const onSubmit = (data: Likes) => {
     const formData = new FormData();
     formData.append('actionType', 'update-likes');
     formData.set('likes', data.likes.toString());
@@ -22,5 +21,3 @@ export const useUpdateLikes = ({ onLikes }: UseUpdateLikesProps) => {
 
   return onSubmit;
 };
-
-//   reset: UseFormReset<CommentInput>;
