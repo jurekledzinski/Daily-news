@@ -1,3 +1,5 @@
 export const Loader = ({ ...props }) => {
-  return <div className="loader" {...props}></div>;
+  return (
+    <div {...props} className={['loader', props.className].join(' ')}></div>
+  );
 };

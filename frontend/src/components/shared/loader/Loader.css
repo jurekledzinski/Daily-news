@@ -8,6 +8,25 @@
   animation: spin 1s linear infinite;
 }
 
+.loader.fixed {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.backdrop {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
