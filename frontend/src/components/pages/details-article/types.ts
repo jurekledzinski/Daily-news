@@ -1,11 +1,13 @@
+import { ArticleData, Likes } from '../../../api';
+import { CommentInput, CommentsWithReplies } from '../../shared';
 import { LegacyRef } from 'react';
-import { IComment, IDataArticle, ILikes } from '../../../api';
-import { CommentInput } from '../../shared';
 
 export type ArticleDetailsProps = {
-  comments: IComment[];
-  data: IDataArticle;
+  comments: CommentsWithReplies[];
+  data: ArticleData;
   headerRef: LegacyRef<HTMLDivElement> | undefined;
-  methodSubmit: (data: CommentInput, commentId?: string) => void;
-  methodSubmitLike: (data: ILikes) => void;
+  methodSubmitComment: (data: CommentInput, commentId?: string) => void;
+  methodSubmitLike: (data: Likes) => void;
+  onShowReplies: (commendId: string) => void;
+  onShowMoreReplies: (commendId: string, pageReply: number) => void;
 };
