@@ -1,12 +1,13 @@
-import { forwardRef, Ref, useRef, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
+import { forwardRef, Ref, useRef, useState } from 'react';
 import { LoginForm, RegisterForm } from '../forms';
 import { Modal } from '../../../shared';
-import { useLoginForm, useRegisterForm } from '../../../../hooks';
-
 import './Header.css';
-
-// TODO: Forward ref header
+import {
+  //   useFetchUserData,
+  useLoginForm,
+  useRegisterForm,
+} from '../../../../hooks';
 
 export const Header = forwardRef<HTMLDivElement>(
   (_, ref: Ref<HTMLDivElement>) => {
@@ -15,6 +16,7 @@ export const Header = forwardRef<HTMLDivElement>(
     const timeout1 = useRef<number | null>(null);
     const timeout2 = useRef<number | null>(null);
     const [controlDialog, setControlDialog] = useState<null | boolean>(null);
+    // const data = useFetchUserData();
 
     const formSignUpControl = useRegisterForm({
       onSuccess: () => dialogRegisterRef.current?.close(),

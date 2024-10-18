@@ -1,7 +1,11 @@
 .header {
-  /* box-shadow: 0 0px 0px 1px var(--secondary-color); */
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   border-bottom: 1px solid #ddd;
+  z-index: 3;
+  background: white;
 }
 
 .header__nav {
@@ -24,24 +28,4 @@
 
 .header__button {
   padding: 0.35rem 0.75rem;
-}
-
-.header.slide {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  animation: moveDown 0.5s forwards ease;
-  border-bottom: 1px solid #ddd;
-  z-index: 10;
-  background: white;
-}
-
-@keyframes moveDown {
-  from {
-    transform: translateY(-30px);
-  }
-  to {
-    transform: translateY(0px);
-  }
 }
