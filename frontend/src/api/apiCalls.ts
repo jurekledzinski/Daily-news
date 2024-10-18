@@ -1,29 +1,26 @@
+import { URLS } from './urls';
 import {
   APIGuardianResponseSuccess,
-  ICategories,
+  CategoriesData,
   IArticles,
   APIResponseDetailsSuccess,
   IDetailsArticle,
   APIGuardianResponsePagniationSuccess,
-  ICommentCreate,
+  CommentCreate,
   APICreateResponseSuccess,
-  ILikes,
+  Likes,
   APIUpdateResponseSuccess,
 } from './types';
 
 export const getCategoriesArticles = async () => {
   try {
-    const response = await fetch(
-      `https://content.guardianapis.com/sections?&format=json&api-key=${
-        import.meta.env.VITE_API_KEY
-      }`
-    );
+    const response = await fetch(URLS.GET_CATEGORIES_ARTICLES());
 
     if (!response.ok) {
       throw new Error('Failed to load page data.');
     }
 
-    const data: APIGuardianResponseSuccess<ICategories[]> =
+    const data: APIGuardianResponseSuccess<CategoriesData[]> =
       await response.json();
 
     return data;
@@ -33,11 +30,7 @@ export const getCategoriesArticles = async () => {
 };
 
 export const getArticles = async (category: string, page: string) => {
-  const response = await fetch(
-    `https://content.guardianapis.com/${category}?show-fields=body,headline,trailText&show-elements=image&page=${page}&page-size=12&api-key=${
-      import.meta.env.VITE_API_KEY
-    }`
-  );
+  const response = await fetch(URLS.GET_ARTICLES(category, page));
 
   if (!response.ok) throw new Error('Something went wrong, please try later.');
 
@@ -48,11 +41,7 @@ export const getArticles = async (category: string, page: string) => {
 };
 
 export const getDetailsArticle = async (_: string, id: string) => {
-  const response = await fetch(
-    `https://content.guardianapis.com/${id}?show-fields=body,trailText&show-elements=image&api-key=${
-      import.meta.env.VITE_API_KEY
-    }`
-  );
+  const response = await fetch(URLS.GET_DETAILS_ARTICLE(id));
 
   if (!response.ok) throw new Error('Something went wrong, please try later.');
 
@@ -65,10 +54,11 @@ export const getDetailsArticle = async (_: string, id: string) => {
 export const getComments = async (articleId: string, page: string) => {
   const id = encodeURIComponent(articleId);
 
-  const response = await fetch(
-    `http://localhost:5000/api/v1/comments/${id}?page=${page}`,
-    { method: 'GET', mode: 'cors', credentials: 'include' }
-  );
+  const response = await fetch(URLS.GET_COMMENTS(id, page), {
+    method: 'GET',
+    mode: 'cors',
+    credentials: 'include',
+  });
 
   if (!response.ok) throw new Error('Something went wrong, please try later.');
 
@@ -85,10 +75,11 @@ export const getCommentReplies = async (
 ) => {
   const id = encodeURIComponent(articleId);
 
-  const response = await fetch(
-    `http://localhost:5000/api/v1/comments/${id}/${commentId}?page_reply=${page}`,
-    { method: 'GET', mode: 'cors', credentials: 'include' }
-  );
+  const response = await fetch(URLS.GET_COMMENT_REPLIES(id, commentId, page), {
+    method: 'GET',
+    mode: 'cors',
+    credentials: 'include',
+  });
 
   if (!response.ok) throw new Error('Something went wrong, please try later.');
 
@@ -98,8 +89,8 @@ export const getCommentReplies = async (
   return data;
 };
 
-export const createComment = async (body: ICommentCreate) => {
-  const response = await fetch('http://localhost:5000/api/v1/comments/create', {
+export const createComment = async (body: CommentCreate) => {
+  const response = await fetch(URLS.CREATE_COMMENT(), {
     method: 'POST',
     mode: 'cors',
     credentials: 'include',
@@ -116,21 +107,18 @@ export const createComment = async (body: ICommentCreate) => {
   return data;
 };
 
-export const updateLikesComment = async (articleId: string, body: ILikes) => {
+export const updateLikesComment = async (articleId: string, body: Likes) => {
   const id = encodeURIComponent(articleId);
 
-  const response = await fetch(
-    `http://localhost:5000/api/v1/comments/likes/${id}/${body.commentId}`,
-    {
-      method: 'PATCH',
-      mode: 'cors',
-      credentials: 'include',
-      body: JSON.stringify({ likes: parseInt(body.likes.toString()) }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  );
+  const response = await fetch(URLS.UPDATE_COMMENT_LIKE(id, body.commentId), {
+    method: 'PATCH',
+    mode: 'cors',
+    credentials: 'include',
+    body: JSON.stringify({ likes: parseInt(body.likes.toString()) }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
   if (!response.ok) throw new Error('Something went wrong, please try later.');
 
