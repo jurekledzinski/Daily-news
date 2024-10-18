@@ -3,6 +3,14 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   display: grid;
   margin: 0.5rem 0;
-  overflow-x: clip;
-  overflow-y: auto;
+  height: calc(100% - 45px);
+  animation: fadeIn 0.1s forwards;
+  opacity: 0;
+  margin-top: 73px;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
