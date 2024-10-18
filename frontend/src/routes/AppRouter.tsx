@@ -13,7 +13,11 @@ import {
   loaderDetailsArticle,
 } from '../api';
 
-const queryClient = new QueryClient();
+// TODO:
+
+// Get this queryClient and invalidate queries comments when change tabs and close tabs
+
+export const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
