@@ -29,17 +29,18 @@ app.use(
 
 app.use(
   session({
+    name: 'bmg-seqdk',
     secret: process.env.SECRET_KEY!,
     resave: false,
     saveUninitialized: false,
     store: mongoStore,
     cookie: {
-      domain: 'localhost',
+      domain: 'localhost', //change later production
       path: '/',
-      secure: false,
+      secure: false, //change later production
       sameSite: 'strict',
       httpOnly: true,
-      maxAge: 1000 * 60 * 5,
+      maxAge: 1000 * 60 * 5, //change later production
     },
   })
 );
