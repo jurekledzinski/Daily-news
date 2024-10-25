@@ -1,13 +1,12 @@
-import { ObjectId, WithId } from 'mongodb';
-import { IComment } from '../models/comments';
+import { ObjectId } from 'mongodb';
 
-export const transformDocument = <T extends WithId<IComment>>(
+export const transformDocument = <T extends { _id: string | ObjectId }>(
   result: T[]
 ): (T & { id: ObjectId | string })[] => {
-  if (!result || !Array.isArray(result)) return [];
+  if (!result || !result.length || !Array.isArray(result)) return [];
 
-  return result.map((comment) => {
-    const { _id, ...rest } = comment;
+  return result.map((data) => {
+    const { _id, ...rest } = data;
 
     const item = {
       ...rest,
