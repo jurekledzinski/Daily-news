@@ -15,6 +15,7 @@ import {
   Params,
   useNavigation,
 } from 'react-router-dom';
+import { getCurrentCategory } from '../../helpers';
 
 export const GridArticles = () => {
   const { category } = useParams() as Params;
@@ -65,7 +66,13 @@ export const GridArticles = () => {
   });
 
   return (
-    <div className="grid-articles">
+    <div
+      className={
+        category && getCurrentCategory(category)?.articles.length
+          ? 'grid-articles grid-articles--sub-tabs'
+          : 'grid-articles'
+      }
+    >
       {navigation.state === 'idle' ? (
         category && state[category] ? (
           state[category].length ? (
