@@ -1,9 +1,10 @@
-import passport from 'passport';
-import LocalStrategy from 'passport-local';
 import bcrypt from 'bcrypt';
-import { getCollectionDb } from '../config/db';
 import CustomError from '../error/error';
+import LocalStrategy from 'passport-local';
+import passport from 'passport';
+import { getCollectionDb } from '../config/db';
 import { ObjectId } from 'mongodb';
+import { transformDocument } from '../helpers/transformData';
 import { User } from '../models/user';
 
 passport.use(
@@ -61,14 +62,18 @@ passport.deserializeUser(async (id: string, done) => {
 
     const user = await collection.findOne<User>(
       { _id: new ObjectId(id) },
-      { projection: { _id: 0, password: 0 } }
+      { projection: { password: 0 } }
     );
 
     if (!user) {
       return done(null, false);
     }
 
-    done(null, user);
+    const formatUser = transformDocument([
+      { ...user, _id: new ObjectId(user._id) },
+    ]);
+
+    done(null, formatUser[0] ?? []);
   } catch (error) {
     done(error, null);
   }
