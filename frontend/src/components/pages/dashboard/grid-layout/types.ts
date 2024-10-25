@@ -1,5 +1,5 @@
-import type ReactGridLayout from 'react-grid-layout';
 import { IDataCategories } from '../../../../api';
+import type ReactGridLayout from 'react-grid-layout';
 
 export type LayoutItem = {
   id?: string | undefined;
@@ -28,6 +28,7 @@ export type GridCardProps = {
   className: string;
   gridItem: LayoutItem;
   onClick: (value: string) => void;
+  onRemove: (id: string) => void;
 };
 
 export interface LocalData extends Omit<LayoutItem, 'ui'> {
