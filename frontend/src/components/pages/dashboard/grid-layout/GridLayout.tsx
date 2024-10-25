@@ -29,21 +29,15 @@ export const GridLayout = ({
     handleDrop,
     handleDropStop,
     handleResizeStop,
+    handleRemoveCard,
   } = useControlDashboard({
     currentBreakPoint,
     layoutData: layout,
-    onChangeBreakpoint: (breakpoint) => {
-      setCurrentBreakPoint(breakpoint);
-    },
-    onDrop: (newLayouts) => {
-      setLayout(newLayouts);
-    },
-    onDropStop: (newLayouts) => {
-      setLayout(newLayouts);
-    },
-    onResizeStop: (newLayouts) => {
-      setLayout(newLayouts);
-    },
+    onChangeBreakpoint: (breakpoint) => setCurrentBreakPoint(breakpoint),
+    onDrop: (newLayouts) => setLayout(newLayouts),
+    onDropStop: (newLayouts) => setLayout(newLayouts),
+    onResizeStop: (newLayouts) => setLayout(newLayouts),
+    onRemoveCard: (newLayouts) => setLayout(newLayouts),
   });
 
   return (
@@ -94,6 +88,7 @@ export const GridLayout = ({
               gridItem={item}
               key={item.ui.i}
               onClick={(value) => onNavigate(value, item.page)}
+              onRemove={handleRemoveCard}
               ref={gridCardRef}
             />
           );
