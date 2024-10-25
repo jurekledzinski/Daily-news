@@ -125,7 +125,9 @@ export const CategoriesArticles = () => {
           const url = `/categories/${category}/articles/article/${articleId}?page=1`;
           navigate(url, { preventScrollReset: true });
         }}
-        onRedirectThree={() => navigate('/', { preventScrollReset: true })}
+        onRedirectThree={() => {
+          navigate('/', { preventScrollReset: true });
+        }}
         onSetActiveTabs={(value) => setActiveTabs(value)}
         state={state}
       />
