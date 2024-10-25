@@ -1,0 +1,28 @@
+.alert-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #ff4136;
+  padding: 0.5rem 0.5rem;
+  width: 100%;
+}
+
+.alert-error__icon {
+  display: inline-block;
+  color: white;
+}
+
+.alert-error__text {
+  color: white;
+  font-size: 0.7rem;
+}
+
+.alert-error--profile {
+  margin-top: 1rem;
+  width: 400px;
+}
+
+.alert-error--article-details {
+  margin-top: 0.5rem;
+  width: 100%;
+}
