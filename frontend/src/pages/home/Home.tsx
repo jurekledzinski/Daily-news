@@ -1,44 +1,37 @@
-import { Header } from '../../components/pages';
+import { Footer, Header } from '../../components/pages';
+import { getCurrentCategory } from '../../helpers';
 import { loaderCategories } from '../../api';
+import { Suspense } from 'react';
+import './Home.css';
+
 import {
   Outlet,
+  Params,
   ScrollRestoration,
   useLoaderData,
   useMatch,
+  useParams,
 } from 'react-router-dom';
-import { Suspense, useEffect } from 'react';
-import { useRef } from 'react';
-import './Home.css';
 
 export const Home = () => {
-  const match = useMatch('/');
-  const headerRef = useRef<HTMLDivElement | null>(null);
-  const footerRef = useRef<HTMLDivElement | null>(null);
+  const { category } = useParams() as Params;
+  const matchHome = useMatch('/');
+  const matchProfile = useMatch('/profile/:id');
+
   const data = useLoaderData() as Awaited<
     ReturnType<ReturnType<typeof loaderCategories>>
   >;
 
-  useEffect(() => {
-    if (!headerRef.current) return;
-    if (!match) {
-      headerRef.current.style.position = 'fixed';
-    } else {
-      headerRef.current.style.position = 'static';
-    }
-  }, [match]);
-
   return (
     <div className="container">
-      <Header ref={headerRef} />
+      <Header matchHome={matchHome} matchProfile={matchProfile} />
       <Suspense>
         <Outlet
           context={{
-            categories: (data.response.results ?? []).map((c) => ({
+            categories: (data.response?.results ?? []).map((c) => ({
               id: c.id,
               title: c.webTitle,
             })),
-            headerRef: headerRef,
-            footerRef: footerRef,
           }}
         />
       </Suspense>
@@ -49,10 +42,14 @@ export const Home = () => {
           return location.pathname;
         }}
       />
-
-      <footer className="footer" ref={footerRef}>
+      <Footer
+        category={category}
+        isSubTabs={Boolean(getCurrentCategory(category ?? '')?.articles.length)}
+        matchHome={matchHome}
+        matchProfile={matchProfile}
+      >
         All rights reserved © {new Date().getFullYear()}
-      </footer>
+      </Footer>
     </div>
   );
 };
