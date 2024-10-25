@@ -3,21 +3,25 @@ import Dashboard from '../pages/dashboard';
 import DetailsArticle from '../pages/details-article';
 import GridArticles from '../pages/grid-articles';
 import Home from '../pages/home';
+import Profile from '../pages/profile';
 import { createBrowserRouter } from 'react-router-dom';
 import { ErrorPage } from '../components/pages';
 import { QueryClient } from '@tanstack/react-query';
 import {
   actionDetailsArticle,
+  actionHome,
+  actionProfileUser,
   loaderArticles,
   loaderCategories,
   loaderDetailsArticle,
 } from '../api';
+// import { UserAction } from '../store';
 
 // TODO:
 
 // Get this queryClient and invalidate queries comments when change tabs and close tabs
 
-export const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -25,6 +29,7 @@ const router = createBrowserRouter([
     element: <Home />,
     errorElement: <ErrorPage />,
     loader: loaderCategories(queryClient),
+    action: actionHome(queryClient),
     children: [
       {
         index: true,
@@ -50,6 +55,12 @@ const router = createBrowserRouter([
             action: actionDetailsArticle(queryClient),
           },
         ],
+      },
+      {
+        path: 'profile/:id',
+        element: <Profile />,
+        action: actionProfileUser,
+        errorElement: <ErrorPage />,
       },
     ],
   },
