@@ -3,7 +3,7 @@ import { ErrorMessage } from '../messages';
 import { Form } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-const FormAddComment = ({ buttonText, onSubmit }: FormProps) => {
+export const FormComment = ({ buttonText, onSubmit }: FormProps) => {
   const formMethods = useForm<CommentInput>();
   const { formState } = formMethods;
   const { errors } = formState;
@@ -16,6 +16,7 @@ const FormAddComment = ({ buttonText, onSubmit }: FormProps) => {
           formMethods.handleSubmit(onSubmit)(event);
           formMethods.reset();
         }}
+        noValidate
       >
         <textarea
           cols={40}
@@ -30,5 +31,3 @@ const FormAddComment = ({ buttonText, onSubmit }: FormProps) => {
     </div>
   );
 };
-
-export default FormAddComment;

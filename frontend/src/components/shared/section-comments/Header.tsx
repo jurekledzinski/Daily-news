@@ -1,6 +1,6 @@
 import { ButtonLikes, HeaderProps } from '.';
 
-const Header = ({
+export const Header = ({
   commentId,
   likes,
   parentCommentId,
@@ -22,5 +22,3 @@ const Header = ({
     </div>
   );
 };
-
-export default Header;

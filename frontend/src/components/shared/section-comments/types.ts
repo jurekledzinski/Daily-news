@@ -10,7 +10,9 @@ export interface CommentsWithReplies extends CommentAndReplies {
 
 export type SectionCommentsProps = {
   comments: CommentsWithReplies[];
-  children?: ((commentId: string) => React.ReactNode) | null;
+  children?:
+    | ((commentId: string, onClose: () => void) => React.ReactNode)
+    | null;
   onShowReplies: (commendId: string) => void;
   onShowMoreReplies: (commendId: string, pageReply: number) => void;
   onSubmitLike: (data: Likes) => void;
@@ -46,7 +48,7 @@ export type ContentProps = {
 export type CommentSectionProps = Omit<SectionCommentsProps, 'comments'> & {
   comment: SectionCommentsProps['comments'][0];
   className?: string;
-  children: ((commentId: string) => React.ReactNode) | null;
+  children: SectionCommentsProps['children'];
   onShowReplies: SectionCommentsProps['onShowReplies'];
   onShowMoreReplies: SectionCommentsProps['onShowMoreReplies'];
   onSubmitLike: SectionCommentsProps['onSubmitLike'];

@@ -1,7 +1,13 @@
+import { CommentPanel, CommentSectionProps, Content, Footer, Header } from '.';
 import { useState } from 'react';
-import { CommentPanel, Content, Footer, Header, CommentSectionProps } from '.';
 
-const CommentSection = ({
+// TODO: add chilren do footer if children is true then show reply button if not then not show
+// Create component button który bedzie reuzywalny ma miec jedno zadanie
+
+// <Button  onClick={()=>{}}></Button>
+// <Button  onClick={()=>{setShowReplies()}}></Button>
+
+export const CommentSection = ({
   className,
   comment,
   children,
@@ -37,7 +43,12 @@ const CommentSection = ({
         />
       </CommentPanel>
 
-      {showForm && children ? children(comment.id) : null}
+      {showForm && children
+        ? children(comment.id, () => {
+            setShowForm(false);
+            setShowReplies(true);
+          })
+        : null}
 
       {showReplies &&
         comment.replies &&
@@ -72,5 +83,3 @@ const CommentSection = ({
     </div>
   );
 };
-
-export default CommentSection;

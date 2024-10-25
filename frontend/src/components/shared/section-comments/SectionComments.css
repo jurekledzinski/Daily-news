@@ -1,7 +1,7 @@
 .comment-panel {
   border: 1px solid #ddd;
   padding: 0.8rem;
-  margin: 0.8rem 0;
+  margin: 0.5rem 0;
 }
 
 .comment-panel__header {
@@ -22,7 +22,7 @@
 }
 
 .comment-form {
-  margin: 0.8rem 0;
+  margin: 0.5rem 0;
 }
 
 .comment-form form {
@@ -37,7 +37,7 @@
 
 .comment-form button {
   display: block;
-  margin: 0.4rem 0;
+  margin-top: 0.5rem;
   background-color: #fff685;
   width: 10rem;
 }

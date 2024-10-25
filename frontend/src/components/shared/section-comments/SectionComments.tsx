@@ -1,8 +1,8 @@
-import CommentSection from './CommentSection';
+import { CommentSection } from './CommentSection';
 import { SectionCommentsProps } from './types';
 import './SectionComments.css';
 
-const SectionComments = ({
+export const SectionComments = ({
   comments,
   children,
   onShowReplies,
@@ -25,5 +25,3 @@ const SectionComments = ({
     })}
   </div>
 );
-
-export default SectionComments;
