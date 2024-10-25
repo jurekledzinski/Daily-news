@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { z } from 'zod';
 
 const UserSchema = z.object({
@@ -24,6 +25,18 @@ const loginUserSchema = UserSchema.pick({
   password: true,
 });
 
+const ChangeUserPasswordSchema = UserSchema.pick({ password: true });
+const UpdateUserProfileSchema = UserSchema.pick({ name: true, email: true });
+
 type UserLogin = z.infer<typeof loginUserSchema>;
 
-export { UserSchema, User, UserLogin };
+type UserData = Omit<User, '_id'> & { _id: ObjectId | string };
+
+export {
+  ChangeUserPasswordSchema,
+  UpdateUserProfileSchema,
+  UserSchema,
+  User,
+  UserData,
+  UserLogin,
+};
