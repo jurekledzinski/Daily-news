@@ -39,7 +39,7 @@ dialog[open]::backdrop {
   padding: 0.5rem;
 }
 
-.modal__content {
+.modal__body {
   padding: 0.5rem;
 }
 
@@ -49,4 +49,9 @@ dialog[open]::backdrop {
   padding: 0 0.5rem 1rem;
   gap: 0.5rem;
   margin-top: 1.5rem;
+}
+
+.delete-account-modal > .modal__header {
+  background-color: red;
+  color: white;
 }
