@@ -1,8 +1,5 @@
 export type UseOutletContext = {
-  headerRef: React.MutableRefObject<HTMLDivElement | null>;
-  footerRef: React.MutableRefObject<HTMLDivElement | null>;
   handleAddSubArticle: (value: { id: string; title: string }) => void;
-  tabsListContainerRef: React.MutableRefObject<HTMLDivElement | null>;
 };
 
 export type UseScrollToggleProps = {
@@ -11,4 +8,10 @@ export type UseScrollToggleProps = {
   root?: IntersectionObserverInit['root'];
   rootMargin?: IntersectionObserverInit['rootMargin'];
   threshold?: IntersectionObserverInit['threshold'];
+};
+
+export type ActionData = {
+  action: string;
+  message: string;
+  redirect: string;
 };
