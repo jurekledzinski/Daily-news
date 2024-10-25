@@ -1,48 +1,37 @@
-import { APICreateResponseSuccess, URLS } from '../api';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
+import { useSubmit } from 'react-router-dom';
 import {
   FormResigsterValues,
   useRegisterFormProps,
 } from '../components/pages/';
 
-export const useRegisterForm = ({ onSuccess }: useRegisterFormProps) => {
-  const formMethods = useForm<FormResigsterValues>({
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
+export const useRegisterForm = ({
+  error,
+  onSuccess,
+  status,
+}: useRegisterFormProps) => {
+  const methods = useForm<FormResigsterValues>({
+    defaultValues: { name: '', email: '', password: '', confirmPassword: '' },
   });
 
-  const submit = useMutation<
-    APICreateResponseSuccess,
-    Error,
-    Omit<FormResigsterValues, 'confirmPassword'>
-  >({
-    mutationFn: async (data) => {
-      const response = await fetch(URLS.CREATE_USER(), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        mode: 'cors',
-        body: JSON.stringify(data),
-      });
-      return await response.json();
-    },
-    onSuccess: () => {
-      onSuccess();
-      formMethods.reset();
-    },
-  });
+  const submit = useSubmit();
 
-  return {
-    formMethods,
-    onSubmit: (data: FormResigsterValues) => {
-      delete data.confirmPassword;
-      submit.mutate(data);
-    },
+  const onSubmit = (data: FormResigsterValues) => {
+    const formData = new FormData();
+    formData.append('actionType', 'register-user');
+    formData.set('email', data.email);
+    formData.set('name', data.name);
+    formData.set('password', data.password);
+
+    submit(formData, { method: 'post' });
   };
+
+  useEffect(() => {
+    if (status === 'idle' && !error) {
+      onSuccess(methods.reset);
+    }
+  }, [error, onSuccess, status, methods.reset]);
+
+  return { methods, onSubmit: methods.handleSubmit(onSubmit) };
 };
