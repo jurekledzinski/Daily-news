@@ -1,92 +1,172 @@
-import { FormProvider } from 'react-hook-form';
-import { forwardRef, Ref, useRef, useState } from 'react';
-import { LoginForm, RegisterForm } from '../forms';
-import { Modal } from '../../../shared';
+import { getCookie, removeCookie } from '../../../../helpers';
+import { NavBarActions, NavBarAuth } from '../NavBar';
+import { PathMatch, useNavigate, useNavigation } from 'react-router-dom';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { useUserStore } from '../../../../store';
 import './Header.css';
 import {
-  //   useFetchUserData,
+  useFetchUserData,
   useLoginForm,
+  useLogoutUser,
   useRegisterForm,
 } from '../../../../hooks';
 
-export const Header = forwardRef<HTMLDivElement>(
-  (_, ref: Ref<HTMLDivElement>) => {
-    const dialogLoginRef = useRef<HTMLDialogElement | null>(null);
-    const dialogRegisterRef = useRef<HTMLDialogElement | null>(null);
-    const timeout1 = useRef<number | null>(null);
-    const timeout2 = useRef<number | null>(null);
-    const [controlDialog, setControlDialog] = useState<null | boolean>(null);
-    // const data = useFetchUserData();
+type HeaderProps = {
+  matchHome: PathMatch<string> | null;
+  matchProfile: PathMatch<string> | null;
+};
 
-    const formSignUpControl = useRegisterForm({
-      onSuccess: () => dialogRegisterRef.current?.close(),
-    });
+export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
+  const navigate = useNavigate();
+  const dialogLoginRef = useRef<HTMLDialogElement | null>(null);
+  const dialogRegisterRef = useRef<HTMLDialogElement | null>(null);
+  const navigation = useNavigation();
+  const { onGetCookie, onRemoveCookie } = useControlServerError('serverError');
 
-    const formSignInControl = useLoginForm({
-      onSuccess: () => dialogLoginRef.current?.close(),
-    });
+  useFetchUserData();
+  const { state, dispatch } = useUserStore();
 
-    return (
-      <>
-        <header className="header" ref={ref}>
-          <nav className="header__nav">
-            <h4 className="header__logo">Daily news</h4>
-            <div className="header__buttons">
-              <button className="header__button">Profile</button>
-              <button
-                className="header__button"
-                onClick={() => {
-                  if (timeout1.current) clearTimeout(timeout1.current);
-                  setControlDialog(false);
+  const logoutUser = useLogoutUser({
+    onSuccess: () => {
+      dispatch({ type: 'LOGOUT_USER' });
+      if (matchProfile) navigate('/', { replace: true });
+    },
+  });
 
-                  timeout1.current = setTimeout(() => {
-                    if (!dialogLoginRef.current) return;
-                    dialogLoginRef.current.showModal();
-                  });
-                }}
-              >
-                Sign in
-              </button>
-              <button
-                className="header__button"
-                onClick={() => {
-                  if (timeout2.current) clearTimeout(timeout2.current);
-                  setControlDialog(true);
+  const submitRegister = useRegisterForm({
+    status: navigation.state,
+    error: onGetCookie('register-user'),
+    onSuccess: useCallback((reset) => {
+      dialogRegisterRef.current?.close();
+      reset();
+    }, []),
+  });
 
-                  timeout2.current = setTimeout(() => {
-                    if (!dialogRegisterRef.current) return;
-                    dialogRegisterRef.current.showModal();
-                  });
-                }}
-              >
-                Sign up
-              </button>
-            </div>
-          </nav>
-        </header>
+  const submitLogin = useLoginForm({
+    status: navigation.state,
+    error: onGetCookie('login-user'),
+    onSuccess: useCallback((reset) => {
+      dialogLoginRef.current?.close();
+      reset();
+    }, []),
+  });
 
-        {controlDialog === null ? null : controlDialog ? (
-          <Modal
-            ref={dialogRegisterRef}
-            onClose={formSignUpControl.formMethods.reset}
-            title="Sign up"
-          >
-            <FormProvider {...formSignUpControl.formMethods}>
-              <RegisterForm onSubmit={formSignUpControl.onSubmit} />
-            </FormProvider>
-          </Modal>
-        ) : (
-          <Modal
-            ref={dialogLoginRef}
-            onClose={formSignInControl.formMethods.reset}
-            title="Sign in"
-          >
-            <FormProvider {...formSignInControl.formMethods}>
-              <LoginForm onSubmit={formSignInControl.onSubmit} />
-            </FormProvider>
-          </Modal>
-        )}
-      </>
-    );
-  }
-);
+  return (
+    <>
+      <header
+        className={
+          matchHome || matchProfile ? 'header' : 'header header--fixed'
+        }
+      >
+        <nav className="header__nav">
+          <h4 className="header__logo">Daily news</h4>
+          <div className="header__buttons">
+            <NavBarActions
+              onBack={() => navigate(-1)}
+              onClick={() => navigate(`profile/${state.user?.id}`)}
+              user={state.user}
+            />
+            <NavBarAuth
+              logout={logoutUser}
+              modalLoginRef={dialogLoginRef}
+              modalRegisterRef={dialogRegisterRef}
+              onGetCookie={onGetCookie}
+              onRemoveCookie={onRemoveCookie}
+              submitLogin={submitLogin}
+              submitRegister={submitRegister}
+              user={state.user}
+            />
+          </div>
+        </nav>
+      </header>
+    </>
+  );
+};
+
+function useControlServerError(cookieName: string) {
+  const [, setFlag] = useState(false);
+
+  const onRemoveCookie = useCallback(() => {
+    removeCookie(cookieName);
+    setFlag((prev) => !prev);
+  }, [cookieName]);
+
+  const onGetCookie = useCallback(
+    (action: string): { message: string; action: string } | null =>
+      action && action === getCookie(cookieName)?.action
+        ? getCookie(cookieName)
+        : null,
+    [cookieName]
+  );
+
+  return useMemo(
+    () => ({
+      onGetCookie,
+      onRemoveCookie,
+    }),
+    [onGetCookie, onRemoveCookie]
+  );
+}
+
+// {state.user && (
+//     <button
+//       className="header__logout"
+//       onClick={() => {
+//         logoutUser();
+//       }}
+//     >
+//       Logout
+//     </button>
+//   )}
+
+//   {!state.user && (
+//     <Modal
+//       openButton=" Sign in"
+//       form="login"
+//       ref={dialogLoginRef}
+//       onClose={() => {
+//         onRemoveCookie();
+//         submitLogin.methods.reset();
+//       }}
+//       title="Sign in"
+//     >
+//       <LoginForm
+//         id="login"
+//         methods={submitLogin.methods}
+//         onSubmit={submitLogin.onSubmit}
+//         {...(onGetCookie('login-user') && {
+//           serverError: onGetCookie('login-user')?.message,
+//         })}
+//       />
+//     </Modal>
+//   )}
+
+//   {!state.user && (
+//     <Modal
+//       openButton="Sign up"
+//       form="register"
+//       ref={dialogRegisterRef}
+//       onClose={() => {
+//         onRemoveCookie();
+//         submitRegister.methods.reset();
+//       }}
+//       title="Sign up"
+//     >
+//       <RegisterForm
+//         id="register"
+//         methods={submitRegister.methods}
+//         onSubmit={submitRegister.onSubmit}
+//         {...(onGetCookie('register-user') && {
+//           serverError: onGetCookie('register-user')?.message,
+//         })}
+//       />
+//     </Modal>
+//   )}
+// {state.user && (
+//     <button
+//       className="header__profile"
+//       onClick={() => navigate(`profile/${state.user?.id}`)}
+//     >
+//       Profile
+//     </button>
+//   )}

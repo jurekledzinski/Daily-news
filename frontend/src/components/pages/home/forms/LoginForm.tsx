@@ -1,13 +1,18 @@
 import { ErrorMessage } from '../../../shared/messages';
-import { FormLoginValues, LoginFormProps } from './types';
-import { useFormContext } from 'react-hook-form';
+import { Form } from 'react-router-dom';
+import { LoginFormProps } from './types';
+import { AlertError } from '../../../shared';
 
-export const LoginForm = ({ onSubmit }: LoginFormProps) => {
-  const methods = useFormContext<FormLoginValues>();
+export const LoginForm = ({
+  id,
+  onSubmit,
+  methods,
+  serverError,
+}: LoginFormProps) => {
   const { errors } = methods.formState;
 
   return (
-    <form id="form" onSubmit={methods.handleSubmit(onSubmit)} noValidate>
+    <Form id={id} onSubmit={onSubmit} method="POST" noValidate>
       <fieldset>
         <label>Email:</label>
         <input
@@ -34,6 +39,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
           <ErrorMessage> {errors.password.message}</ErrorMessage>
         )}
       </fieldset>
-    </form>
+      {serverError && <AlertError> {serverError}</AlertError>}
+    </Form>
   );
 };

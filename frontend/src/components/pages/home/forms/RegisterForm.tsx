@@ -1,13 +1,16 @@
-import { ErrorMessage } from '../../../shared';
-import { FormResigsterValues, RegisterFormProps } from './types';
-import { useFormContext } from 'react-hook-form';
+import { AlertError, ErrorMessage } from '../../../shared';
+import { RegisterFormProps } from './types';
 
-export const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
-  const methods = useFormContext<FormResigsterValues>();
+export const RegisterForm = ({
+  id,
+  onSubmit,
+  methods,
+  serverError,
+}: RegisterFormProps) => {
   const { errors } = methods.formState;
 
   return (
-    <form id="form" onSubmit={methods.handleSubmit(onSubmit)} noValidate>
+    <form id={id} onSubmit={onSubmit} noValidate>
       <fieldset>
         <label>Name:</label>
         <input
@@ -73,6 +76,7 @@ export const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
           <ErrorMessage>{errors.confirmPassword.message}</ErrorMessage>
         )}
       </fieldset>
+      {serverError && <AlertError> {serverError}</AlertError>}
     </form>
   );
 };
