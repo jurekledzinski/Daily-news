@@ -17,6 +17,8 @@ import {
   APIErrorResponse,
 } from './types';
 
+// ----------------- Api articles -----------------
+
 export const getCategoriesArticles = tryCatch<
   APIGuardianResponseSuccess<CategoriesData[]>,
   APIErrorResponse
@@ -45,6 +47,8 @@ export const getDetailsArticle = tryCatch<
 
   return await response.json();
 });
+
+// ----------------- Api comments -----------------
 
 export const getComments = tryCatch<
   APIResponseDetailsSuccess<IDetailsArticle>,
@@ -124,7 +128,7 @@ export const updateLikesComment = tryCatch<
   return await response.json();
 });
 
-// ----------------- Actions user profile -----------------
+// ----------------- Api user profile -----------------
 
 export const updateUserProfile = tryCatch<
   APISuccessResponse,
@@ -176,7 +180,7 @@ export const deleteUserAccount = tryCatch<
   return await response.json();
 });
 
-// ----------------- Actions register -----------------
+// ----------------- Api register login logout -----------------
 
 export const registerUser = tryCatch<
   APISuccessResponse,
