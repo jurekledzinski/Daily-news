@@ -40,7 +40,7 @@ app.use(
       secure: false, //change later production
       sameSite: 'strict',
       httpOnly: true,
-      maxAge: 1000 * 60 * 5, //change later production
+      maxAge: 1000 * 60 * 60 * 1, //change later production
     },
   })
 );
@@ -65,15 +65,12 @@ app.use(
 
       console.log('Error zod', formattedErrors);
 
-      res.status(error.statusCode || 500);
-
-      res.json({
+      res.status(error.statusCode || 500).json({
         error: { message: formattedErrors, statusCode: error.statusCode },
       });
     } else {
       console.log('error normal', error.message);
-      res.status(error.statusCode || 500);
-      res.json({
+      res.status(error.statusCode || 500).json({
         message: error.message,
         success: error.success,
       });
