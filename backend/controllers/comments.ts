@@ -154,7 +154,7 @@ export const updateCommentLikes = tryCatch(
     const articleId = decodeURIComponent(req.params.article_id);
     const commentId = req.params.comment_id;
 
-    const a = await collection.updateOne(
+    await collection.updateOne(
       {
         _id: new ObjectId(commentId),
         idArticle: articleId,
