@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 
 export type UseScrollToggleProps = {
-  onChangeVisible: (value: boolean | null) => void;
+  onChangeVisible: (
+    value: 'visible' | 'half-visible' | 'not-visible' | 'not-visible-initial'
+  ) => void;
   root?: IntersectionObserverInit['root'];
   rootMargin?: IntersectionObserverInit['rootMargin'];
   target: React.MutableRefObject<HTMLDivElement | null>;
@@ -36,11 +38,14 @@ export const useScrollToggle = ({
         // 0 - not-visible
 
         if (entry.isIntersecting && ratio === 1) {
-          onChangeVisible(true);
+          onChangeVisible('visible'); //true
         } else if (ratio === 0.5) {
-          onChangeVisible(false);
+          onChangeVisible('half-visible'); //false
         } else if (ratio === 0) {
-          onChangeVisible(null);
+          onChangeVisible('not-visible-initial'); //null
+          setTimeout(() => {
+            onChangeVisible('not-visible');
+          }, 180);
         }
       });
     };
