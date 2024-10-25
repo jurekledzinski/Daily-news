@@ -1,42 +1,33 @@
-import { APICreateResponseSuccess, URLS } from '../api';
 import { FormLoginValues, useLoginFormProps } from '../components/pages';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useSubmit } from 'react-router-dom';
 
-export const useLoginForm = ({ onSuccess }: useLoginFormProps) => {
-  const queryClient = useQueryClient();
-
-  const formMethods = useForm<FormLoginValues>({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+export const useLoginForm = ({
+  error,
+  onSuccess,
+  status,
+}: useLoginFormProps) => {
+  const methods = useForm<FormLoginValues>({
+    defaultValues: { email: '', password: '' },
   });
 
-  const submit = useMutation<APICreateResponseSuccess, Error, FormLoginValues>({
-    mutationFn: async (data) => {
-      const response = await fetch(URLS.LOGIN_USER(), {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        mode: 'cors',
-        body: JSON.stringify(data),
-      });
-      return await response.json();
-    },
-    onSuccess: () => {
-      onSuccess();
-      formMethods.reset();
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-    },
-  });
+  const submit = useSubmit();
 
-  return {
-    formMethods,
-    onSubmit: (data: FormLoginValues) => submit.mutate(data),
+  const onSubmit = (data: FormLoginValues) => {
+    const formData = new FormData();
+    formData.append('actionType', 'login-user');
+    formData.set('email', data.email);
+    formData.set('password', data.password);
+
+    submit(formData, { method: 'post' });
   };
+
+  useEffect(() => {
+    if (status === 'idle' && !error) {
+      onSuccess(methods.reset);
+    }
+  }, [error, onSuccess, status, methods.reset]);
+
+  return { methods, onSubmit: methods.handleSubmit(onSubmit) };
 };
