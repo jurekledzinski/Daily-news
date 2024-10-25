@@ -23,70 +23,63 @@ export const getCategoriesArticles = tryCatch<
 >(async () => {
   const response = await fetch(URLS.GET_CATEGORIES_ARTICLES());
 
-  const data = await response.json();
-
-  return data;
+  return await response.json();
 });
 
-export const getArticles = async (category: string, page: string) => {
-  const response = await fetch(URLS.GET_ARTICLES(category, page));
+export const getArticles = tryCatch<
+  APIGuardianResponsePagniationSuccess<IArticles[]>,
+  APIErrorResponse,
+  { category: string; page: string }
+>(async (data: { category: string; page: string }) => {
+  const response = await fetch(URLS.GET_ARTICLES(data.category, data.page));
 
-  if (!response.ok) throw new Error('Something went wrong, please try later.');
+  return await response.json();
+});
 
-  const data: APIGuardianResponsePagniationSuccess<IArticles[]> =
-    await response.json();
-
-  return data;
-};
-
-export const getDetailsArticle = async (_: string, id: string) => {
+export const getDetailsArticle = tryCatch<
+  APIResponseDetailsSuccess<IDetailsArticle>,
+  APIErrorResponse,
+  string
+>(async (id: string) => {
   const response = await fetch(URLS.GET_DETAILS_ARTICLE(id));
 
-  if (!response.ok) throw new Error('Something went wrong, please try later.');
+  return await response.json();
+});
 
-  const data: APIResponseDetailsSuccess<IDetailsArticle> =
-    await response.json();
+export const getComments = tryCatch<
+  APIResponseDetailsSuccess<IDetailsArticle>,
+  APIErrorResponse,
+  { articleId: string; page: string }
+>(async (data: { articleId: string; page: string }) => {
+  const id = encodeURIComponent(data.articleId);
 
-  return data;
-};
-
-export const getComments = async (articleId: string, page: string) => {
-  const id = encodeURIComponent(articleId);
-
-  const response = await fetch(URLS.GET_COMMENTS(id, page), {
+  const response = await fetch(URLS.GET_COMMENTS(id, data.page), {
     method: 'GET',
     mode: 'cors',
     credentials: 'include',
   });
 
-  if (!response.ok) throw new Error('Something went wrong, please try later.');
+  return await response.json();
+});
 
-  const data: APIResponseDetailsSuccess<IDetailsArticle> =
-    await response.json();
+export const getCommentReplies = tryCatch<
+  APIResponseDetailsSuccess<IDetailsArticle>,
+  APIErrorResponse,
+  { articleId: string; commentId: string; page: string }
+>(async (data: { articleId: string; commentId: string; page: string }) => {
+  const id = encodeURIComponent(data.articleId);
 
-  return data;
-};
+  const response = await fetch(
+    URLS.GET_COMMENT_REPLIES(id, data.commentId, data.page),
+    {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+    }
+  );
 
-export const getCommentReplies = async (
-  articleId: string,
-  commentId: string,
-  page: string
-) => {
-  const id = encodeURIComponent(articleId);
-
-  const response = await fetch(URLS.GET_COMMENT_REPLIES(id, commentId, page), {
-    method: 'GET',
-    mode: 'cors',
-    credentials: 'include',
-  });
-
-  if (!response.ok) throw new Error('Something went wrong, please try later.');
-
-  const data: APIResponseDetailsSuccess<IDetailsArticle> =
-    await response.json();
-
-  return data;
-};
+  return await response.json();
+});
 
 export const createComment = tryCatch<
   APISuccessResponse,
