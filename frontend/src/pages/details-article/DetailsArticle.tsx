@@ -1,19 +1,19 @@
 import { ArticleDetails } from '../../components/pages';
 import { cloneDeep } from 'lodash';
 import { CommentsWithReplies } from '../../components/shared';
+import { loaderDetailsArticle } from '../../api';
+import { useCallback, useRef, useState } from 'react';
+import { useUserStore } from '../../store';
 import {
   getDetailsArticleImageData,
   updateNestedRepliesLikes,
 } from '../../helpers';
-import { loaderDetailsArticle } from '../../api';
 import {
   useAddComment,
   useFetchOnScroll,
   useLoadComments,
   useUpdateLikes,
 } from '../../hooks';
-import { useCallback, useRef, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import {
   Params,
   useLoaderData,
@@ -29,16 +29,17 @@ export const DetailsArticle = () => {
     Record<string, CommentsWithReplies[]>
   >({});
   const { id } = useParams() as Params;
+  const { state } = useUserStore();
   const articleId = decodeURIComponent(id ?? '');
   const [searchParams, setSearchParams] = useSearchParams();
-
   const data = useLoaderData() as LoaderData;
   const article = data.detailsArticle.response.content;
+  const user = state.user ?? { email: '', name: '', id: '' };
 
   const methodSubmitComment = useAddComment({
     artId: articleId,
-    user: `user-${uuidv4().slice(0, 6)}`,
-    userId: uuidv4(),
+    user: user.name,
+    userId: user.id ?? '',
   });
 
   const methodSubmitLike = useUpdateLikes({
@@ -103,7 +104,7 @@ export const DetailsArticle = () => {
         }}
         methodSubmitComment={methodSubmitComment}
         methodSubmitLike={methodSubmitLike}
-        onShowReplies={async (commentId) => {
+        onShowReplies={(commentId) => {
           setSearchParams({ comment_id: commentId, page_reply: '1' });
         }}
         onShowMoreReplies={(parentCommentId, page) => {
@@ -112,6 +113,7 @@ export const DetailsArticle = () => {
           currentParams.set('page_reply', (page + 1).toString());
           setSearchParams(currentParams);
         }}
+        userData={state}
       />
     </section>
   );
