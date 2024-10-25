@@ -1,8 +1,7 @@
 import { Backdrop, Loader } from '../../../shared';
 import { ObjArticles } from '../../dashboard';
-import { Outlet, useNavigation, useOutletContext } from 'react-router-dom';
+import { Outlet, useNavigation } from 'react-router-dom';
 import { TabsCategoriesArticlesProps } from './types';
-import { UseOutletContext } from '../../../../types/global';
 import { useRef } from 'react';
 import './TabsCategories.css';
 
@@ -27,7 +26,6 @@ export const TabsCategoriesArticles = ({
   onRedirectTwo,
   onRedirectThree,
 }: TabsCategoriesArticlesProps) => {
-  const context = useOutletContext<UseOutletContext>();
   const tabsListContainerRef = useRef<HTMLDivElement | null>(null);
   const navigation = useNavigation();
 
@@ -93,9 +91,6 @@ export const TabsCategoriesArticles = ({
         <Outlet
           context={{
             handleAddSubArticle,
-            footerRef: context.footerRef,
-            headerRef: context.headerRef,
-            tabsListContainerRef: tabsListContainerRef,
           }}
         />
       </TabsPanel>
