@@ -1,0 +1,39 @@
+.profile__password-form,
+.profile__form {
+  width: min(100%, 400px);
+}
+
+.profile__password-form form > button,
+.profile__form form > button {
+  margin-top: 1rem;
+}
+.profile__password-form {
+  margin: 1rem 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.15rem;
+  font-size: 0.75rem;
+}
+
+input {
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+input::placeholder {
+  font-size: 0.8rem;
+}
+
+fieldset {
+  margin-bottom: 0.25rem;
+  border: none;
+}
