@@ -1,8 +1,39 @@
-import { CommentCreate, Likes } from './types';
-import { createComment, updateLikesComment } from './apiCalls';
-import { invalidateQueries, refetchQueries } from '../helpers';
-import { LoaderFunctionArgs, Params, redirect } from 'react-router-dom';
+import { queryClient as useQueryClient } from '../main';
 import { QueryClient } from '@tanstack/react-query';
+import {
+  invalidateQueries,
+  refetchQueries,
+  removeCookie,
+  setCookie,
+} from '../helpers';
+import {
+  LoaderFunctionArgs,
+  Params,
+  redirect,
+  RedirectFunction,
+} from 'react-router-dom';
+import {
+  APIErrorResponse,
+  APISuccessResponse,
+  CommentCreate,
+  DataLogin,
+  DataPassword,
+  DataProfile,
+  Likes,
+  User,
+} from './types';
+import {
+  createComment,
+  updateLikesComment,
+  deleteUserAccount,
+  updateUserProfile,
+  changeUserPassword,
+  registerUser,
+  loginUser,
+  logoutUser,
+} from './apiCalls';
+
+// ----------------- Actions comment -----------------
 
 export const actionDetailsArticle =
   (queryClient: QueryClient) =>
@@ -33,12 +64,22 @@ export const actionCreateComment = async (
 ) => {
   data.delete('actionType');
   const newComment = Object.fromEntries(data) as unknown as CommentCreate;
-  await createComment(newComment);
+  const result = await createComment(newComment);
 
   await invalidateQueries(queryClient, ['list-comments', articleId, page]);
   await refetchQueries(queryClient, ['list-comments', articleId, page]);
 
-  return redirect(window.location.pathname);
+  const redirectTo = window.location.pathname;
+
+  if ('message' in result && !result.success) {
+    return {
+      message: result.message,
+      redirect: redirectTo,
+      action: 'create-comment',
+    };
+  }
+
+  return redirect(redirectTo);
 };
 
 export const actionCreateCommentReply = async (
@@ -50,7 +91,7 @@ export const actionCreateCommentReply = async (
 ) => {
   data.delete('actionType');
   const newReply = Object.fromEntries(data) as unknown as CommentCreate;
-  await createComment(newReply);
+  const result = await createComment(newReply);
   const parentId = newReply.parentCommentId ?? '';
 
   await invalidateQueries(queryClient, ['list-comments', articleId, page]);
@@ -69,9 +110,17 @@ export const actionCreateCommentReply = async (
     parentId,
   ]);
 
-  return redirect(
-    `${window.location.pathname}?comment_id=${newReply.parentCommentId}`
-  );
+  const redirectTo = `${window.location.pathname}?comment_id=${newReply.parentCommentId}`;
+
+  if ('message' in result && !result.success) {
+    return {
+      message: result.message,
+      redirect: redirectTo,
+      action: 'create-reply',
+    };
+  }
+
+  return redirect(redirectTo);
 };
 
 export const actionUpdateLikesComment = async (
@@ -83,13 +132,173 @@ export const actionUpdateLikesComment = async (
   data.delete('actionType');
   const comment = Object.fromEntries(data) as unknown as Likes;
 
-  await updateLikesComment(articleId, comment);
+  const result = await updateLikesComment({ articleId, body: comment });
 
   if (comment.parentCommentId === 'null') {
-    return redirect(`${window.location.pathname}?page=${page}`);
+    const redirectTo = `${window.location.pathname}?page=${page}`;
+
+    if ('message' in result && !result.success) {
+      return {
+        message: result.message,
+        redirect: redirectTo,
+        action: 'update-likes',
+      };
+    }
+
+    return redirect(redirectTo);
   }
 
-  return redirect(
-    `${window.location.pathname}?comment_id=${comment.parentCommentId}&page_reply=${pageReply}`
-  );
+  const redirectTo = `${window.location.pathname}?comment_id=${comment.parentCommentId}&page_reply=${pageReply}`;
+
+  if ('message' in result && !result.success) {
+    return {
+      message: result.message,
+      redirect: redirectTo,
+      action: 'update-likes',
+    };
+  }
+
+  return redirect(redirectTo);
 };
+
+// ----------------- Actions user profile -----------------
+
+export const actionProfileUser = async ({
+  params,
+  request,
+}: LoaderFunctionArgs<unknown>) => {
+  const { id } = params as Params;
+  if (!id) return;
+  const data = await request.formData();
+  const actionType = data.get('actionType');
+
+  if (actionType === 'update-profile') {
+    return actionUpdateUserProfile(data, id);
+  } else if (actionType === 'change-password') {
+    return actionChangeUserPassword(data, id);
+  } else if (actionType === 'delete-user-account') {
+    return actionDeleteUserAccount(id);
+  }
+};
+
+const actionUpdateUserProfile = async (data: FormData, id: string) => {
+  data.delete('actionType');
+  const dataProfile = Object.fromEntries(data) as unknown as DataProfile;
+
+  const result = await updateUserProfile({ id, body: dataProfile });
+
+  useQueryClient.removeQueries({ queryKey: ['user'] });
+
+  if ('message' in result && !result.success) {
+    return {
+      message: result.message,
+      redirect: window.location.pathname,
+      action: 'update-profile',
+    };
+  }
+
+  return redirect(`${window.location.pathname}`);
+};
+
+const actionChangeUserPassword = async (data: FormData, id: string) => {
+  data.delete('actionType');
+  const changePassword = Object.fromEntries(data) as unknown as DataPassword;
+  const result = await changeUserPassword({ id, body: changePassword });
+
+  useQueryClient.removeQueries({ queryKey: ['user'] });
+
+  if ('message' in result && !result.success) {
+    return {
+      message: result.message,
+      redirect: window.location.pathname,
+      action: 'change-password',
+    };
+  }
+
+  return redirect(`${window.location.pathname}`);
+};
+
+const actionDeleteUserAccount = async (id: string) => {
+  const result = await deleteUserAccount(id);
+
+  useQueryClient.invalidateQueries({ queryKey: ['user'] });
+
+  if ('message' in result && !result.success) {
+    return {
+      message: result.message,
+      redirect: '/',
+      action: 'delete-user-account',
+    };
+  }
+
+  return redirect('/');
+};
+
+// ----------------- Actions register -----------------
+
+export const actionHome =
+  (queryClient: QueryClient) =>
+  async ({ request }: LoaderFunctionArgs<unknown>) => {
+    const data = await request.formData();
+    const actionType = data.get('actionType');
+
+    if (actionType === 'register-user') {
+      return actionRegisterUser(data);
+    } else if (actionType === 'login-user') {
+      return actionLoginUser(queryClient, data);
+    } else if (actionType === 'logout-user') {
+      return actionLogoutUser();
+    }
+  };
+
+export const actionRegisterUser = async (data: FormData) => {
+  data.delete('actionType');
+  const newUser = Object.fromEntries(data) as unknown as User;
+
+  const result = await registerUser(newUser);
+
+  const redirectTo = window.location.pathname;
+
+  return setResponse('register-user', redirect, result, redirectTo);
+};
+
+export const actionLoginUser = async (
+  queryClient: QueryClient,
+  data: FormData
+) => {
+  data.delete('actionType');
+
+  const user = Object.fromEntries(data) as unknown as DataLogin;
+
+  const result = await loginUser(user);
+
+  await invalidateQueries(queryClient, ['user']);
+
+  const redirectTo = window.location.pathname;
+  return setResponse('login-user', redirect, result, redirectTo);
+};
+
+export const actionLogoutUser = async () => {
+  const result = await logoutUser({});
+
+  useQueryClient.removeQueries({ queryKey: ['user'] });
+
+  const redirectTo = window.location.pathname;
+  return setResponse('logout-user', redirect, result, redirectTo);
+};
+
+function setResponse(
+  action: string,
+  redirect: RedirectFunction,
+  result: APISuccessResponse<unknown> | APIErrorResponse,
+  url: string
+) {
+  if ('message' in result && !result.success) {
+    const error = { message: result.message, action };
+    setCookie('serverError', error);
+    return redirect(url);
+  }
+
+  removeCookie('serverError');
+  return redirect(url);
+}

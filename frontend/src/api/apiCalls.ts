@@ -1,3 +1,4 @@
+import { tryCatch } from '../helpers';
 import { URLS } from './urls';
 import {
   APIGuardianResponseSuccess,
@@ -7,27 +8,25 @@ import {
   IDetailsArticle,
   APIGuardianResponsePagniationSuccess,
   CommentCreate,
-  APICreateResponseSuccess,
+  APISuccessResponse,
   Likes,
-  APIUpdateResponseSuccess,
+  DataPassword,
+  DataProfile,
+  DataLogin,
+  User,
+  APIErrorResponse,
 } from './types';
 
-export const getCategoriesArticles = async () => {
-  try {
-    const response = await fetch(URLS.GET_CATEGORIES_ARTICLES());
+export const getCategoriesArticles = tryCatch<
+  APIGuardianResponseSuccess<CategoriesData[]>,
+  APIErrorResponse
+>(async () => {
+  const response = await fetch(URLS.GET_CATEGORIES_ARTICLES());
 
-    if (!response.ok) {
-      throw new Error('Failed to load page data.');
-    }
+  const data = await response.json();
 
-    const data: APIGuardianResponseSuccess<CategoriesData[]> =
-      await response.json();
-
-    return data;
-  } catch (error) {
-    return false;
-  }
-};
+  return data;
+});
 
 export const getArticles = async (category: string, page: string) => {
   const response = await fetch(URLS.GET_ARTICLES(category, page));
@@ -89,7 +88,11 @@ export const getCommentReplies = async (
   return data;
 };
 
-export const createComment = async (body: CommentCreate) => {
+export const createComment = tryCatch<
+  APISuccessResponse,
+  APIErrorResponse,
+  CommentCreate
+>(async (body: CommentCreate) => {
   const response = await fetch(URLS.CREATE_COMMENT(), {
     method: 'POST',
     mode: 'cors',
@@ -100,29 +103,135 @@ export const createComment = async (body: CommentCreate) => {
     },
   });
 
-  if (!response.ok) throw new Error('Something went wrong, please try later.');
+  return await response.json();
+});
 
-  const data: APICreateResponseSuccess = await response.json();
+export const updateLikesComment = tryCatch<
+  APISuccessResponse,
+  APIErrorResponse,
+  { articleId: string; body: Likes }
+>(async (data: { articleId: string; body: Likes }) => {
+  const id = encodeURIComponent(data.articleId);
 
-  return data;
-};
+  const response = await fetch(
+    URLS.UPDATE_COMMENT_LIKE(id, data.body.commentId),
+    {
+      method: 'PATCH',
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        likes: parseInt(data.body.likes.toString()),
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
 
-export const updateLikesComment = async (articleId: string, body: Likes) => {
-  const id = encodeURIComponent(articleId);
+  return await response.json();
+});
 
-  const response = await fetch(URLS.UPDATE_COMMENT_LIKE(id, body.commentId), {
+// ----------------- Actions user profile -----------------
+
+export const updateUserProfile = tryCatch<
+  APISuccessResponse,
+  APIErrorResponse,
+  { id: string; body: DataProfile }
+>(async (data: { id: string; body: DataProfile }) => {
+  const response = await fetch(URLS.UPDATE_USER_PROFILE(data.id), {
     method: 'PATCH',
     mode: 'cors',
     credentials: 'include',
-    body: JSON.stringify({ likes: parseInt(body.likes.toString()) }),
+    body: JSON.stringify(data.body),
     headers: {
       'Content-Type': 'application/json',
     },
   });
 
-  if (!response.ok) throw new Error('Something went wrong, please try later.');
+  return await response.json();
+});
 
-  const data: APIUpdateResponseSuccess = await response.json();
+export const changeUserPassword = tryCatch<
+  APISuccessResponse,
+  APIErrorResponse,
+  { id: string; body: DataPassword }
+>(async (data: { id: string; body: DataPassword }) => {
+  const response = await fetch(URLS.CHANGE_USER_PASSWORD(data.id), {
+    method: 'PATCH',
+    mode: 'cors',
+    credentials: 'include',
+    body: JSON.stringify(data.body),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
-  return data;
-};
+  return await response.json();
+});
+
+export const deleteUserAccount = tryCatch<
+  APISuccessResponse,
+  APIErrorResponse,
+  string
+>(async (id: string) => {
+  const response = await fetch(URLS.DELETE_USER_ACCOUNT(id), {
+    method: 'DELETE',
+    mode: 'cors',
+    credentials: 'include',
+  });
+
+  return await response.json();
+});
+
+// ----------------- Actions register -----------------
+
+export const registerUser = tryCatch<
+  APISuccessResponse,
+  APIErrorResponse,
+  User
+>(async (body: User) => {
+  const response = await fetch(URLS.CREATE_USER(), {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'include',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return await response.json();
+});
+
+export const loginUser = tryCatch<
+  APISuccessResponse,
+  APIErrorResponse,
+  DataLogin
+>(async (body: DataLogin) => {
+  const response = await fetch(URLS.LOGIN_USER(), {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'include',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return await response.json();
+});
+
+export const logoutUser = tryCatch<APISuccessResponse, APIErrorResponse>(
+  async () => {
+    const response = await fetch(URLS.LOGOUT_USER(), {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return await response.json();
+  }
+);

@@ -2,6 +2,13 @@ export const URLS = {
   FETCH_USER: () => 'http://localhost:5000/api/v1/users',
   CREATE_USER: () => 'http://localhost:5000/api/v1/register',
   LOGIN_USER: () => 'http://localhost:5000/api/v1/login',
+  LOGOUT_USER: () => 'http://localhost:5000/api/v1/users/logout',
+  UPDATE_USER_PROFILE: (id: string) =>
+    `http://localhost:5000/api/v1/users/update_profile/${id}`,
+  CHANGE_USER_PASSWORD: (id: string) =>
+    `http://localhost:5000/api/v1/users/change_password/${id}`,
+  DELETE_USER_ACCOUNT: (id: string) =>
+    `http://localhost:5000/api/v1/users/delete_user/${id}`,
   GET_CATEGORIES_ARTICLES: () => {
     return `https://content.guardianapis.com/sections?&format=json&api-key=${
       import.meta.env.VITE_API_KEY

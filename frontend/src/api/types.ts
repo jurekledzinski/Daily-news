@@ -38,24 +38,21 @@ export type APIResponseDetailsSuccess<T> = {
   >;
 };
 
-export type APISuccessResponse<T> = {
+export type APISuccess<T> = {
   success: boolean;
   payload: {
     result: T;
   };
 };
 
-export interface APIResponsePagniationSuccess<T> extends APISuccessResponse<T> {
+export interface APIResponsePagniationSuccess<T> extends APISuccess<T> {
   page: number;
   totalPages: number;
   replyCount?: number;
 }
 
-export interface APICreateResponseSuccess<T = unknown>
-  extends Omit<APISuccessResponse<T>, 'payload'> {}
-
-export interface APIUpdateResponseSuccess<T = unknown>
-  extends Omit<APISuccessResponse<T>, 'payload'> {}
+export interface APISuccessResponse<T = unknown>
+  extends Omit<APISuccess<T>, 'payload'> {}
 
 export type APIErrorResponse = {
   message?: string;
@@ -140,3 +137,15 @@ export type Likes = {
   likes: number;
   parentCommentId?: string | null;
 };
+
+export type User = {
+  email: string;
+  name: string;
+  password: string;
+  id: string;
+};
+
+export type DataPassword = Pick<User, 'password'>;
+export type DataProfile = Omit<User, 'password' | 'id'>;
+export type DataLogin = Omit<User, 'name' | 'id'>;
+export type DataUser = Omit<User, 'password'>;
