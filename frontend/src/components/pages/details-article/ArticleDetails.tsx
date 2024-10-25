@@ -1,8 +1,12 @@
 import { ArticleDetailsProps } from './types';
-import { Form, SectionComments } from '../../shared';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AlertError, FormComment, SectionComments } from '../../shared';
 import { Header } from './Header';
 import { sanitizeContent } from '../../../helpers';
 import './ArticleDetails.css';
+import { useActionData } from 'react-router-dom';
+import { ActionData } from '../../../types';
 
 export const ArticleDetails = ({
   comments,
@@ -12,9 +16,13 @@ export const ArticleDetails = ({
   methodSubmitLike,
   onShowReplies,
   onShowMoreReplies,
+  userData,
 }: ArticleDetailsProps) => {
+  const actionData = useActionData() as ActionData;
   const cleanCaption = sanitizeContent(data.caption);
   const cleanContent = sanitizeContent(data.content);
+
+  //   TODO: create message info komponent w messages folder i zmien niżej
 
   return (
     <div className="details-article">
@@ -49,10 +57,26 @@ export const ArticleDetails = ({
         ) : null}
       </div>
 
-      <Form
-        buttonText="Add comment"
-        onSubmit={(data) => methodSubmitComment(data)}
-      />
+      {userData.user ? (
+        <FormComment
+          buttonText="Add comment"
+          onSubmit={(data) => methodSubmitComment(data)}
+        />
+      ) : (
+        <div
+          className="message-info"
+          style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+        >
+          <FontAwesomeIcon icon={faLock} />
+          <p>Sign in to add comment</p>
+        </div>
+      )}
+
+      {actionData && actionData.action === 'create-comment' && (
+        <AlertError className="alert-error--article-details">
+          {actionData.message}
+        </AlertError>
+      )}
 
       <SectionComments
         comments={comments}
@@ -60,14 +84,26 @@ export const ArticleDetails = ({
         onShowMoreReplies={onShowMoreReplies}
         onSubmitLike={methodSubmitLike}
       >
-        {(commentId) => {
-          return (
-            <Form
-              buttonText="Reply to comment"
-              onSubmit={(data) => methodSubmitComment(data, commentId)}
-            />
-          );
-        }}
+        {userData.user
+          ? (commentId, onClose) => {
+              return (
+                <>
+                  <FormComment
+                    buttonText="Reply to comment"
+                    onSubmit={(data) => {
+                      onClose();
+                      methodSubmitComment(data, commentId);
+                    }}
+                  />
+                  {actionData && actionData.action === 'create-reply' && (
+                    <AlertError className="alert-error--article-details">
+                      {actionData.message}
+                    </AlertError>
+                  )}
+                </>
+              );
+            }
+          : null}
       </SectionComments>
     </div>
   );
