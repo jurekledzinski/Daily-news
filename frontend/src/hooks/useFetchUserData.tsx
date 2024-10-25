@@ -1,9 +1,13 @@
-import { APIErrorResponse, APISuccessResponse, URLS } from '../api';
+import { APIErrorResponse, APISuccess, URLS } from '../api';
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useUserStore } from '../store';
 
 export const useFetchUserData = () => {
-  const data = useQuery<
-    APISuccessResponse<{ email: string; name: string }>,
+  const { dispatch } = useUserStore();
+
+  const result = useQuery<
+    APISuccess<{ email: string; name: string }>,
     APIErrorResponse
   >({
     queryKey: ['user'],
@@ -17,10 +21,21 @@ export const useFetchUserData = () => {
         mode: 'cors',
       });
 
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+
       return await response.json();
     },
+    enabled: document.cookie.split('=').includes('time'),
     retry: false,
   });
 
-  return data;
+  useEffect(() => {
+    if (result.isLoading) return;
+    if (result.isError) return dispatch({ type: 'SET_USER', payload: null });
+    if (!result.data) return;
+
+    dispatch({ type: 'SET_USER', payload: result.data.payload.result });
+  }, [dispatch, result.data, result.isError, result.isLoading]);
 };
