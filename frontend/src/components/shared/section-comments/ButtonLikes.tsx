@@ -1,9 +1,8 @@
 import { AiOutlineLike } from 'react-icons/ai';
-import { getValueLike, setLikes } from '../../../helpers';
 import { Form } from 'react-router-dom';
-
-import { useState } from 'react';
+import { getValueLike, setLikes } from '../../../helpers';
 import { Likes } from '../../../api';
+import { useState } from 'react';
 
 type ButtonLikesProps = {
   commentId: string;
@@ -12,7 +11,7 @@ type ButtonLikesProps = {
   parentCommentId: string | null;
 };
 
-const ButtonLikes = ({
+export const ButtonLikes = ({
   commentId,
   likes,
   onSubmitLike,
@@ -37,5 +36,3 @@ const ButtonLikes = ({
     </Form>
   );
 };
-
-export default ButtonLikes;
