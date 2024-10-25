@@ -29,7 +29,7 @@ export const loaderCategories =
       queryClient.getQueryData(query.queryKey) ??
       (await queryClient.fetchQuery(query));
 
-    return categories;
+    return categories ? categories : categories;
   };
 
 export const loaderArticles =

@@ -1,7 +1,7 @@
-import { getCookie, removeCookie } from '../../../../helpers';
-import { NavBarActions, NavBarAuth } from '../NavBar';
+import { NavBarActions, NavBarAuth } from '../nav-bar';
 import { PathMatch, useNavigate, useNavigation } from 'react-router-dom';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
+import { useControlServerError } from '../../../../hooks/useControlServerError';
 import { useUserStore } from '../../../../store';
 import './Header.css';
 import {
@@ -18,12 +18,12 @@ type HeaderProps = {
 
 export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const navigate = useNavigate();
+  const navigation = useNavigation();
   const dialogLoginRef = useRef<HTMLDialogElement | null>(null);
   const dialogRegisterRef = useRef<HTMLDialogElement | null>(null);
-  const navigation = useNavigation();
-  const { onGetCookie, onRemoveCookie } = useControlServerError('serverError');
-
   useFetchUserData();
+
+  const { onGetCookie, onRemoveCookie } = useControlServerError('serverError');
   const { state, dispatch } = useUserStore();
 
   const logoutUser = useLogoutUser({
@@ -82,91 +82,3 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
     </>
   );
 };
-
-function useControlServerError(cookieName: string) {
-  const [, setFlag] = useState(false);
-
-  const onRemoveCookie = useCallback(() => {
-    removeCookie(cookieName);
-    setFlag((prev) => !prev);
-  }, [cookieName]);
-
-  const onGetCookie = useCallback(
-    (action: string): { message: string; action: string } | null =>
-      action && action === getCookie(cookieName)?.action
-        ? getCookie(cookieName)
-        : null,
-    [cookieName]
-  );
-
-  return useMemo(
-    () => ({
-      onGetCookie,
-      onRemoveCookie,
-    }),
-    [onGetCookie, onRemoveCookie]
-  );
-}
-
-// {state.user && (
-//     <button
-//       className="header__logout"
-//       onClick={() => {
-//         logoutUser();
-//       }}
-//     >
-//       Logout
-//     </button>
-//   )}
-
-//   {!state.user && (
-//     <Modal
-//       openButton=" Sign in"
-//       form="login"
-//       ref={dialogLoginRef}
-//       onClose={() => {
-//         onRemoveCookie();
-//         submitLogin.methods.reset();
-//       }}
-//       title="Sign in"
-//     >
-//       <LoginForm
-//         id="login"
-//         methods={submitLogin.methods}
-//         onSubmit={submitLogin.onSubmit}
-//         {...(onGetCookie('login-user') && {
-//           serverError: onGetCookie('login-user')?.message,
-//         })}
-//       />
-//     </Modal>
-//   )}
-
-//   {!state.user && (
-//     <Modal
-//       openButton="Sign up"
-//       form="register"
-//       ref={dialogRegisterRef}
-//       onClose={() => {
-//         onRemoveCookie();
-//         submitRegister.methods.reset();
-//       }}
-//       title="Sign up"
-//     >
-//       <RegisterForm
-//         id="register"
-//         methods={submitRegister.methods}
-//         onSubmit={submitRegister.onSubmit}
-//         {...(onGetCookie('register-user') && {
-//           serverError: onGetCookie('register-user')?.message,
-//         })}
-//       />
-//     </Modal>
-//   )}
-// {state.user && (
-//     <button
-//       className="header__profile"
-//       onClick={() => navigate(`profile/${state.user?.id}`)}
-//     >
-//       Profile
-//     </button>
-//   )}
