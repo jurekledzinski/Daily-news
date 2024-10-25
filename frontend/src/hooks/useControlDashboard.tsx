@@ -1,8 +1,8 @@
-import type ReactGridLayout from 'react-grid-layout';
-import { LayoutData } from '../components/pages/dashboard';
-import { v4 as uuidv4 } from 'uuid';
 import { cloneDeep } from 'lodash';
 import { findPosition } from '../helpers';
+import { LayoutData } from '../components/pages/dashboard';
+import { v4 as uuidv4 } from 'uuid';
+import type ReactGridLayout from 'react-grid-layout';
 
 export const colsLayouts = {
   lg: 4,
@@ -20,6 +20,7 @@ type useControlDashboardProps = {
   onDrop: (newLayouts: LayoutData) => void;
   onDropStop: (newLayouts: LayoutData) => void;
   onResizeStop: (newLayouts: LayoutData) => void;
+  onRemoveCard: (newLayouts: LayoutData) => void;
 };
 
 export const useControlDashboard = ({
@@ -29,6 +30,7 @@ export const useControlDashboard = ({
   onDrop,
   onDropStop,
   onResizeStop,
+  onRemoveCard,
 }: useControlDashboardProps) => {
   const handleBreakPointChange = (newBreakpoint: string) => {
     onChangeBreakpoint(newBreakpoint);
@@ -109,7 +111,7 @@ export const useControlDashboard = ({
 
         return item;
       }),
-    };
+    } as LayoutData;
 
     onDropStop(updateData);
   };
@@ -128,9 +130,19 @@ export const useControlDashboard = ({
 
         return item;
       }),
-    };
+    } as LayoutData;
 
     onResizeStop(updateData);
+  };
+
+  const handleRemoveCard = (id: string) => {
+    const result = Object.entries(layoutData).map((layout) => {
+      return [layout[0], layout[1].filter((item) => item.id !== id)];
+    });
+
+    const updatedLayout = Object.fromEntries(result) as LayoutData;
+
+    onRemoveCard(updatedLayout);
   };
 
   return {
@@ -138,5 +150,6 @@ export const useControlDashboard = ({
     handleDrop,
     handleDropStop,
     handleResizeStop,
+    handleRemoveCard,
   };
 };
