@@ -15,7 +15,7 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
           }
           if (!user) {
             return reject(
-              new CustomError(`Authentication failed, ${info.message}`, 500)
+              new CustomError(`Authentication failed, ${info.message}`, 404)
             );
           }
           resolve({ user, info });
@@ -33,6 +33,17 @@ export const loginUser = tryCatch<{ message: '' }>(
       if (error) {
         throw new CustomError('Login failed', 500);
       }
+
+      const maxAge = req.session.cookie.maxAge;
+
+      res.cookie('time', 'true', {
+        domain: 'localhost', //change later
+        path: '/',
+        secure: false, //change later
+        httpOnly: false,
+        sameSite: 'strict',
+        maxAge: maxAge,
+      });
 
       return res.status(200).json({ success: true });
     });
