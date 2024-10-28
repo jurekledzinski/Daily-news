@@ -2,10 +2,10 @@ import { FooterProps } from './types';
 
 export const Footer = ({
   amountReplies,
+  children,
   onShowForm,
   onShowReplies,
 }: FooterProps) => {
-  const isLogged = document.cookie.split('=').includes('time');
   return (
     <div className="comment-panel__footer">
       {amountReplies ? (
@@ -13,7 +13,7 @@ export const Footer = ({
           Show replies ({amountReplies})
         </button>
       ) : null}
-      {isLogged && (
+      {children && (
         <button className="comment-panel__reply" onClick={onShowForm}>
           Reply
         </button>

@@ -33,6 +33,7 @@ export const CommentSection = ({
 
         <Footer
           amountReplies={comment.replyCount ?? 0}
+          children={children}
           onShowForm={() => {
             setShowForm((prev) => !prev);
           }}
