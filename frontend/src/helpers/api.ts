@@ -1,3 +1,6 @@
+import { APIErrorResponse, APISuccessResponse } from '../api';
+import { RedirectFunction } from 'react-router-dom';
+import { removeCookie, setCookie } from './global';
 import type { QueryClient } from '@tanstack/react-query';
 
 export const invalidateQueries = async (
@@ -37,3 +40,28 @@ export const fetchOrCache = async <T>(
 ) => {
   return (queryClient.getQueryData(queryKey) as T) ?? (await queryFn());
 };
+
+export function setResponse(
+  action: string,
+  redirect: RedirectFunction,
+  result: APISuccessResponse<unknown> | APIErrorResponse,
+  url: string
+) {
+  if ('message' in result && !result.success) {
+    const error = { message: result.message, action };
+    setCookie('serverError', error);
+    return redirect(url);
+  }
+
+  removeCookie('serverError');
+  return redirect(url);
+}
+
+export function getUrlQuery(
+  request: Request,
+  nameQuery: string,
+  initial: string
+) {
+  const url = new URL(request.url);
+  return url.searchParams.get(nameQuery) ?? initial;
+}
