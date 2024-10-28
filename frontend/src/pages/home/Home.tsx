@@ -1,20 +1,16 @@
 import { Footer, Header } from '../../components/pages';
-import { getCurrentCategory } from '../../helpers';
 import { loaderCategories } from '../../api';
 import { Suspense } from 'react';
 import './Home.css';
 
 import {
   Outlet,
-  Params,
   ScrollRestoration,
   useLoaderData,
   useMatch,
-  useParams,
 } from 'react-router-dom';
 
 export const Home = () => {
-  const { category } = useParams() as Params;
   const matchHome = useMatch('/');
   const matchProfile = useMatch('/profile/:id');
 
@@ -42,14 +38,7 @@ export const Home = () => {
           return location.pathname;
         }}
       />
-      <Footer
-        category={category}
-        isSubTabs={Boolean(getCurrentCategory(category ?? '')?.articles.length)}
-        matchHome={matchHome}
-        matchProfile={matchProfile}
-      >
-        All rights reserved © {new Date().getFullYear()}
-      </Footer>
+      <Footer>All rights reserved © {new Date().getFullYear()}</Footer>
     </div>
   );
 };
