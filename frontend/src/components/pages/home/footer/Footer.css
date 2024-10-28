@@ -3,11 +3,3 @@
   color: var(--secondary-color);
   background: var(--dark-color);
 }
-
-.footer.footer--top-tabs {
-  margin-top: 31px;
-}
-
-.footer.footer--sub-tabs {
-  margin-top: 110px;
-}
