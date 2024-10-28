@@ -8,6 +8,7 @@ type GuardianResponse<T> = {
   pageSize: number;
   currentPage: number;
   pages: number;
+  message?: string;
 };
 
 export type APIGuardianResponseSuccess<T> = {
@@ -28,13 +29,14 @@ export type APIGuardianResponsePagniationSuccess<T> = {
     | 'pageSize'
     | 'currentPage'
     | 'pages'
+    | 'message'
   >;
 };
 
 export type APIResponseDetailsSuccess<T> = {
   response: Pick<
     GuardianResponse<T>,
-    'status' | 'total' | 'userTier' | 'content'
+    'status' | 'total' | 'userTier' | 'content' | 'message'
   >;
 };
 
@@ -43,6 +45,7 @@ export type APISuccess<T> = {
   payload: {
     result: T;
   };
+  message?: string;
 };
 
 export interface APIResponsePagniationSuccess<T> extends APISuccess<T> {
@@ -149,8 +152,6 @@ export type DataPassword = Pick<User, 'password'>;
 export type DataProfile = Omit<User, 'password' | 'id'>;
 export type DataLogin = Omit<User, 'name' | 'id'>;
 export type DataUser = Omit<User, 'password'>;
-
-// To trzeba zrobic
 
 type APIGuardian<T> = APIGuardianResponsePagniationSuccess<T>['response'];
 
