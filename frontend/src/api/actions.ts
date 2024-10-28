@@ -1,20 +1,8 @@
+import { invalidateQueries, refetchQueries, setResponse } from '../helpers';
+import { LoaderFunctionArgs, Params, redirect } from 'react-router-dom';
 import { queryClient as useQueryClient } from '../main';
 import { QueryClient } from '@tanstack/react-query';
 import {
-  invalidateQueries,
-  refetchQueries,
-  removeCookie,
-  setCookie,
-} from '../helpers';
-import {
-  LoaderFunctionArgs,
-  Params,
-  redirect,
-  RedirectFunction,
-} from 'react-router-dom';
-import {
-  APIErrorResponse,
-  APISuccessResponse,
   CommentCreate,
   DataLogin,
   DataPassword,
@@ -74,7 +62,6 @@ export const actionCreateComment = async (
   if ('message' in result && !result.success) {
     return {
       message: result.message,
-      redirect: redirectTo,
       action: 'create-comment',
     };
   }
@@ -115,7 +102,6 @@ export const actionCreateCommentReply = async (
   if ('message' in result && !result.success) {
     return {
       message: result.message,
-      redirect: redirectTo,
       action: 'create-reply',
     };
   }
@@ -140,7 +126,6 @@ export const actionUpdateLikesComment = async (
     if ('message' in result && !result.success) {
       return {
         message: result.message,
-        redirect: redirectTo,
         action: 'update-likes',
       };
     }
@@ -153,7 +138,6 @@ export const actionUpdateLikesComment = async (
   if ('message' in result && !result.success) {
     return {
       message: result.message,
-      redirect: redirectTo,
       action: 'update-likes',
     };
   }
@@ -192,12 +176,13 @@ const actionUpdateUserProfile = async (data: FormData, id: string) => {
   if ('message' in result && !result.success) {
     return {
       message: result.message,
-      redirect: window.location.pathname,
       action: 'update-profile',
     };
   }
 
-  return redirect(`${window.location.pathname}`);
+  const redirectTo = window.location.pathname;
+
+  return redirect(redirectTo);
 };
 
 const actionChangeUserPassword = async (data: FormData, id: string) => {
@@ -210,12 +195,13 @@ const actionChangeUserPassword = async (data: FormData, id: string) => {
   if ('message' in result && !result.success) {
     return {
       message: result.message,
-      redirect: window.location.pathname,
       action: 'change-password',
     };
   }
 
-  return redirect(`${window.location.pathname}`);
+  const redirectTo = window.location.pathname;
+
+  return redirect(redirectTo);
 };
 
 const actionDeleteUserAccount = async (id: string) => {
@@ -226,7 +212,6 @@ const actionDeleteUserAccount = async (id: string) => {
   if ('message' in result && !result.success) {
     return {
       message: result.message,
-      redirect: '/',
       action: 'delete-user-account',
     };
   }
@@ -286,19 +271,3 @@ export const actionLogoutUser = async () => {
   const redirectTo = window.location.pathname;
   return setResponse('logout-user', redirect, result, redirectTo);
 };
-
-function setResponse(
-  action: string,
-  redirect: RedirectFunction,
-  result: APISuccessResponse<unknown> | APIErrorResponse,
-  url: string
-) {
-  if ('message' in result && !result.success) {
-    const error = { message: result.message, action };
-    setCookie('serverError', error);
-    return redirect(url);
-  }
-
-  removeCookie('serverError');
-  return redirect(url);
-}
