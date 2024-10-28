@@ -1,9 +1,20 @@
 .tabs__list-container {
   position: fixed;
-  width: 100%;
   top: 45px;
   left: 0px;
   z-index: 3;
   background-color: #f9f9f9;
   padding: 0.5rem;
+  width: 100%;
+}
+
+.tabs__panel {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }

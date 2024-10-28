@@ -1,15 +1,8 @@
 .grid-articles {
-  gap: 0.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+  opacity: 1;
   margin: 0.5rem 0;
   height: calc(100% - 45px);
-  animation: fadeIn 0.1s forwards;
-  opacity: 0;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
 }

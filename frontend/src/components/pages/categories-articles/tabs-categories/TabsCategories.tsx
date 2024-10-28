@@ -81,7 +81,7 @@ export const TabsCategoriesArticles = ({
         </TabsList>
       </TabsListConainer>
 
-      <TabsPanel>
+      <TabsPanel key={activeTabs[1] ? activeTabs[1] : activeTabs[0]}>
         {navigation.state === 'loading' && (
           <Backdrop>
             <Loader className="fixed" />

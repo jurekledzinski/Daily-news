@@ -79,26 +79,23 @@ export const GridArticles = () => {
   return (
     <div className="grid-articles">
       {navigation.state === 'idle' ? (
-        category && state[category] ? (
-          state[category].length ? (
-            state[category].map((article, index) => (
-              <Card
-                key={article.id}
-                handleAddSubArticle={context.handleAddSubArticle}
-                article={article}
-                ref={index === 0 ? firstChildRef : null}
-              />
-            ))
-          ) : (
+        category && state[category] && state[category].length ? (
+          state[category].map((article, index) => (
+            <Card
+              key={article.id}
+              handleAddSubArticle={context.handleAddSubArticle}
+              article={article}
+              ref={index === 0 ? firstChildRef : null}
+            />
+          ))
+        ) : (
+          category &&
+          state[category] && (
             <NoDataMessage className="articles">
               <FontAwesomeIcon icon={faNewspaper} />
               <p>No articles</p>
             </NoDataMessage>
           )
-        ) : (
-          <Backdrop>
-            <Loader className="fixed" />
-          </Backdrop>
         )
       ) : (
         <Backdrop>
