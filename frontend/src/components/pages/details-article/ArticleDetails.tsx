@@ -1,12 +1,12 @@
 import { ActionData } from '../../../types';
+import { AlertError, FormComment, SectionComments } from '../../shared';
 import { ArticleDetailsProps } from './types';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Header } from './Header';
 import { sanitizeContent } from '../../../helpers';
 import { useActionData } from 'react-router-dom';
 import './ArticleDetails.css';
-import { AlertError, FormComment, SectionComments } from '../../shared';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 export const ArticleDetails = ({
   comments,
