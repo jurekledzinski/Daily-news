@@ -3,7 +3,6 @@ import { Card, LocalData } from '../../components/pages';
 import { faNewspaper } from '@fortawesome/free-regular-svg-icons';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getCurrentCategory } from '../../helpers';
 import { loaderArticles } from '../../api';
 import { useCallback, useRef, useState } from 'react';
 import { useFetchOnScroll, useLoadGridArticles } from '../../hooks';
@@ -31,8 +30,6 @@ export const GridArticles = () => {
   const data = useLoaderData() as Awaited<
     ReturnType<ReturnType<typeof loaderArticles>>
   >;
-
-  console.log('data grid articles', data);
 
   useFetchOnScroll({
     onChangeVisible: useCallback(
@@ -70,21 +67,17 @@ export const GridArticles = () => {
 
   if (data.response.status === 'error' && 'message' in data.response) {
     return (
-      <NoDataMessage className="articles">
+      <NoDataMessage className="articles server-error">
         <FontAwesomeIcon icon={faTriangleExclamation} />
-        <p>{data.response.message}</p>
+        <p>
+          {data.response.message ?? "Couldn't fetch data, please try later."}
+        </p>
       </NoDataMessage>
     );
   }
 
   return (
-    <div
-      className={
-        category && getCurrentCategory(category)?.articles.length
-          ? 'grid-articles grid-articles--sub-tabs'
-          : 'grid-articles'
-      }
-    >
+    <div className="grid-articles">
       {navigation.state === 'idle' ? (
         category && state[category] ? (
           state[category].length ? (
