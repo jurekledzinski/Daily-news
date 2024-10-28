@@ -1,4 +1,8 @@
-import { APIGuardianResponsePagniationSuccess, IArticles } from '../api';
+import {
+  APIGuardianResponseError,
+  APIGuardianResponsePagniationSuccess,
+  IArticles,
+} from '../api';
 import { LocalData } from '../components/pages';
 import { useEffect } from 'react';
 import {
@@ -11,7 +15,9 @@ import {
 
 type UseLoadGridArticlesProps = {
   category: string | undefined;
-  data: APIGuardianResponsePagniationSuccess<IArticles[]>;
+  data:
+    | APIGuardianResponsePagniationSuccess<IArticles[]>
+    | APIGuardianResponseError;
   searchParams: URLSearchParams;
   onSetState: (articles: LocalData['listArticles']) => void;
 };

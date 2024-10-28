@@ -149,3 +149,15 @@ export type DataPassword = Pick<User, 'password'>;
 export type DataProfile = Omit<User, 'password' | 'id'>;
 export type DataLogin = Omit<User, 'name' | 'id'>;
 export type DataUser = Omit<User, 'password'>;
+
+// To trzeba zrobic
+
+type APIGuardian<T> = APIGuardianResponsePagniationSuccess<T>['response'];
+
+interface ResponsePagination<T = IArticles[]> extends APIGuardian<T> {
+  message: string;
+}
+
+export interface APIGuardianResponseError {
+  response: ResponsePagination;
+}

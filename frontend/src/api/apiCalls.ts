@@ -15,13 +15,14 @@ import {
   DataLogin,
   User,
   APIErrorResponse,
+  APIGuardianResponseError,
 } from './types';
 
 // ----------------- Api articles -----------------
 
 export const getCategoriesArticles = tryCatch<
   APIGuardianResponseSuccess<CategoriesData[]>,
-  APIErrorResponse
+  APIGuardianResponseError
 >(async () => {
   const response = await fetch(URLS.GET_CATEGORIES_ARTICLES());
 
@@ -30,7 +31,7 @@ export const getCategoriesArticles = tryCatch<
 
 export const getArticles = tryCatch<
   APIGuardianResponsePagniationSuccess<IArticles[]>,
-  APIErrorResponse,
+  APIGuardianResponseError,
   { category: string; page: string }
 >(async (data: { category: string; page: string }) => {
   const response = await fetch(URLS.GET_ARTICLES(data.category, data.page));
@@ -40,7 +41,7 @@ export const getArticles = tryCatch<
 
 export const getDetailsArticle = tryCatch<
   APIResponseDetailsSuccess<IDetailsArticle>,
-  APIErrorResponse,
+  APIGuardianResponseError,
   string
 >(async (id: string) => {
   const response = await fetch(URLS.GET_DETAILS_ARTICLE(id));

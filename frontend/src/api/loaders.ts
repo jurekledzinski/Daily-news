@@ -9,6 +9,7 @@ import {
   APIGuardianResponsePagniationSuccess,
   Comment,
   APIResponsePagniationSuccess,
+  APIGuardianResponseError,
 } from './types';
 import {
   getArticlesQuery,
@@ -29,7 +30,9 @@ export const loaderCategories =
       queryClient.getQueryData(query.queryKey) ??
       (await queryClient.fetchQuery(query));
 
-    return categories ? categories : categories;
+    return categories
+      ? categories
+      : { response: { results: [], status: '', total: 1, userTier: '' } };
   };
 
 export const loaderArticles =
@@ -38,18 +41,36 @@ export const loaderArticles =
     params,
     request,
   }: LoaderFunctionArgs): Promise<
-    APIGuardianResponsePagniationSuccess<IArticles[]>
+    APIGuardianResponsePagniationSuccess<IArticles[]> | APIGuardianResponseError
   > => {
     const { category } = params as Params;
     const page = getUrlQuery(request, 'page', '1');
 
     const query = getArticlesQuery(category ?? 'about', page);
 
-    const articles: APIGuardianResponsePagniationSuccess<IArticles[]> =
+    const articles:
+      | APIGuardianResponsePagniationSuccess<IArticles[]>
+      | APIGuardianResponseError =
       queryClient.getQueryData(query.queryKey) ??
       (await queryClient.fetchQuery(query));
 
-    return articles;
+    if ('message' in articles.response) {
+      return {
+        response: {
+          currentPage: 1,
+          pages: 1,
+          pageSize: 1,
+          results: [],
+          startIndex: 1,
+          status: 'error',
+          total: 1,
+          userTier: '',
+          message: articles.response.message,
+        },
+      };
+    } else {
+      return articles;
+    }
   };
 
 export const loaderDetailsArticle =
@@ -92,10 +113,64 @@ export const loaderDetailsArticle =
       queryClient.fetchQuery(queryCommentReplies)
     );
 
-    return { detailsArticle, comments, commentReplies };
+    return {
+      detailsArticle: detailsArticle
+        ? detailsArticle
+        : {
+            response: {
+              content: {
+                apiUrl: '',
+                elements: [],
+                fields: { body: '', headline: '', trailText: '' },
+                id: '',
+                sectionId: '',
+                webPublicationDate: '',
+                webTitle: '',
+              },
+              status: '',
+              total: 1,
+              userTier: '',
+            },
+          },
+      comments: comments
+        ? comments
+        : {
+            page: 1,
+            payload: { result: [] },
+            success: false,
+            totalPages: 1,
+            replyCount: 1,
+          },
+      commentReplies: commentReplies
+        ? commentReplies
+        : {
+            page: 1,
+            payload: { result: [] },
+            success: false,
+            totalPages: 1,
+            replyCount: 1,
+          },
+    };
   };
 
 function getUrlQuery(request: Request, nameQuery: string, initial: string) {
   const url = new URL(request.url);
   return url.searchParams.get(nameQuery) ?? initial;
 }
+
+// Quardian response
+
+// const a = {
+//   response: {
+//     status: 'error',
+//     message: 'Not Found',
+//   },
+// };
+
+// So for good data in get quardian status === 'ok'
+// for error status === "error"
+
+// TODO:
+
+// 1. Nie zwracaj empty dane z get methods dla quardian i twojego api
+// 2.

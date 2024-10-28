@@ -1,7 +1,9 @@
 import { Backdrop, Loader, NoDataMessage } from '../../components/shared';
 import { Card, LocalData } from '../../components/pages';
 import { faNewspaper } from '@fortawesome/free-regular-svg-icons';
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getCurrentCategory } from '../../helpers';
 import { loaderArticles } from '../../api';
 import { useCallback, useRef, useState } from 'react';
 import { useFetchOnScroll, useLoadGridArticles } from '../../hooks';
@@ -15,7 +17,6 @@ import {
   Params,
   useNavigation,
 } from 'react-router-dom';
-import { getCurrentCategory } from '../../helpers';
 
 export const GridArticles = () => {
   const { category } = useParams() as Params;
@@ -30,6 +31,8 @@ export const GridArticles = () => {
   const data = useLoaderData() as Awaited<
     ReturnType<ReturnType<typeof loaderArticles>>
   >;
+
+  console.log('data grid articles', data);
 
   useFetchOnScroll({
     onChangeVisible: useCallback(
@@ -64,6 +67,15 @@ export const GridArticles = () => {
       [category]
     ),
   });
+
+  if (data.response.status === 'error' && 'message' in data.response) {
+    return (
+      <NoDataMessage className="articles">
+        <FontAwesomeIcon icon={faTriangleExclamation} />
+        <p>{data.response.message}</p>
+      </NoDataMessage>
+    );
+  }
 
   return (
     <div
