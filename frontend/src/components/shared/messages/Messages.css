@@ -7,10 +7,10 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
   color: #555555;
   text-align: center;
   text-transform: uppercase;
-  transform: translate(-50%, -50%);
 }
 
 .no-data p {
@@ -22,6 +22,18 @@
   font-size: 0.5rem;
 }
 
-.no-data.articles svg {
-  font-size: 6rem;
+.no-data.articles svg,
+.no-data.comments svg {
+  font-size: 3rem;
+}
+
+.no-data.articles.server-error {
+  color: var(--negative-color);
+}
+
+.no-data.comments.server-error {
+  position: initial;
+  transform: initial;
+  margin: 0 auto;
+  color: var(--negative-color);
 }
