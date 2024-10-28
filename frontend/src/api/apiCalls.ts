@@ -16,6 +16,7 @@ import {
   User,
   APIErrorResponse,
   APIGuardianResponseError,
+  APIResponsePagniationSuccess,
 } from './types';
 
 // ----------------- Api articles -----------------
@@ -52,7 +53,7 @@ export const getDetailsArticle = tryCatch<
 // ----------------- Api comments -----------------
 
 export const getComments = tryCatch<
-  APIResponseDetailsSuccess<IDetailsArticle>,
+  APIResponsePagniationSuccess<Comment[]>,
   APIErrorResponse,
   { articleId: string; page: string }
 >(async (data: { articleId: string; page: string }) => {
@@ -68,7 +69,7 @@ export const getComments = tryCatch<
 });
 
 export const getCommentReplies = tryCatch<
-  APIResponseDetailsSuccess<IDetailsArticle>,
+  APIResponsePagniationSuccess<Comment[]>,
   APIErrorResponse,
   { articleId: string; commentId: string; page: string }
 >(async (data: { articleId: string; commentId: string; page: string }) => {
