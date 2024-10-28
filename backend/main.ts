@@ -61,21 +61,15 @@ app.use('/api/v1/comments', commentRoutes);
 app.use(
   (error: CustomError, req: Request, res: Response, next: NextFunction) => {
     if (error instanceof z.ZodError) {
-      const formattedErrors = error.format();
-
-      console.log('Error zod', formattedErrors);
-
       res.status(error.statusCode || 500).json({
-        error: { message: formattedErrors, statusCode: error.statusCode },
+        error: { message: 'Incorrect data types', success: false },
       });
     } else {
-      console.log('error normal', error.message);
       res.status(error.statusCode || 500).json({
         message: error.message,
         success: error.success,
       });
     }
-
     next();
   }
 );
