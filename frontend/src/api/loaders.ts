@@ -1,4 +1,4 @@
-import { fetchOrCache } from '../helpers';
+import { fetchOrCache, getUrlQuery } from '../helpers';
 import { LoaderFunctionArgs, Params } from 'react-router-dom';
 import {
   APIGuardianResponseSuccess,
@@ -48,13 +48,11 @@ export const loaderArticles =
 
     const query = getArticlesQuery(category ?? 'about', page);
 
-    const articles:
-      | APIGuardianResponsePagniationSuccess<IArticles[]>
-      | APIGuardianResponseError =
+    const articles: APIGuardianResponsePagniationSuccess<IArticles[]> =
       queryClient.getQueryData(query.queryKey) ??
       (await queryClient.fetchQuery(query));
 
-    if ('message' in articles.response) {
+    if (articles.response.status === 'error' || !articles) {
       return {
         response: {
           currentPage: 1,
@@ -114,25 +112,27 @@ export const loaderDetailsArticle =
     );
 
     return {
-      detailsArticle: detailsArticle
-        ? detailsArticle
-        : {
-            response: {
-              content: {
-                apiUrl: '',
-                elements: [],
-                fields: { body: '', headline: '', trailText: '' },
-                id: '',
-                sectionId: '',
-                webPublicationDate: '',
-                webTitle: '',
+      detailsArticle:
+        detailsArticle && detailsArticle.response.status === 'ok'
+          ? detailsArticle
+          : {
+              response: {
+                content: {
+                  apiUrl: '',
+                  elements: [],
+                  fields: { body: '', headline: '', trailText: '' },
+                  id: '',
+                  sectionId: '',
+                  webPublicationDate: '',
+                  webTitle: '',
+                },
+                status: 'error',
+                total: 1,
+                userTier: '',
+                message: detailsArticle.response.message,
               },
-              status: '',
-              total: 1,
-              userTier: '',
             },
-          },
-      comments: comments
+      comments: comments.success
         ? comments
         : {
             page: 1,
@@ -140,8 +140,9 @@ export const loaderDetailsArticle =
             success: false,
             totalPages: 1,
             replyCount: 1,
+            message: comments.message,
           },
-      commentReplies: commentReplies
+      commentReplies: commentReplies.success
         ? commentReplies
         : {
             page: 1,
@@ -149,28 +150,7 @@ export const loaderDetailsArticle =
             success: false,
             totalPages: 1,
             replyCount: 1,
+            message: commentReplies.message,
           },
     };
   };
-
-function getUrlQuery(request: Request, nameQuery: string, initial: string) {
-  const url = new URL(request.url);
-  return url.searchParams.get(nameQuery) ?? initial;
-}
-
-// Quardian response
-
-// const a = {
-//   response: {
-//     status: 'error',
-//     message: 'Not Found',
-//   },
-// };
-
-// So for good data in get quardian status === 'ok'
-// for error status === "error"
-
-// TODO:
-
-// 1. Nie zwracaj empty dane z get methods dla quardian i twojego api
-// 2.
