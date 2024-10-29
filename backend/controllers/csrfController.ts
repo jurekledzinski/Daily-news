@@ -1,5 +1,6 @@
 import { csrfSync } from 'csrf-sync';
 import { Request, Response } from 'express';
+import { STATUS_CODE } from '../constants';
 
 const { generateToken, storeTokenInState } = csrfSync();
 
@@ -20,8 +21,8 @@ export const csrfController = (req: Request, res: Response) => {
   //     req.session.csrfToken = generateToken(req);
   //   }
 
-//   console.log('kkkk', req.session.id);
-//   console.log('---', req.session);
+  //   console.log('kkkk', req.session.id);
+  console.log('--- csrf session before send', req.session);
 
-  return res.json({ token: generateToken(req, true) });
+  return res.status(STATUS_CODE.OK).json({ token: generateToken(req, true) });
 };
