@@ -35,12 +35,12 @@ app.use(
     saveUninitialized: false,
     store: mongoStore,
     cookie: {
-      domain: 'localhost', //change later production
+      domain: process.env.NODE_ENV === 'production' ? '' : 'localhost', //add url for production later after deploy frontend
       path: '/',
-      secure: false, //change later production
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 1, //change later production
+      maxAge: 1000 * 60 * 60 * 1,
     },
   })
 );
