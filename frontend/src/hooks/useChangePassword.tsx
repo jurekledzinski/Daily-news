@@ -2,7 +2,11 @@ import { InputsPassword } from '../components/pages';
 import { useForm } from 'react-hook-form';
 import { useSubmit } from 'react-router-dom';
 
-export const useChangePassword = () => {
+type UseChangePasswordProps = {
+  token: string;
+};
+
+export const useChangePassword = ({ token }: UseChangePasswordProps) => {
   const methods = useForm<InputsPassword>();
   const submit = useSubmit();
 
@@ -10,6 +14,7 @@ export const useChangePassword = () => {
     const formData = new FormData();
     formData.append('actionType', 'change-password');
     formData.set('password', data.password);
+    formData.append('csrfToken', token);
 
     submit(formData, { method: 'post' });
     methods.reset();

@@ -2,7 +2,11 @@ import { ActionData } from '../../types';
 import { AlertError, Modal } from '../../components/shared';
 import { Form, useActionData } from 'react-router-dom';
 import { useChangePassword } from '../../hooks/useChangePassword';
-import { useDeleteUserAccount, useUpdateUserProfile } from '../../hooks';
+import {
+  useDeleteUserAccount,
+  useFetchProtection,
+  useUpdateUserProfile,
+} from '../../hooks';
 import { useUserStore } from '../../store';
 import './Profile.css';
 import {
@@ -13,9 +17,11 @@ import {
 export const Profile = () => {
   const actionData = useActionData() as ActionData;
   const { state } = useUserStore();
-  const submitDeleteUser = useDeleteUserAccount();
-  const submitUpdateUser = useUpdateUserProfile({ initialData: state });
-  const submitChangePassword = useChangePassword();
+  const data = useFetchProtection();
+  const token = data?.data?.token ?? '';
+  const submitDeleteUser = useDeleteUserAccount({ token });
+  const submitUpdateUser = useUpdateUserProfile({ initialData: state, token });
+  const submitChangePassword = useChangePassword({ token });
 
   return (
     <div className="profile">

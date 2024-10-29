@@ -5,10 +5,12 @@ import { useSubmit } from 'react-router-dom';
 
 type useUpdateUserProfileProps = {
   initialData: UserState;
+  token: string;
 };
 
 export const useUpdateUserProfile = ({
   initialData,
+  token,
 }: useUpdateUserProfileProps) => {
   const methods = useForm<InputsProfile>({
     values: {
@@ -23,6 +25,7 @@ export const useUpdateUserProfile = ({
     formData.append('actionType', 'update-profile');
     formData.set('name', data.name);
     formData.set('email', data.email);
+    formData.append('csrfToken', token);
 
     submit(formData, { method: 'post' });
   };
