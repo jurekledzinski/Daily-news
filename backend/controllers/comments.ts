@@ -1,67 +1,50 @@
 import CustomError from '../error/error';
 import { CommentSchema, IComment } from '../models/comments';
 import { getCollectionDb } from '../config/db';
+import { ObjectId, WithId } from 'mongodb';
+import { PAGE_SIZE, STATUS_CODE } from '../constants';
 import { Request, Response } from 'express';
 import { transformDocument } from '../helpers/transformData';
 import { tryCatch } from '../helpers/tryCatch';
-import { ObjectId, WithId } from 'mongodb';
+import {
+  buildResponse,
+  calculateSkipCount,
+  commentAggergation,
+} from '../helpers';
 
 const collection = getCollectionDb<IComment>('comments');
 
 export const getComments = tryCatch<IComment[]>(
   async (req: Request, res: Response) => {
     if (!collection) {
-      throw new CustomError('Internal server error', 500);
+      throw new CustomError(
+        'Internal server error',
+        STATUS_CODE.INTERNAL_SERVER_ERROR
+      );
     }
 
-    const article_id = decodeURIComponent(req.params.article_id);
+    const idArticle = decodeURIComponent(req.params.article_id);
     const page = req.query.page ?? '1';
-    const pageSize = 10;
-    const skipCount = (parseInt(page.toString()) - 1) * pageSize;
+    const skipCount = calculateSkipCount(page);
 
     const total = await collection.countDocuments({
-      idArticle: article_id,
+      idArticle,
       parentCommentId: null,
     });
 
-    const result = await collection
-      .aggregate<IComment>([
-        { $match: { idArticle: article_id, parentCommentId: null } },
-        {
-          $lookup: {
-            from: 'comments',
-            let: { topCommentId: { $toString: '$_id' } },
-            pipeline: [
-              {
-                $match: {
-                  $expr: { $eq: ['$parentCommentId', '$$topCommentId'] },
-                },
-              },
-            ],
-            as: 'replies',
-          },
-        },
-        {
-          $addFields: {
-            replyCount: { $size: '$replies' },
-          },
-        },
-        { $project: { replies: 0 } },
-        { $sort: { createdAt: -1 } },
-        { $skip: skipCount },
-        { $limit: pageSize },
-      ])
-      .toArray();
+    const result = await commentAggergation(
+      idArticle,
+      null,
+      skipCount,
+      PAGE_SIZE
+    );
 
     const formatResults = transformDocument<WithId<IComment>>(result);
 
-    const totalPages = Math.ceil(total / pageSize);
+    const totalPages = Math.ceil(total / PAGE_SIZE);
 
-    return res.status(200).json({
-      payload: { result: formatResults },
-      success: true,
-      totalPages: totalPages ? totalPages : 1,
-      page: parseInt(page.toString()),
+    return res.status(STATUS_CODE.OK).json({
+      ...buildResponse(formatResults, page, totalPages),
     });
   }
 );
@@ -69,60 +52,35 @@ export const getComments = tryCatch<IComment[]>(
 export const getCommentReplies = tryCatch<IComment[]>(
   async (req: Request, res: Response) => {
     if (!collection) {
-      throw new CustomError('Internal server error', 500);
+      throw new CustomError(
+        'Internal server error',
+        STATUS_CODE.INTERNAL_SERVER_ERROR
+      );
     }
 
-    console.log('req.query get replies', req.query);
-
-    const article_id = decodeURIComponent(req.params.article_id);
+    const idArticle = decodeURIComponent(req.params.article_id);
     const comment_id = req.params.comment_id;
     const page = req.query.page_reply ?? '1';
-    const pageSize = 10;
-    const skipCount = (parseInt(page.toString()) - 1) * pageSize;
+    const skipCount = calculateSkipCount(page);
 
     const total = await collection.countDocuments({
-      idArticle: article_id,
+      idArticle,
       parentCommentId: comment_id,
     });
 
-    const result = await collection
-      .aggregate<IComment>([
-        { $match: { idArticle: article_id, parentCommentId: comment_id } },
-        {
-          $lookup: {
-            from: 'comments',
-            let: { topCommentId: { $toString: '$_id' } },
-            pipeline: [
-              {
-                $match: {
-                  $expr: { $eq: ['$parentCommentId', '$$topCommentId'] },
-                },
-              },
-            ],
-            as: 'replies',
-          },
-        },
-        {
-          $addFields: {
-            replyCount: { $size: '$replies' },
-          },
-        },
-        { $project: { replies: 0 } },
-        { $sort: { createdAt: -1 } },
-        { $skip: skipCount },
-        { $limit: pageSize },
-      ])
-      .toArray();
+    const result = await commentAggergation(
+      idArticle,
+      comment_id,
+      skipCount,
+      PAGE_SIZE
+    );
 
     const formatResults = transformDocument<WithId<IComment>>(result);
 
-    const totalPages = Math.ceil(total / pageSize);
+    const totalPages = Math.ceil(total / PAGE_SIZE);
 
-    return res.status(200).json({
-      payload: { result: formatResults },
-      success: true,
-      totalPages: totalPages ? totalPages : 1,
-      page: parseInt(page.toString()),
+    return res.status(STATUS_CODE.OK).json({
+      ...buildResponse(formatResults, page, totalPages),
       replyCount: total,
     });
   }
@@ -134,7 +92,10 @@ export const createComment = tryCatch(async (req: Request, res: Response) => {
   const parentId = req.body.parentCommentId === 'null';
 
   if (!collection) {
-    throw new CustomError('Internal server error', 500);
+    throw new CustomError(
+      'Internal server error',
+      STATUS_CODE.INTERNAL_SERVER_ERROR
+    );
   }
 
   await collection.insertOne({
@@ -142,13 +103,16 @@ export const createComment = tryCatch(async (req: Request, res: Response) => {
     parentCommentId: parentId ? null : req.body.parentCommentId,
   });
 
-  return res.status(200).json({ success: true });
+  return res.status(STATUS_CODE.OK).json({ success: true });
 });
 
 export const updateCommentLikes = tryCatch(
   async (req: Request, res: Response) => {
     if (!collection) {
-      throw new CustomError('Internal server error', 500);
+      throw new CustomError(
+        'Internal server error',
+        STATUS_CODE.INTERNAL_SERVER_ERROR
+      );
     }
 
     const articleId = decodeURIComponent(req.params.article_id);
@@ -162,6 +126,6 @@ export const updateCommentLikes = tryCatch(
       { $inc: req.body }
     );
 
-    return res.status(200).json({ success: true });
+    return res.status(STATUS_CODE.OK).json({ success: true });
   }
 );
