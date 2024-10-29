@@ -1,6 +1,6 @@
 import express from 'express';
-const router = express.Router();
 import { csrfController } from '../controllers/csrfController';
+const router = express.Router();
 
 router.route('/').get(csrfController);
 
