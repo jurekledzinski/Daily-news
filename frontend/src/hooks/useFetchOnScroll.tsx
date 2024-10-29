@@ -11,7 +11,8 @@ export const useFetchOnScroll = ({
     const onScroll = () => {
       if (
         window.scrollY !== 0 &&
-        window.innerHeight + window.scrollY >= document.body.scrollHeight
+        Math.ceil(window.innerHeight + window.scrollY) >=
+          document.body.scrollHeight
       ) {
         onChangeVisible(true);
       }
