@@ -25,6 +25,8 @@ export const URLS = {
     return url;
   },
 
+  GET_CSRF_TOKEN: () => 'http://localhost:5000/api/v1/csrf-token',
+
   GET_CATEGORIES_ARTICLES: () => {
     const url = `https://content.guardianapis.com/sections?&format=json&api-key=${
       import.meta.env.VITE_API_KEY
