@@ -52,7 +52,7 @@ app.use(passport.session());
 // crsfRoutes musza być za session
 
 // use routes
-app.use('/csrf-token', csrfRoutes);
+app.use('/api/v1/csrf-token', csrfRoutes);
 app.use('/api/v1/login', loginRoutes);
 app.use('/api/v1/register', registerRoutes);
 app.use('/api/v1/users', userRoutes);
