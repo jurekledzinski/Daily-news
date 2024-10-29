@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import CustomError from '../error/error';
+import xss from 'xss';
 import { getCollectionDb } from '../config/db';
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
@@ -53,7 +54,7 @@ export const updateUserProfile = tryCatch<UserData[]>(
       );
     }
 
-    UpdateUserProfileSchema.parse(req.body);
+    const parsedData = UpdateUserProfileSchema.parse(req.body);
 
     const sessionUser = req.user! as UserData;
 
@@ -66,7 +67,7 @@ export const updateUserProfile = tryCatch<UserData[]>(
 
     await collection.updateOne(
       { _id: new ObjectId(req.params.id) },
-      { $set: { ...req.body } }
+      { $set: { email: xss(parsedData.email), name: xss(parsedData.name) } }
     );
 
     return res
@@ -84,10 +85,10 @@ export const changeUserPassword = tryCatch<UserData[]>(
       );
     }
 
-    const userData = ChangeUserPasswordSchema.parse(req.body);
+    const parsedData = ChangeUserPasswordSchema.parse(req.body);
 
     const salt = 10;
-    const password = userData.password;
+    const password = xss(parsedData.password);
 
     const generatedSalt = await bcrypt.genSalt(salt);
     const hashedPassword = await bcrypt.hash(password, generatedSalt);

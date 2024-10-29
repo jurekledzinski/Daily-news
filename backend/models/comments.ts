@@ -11,8 +11,12 @@ const CommentSchema = z.object({
   userId: z.string(),
 });
 
+const LikesSchema = CommentSchema.pick({ likes: true });
+
 type Comment = z.infer<typeof CommentSchema>;
 
-type IComment = Omit<Comment, '_id'> & { _id: ObjectId | string };
+interface IComment extends Comment {
+  _id?: ObjectId;
+}
 
-export { CommentSchema, IComment };
+export { CommentSchema, IComment, LikesSchema };

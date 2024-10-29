@@ -2,10 +2,12 @@ import bcrypt from 'bcrypt';
 import CustomError from '../error/error';
 import LocalStrategy from 'passport-local';
 import passport from 'passport';
+import xss from 'xss';
 import { getCollectionDb } from '../config/db';
+import { loginUserSchema, User } from '../models/user';
 import { ObjectId } from 'mongodb';
+import { STATUS_CODE } from '../constants';
 import { transformDocument } from '../helpers/transformData';
-import { User } from '../models/user';
 
 passport.use(
   new LocalStrategy.Strategy(
@@ -14,20 +16,30 @@ passport.use(
       passwordField: 'password',
     },
     async (email, password, done) => {
+      const parsedData = loginUserSchema.parse({ email, password });
+
       try {
         const collection = getCollectionDb('users');
 
         if (!collection) {
-          throw new CustomError('Internal server error', 500);
+          throw new CustomError(
+            'Internal server error',
+            STATUS_CODE.INTERNAL_SERVER_ERROR
+          );
         }
 
-        const user = await collection.findOne<User>({ email });
+        const user = await collection.findOne<User>({
+          email: xss(parsedData.email),
+        });
 
         if (!user) {
           return done(null, false, { message: 'User not found' });
         }
 
-        const isPasswordSame = await bcrypt.compare(password, user.password);
+        const isPasswordSame = await bcrypt.compare(
+          xss(parsedData.password),
+          user.password
+        );
 
         if (isPasswordSame) {
           return done(null, user);
@@ -57,7 +69,10 @@ passport.deserializeUser(async (id: string, done) => {
     const collection = getCollectionDb('users');
 
     if (!collection) {
-      throw new CustomError('Internal server error', 500);
+      throw new CustomError(
+        'Internal server error',
+        STATUS_CODE.INTERNAL_SERVER_ERROR
+      );
     }
 
     const user = await collection.findOne<User>(

@@ -34,6 +34,7 @@ type UserData = Omit<User, '_id'> & { _id: ObjectId | string };
 
 export {
   ChangeUserPasswordSchema,
+  loginUserSchema,
   UpdateUserProfileSchema,
   UserSchema,
   User,

@@ -1,5 +1,6 @@
 import CustomError from '../error/error';
 import passport from '../middlewares/passport_config';
+import xss from 'xss';
 import { NextFunction, Request, Response } from 'express';
 import { STATUS_CODE } from '../constants';
 import { tryCatch } from '../helpers/tryCatch';
@@ -11,6 +12,8 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
       passport.authenticate(
         'local',
         (error: Error, user: UserLogin, info: { message?: string }) => {
+          console.log('3 user', user);
+
           if (error) {
             return reject(
               new CustomError(
@@ -19,6 +22,7 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
               )
             );
           }
+
           if (!user) {
             return reject(
               new CustomError(
@@ -27,6 +31,7 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
               )
             );
           }
+
           resolve({ user, info });
         }
       )(req, res, next);

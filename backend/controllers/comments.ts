@@ -1,7 +1,8 @@
 import CustomError from '../error/error';
-import { CommentSchema, IComment } from '../models/comments';
+import xss from 'xss';
+import { CommentSchema, IComment, LikesSchema } from '../models/comments';
 import { getCollectionDb } from '../config/db';
-import { ObjectId, WithId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { PAGE_SIZE, STATUS_CODE } from '../constants';
 import { Request, Response } from 'express';
 import { transformDocument } from '../helpers/transformData';
@@ -39,7 +40,7 @@ export const getComments = tryCatch<IComment[]>(
       PAGE_SIZE
     );
 
-    const formatResults = transformDocument<WithId<IComment>>(result);
+    const formatResults = transformDocument<IComment>(result);
 
     const totalPages = Math.ceil(total / PAGE_SIZE);
 
@@ -75,7 +76,7 @@ export const getCommentReplies = tryCatch<IComment[]>(
       PAGE_SIZE
     );
 
-    const formatResults = transformDocument<WithId<IComment>>(result);
+    const formatResults = transformDocument<IComment>(result);
 
     const totalPages = Math.ceil(total / PAGE_SIZE);
 
@@ -87,7 +88,7 @@ export const getCommentReplies = tryCatch<IComment[]>(
 );
 
 export const createComment = tryCatch(async (req: Request, res: Response) => {
-  CommentSchema.parse(req.body);
+  const parsedData = CommentSchema.parse(req.body);
 
   const parentId = req.body.parentCommentId === 'null';
 
@@ -98,9 +99,16 @@ export const createComment = tryCatch(async (req: Request, res: Response) => {
     );
   }
 
+  const likes = xss(parsedData.likes.toString());
+
   await collection.insertOne({
-    ...req.body,
-    parentCommentId: parentId ? null : req.body.parentCommentId,
+    createdAt: xss(parsedData.createdAt),
+    idArticle: xss(parsedData.idArticle),
+    likes: parseInt(likes),
+    text: xss(parsedData.text),
+    user: xss(parsedData.user),
+    userId: xss(parsedData.userId),
+    parentCommentId: parentId ? null : xss(parsedData.parentCommentId ?? ''),
   });
 
   return res.status(STATUS_CODE.OK).json({ success: true });
@@ -108,6 +116,8 @@ export const createComment = tryCatch(async (req: Request, res: Response) => {
 
 export const updateCommentLikes = tryCatch(
   async (req: Request, res: Response) => {
+    const parsedData = LikesSchema.parse(req.body);
+
     if (!collection) {
       throw new CustomError(
         'Internal server error',
@@ -118,12 +128,14 @@ export const updateCommentLikes = tryCatch(
     const articleId = decodeURIComponent(req.params.article_id);
     const commentId = req.params.comment_id;
 
+    const likes = xss(parsedData.likes.toString());
+
     await collection.updateOne(
       {
         _id: new ObjectId(commentId),
         idArticle: articleId,
       },
-      { $inc: req.body }
+      { $inc: { likes: parseInt(likes) } }
     );
 
     return res.status(STATUS_CODE.OK).json({ success: true });
