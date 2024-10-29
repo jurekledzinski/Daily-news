@@ -1,8 +1,8 @@
 import { ObjectId } from 'mongodb';
 
-export const transformDocument = <T extends { _id: string | ObjectId }>(
+export const transformDocument = <T extends { _id?: ObjectId }>(
   result: T[]
-): (T & { id: ObjectId | string })[] => {
+): (T & { id?: ObjectId })[] => {
   if (!result || !result.length || !Array.isArray(result)) return [];
 
   return result.map((data) => {
@@ -10,9 +10,9 @@ export const transformDocument = <T extends { _id: string | ObjectId }>(
 
     const item = {
       ...rest,
-      id: _id,
+      ...(_id && { id: _id }),
     };
 
-    return item as T & { id: ObjectId | string };
+    return item as T & { id?: ObjectId };
   });
 };
