@@ -40,7 +40,13 @@ export const actionDetailsArticle =
     } else if (actionType === 'create-reply') {
       return actionCreateCommentReply(queryClient, data, articleId, page, '1');
     } else if (actionType === 'update-likes') {
-      return actionUpdateLikesComment(data, articleId, page, pageReply);
+      return actionUpdateLikesComment(
+        queryClient,
+        data,
+        articleId,
+        page,
+        pageReply
+      );
     }
   };
 
@@ -90,6 +96,7 @@ export const actionCreateCommentReply = async (
     pageReply,
     parentId,
   ]);
+
   await refetchQueries(queryClient, [
     'list-comment-replies',
     articleId,
@@ -110,6 +117,7 @@ export const actionCreateCommentReply = async (
 };
 
 export const actionUpdateLikesComment = async (
+  queryClient: QueryClient,
   data: FormData,
   articleId: string,
   page: string,
@@ -130,6 +138,9 @@ export const actionUpdateLikesComment = async (
       };
     }
 
+    await invalidateQueries(queryClient, ['list-comments', articleId, page]);
+    await refetchQueries(queryClient, ['list-comments', articleId, page]);
+
     return redirect(redirectTo);
   }
 
@@ -141,6 +152,22 @@ export const actionUpdateLikesComment = async (
       action: 'update-likes',
     };
   }
+
+  const parentId = comment.parentCommentId ?? '';
+
+  await invalidateQueries(queryClient, [
+    'list-comment-replies',
+    articleId,
+    pageReply,
+    parentId,
+  ]);
+
+  await refetchQueries(queryClient, [
+    'list-comment-replies',
+    articleId,
+    pageReply,
+    parentId,
+  ]);
 
   return redirect(redirectTo);
 };
