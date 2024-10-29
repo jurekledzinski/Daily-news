@@ -13,3 +13,4 @@ export * from './useLoadComments';
 export * from './useLogoutUser';
 export * from './useDeleteUserAccount';
 export * from './useUpdateUserProfile';
+export * from './useFetchProtection';
