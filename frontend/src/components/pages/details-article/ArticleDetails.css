@@ -1,7 +1,7 @@
 .details-article {
   max-width: 1366px;
   margin: 81px auto 1rem;
-  padding: 1rem;
+  padding: 1rem 0;
   animation: fadeIn 0.3s forwards;
 }
 
