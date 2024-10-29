@@ -1,5 +1,5 @@
-import { cloneDeep, uniqBy } from 'lodash';
 import { ArticleDetailsElements } from '../api';
+import { cloneDeep, uniqBy } from 'lodash';
 import { CommentsWithReplies } from '../components/shared';
 
 export const getDetailsArticleImageData = (
@@ -50,7 +50,7 @@ export const udpatedNestedReplies = (
   for (const obj of formatComment.replies) {
     if (obj.id === commentId) {
       obj.replies = uniqBy(
-        [...(obj?.replies ?? []), ...newReplies].sort(
+        [...newReplies, ...(obj?.replies ?? [])].sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         ),
