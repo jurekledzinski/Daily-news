@@ -162,3 +162,11 @@ interface ResponsePagination<T = IArticles[]> extends APIGuardian<T> {
 export interface APIGuardianResponseError {
   response: ResponsePagination;
 }
+
+export type APICSRFTokenResponse = {
+  token: string;
+};
+
+export type CSRFToken = {
+  csrfToken: string;
+};
