@@ -12,8 +12,6 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
       passport.authenticate(
         'local',
         (error: Error, user: UserLogin, info: { message?: string }) => {
-          console.log('3 user', user);
-
           if (error) {
             return reject(
               new CustomError(
