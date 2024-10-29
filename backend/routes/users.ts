@@ -1,4 +1,5 @@
 import { checkAuthentication } from '../middlewares/authorization';
+import { csrfSync } from 'csrf-sync';
 import { Router } from 'express';
 import {
   changeUserPassword,
@@ -7,6 +8,7 @@ import {
   logoutUser,
   updateUserProfile,
 } from '../controllers/users';
+const { csrfSynchronisedProtection } = csrfSync();
 
 const router = Router();
 
@@ -19,6 +21,8 @@ router
   .route('/change_password/:id')
   .patch(checkAuthentication, changeUserPassword);
 
-router.route('/delete_user/:id').delete(checkAuthentication, deleteUser);
+router
+  .route('/delete_user/:id')
+  .delete(checkAuthentication, csrfSynchronisedProtection, deleteUser);
 
 export default router;
