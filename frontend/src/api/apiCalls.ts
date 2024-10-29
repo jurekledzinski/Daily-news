@@ -171,12 +171,16 @@ export const changeUserPassword = tryCatch<
 export const deleteUserAccount = tryCatch<
   APISuccessResponse,
   APIErrorResponse,
-  string
->(async (id: string) => {
-  const response = await fetch(URLS.DELETE_USER_ACCOUNT(id), {
+  { id: string; token: string }
+>(async (data: { id: string; token: string }) => {
+  const response = await fetch(URLS.DELETE_USER_ACCOUNT(data.id), {
     method: 'DELETE',
     mode: 'cors',
     credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': data.token,
+    },
   });
 
   return await response.json();

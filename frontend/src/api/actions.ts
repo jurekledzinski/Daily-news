@@ -4,6 +4,7 @@ import { queryClient as useQueryClient } from '../main';
 import { QueryClient } from '@tanstack/react-query';
 import {
   CommentCreate,
+  CSRFToken,
   DataLogin,
   DataPassword,
   DataProfile,
@@ -188,7 +189,7 @@ export const actionProfileUser = async ({
   } else if (actionType === 'change-password') {
     return actionChangeUserPassword(data, id);
   } else if (actionType === 'delete-user-account') {
-    return actionDeleteUserAccount(id);
+    return actionDeleteUserAccount(data, id);
   }
 };
 
@@ -231,8 +232,11 @@ const actionChangeUserPassword = async (data: FormData, id: string) => {
   return redirect(redirectTo);
 };
 
-const actionDeleteUserAccount = async (id: string) => {
-  const result = await deleteUserAccount(id);
+const actionDeleteUserAccount = async (data: FormData, id: string) => {
+  data.delete('actionType');
+  const deleteData = Object.fromEntries(data) as unknown as CSRFToken;
+
+  const result = await deleteUserAccount({ id, token: deleteData.csrfToken });
 
   useQueryClient.invalidateQueries({ queryKey: ['user'] });
 
