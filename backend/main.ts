@@ -58,20 +58,18 @@ app.use('/api/v1/register', registerRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/comments', commentRoutes);
 
-app.use(
-  (error: CustomError, req: Request, res: Response, next: NextFunction) => {
-    if (error instanceof z.ZodError) {
-      res.status(error.statusCode || 500).json({
-        error: { message: 'Incorrect data types', success: false },
-      });
-    } else {
-      res.status(error.statusCode || 500).json({
-        message: error.message,
-        success: error.success,
-      });
-    }
-    next();
+app.use((error: CustomError, _: Request, res: Response, next: NextFunction) => {
+  if (error instanceof z.ZodError) {
+    res.status(error.statusCode || 500).json({
+      error: { message: 'Incorrect data types', success: false },
+    });
+  } else {
+    res.status(error.statusCode || 500).json({
+      message: error.message,
+      success: error.success,
+    });
   }
-);
+  next();
+});
 
 export default app;
