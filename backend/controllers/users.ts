@@ -3,6 +3,8 @@ import CustomError from '../error/error';
 import { getCollectionDb } from '../config/db';
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
+import { requestLogout } from '../helpers';
+import { STATUS_CODE } from '../constants';
 import { tryCatch } from '../helpers/tryCatch';
 import {
   ChangeUserPasswordSchema,
@@ -15,11 +17,14 @@ const collection = getCollectionDb<UserData>('users');
 export const getUser = tryCatch<UserData[]>(
   async (req: Request, res: Response) => {
     if (!collection) {
-      throw new CustomError('Internal server error', 500);
+      throw new CustomError(
+        'Internal server error',
+        STATUS_CODE.INTERNAL_SERVER_ERROR
+      );
     }
 
     return res
-      .status(200)
+      .status(STATUS_CODE.OK)
       .json({ success: true, payload: { result: req.user } });
   }
 );
@@ -30,38 +35,33 @@ export const logoutUser = async (
   next: NextFunction
 ) => {
   if (!collection) {
-    throw new CustomError('Internal server error', 500);
+    throw new CustomError(
+      'Internal server error',
+      STATUS_CODE.INTERNAL_SERVER_ERROR
+    );
   }
 
-  req.logout((err: Error) => {
-    if (err) return next(err);
-
-    req.session.destroy((err: Error) => {
-      if (err) return next(err);
-
-      res.clearCookie('time', { path: '/' });
-      res.clearCookie('bmg-seqdk', { path: '/' });
-
-      return res.status(200).json({ success: true });
-    });
-  });
+  requestLogout(req, res, next);
 };
 
 export const updateUserProfile = tryCatch<UserData[]>(
   async (req: Request, res: Response) => {
     if (!collection) {
-      throw new CustomError('Internal server error', 500);
+      throw new CustomError(
+        'Internal server error',
+        STATUS_CODE.INTERNAL_SERVER_ERROR
+      );
     }
 
     UpdateUserProfileSchema.parse(req.body);
 
+    const sessionUser = req.user! as UserData;
+
     const isExist =
       (await collection.findOne({ email: req.body.email })) !== null;
 
-    console.log('isExist', isExist);
-
-    if (isExist) {
-      throw new CustomError('User with this email already exist', 409);
+    if (isExist && sessionUser && sessionUser.email !== req.body.email) {
+      throw new CustomError('User exist', STATUS_CODE.CONFLICT);
     }
 
     await collection.updateOne(
@@ -69,14 +69,19 @@ export const updateUserProfile = tryCatch<UserData[]>(
       { $set: { ...req.body } }
     );
 
-    return res.status(200).json({ success: true });
+    return res
+      .status(STATUS_CODE.INTERNAL_SERVER_ERROR)
+      .json({ success: true });
   }
 );
 
 export const changeUserPassword = tryCatch<UserData[]>(
   async (req: Request, res: Response) => {
     if (!collection) {
-      throw new CustomError('Internal server error', 500);
+      throw new CustomError(
+        'Internal server error',
+        STATUS_CODE.INTERNAL_SERVER_ERROR
+      );
     }
 
     const userData = ChangeUserPasswordSchema.parse(req.body);
@@ -92,14 +97,17 @@ export const changeUserPassword = tryCatch<UserData[]>(
       { $set: { password: hashedPassword } }
     );
 
-    return res.status(200).json({ success: true });
+    return res.status(STATUS_CODE.OK).json({ success: true });
   }
 );
 
 export const deleteUser = tryCatch<UserData[]>(
   async (req: Request, res: Response, next: NextFunction) => {
     if (!collection) {
-      throw new CustomError('Internal server error', 500);
+      throw new CustomError(
+        'Internal server error',
+        STATUS_CODE.INTERNAL_SERVER_ERROR
+      );
     }
 
     const id = req.params.id;
@@ -109,20 +117,9 @@ export const deleteUser = tryCatch<UserData[]>(
     });
 
     if (result.deletedCount) {
-      req.logout((err: Error) => {
-        if (err) return next(err);
-
-        req.session.destroy((err: Error) => {
-          if (err) return next(err);
-
-          res.clearCookie('time', { path: '/' });
-          res.clearCookie('bmg-seqdk', { path: '/' });
-
-          return res.status(200).json({ success: true });
-        });
-      });
+      requestLogout(req, res, next);
     } else {
-      res.status(200).json({ success: false });
+      res.status(STATUS_CODE.OK).json({ success: false });
     }
   }
 );
