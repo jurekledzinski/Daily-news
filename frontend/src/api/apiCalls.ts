@@ -91,7 +91,9 @@ export const createComment = tryCatch<
   APISuccessResponse,
   APIErrorResponse,
   CommentCreate
->(async (body: CommentCreate) => {
+>(async (data: CommentCreate) => {
+  const { csrfToken, ...body } = data;
+
   const response = await fetch(URLS.CREATE_COMMENT(), {
     method: 'POST',
     mode: 'cors',
@@ -99,6 +101,7 @@ export const createComment = tryCatch<
     body: JSON.stringify({ ...body, likes: parseInt(body.likes) }),
     headers: {
       'Content-Type': 'application/json',
+      'X-CSRF-Token': csrfToken,
     },
   });
 
@@ -137,13 +140,16 @@ export const updateUserProfile = tryCatch<
   APIErrorResponse,
   { id: string; body: DataProfile }
 >(async (data: { id: string; body: DataProfile }) => {
+  const { csrfToken, ...body } = data.body;
+
   const response = await fetch(URLS.UPDATE_USER_PROFILE(data.id), {
     method: 'PATCH',
     mode: 'cors',
     credentials: 'include',
-    body: JSON.stringify(data.body),
+    body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
+      'X-CSRF-Token': csrfToken,
     },
   });
 
@@ -155,13 +161,16 @@ export const changeUserPassword = tryCatch<
   APIErrorResponse,
   { id: string; body: DataPassword }
 >(async (data: { id: string; body: DataPassword }) => {
+  const { csrfToken, ...body } = data.body;
+
   const response = await fetch(URLS.CHANGE_USER_PASSWORD(data.id), {
     method: 'PATCH',
     mode: 'cors',
     credentials: 'include',
-    body: JSON.stringify(data.body),
+    body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
+      'X-CSRF-Token': csrfToken,
     },
   });
 

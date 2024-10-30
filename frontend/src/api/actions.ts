@@ -1,7 +1,7 @@
 import { invalidateQueries, refetchQueries, setResponse } from '../helpers';
 import { LoaderFunctionArgs, Params, redirect } from 'react-router-dom';
 import { queryClient as useQueryClient } from '../main';
-import { QueryClient } from '@tanstack/react-query';
+import type { QueryClient } from '@tanstack/react-query';
 import {
   CommentCreate,
   CSRFToken,
@@ -63,6 +63,7 @@ export const actionCreateComment = async (
 
   await invalidateQueries(queryClient, ['list-comments', articleId, page]);
   await refetchQueries(queryClient, ['list-comments', articleId, page]);
+  useQueryClient.invalidateQueries({ queryKey: ['crsf-token'] });
 
   const redirectTo = window.location.pathname;
 
@@ -90,6 +91,7 @@ export const actionCreateCommentReply = async (
 
   await invalidateQueries(queryClient, ['list-comments', articleId, page]);
   await refetchQueries(queryClient, ['list-comments', articleId, page]);
+  useQueryClient.invalidateQueries({ queryKey: ['crsf-token'] });
 
   await invalidateQueries(queryClient, [
     'list-comment-replies',
@@ -200,6 +202,7 @@ const actionUpdateUserProfile = async (data: FormData, id: string) => {
   const result = await updateUserProfile({ id, body: dataProfile });
 
   useQueryClient.removeQueries({ queryKey: ['user'] });
+  useQueryClient.invalidateQueries({ queryKey: ['crsf-token'] });
 
   if ('message' in result && !result.success) {
     return {
@@ -215,10 +218,12 @@ const actionUpdateUserProfile = async (data: FormData, id: string) => {
 
 const actionChangeUserPassword = async (data: FormData, id: string) => {
   data.delete('actionType');
-  const changePassword = Object.fromEntries(data) as unknown as DataPassword;
-  const result = await changeUserPassword({ id, body: changePassword });
+  const dataPassword = Object.fromEntries(data) as unknown as DataPassword;
+
+  const result = await changeUserPassword({ id, body: dataPassword });
 
   useQueryClient.removeQueries({ queryKey: ['user'] });
+  useQueryClient.invalidateQueries({ queryKey: ['crsf-token'] });
 
   if ('message' in result && !result.success) {
     return {
