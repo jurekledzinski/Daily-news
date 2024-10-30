@@ -46,14 +46,15 @@ export type ContentProps = {
   text: string;
 };
 
-export type CommentSectionProps = Omit<SectionCommentsProps, 'comments'> & {
+export interface CommentSectionProps
+  extends Omit<SectionCommentsProps, 'comments'> {
   comment: SectionCommentsProps['comments'][0];
   className?: string;
   children: SectionCommentsProps['children'];
   onShowReplies: SectionCommentsProps['onShowReplies'];
   onShowMoreReplies: SectionCommentsProps['onShowMoreReplies'];
   onSubmitLike: SectionCommentsProps['onSubmitLike'];
-};
+}
 
 export type CommentPanelProps = {
   comment: SectionCommentsProps['comments'][0];
