@@ -1,3 +1,4 @@
+import { ActionData } from '../../types';
 import { ArticleDetails } from '../../components/pages';
 import { cloneDeep } from 'lodash';
 import { CommentsWithReplies, NoDataMessage } from '../../components/shared';
@@ -13,6 +14,7 @@ import {
 import {
   useAddComment,
   useFetchOnScroll,
+  useFetchProtection,
   useLoadComments,
   useUpdateLikes,
 } from '../../hooks';
@@ -21,6 +23,7 @@ import {
   useLoaderData,
   useParams,
   useSearchParams,
+  useActionData,
 } from 'react-router-dom';
 
 type LoaderData = Awaited<ReturnType<ReturnType<typeof loaderDetailsArticle>>>;
@@ -35,12 +38,14 @@ export const DetailsArticle = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const data = useLoaderData() as LoaderData;
   const article = data.detailsArticle.response.content;
-  const user = state.user ?? { email: '', name: '', id: '' };
+  const dataToken = useFetchProtection();
+  const actionData = useActionData() as ActionData;
 
   const methodSubmitComment = useAddComment({
     artId: articleId,
-    user: user.name,
-    userId: user.id ?? '',
+    token: dataToken.token,
+    user: state.user?.name ?? '',
+    userId: state.user?.id ?? '',
   });
 
   const methodSubmitLike = useUpdateLikes({
@@ -104,6 +109,7 @@ export const DetailsArticle = () => {
   return (
     <section className="section section--details-article">
       <ArticleDetails
+        actionData={actionData}
         comments={id && stateComments[id] ? stateComments[id] : []}
         data={{
           id: article.id,
