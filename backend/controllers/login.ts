@@ -5,6 +5,7 @@ import { NextFunction, Request, Response } from 'express';
 import { STATUS_CODE } from '../constants';
 import { tryCatch } from '../helpers/tryCatch';
 import { UserLogin } from '../models/user';
+import { responseCookie } from '../helpers';
 
 const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
   return new Promise<{ user: UserLogin; info: { message?: string } }>(
@@ -51,14 +52,7 @@ export const loginUser = tryCatch<{ message: '' }>(
 
       const maxAge = req.session.cookie.maxAge;
 
-      res.cookie('time', 'true', {
-        domain: process.env.NODE_ENV === 'production' ? '' : 'localhost', //add later domain after deploy frontend
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-        httpOnly: false,
-        sameSite: 'strict',
-        maxAge: maxAge,
-      });
+      responseCookie(res, maxAge);
 
       return res.status(STATUS_CODE.OK).json({ success: true });
     });

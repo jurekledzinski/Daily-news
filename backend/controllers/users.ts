@@ -4,7 +4,7 @@ import xss from 'xss';
 import { getCollectionDb } from '../config/db';
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { requestLogout } from '../helpers';
+import { requestLogout, responseCookie } from '../helpers';
 import { STATUS_CODE } from '../constants';
 import { tryCatch } from '../helpers/tryCatch';
 import {
@@ -23,6 +23,10 @@ export const getUser = tryCatch<UserData[]>(
         STATUS_CODE.INTERNAL_SERVER_ERROR
       );
     }
+
+    const maxAge = req.session.cookie.maxAge;
+
+    responseCookie(res, maxAge);
 
     return res
       .status(STATUS_CODE.OK)
@@ -70,9 +74,7 @@ export const updateUserProfile = tryCatch<UserData[]>(
       { $set: { email: xss(parsedData.email), name: xss(parsedData.name) } }
     );
 
-    return res
-      .status(STATUS_CODE.INTERNAL_SERVER_ERROR)
-      .json({ success: true });
+    return res.status(STATUS_CODE.OK).json({ success: true });
   }
 );
 
