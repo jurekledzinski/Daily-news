@@ -5,9 +5,15 @@ type UseAddCommentProps = {
   artId: string | undefined;
   user: string;
   userId: string;
+  token: string;
 };
 
-export const useAddComment = ({ artId, user, userId }: UseAddCommentProps) => {
+export const useAddComment = ({
+  artId,
+  token,
+  user,
+  userId,
+}: UseAddCommentProps) => {
   const submit = useSubmit();
 
   const onSubmit = (data: CommentInput, commentId?: string) => {
@@ -26,6 +32,7 @@ export const useAddComment = ({ artId, user, userId }: UseAddCommentProps) => {
     formData.append('userId', userId);
     formData.append('idArticle', artId ?? '');
     formData.append('likes', '0');
+    formData.append('csrfToken', token);
 
     submit(formData, { method: 'post' });
   };
