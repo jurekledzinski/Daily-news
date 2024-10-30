@@ -1,5 +1,5 @@
 import { APICSRFTokenResponse, APIErrorResponse, URLS } from '../api';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, } from '@tanstack/react-query';
 
 export const useFetchProtection = () => {
   const data = useQuery<APICSRFTokenResponse, APIErrorResponse>({
@@ -20,5 +20,5 @@ export const useFetchProtection = () => {
     enabled: document.cookie.split('=').includes('time'),
   });
 
-  return data;
+  return { token: data.data?.token ?? '' };
 };
