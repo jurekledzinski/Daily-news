@@ -16,10 +16,10 @@ router.get('/', checkAuthentication, getUser);
 router.route('/logout').post(checkAuthentication, logoutUser);
 router
   .route('/update_profile/:id')
-  .patch(checkAuthentication, updateUserProfile);
+  .patch(checkAuthentication, csrfSynchronisedProtection, updateUserProfile);
 router
   .route('/change_password/:id')
-  .patch(checkAuthentication, changeUserPassword);
+  .patch(checkAuthentication, csrfSynchronisedProtection, changeUserPassword);
 
 router
   .route('/delete_user/:id')
