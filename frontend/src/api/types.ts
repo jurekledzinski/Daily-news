@@ -62,6 +62,14 @@ export type APIErrorResponse = {
   success: boolean;
 };
 
+export type APICSRFTokenResponse = {
+  token: string;
+};
+
+export type CSRFToken = {
+  csrfToken: string;
+};
+
 export type ArticleDetailsElements = {
   id: string;
   relation: string;
@@ -127,7 +135,7 @@ export type Comment = {
   replyCount?: number;
 };
 
-export type CommentCreate = Omit<Comment, 'id'>;
+export type CommentCreate = Omit<Comment, 'id'> & CSRFToken;
 
 export interface CommentAndReplies extends Comment {
   pageReply?: number;
@@ -148,8 +156,8 @@ export type User = {
   id: string;
 };
 
-export type DataPassword = Pick<User, 'password'>;
-export type DataProfile = Omit<User, 'password' | 'id'>;
+export type DataPassword = Pick<User, 'password'> & CSRFToken;
+export type DataProfile = Omit<User, 'password' | 'id'> & CSRFToken;
 export type DataLogin = Omit<User, 'name' | 'id'>;
 export type DataUser = Omit<User, 'password'>;
 
@@ -162,11 +170,3 @@ interface ResponsePagination<T = IArticles[]> extends APIGuardian<T> {
 export interface APIGuardianResponseError {
   response: ResponsePagination;
 }
-
-export type APICSRFTokenResponse = {
-  token: string;
-};
-
-export type CSRFToken = {
-  csrfToken: string;
-};
