@@ -2,4 +2,12 @@
   padding: 0.75rem 0.5rem;
   color: var(--secondary-color);
   background: var(--dark-color);
+  opacity: 0;
+  animation: fadeIn 0.8s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
