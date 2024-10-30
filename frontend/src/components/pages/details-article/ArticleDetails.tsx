@@ -1,14 +1,13 @@
-import { ActionData } from '../../../types';
 import { AlertError, FormComment, SectionComments } from '../../shared';
 import { ArticleDetailsProps } from './types';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Header } from './Header';
 import { sanitizeContent } from '../../../helpers';
-import { useActionData } from 'react-router-dom';
 import './ArticleDetails.css';
 
 export const ArticleDetails = ({
+  actionData,
   comments,
   data,
   methodSubmitComment,
@@ -19,7 +18,6 @@ export const ArticleDetails = ({
   successRepliesComments,
   userData,
 }: ArticleDetailsProps) => {
-  const actionData = useActionData() as ActionData;
   const cleanCaption = sanitizeContent(data.caption);
   const cleanContent = sanitizeContent(data.content);
 
@@ -73,6 +71,12 @@ export const ArticleDetails = ({
         </AlertError>
       )}
 
+      {actionData && actionData.action === 'create-reply' && (
+        <AlertError className="alert-error--article-details">
+          {actionData.message}
+        </AlertError>
+      )}
+
       {!successComments || !successRepliesComments ? (
         <AlertError className="alert-error--article-details">
           Couldn't fetch data comments
@@ -91,15 +95,10 @@ export const ArticleDetails = ({
                     <FormComment
                       buttonText="Reply to comment"
                       onSubmit={(data) => {
-                        onClose();
                         methodSubmitComment(data, commentId);
+                        onClose();
                       }}
                     />
-                    {actionData && actionData.action === 'create-reply' && (
-                      <AlertError className="alert-error--article-details">
-                        {actionData.message}
-                      </AlertError>
-                    )}
                   </>
                 );
               }
