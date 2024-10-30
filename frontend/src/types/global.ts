@@ -1,4 +1,5 @@
 export type UseOutletContext = {
+  activeTabs: string[];
   handleAddSubArticle: (value: { id: string; title: string }) => void;
 };
 

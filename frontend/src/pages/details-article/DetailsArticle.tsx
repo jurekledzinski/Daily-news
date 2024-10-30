@@ -1,4 +1,4 @@
-import { ActionData } from '../../types';
+import { ActionData, UseOutletContext } from '../../types';
 import { ArticleDetails } from '../../components/pages';
 import { cloneDeep } from 'lodash';
 import { CommentsWithReplies, NoDataMessage } from '../../components/shared';
@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { loaderDetailsArticle } from '../../api';
 import { useCallback, useState } from 'react';
 import { useUserStore } from '../../store';
+import './DetailsArticle.css';
 import {
   getDetailsArticleImageData,
   updateNestedRepliesLikes,
@@ -24,6 +25,7 @@ import {
   useParams,
   useSearchParams,
   useActionData,
+  useOutletContext,
 } from 'react-router-dom';
 
 type LoaderData = Awaited<ReturnType<ReturnType<typeof loaderDetailsArticle>>>;
@@ -40,6 +42,7 @@ export const DetailsArticle = () => {
   const article = data.detailsArticle.response.content;
   const dataToken = useFetchProtection();
   const actionData = useActionData() as ActionData;
+  const context = useOutletContext<UseOutletContext>();
 
   const methodSubmitComment = useAddComment({
     artId: articleId,
@@ -107,7 +110,12 @@ export const DetailsArticle = () => {
   }
 
   return (
-    <section className="section section--details-article">
+    <section
+      className="section section--details-article"
+      key={
+        context.activeTabs[1] ? context.activeTabs[1] : context.activeTabs[0]
+      }
+    >
       <ArticleDetails
         actionData={actionData}
         comments={id && stateComments[id] ? stateComments[id] : []}
