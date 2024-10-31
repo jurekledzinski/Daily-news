@@ -5,9 +5,10 @@ import { useOutletContext } from 'react-router-dom';
 
 type AsideProps = {
   layout: LayoutData;
+  onTouchStart: (data: IDataCategories) => void;
 };
 
-export const Aside = ({ layout }: AsideProps) => {
+export const Aside = ({ layout, onTouchStart }: AsideProps) => {
   const { categories } = useOutletContext<{ categories: IDataCategories[] }>();
 
   return (
@@ -21,6 +22,7 @@ export const Aside = ({ layout }: AsideProps) => {
               data={section}
               key={section.id}
               isDisabled={card ? true : false}
+              onTouchStart={onTouchStart}
             />
           );
         })

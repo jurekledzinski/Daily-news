@@ -1,9 +1,13 @@
 import { Aside } from '../../components/pages';
-import { getLocalData, setLocalData } from '../../helpers';
 import { GridLayout, LayoutData, LocalData } from '../../components/pages';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
+import {
+  getLocalData,
+  handleAddCardOnTouch,
+  setLocalData,
+} from '../../helpers';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -103,7 +107,14 @@ export const Dashboard = () => {
           navigate({ pathname: url, search: query });
         }}
       />
-      <Aside layout={layout} />
+      <Aside
+        layout={layout}
+        onTouchStart={(data) => {
+          handleAddCardOnTouch(data, layout, (newLayout) => {
+            setLayout(newLayout);
+          });
+        }}
+      />
     </section>
   );
 };
