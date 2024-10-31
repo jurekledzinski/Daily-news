@@ -112,6 +112,7 @@ export const Dashboard = () => {
         onTouchStart={(data) => {
           handleAddCardOnTouch(data, layout, (newLayout) => {
             setLayout(newLayout);
+            handleSetLayout(newLayout);
           });
         }}
       />
