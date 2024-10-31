@@ -81,7 +81,7 @@ export const TabsCategoriesArticles = ({
         </TabsList>
       </TabsListConainer>
 
-      <TabsPanel key={activeTabs[1] ? activeTabs[1] : activeTabs[0]}>
+      <TabsPanel>
         {navigation.state === 'loading' && (
           <Backdrop>
             <Loader className="fixed" />
@@ -91,6 +91,7 @@ export const TabsCategoriesArticles = ({
         <Outlet
           context={{
             handleAddSubArticle,
+            activeTabs,
           }}
         />
       </TabsPanel>
