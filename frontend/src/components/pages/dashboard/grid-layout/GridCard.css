@@ -7,7 +7,7 @@
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
-.grid-card > h6 {
+.grid-card__title {
   background-color: rgba(0, 0, 0, 0.5);
   padding: 0.5rem 0;
   width: 100%;
@@ -42,7 +42,7 @@
 }
 
 .grid-card__remove {
-  display: none;
+  display: block;
   cursor: pointer;
   border: none;
   background-color: transparent;
@@ -50,10 +50,22 @@
   color: #555555;
 }
 
-.grid-card__header:hover .grid-card__remove {
-  display: block;
-}
+@media (hover: hover) {
+  .grid-card__remove {
+    display: none;
+  }
 
-.grid-card__handle:active + .grid-card__remove {
-  display: none;
+  .grid-card__header:hover .grid-card__remove {
+    display: block;
+  }
+
+  .grid-card__handle:active + .grid-card__remove {
+    display: none;
+  }
+
+  .grid-card__remove:active,
+  .grid-card__remove:focus,
+  .grid-card__remove:focus-within {
+    display: none;
+  }
 }
