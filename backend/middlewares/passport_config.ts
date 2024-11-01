@@ -1,13 +1,13 @@
 import bcrypt from 'bcrypt';
-import CustomError from '../error/error';
 import LocalStrategy from 'passport-local';
 import passport from 'passport';
 import xss from 'xss';
-import { getCollectionDb } from '../config/db';
-import { loginUserSchema, User } from '../models/user';
+import { CustomError } from '../error';
+import { getCollectionDb } from '../config';
+import { User } from '../models';
 import { ObjectId } from 'mongodb';
 import { STATUS_CODE } from '../constants';
-import { transformDocument } from '../helpers/transformData';
+import { transformDocument } from '../helpers';
 
 passport.use(
   new LocalStrategy.Strategy(
@@ -16,8 +16,6 @@ passport.use(
       passwordField: 'password',
     },
     async (email, password, done) => {
-      const parsedData = loginUserSchema.parse({ email, password });
-
       try {
         const collection = getCollectionDb('users');
 
@@ -29,7 +27,7 @@ passport.use(
         }
 
         const user = await collection.findOne<User>({
-          email: xss(parsedData.email),
+          email: xss(email),
         });
 
         if (!user) {
@@ -37,7 +35,7 @@ passport.use(
         }
 
         const isPasswordSame = await bcrypt.compare(
-          xss(parsedData.password),
+          xss(password),
           user.password
         );
 
