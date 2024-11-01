@@ -1,21 +1,36 @@
-form {
-  gap: 0.25rem;
+.form {
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
 }
 
-label {
+.form__label {
   display: block;
   margin-bottom: 0.15rem;
   font-size: 0.75rem;
 }
 
-input {
-  width: 100%;
+.form__input {
   padding: 0.25rem 0.5rem;
+  width: 100%;
 }
 
-fieldset {
+.form__fieldset {
   margin-bottom: 0.25rem;
   border: none;
+}
+
+.form__wrapper-input {
+  position: relative;
+}
+
+.form__icon {
+  position: absolute;
+  right: 4px;
+  bottom: 5px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  width: 1.125rem;
 }
