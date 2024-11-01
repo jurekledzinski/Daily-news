@@ -22,7 +22,8 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const dialogLoginRef = useRef<HTMLDialogElement | null>(null);
   const dialogRegisterRef = useRef<HTMLDialogElement | null>(null);
   useFetchUserData();
-
+  const arrCookies = document.cookie.split(';');
+  const isLog = arrCookies.some((cookie) => cookie.trim().startsWith('time='));
   const { onGetCookie, onRemoveCookie } = useControlServerError('serverError');
   const { state, dispatch } = useUserStore();
 
@@ -62,11 +63,12 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
           <h4 className="header__logo">Daily news</h4>
           <div className="header__buttons">
             <NavBarActions
+              isLoggedInUser={isLog}
               onBack={() => navigate(-1)}
               onClick={() => navigate(`profile/${state.user?.id}`)}
-              user={state.user}
             />
             <NavBarAuth
+              isLoggedInUser={isLog}
               logout={logoutUser}
               modalLoginRef={dialogLoginRef}
               modalRegisterRef={dialogRegisterRef}
@@ -74,7 +76,6 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
               onRemoveCookie={onRemoveCookie}
               submitLogin={submitLogin}
               submitRegister={submitRegister}
-              user={state.user}
             />
           </div>
         </nav>

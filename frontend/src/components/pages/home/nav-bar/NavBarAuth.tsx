@@ -3,6 +3,7 @@ import { Modal } from '../../../shared';
 import { NavBarAuthProps } from './types';
 
 export const NavBarAuth = ({
+  isLoggedInUser,
   logout,
   modalLoginRef,
   modalRegisterRef,
@@ -10,11 +11,10 @@ export const NavBarAuth = ({
   onRemoveCookie,
   submitLogin,
   submitRegister,
-  user,
 }: NavBarAuthProps) => {
   return (
     <div className="header__auth">
-      {user && (
+      {isLoggedInUser && (
         <button
           className="header__logout"
           onClick={() => {
@@ -25,7 +25,7 @@ export const NavBarAuth = ({
         </button>
       )}
 
-      {!user && (
+      {!isLoggedInUser && (
         <Modal
           form="login"
           onClose={() => {
@@ -47,7 +47,7 @@ export const NavBarAuth = ({
         </Modal>
       )}
 
-      {!user && (
+      {!isLoggedInUser && (
         <Modal
           form="register"
           onClose={() => {

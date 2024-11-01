@@ -2,9 +2,9 @@ import { NavBarActionsProps } from './types';
 import { useMatch } from 'react-router-dom';
 
 export const NavBarActions = ({
+  isLoggedInUser,
   onBack,
   onClick,
-  user,
 }: NavBarActionsProps) => {
   const match = useMatch('/');
 
@@ -15,7 +15,7 @@ export const NavBarActions = ({
           Back
         </button>
       )}
-      {user && (
+      {isLoggedInUser && (
         <button className="header__profile" onClick={onClick}>
           Profile
         </button>

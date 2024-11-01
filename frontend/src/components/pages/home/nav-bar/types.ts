@@ -1,18 +1,17 @@
 import { UseFormReturn } from 'react-hook-form';
-import { UserState } from '../../../../store';
 import { FormLoginValues, FormResigsterValues } from '../forms';
 
 export type NavBarActionsProps = {
+  isLoggedInUser: boolean;
   onBack: () => void;
   onClick: () => void;
-  user: UserState['user'];
 };
 
 export type NavBarAuthProps = {
+  isLoggedInUser: boolean;
   modalLoginRef: React.MutableRefObject<HTMLDialogElement | null>;
   modalRegisterRef: React.MutableRefObject<HTMLDialogElement | null>;
   logout: () => void;
-  user: UserState['user'];
   onGetCookie: (action: string) => {
     message: string;
     action: string;
