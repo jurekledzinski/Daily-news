@@ -1,6 +1,6 @@
-import { getCollectionDb } from '../config/db';
+import { getCollectionDb } from '../config';
 import { PAGE_SIZE } from '../constants';
-import { IComment } from '../models/comments';
+import { IComment } from '../models';
 
 export const calculateSkipCount = (
   page: string | string[] | qs.ParsedQs | qs.ParsedQs[]

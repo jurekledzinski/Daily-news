@@ -1,17 +1,17 @@
 import bcrypt from 'bcrypt';
-import CustomError from '../error/error';
 import xss from 'xss';
-import { getCollectionDb } from '../config/db';
+import { CustomError } from '../error';
+import { getCollectionDb } from '../config';
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import { requestLogout, responseCookie } from '../helpers';
 import { STATUS_CODE } from '../constants';
-import { tryCatch } from '../helpers/tryCatch';
+import { tryCatch } from '../helpers';
 import {
   ChangeUserPasswordSchema,
   UpdateUserProfileSchema,
   UserData,
-} from '../models/user';
+} from '../models';
 
 const collection = getCollectionDb<UserData>('users');
 

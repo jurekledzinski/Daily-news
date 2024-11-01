@@ -1,12 +1,12 @@
-import CustomError from '../error/error';
 import xss from 'xss';
-import { CommentSchema, IComment, LikesSchema } from '../models/comments';
-import { getCollectionDb } from '../config/db';
+import { CommentSchema, IComment, LikesSchema } from '../models';
+import { CustomError } from '../error';
+import { getCollectionDb } from '../config';
 import { ObjectId } from 'mongodb';
 import { PAGE_SIZE, STATUS_CODE } from '../constants';
 import { Request, Response } from 'express';
-import { transformDocument } from '../helpers/transformData';
-import { tryCatch } from '../helpers/tryCatch';
+import { transformDocument } from '../helpers';
+import { tryCatch } from '../helpers';
 import {
   buildResponse,
   calculateSkipCount,

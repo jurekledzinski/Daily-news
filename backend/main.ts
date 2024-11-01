@@ -1,17 +1,20 @@
 require('dotenv').config();
-import commentRoutes from './routes/comments';
 import cors from 'cors';
-import csrfRoutes from './routes/csrfRoute';
-import CustomError from './error/error';
+import { CustomError } from './error';
 import express, { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
-import loginRoutes from './routes/login';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
-import registerRoutes from './routes/register';
 import session from 'express-session';
-import userRoutes from './routes/users';
 import { z } from 'zod';
+
+import {
+  commentRoutes,
+  csrfRoutes,
+  loginRoutes,
+  registerRoutes,
+  userRoutes,
+} from './routes';
 
 const app = express();
 app.disable('x-powered-by');

@@ -1,4 +1,4 @@
-import CustomError from '../error/error';
+import { CustomError } from '../error';
 import { NextFunction, Request, Response } from 'express';
 import { STATUS_CODE } from '../constants';
 

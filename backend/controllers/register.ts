@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
 import CustomError from '../error/error';
 import xss from 'xss';
-import { getCollectionDb } from '../config/db';
+import { getCollectionDb } from '../config';
 import { Request, Response } from 'express';
 import { STATUS_CODE } from '../constants';
-import { tryCatch } from '../helpers/tryCatch';
-import { User, UserSchema } from '../models/user';
+import { tryCatch } from '../helpers';
+import { User, UserSchema } from '../models';
 
 export const registerUser = tryCatch(async (req: Request, res: Response) => {
   const collection = getCollectionDb<User>('users');

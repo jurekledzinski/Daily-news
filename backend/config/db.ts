@@ -3,7 +3,7 @@ import { MongoClient } from 'mongodb';
 
 const url = process.env.MONGO_DB_ATLAS_URL!;
 
-const client = new MongoClient(url);
+export const client = new MongoClient(url);
 
 async function connectDB() {
   try {
