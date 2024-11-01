@@ -1,11 +1,10 @@
-import CustomError from '../error/error';
-import passport from '../middlewares/passport_config';
-import xss from 'xss';
+import { CustomError } from '../error';
 import { NextFunction, Request, Response } from 'express';
-import { STATUS_CODE } from '../constants';
-import { tryCatch } from '../helpers/tryCatch';
-import { UserLogin } from '../models/user';
+import { passport } from '../middlewares';
 import { responseCookie } from '../helpers';
+import { STATUS_CODE } from '../constants';
+import { tryCatch } from '../helpers';
+import { UserLogin } from '../models';
 
 const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
   return new Promise<{ user: UserLogin; info: { message?: string } }>(
