@@ -1,7 +1,11 @@
+import { AlertError } from '../../../shared';
 import { ErrorMessage } from '../../../shared/messages';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form } from 'react-router-dom';
 import { LoginFormProps } from './types';
-import { AlertError } from '../../../shared';
+import { useState } from 'react';
+import './Forms.css';
 
 export const LoginForm = ({
   id,
@@ -10,12 +14,14 @@ export const LoginForm = ({
   serverError,
 }: LoginFormProps) => {
   const { errors } = methods.formState;
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Form id={id} onSubmit={onSubmit} method="POST" noValidate>
-      <fieldset>
-        <label>Email:</label>
+    <Form className="form" id={id} onSubmit={onSubmit} method="POST" noValidate>
+      <fieldset className="form__fieldset">
+        <label className="form__label">Email:</label>
         <input
+          className="form__input"
           type="text"
           {...methods.register('email', {
             required: { message: 'Email is required', value: true },
@@ -25,16 +31,44 @@ export const LoginForm = ({
             },
           })}
         />
+
         {errors.email && <ErrorMessage> {errors.email.message}</ErrorMessage>}
       </fieldset>
-      <fieldset>
-        <label>Password:</label>
-        <input
-          type="password"
-          {...methods.register('password', {
-            required: { message: 'Password is required', value: true },
-          })}
-        />
+
+      <fieldset className="form__fieldset">
+        <label className="form__label">Password:</label>
+        <div className="form__wrapper-input">
+          <input
+            className="form__input"
+            type={showPassword ? 'text' : 'password'}
+            {...methods.register('password', {
+              required: { message: 'Password is required', value: true },
+            })}
+          />
+
+          {showPassword ? (
+            <button
+              className="form__icon"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowPassword(false);
+              }}
+            >
+              <FontAwesomeIcon icon={faEye} />
+            </button>
+          ) : (
+            <button
+              className="form__icon"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowPassword(true);
+              }}
+            >
+              <FontAwesomeIcon icon={faEyeSlash} />
+            </button>
+          )}
+        </div>
+
         {errors.password && (
           <ErrorMessage> {errors.password.message}</ErrorMessage>
         )}

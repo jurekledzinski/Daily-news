@@ -1,6 +1,9 @@
 import { AlertError, ErrorMessage } from '../../../shared';
 import { ChangeUserPasswordProps } from './types';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form } from 'react-router-dom';
+import { useState } from 'react';
 import './Forms.css';
 
 export const ChangePasswordForm = ({
@@ -10,14 +13,17 @@ export const ChangePasswordForm = ({
 }: ChangeUserPasswordProps) => {
   const { formState } = methods;
   const { errors } = formState;
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPasswod, setShowConfirmPassword] = useState(false);
 
   return (
-    <div className="profile__password-form">
-      <Form onSubmit={onSubmit}>
-        <fieldset>
-          <label>Password:</label>
+    <Form className="form" onSubmit={onSubmit}>
+      <fieldset className="form__fieldset">
+        <label className="form__label">Password:</label>
+        <div className="form__wrapper-input">
           <input
-            type="password"
+            className="form__input"
+            type={showPassword ? 'text' : 'password'}
             {...methods.register('password', {
               required: { message: 'Password is required', value: true },
               minLength: {
@@ -27,15 +33,41 @@ export const ChangePasswordForm = ({
             })}
             placeholder="New password"
           />
-          {errors.password && (
-            <ErrorMessage>{errors.password.message}</ErrorMessage>
-          )}
-        </fieldset>
 
-        <fieldset>
-          <label>Confirm password:</label>
+          {showPassword ? (
+            <button
+              className="form__icon"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowPassword(false);
+              }}
+            >
+              <FontAwesomeIcon icon={faEye} />
+            </button>
+          ) : (
+            <button
+              className="form__icon"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowPassword(true);
+              }}
+            >
+              <FontAwesomeIcon icon={faEyeSlash} />
+            </button>
+          )}
+        </div>
+
+        {errors.password && (
+          <ErrorMessage>{errors.password.message}</ErrorMessage>
+        )}
+      </fieldset>
+
+      <fieldset className="form__fieldset">
+        <label className="form__label">Confirm password:</label>
+        <div className="form__wrapper-input">
           <input
-            type="password"
+            className="form__input"
+            type={showConfirmPasswod ? 'text' : 'password'}
             {...methods.register('confirmPassword', {
               required: {
                 message: 'Confirm password is required',
@@ -53,15 +85,38 @@ export const ChangePasswordForm = ({
             })}
             placeholder="Confirm new password"
           />
-          {errors.confirmPassword && (
-            <ErrorMessage>{errors.confirmPassword.message}</ErrorMessage>
+
+          {showConfirmPasswod ? (
+            <button
+              className="form__icon"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowConfirmPassword(false);
+              }}
+            >
+              <FontAwesomeIcon icon={faEye} />
+            </button>
+          ) : (
+            <button
+              className="form__icon"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowConfirmPassword(true);
+              }}
+            >
+              <FontAwesomeIcon icon={faEyeSlash} />
+            </button>
           )}
-        </fieldset>
+        </div>
 
-        {serverError && <AlertError>{serverError}</AlertError>}
+        {errors.confirmPassword && (
+          <ErrorMessage>{errors.confirmPassword.message}</ErrorMessage>
+        )}
+      </fieldset>
 
-        <button type="submit">Change password</button>
-      </Form>
-    </div>
+      {serverError && <AlertError>{serverError}</AlertError>}
+
+      <button type="submit">Change password</button>
+    </Form>
   );
 };
