@@ -2,6 +2,7 @@ import { CommentInput, FormProps } from './types';
 import { ErrorMessage } from '../messages';
 import { Form } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import './SectionComments.css';
 
 export const FormComment = ({ buttonText, onSubmit }: FormProps) => {
   const formMethods = useForm<CommentInput>();

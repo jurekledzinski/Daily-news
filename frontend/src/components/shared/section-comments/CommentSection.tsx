@@ -1,11 +1,6 @@
 import { CommentPanel, CommentSectionProps, Content, Footer, Header } from '.';
 import { useState } from 'react';
-
-// TODO: add chilren do footer if children is true then show reply button if not then not show
-// Create component button który bedzie reuzywalny ma miec jedno zadanie
-
-// <Button  onClick={()=>{}}></Button>
-// <Button  onClick={()=>{setShowReplies()}}></Button>
+import './SectionComments.css';
 
 export const CommentSection = ({
   className,
@@ -33,6 +28,7 @@ export const CommentSection = ({
 
         <Footer
           amountReplies={comment.replyCount ?? 0}
+          createdAt={comment.createdAt}
           children={children}
           onShowForm={() => {
             setShowForm((prev) => !prev);

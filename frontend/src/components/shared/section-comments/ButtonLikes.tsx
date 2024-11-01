@@ -3,6 +3,7 @@ import { Form } from 'react-router-dom';
 import { getValueLike, setLikes } from '../../../helpers';
 import { Likes } from '../../../api';
 import { useState } from 'react';
+import './SectionComments.css';
 
 type ButtonLikesProps = {
   commentId: string;

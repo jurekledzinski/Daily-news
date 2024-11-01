@@ -1,4 +1,5 @@
 import { ButtonLikes, HeaderProps } from '.';
+import './SectionComments.css';
 
 export const Header = ({
   commentId,

@@ -11,8 +11,12 @@
 
 .comment-panel__footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 0.8rem;
+}
+
+.comment-panel__time {
+  font-size: 0.7rem;
 }
 
 .comment-panel__content {

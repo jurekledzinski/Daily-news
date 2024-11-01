@@ -1,3 +1,5 @@
+import './SectionComments.css';
+
 export const CommentPanel = ({ children }: { children: React.ReactNode }) => {
   return (
     <>

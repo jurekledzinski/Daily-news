@@ -36,6 +36,7 @@ export type FormProps = {
 };
 
 export type FooterProps = {
+  createdAt: string;
   amountReplies: number | undefined;
   children: SectionCommentsProps['children'];
   onShowForm: () => void;
