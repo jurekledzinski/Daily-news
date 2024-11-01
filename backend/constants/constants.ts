@@ -7,8 +7,12 @@ export enum STATUS_CODE {
   FORBIDDEN = 403,
   NOT_FOUND = 404,
   CONFLICT = 409,
+  TOO_MANY_REQUESTS = 429,
   // Server errors
   INTERNAL_SERVER_ERROR = 500,
 }
 
 export const PAGE_SIZE = 10;
+
+export const IP_ATTEMPTS_LIMIT = 100;
+export const LOGIN_ATTEMPTS_LIMIT = 10;
