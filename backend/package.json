@@ -25,6 +25,7 @@
     "mongodb": "^6.7.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
+    "rate-limiter-flexible": "^5.0.4",
     "xss": "^1.0.15",
     "zod": "^3.23.8"
   },
