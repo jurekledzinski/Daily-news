@@ -24,10 +24,12 @@ export const Home = () => {
       <Suspense>
         <Outlet
           context={{
-            categories: (data.response?.results ?? []).map((c) => ({
-              id: c.id,
-              title: c.webTitle,
-            })),
+            categories: (data.response?.results ?? [])
+              .map((c) => ({
+                id: c.id,
+                title: c.webTitle,
+              }))
+              .sort((a, b) => a.id.localeCompare(b.id)),
           }}
         />
       </Suspense>
