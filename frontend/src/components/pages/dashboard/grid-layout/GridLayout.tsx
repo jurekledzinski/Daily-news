@@ -75,11 +75,12 @@ export const GridLayout = ({
           w: 1,
           h: 4,
           minH: 4,
-          maxH: 8,
+          maxH: 4,
           minW: 1,
-          maxW: 2,
+          maxW: 1,
         })}
         rowHeight={30}
+        isResizable={false}
       >
         {layout[currentBreakPoint as keyof typeof layout].map((item) => {
           return (
