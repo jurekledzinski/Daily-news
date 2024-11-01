@@ -1,3 +1,25 @@
+const sections = [
+  'artanddesign',
+  'australia-news',
+  'cities',
+  'environment',
+  'fashion',
+  'film',
+  'food',
+  'football',
+  'games',
+  'music',
+  'news',
+  'politics',
+  'science',
+  'sport',
+  'technology',
+  'travel',
+  'uk-news',
+  'weather',
+  'world',
+];
+
 export const URLS = {
   FETCH_USER: () => 'http://localhost:5000/api/v1/users',
 
@@ -28,7 +50,7 @@ export const URLS = {
   GET_CSRF_TOKEN: () => 'http://localhost:5000/api/v1/csrf-token',
 
   GET_CATEGORIES_ARTICLES: () => {
-    const url = `https://content.guardianapis.com/sections?&format=json&api-key=${
+    const url = `https://content.guardianapis.com/sections?q=${sections.join()}&format=json&api-key=${
       import.meta.env.VITE_API_KEY
     }`;
 
