@@ -4,6 +4,7 @@ import cors from 'cors';
 import csrfRoutes from './routes/csrfRoute';
 import CustomError from './error/error';
 import express, { NextFunction, Request, Response } from 'express';
+import helmet from 'helmet';
 import loginRoutes from './routes/login';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
@@ -13,15 +14,20 @@ import userRoutes from './routes/users';
 import { z } from 'zod';
 
 const app = express();
+app.disable('x-powered-by');
 
 const mongoStore = new MongoStore({
   mongoUrl: process.env.MONGO_DB_URL_SESSION,
   dbName: process.env.MONGO_NAME_DB_SESSION,
 });
 
+app.set('trust proxy', 1);
+app.use(helmet());
 app.use(express.json());
 app.use(
   cors({
+    allowedHeaders: ['Content-Type', 'X-CSRF-Token'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     origin: 'http://localhost:3000',
     credentials: true,
   })
