@@ -1,5 +1,6 @@
 import { GridTemplateCard, LayoutData } from '../grid-layout';
 import { IDataCategories } from '../../../../api';
+import { images } from '../../../../images';
 import { NoDataMessage } from '../../../shared';
 import { useOutletContext } from 'react-router-dom';
 
@@ -17,9 +18,14 @@ export const Aside = ({ layout, onTouchStart }: AsideProps) => {
         categories.map((section) => {
           const card = layout.lg.find((cardItem) => cardItem.id === section.id);
 
+          const image = images.find((link) =>
+            new RegExp(section.id, 'i').test(link)
+          );
+
           return (
             <GridTemplateCard
               data={section}
+              image={image ?? ''}
               key={section.id}
               isDisabled={card ? true : false}
               onTouchStart={onTouchStart}
