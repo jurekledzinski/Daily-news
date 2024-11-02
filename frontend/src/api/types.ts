@@ -104,6 +104,7 @@ export interface CategoriesData
 export type IDataCategories = {
   id: string;
   title: string;
+  image: string;
 };
 
 export interface IArticles extends Omit<ArticleDetails, 'webPublicationDate'> {}
