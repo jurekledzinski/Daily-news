@@ -65,11 +65,16 @@ export const useControlDashboard = ({
         (el) => el.ui.i === item.i
       );
 
-      return {
-        id: prevItem?.id ?? '',
-        title: prevItem?.title ?? '',
-        ui: { ...item },
-      };
+      if (prevItem) {
+        return {
+          id: prevItem.id,
+          title: prevItem.title,
+          ui: { ...item },
+          image: prevItem.image,
+        };
+      }
+
+      return item;
     });
 
     for (const breakpoint in layoutData) {

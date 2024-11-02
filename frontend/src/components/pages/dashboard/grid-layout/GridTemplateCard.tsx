@@ -1,8 +1,10 @@
 import { GridTemplateCardProps } from './types';
+import { Image } from '../../../shared';
 import './GridTemplateCard.css';
 
 export const GridTemplateCard = ({
   data,
+  image,
   isDisabled,
   onTouchStart,
 }: GridTemplateCardProps) => {
@@ -17,11 +19,25 @@ export const GridTemplateCard = ({
       onDragStart={(e) => {
         if (isDisabled) e.preventDefault();
 
-        e.dataTransfer.setData('text/plain', `${JSON.stringify(data)}`);
+        e.dataTransfer.setData(
+          'text/plain',
+          `${JSON.stringify({ ...data, image })}`
+        );
       }}
-      onTouchStart={() => onTouchStart(data)}
+      onTouchStart={(e) => {
+        if (isDisabled) {
+          e.preventDefault();
+          return;
+        }
+        onTouchStart({ ...data, image });
+      }}
       unselectable="on"
     >
+      <Image
+        className="grid-template-card__image"
+        src={`${image}&tr=w-170,h-100,c-at_least`}
+        altText={data.title}
+      />
       <h6>{data.title}</h6>
     </div>
   );

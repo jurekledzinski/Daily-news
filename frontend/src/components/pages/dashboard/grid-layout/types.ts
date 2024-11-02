@@ -6,6 +6,7 @@ export type LayoutItem = {
   ui: ReactGridLayout.Layout;
   title: string;
   page: string;
+  image: string;
 };
 
 export type LayoutData = {
@@ -14,6 +15,7 @@ export type LayoutData = {
 
 export type GridTemplateCardProps = {
   data: IDataCategories;
+  image: string;
   isDisabled: boolean;
   onTouchStart: (data: IDataCategories) => void;
 };

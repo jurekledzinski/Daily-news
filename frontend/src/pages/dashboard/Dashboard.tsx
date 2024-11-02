@@ -46,6 +46,7 @@ export const Dashboard = () => {
             listArticles:
               localData.length && inLocal ? inLocal.listArticles : [],
             page: localData.length && inLocal ? inLocal.page : '1',
+            image: localData.length && inLocal ? inLocal.image : category.image,
           };
 
           const accData = [...acc, singleCategory];
@@ -77,6 +78,7 @@ export const Dashboard = () => {
               title: curr.title,
               ui: item[1],
               page: curr.page,
+              image: curr.image,
             },
           ],
         };

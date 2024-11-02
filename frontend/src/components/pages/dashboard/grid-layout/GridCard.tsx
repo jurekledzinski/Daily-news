@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { forwardRef, Ref } from 'react';
 import { GridCardProps } from './types';
 import './GridCard.css';
+import { Image } from '../../../shared';
 
 export const GridCard = forwardRef<HTMLDivElement, GridCardProps>(
   (
@@ -42,6 +43,11 @@ export const GridCard = forwardRef<HTMLDivElement, GridCardProps>(
 
         <h6 className="grid-card__title">{gridItem.title}</h6>
         {children}
+        <Image
+          className="grid-card__image"
+          src={gridItem.image}
+          altText={gridItem.title}
+        />
       </div>
     );
   }
