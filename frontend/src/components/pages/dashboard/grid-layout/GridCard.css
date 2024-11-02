@@ -1,5 +1,6 @@
 .grid-card {
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
@@ -8,6 +9,10 @@
 }
 
 .grid-card__title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 0.5rem 0;
   width: 100%;
@@ -27,9 +32,12 @@
 
 .grid-card__header {
   display: flex;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   justify-content: space-between;
   align-items: center;
+  z-index: 1;
   width: 100%;
 }
 
@@ -47,7 +55,14 @@
   border: none;
   background-color: transparent;
   padding: 0.25rem;
-  color: #555555;
+  color: red;
+}
+
+.grid-card__image {
+  display: block;
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
 }
 
 @media (hover: hover) {
