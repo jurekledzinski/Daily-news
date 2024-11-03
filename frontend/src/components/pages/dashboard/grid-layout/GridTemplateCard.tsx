@@ -38,7 +38,7 @@ export const GridTemplateCard = ({
         src={`${image}&tr=w-170,h-100,c-at_least`}
         altText={data.title}
       />
-      <h6>{data.title}</h6>
+      <h6 className="grid-template-card__title">{data.title}</h6>
     </div>
   );
 };
