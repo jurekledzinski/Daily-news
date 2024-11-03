@@ -12,18 +12,18 @@
 }
 
 .grid-template-card--disabled::after {
-  content: '';
   position: absolute;
+  opacity: 0.5;
   inset: 0;
   background-color: #e9e9e9;
-  opacity: 0.5;
+  content: '';
 }
 
 .grid-template-card:last-child {
   margin-bottom: initial;
 }
 
-.grid-template-card h6 {
+.grid-template-card .grid-template-card__title {
   position: absolute;
   top: 50%;
   left: 50%;
