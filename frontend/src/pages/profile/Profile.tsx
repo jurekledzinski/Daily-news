@@ -57,7 +57,7 @@ export const Profile = () => {
 
       <Modal
         form="delete-user"
-        className="delete-account-modal"
+        className="modal--delete"
         confirmButton="Confirm"
         openButton="Delete account"
         title="Delete account confirmation"
@@ -70,7 +70,9 @@ export const Profile = () => {
             submitDeleteUser();
           }}
         >
-          <p>Are you sure you want delete your account?</p>
+          <p className="modal__text">
+            Are you sure you want delete your account?
+          </p>
         </Form>
       </Modal>
 

@@ -7,6 +7,7 @@ dialog {
   border: none;
   border-radius: 2px;
   width: 20rem;
+  overflow-x: clip;
 }
 
 dialog[open] {
@@ -64,7 +65,24 @@ dialog[open]::backdrop {
   color: white;
 }
 
-.delete-account-modal > .modal__header {
-  background-color: red;
+.modal__text {
+  font-size: 1rem;
+  text-align: left;
+  word-spacing: none;
+}
+
+dialog.modal--delete {
+  box-shadow: none;
+  border: none;
+  width: min(100%, 24rem);
+}
+
+.modal--delete .modal__header {
+  --delete-color: 255, 65, 54;
+  background-color: rgba(var(--delete-color), 1);
+}
+
+.modal--delete .modal__title {
   color: white;
+  font-weight: 500;
 }
