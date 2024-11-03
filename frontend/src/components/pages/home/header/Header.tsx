@@ -1,5 +1,6 @@
 import { NavBarActions, NavBarAuth } from '../nav-bar';
 import { PathMatch, useNavigate, useNavigation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useCallback, useRef } from 'react';
 import { useControlServerError } from '../../../../hooks/useControlServerError';
 import { useUserStore } from '../../../../store';
@@ -30,6 +31,9 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const logoutUser = useLogoutUser({
     onSuccess: () => {
       dispatch({ type: 'LOGOUT_USER' });
+      toast.success('Logout successful', {
+        position: 'top-right',
+      });
       if (matchProfile) navigate('/', { replace: true });
     },
   });
@@ -40,6 +44,9 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
     onSuccess: useCallback((reset) => {
       dialogRegisterRef.current?.close();
       reset();
+      toast.success('Registration successful', {
+        position: 'top-right',
+      });
     }, []),
   });
 
@@ -49,6 +56,9 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
     onSuccess: useCallback((reset) => {
       dialogLoginRef.current?.close();
       reset();
+      toast.success('Login successful', {
+        position: 'top-right',
+      });
     }, []),
   });
 

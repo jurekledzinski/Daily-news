@@ -28,10 +28,10 @@ export const useRegisterForm = ({
   };
 
   useEffect(() => {
-    if (status === 'idle' && !error) {
+    if (status === 'idle' && !error && methods.formState.isSubmitSuccessful) {
       onSuccess(methods.reset);
     }
-  }, [error, onSuccess, status, methods.reset]);
+  }, [error, methods, onSuccess, status]);
 
   return { methods, onSubmit: methods.handleSubmit(onSubmit) };
 };

@@ -48,7 +48,9 @@ export const LoginForm = ({
 
           {showPassword ? (
             <button
-              className="form__icon"
+              className={
+                showPassword ? 'form__icon form__icon--visible' : 'form__icon'
+              }
               onClick={(e) => {
                 e.preventDefault();
                 setShowPassword(false);

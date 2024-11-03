@@ -68,7 +68,9 @@ export const RegisterForm = ({
 
           {showPassword ? (
             <button
-              className="form__icon"
+              className={
+                showPassword ? 'form__icon form__icon--visible' : 'form__icon'
+              }
               onClick={(e) => {
                 e.preventDefault();
                 setShowPassword(false);
@@ -119,7 +121,11 @@ export const RegisterForm = ({
 
           {showConfirmPasswod ? (
             <button
-              className="form__icon"
+              className={
+                showConfirmPasswod
+                  ? 'form__icon form__icon--visible'
+                  : 'form__icon'
+              }
               onClick={(e) => {
                 e.preventDefault();
                 setShowConfirmPassword(false);
