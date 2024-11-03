@@ -1,6 +1,7 @@
 import { invalidateQueries, refetchQueries, setResponse } from '../helpers';
 import { LoaderFunctionArgs, Params, redirect } from 'react-router-dom';
 import { queryClient as useQueryClient } from '../main';
+import { toast } from 'react-toastify';
 import type { QueryClient } from '@tanstack/react-query';
 import {
   CommentCreate,
@@ -74,6 +75,10 @@ export const actionCreateComment = async (
     };
   }
 
+  toast.success('Comment added successfully!', {
+    position: 'top-right',
+  });
+
   return redirect(redirectTo);
 };
 
@@ -115,6 +120,10 @@ export const actionCreateCommentReply = async (
       action: 'create-reply',
     };
   }
+
+  toast.success('Comment added successfully!', {
+    position: 'top-right',
+  });
 
   return redirect(redirectTo);
 };
@@ -211,6 +220,10 @@ const actionUpdateUserProfile = async (data: FormData, id: string) => {
     };
   }
 
+  toast.success('Profile updated successfully!', {
+    position: 'top-right',
+  });
+
   const redirectTo = window.location.pathname;
 
   return redirect(redirectTo);
@@ -232,6 +245,10 @@ const actionChangeUserPassword = async (data: FormData, id: string) => {
     };
   }
 
+  toast.success('Password changed successfully!', {
+    position: 'top-right',
+  });
+
   const redirectTo = window.location.pathname;
 
   return redirect(redirectTo);
@@ -251,6 +268,10 @@ const actionDeleteUserAccount = async (data: FormData, id: string) => {
       action: 'delete-user-account',
     };
   }
+
+  toast.success('Your account has been successfully deleted.', {
+    position: 'top-right',
+  });
 
   return redirect('/');
 };
