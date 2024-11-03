@@ -53,9 +53,10 @@
   display: block;
   cursor: pointer;
   border: none;
-  background-color: transparent;
+  border-radius: initial;
+  background-color: white;
   padding: 0.25rem;
-  color: red;
+  color: var(--negative-color);
 }
 
 .grid-card__image {
