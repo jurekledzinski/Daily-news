@@ -96,6 +96,12 @@ textarea:focus-visible {
   outline-color: #0074d9;
 }
 
+input,
+textarea {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #555555;
+}
+
 textarea {
   padding: 0.5rem;
   width: 100%;
