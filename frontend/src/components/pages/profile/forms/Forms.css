@@ -11,4 +11,12 @@
 .form button[type='submit'] {
   margin-top: 1rem;
   width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+  border: 1px solid var(--primary-color);
+}
+
+.form button[type='submit']:hover {
+  --primary-color-hover: #3565b5;
+  background-color: var(--primary-color-hover);
 }
