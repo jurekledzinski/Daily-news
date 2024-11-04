@@ -111,7 +111,13 @@ export const useControlDashboard = ({
         const sameItem = layout.find((el) => el.i === item.ui.i);
 
         if (sameItem) {
-          return { id: item.id, ui: sameItem, title: item.title };
+          return {
+            id: item.id,
+            ui: sameItem,
+            title: item.title,
+            image: item.image,
+            page: item.page,
+          };
         }
 
         return item;
@@ -130,7 +136,13 @@ export const useControlDashboard = ({
         const sameItem = layout.find((el) => el.i === item.ui.i);
 
         if (sameItem) {
-          return { id: item.id, ui: sameItem, title: item.title };
+          return {
+            id: item.id,
+            ui: sameItem,
+            title: item.title,
+            image: item.image,
+            page: item.page,
+          };
         }
 
         return item;

@@ -44,19 +44,28 @@
 .grid-card__handle {
   display: block;
   border: none;
-  background-color: transparent;
   padding: 0.25rem;
   color: #555555;
+  background-color: white;
+  border: initial;
+  border-radius: initial;
 }
 
 .grid-card__remove {
   display: block;
   cursor: pointer;
-  border: none;
+  border: initial;
   border-radius: initial;
   background-color: white;
   padding: 0.25rem;
   color: var(--negative-color);
+}
+
+.grid-card__handle:hover,
+.grid-card__remove:hover {
+  background-color: white;
+  border: initial;
+  border-radius: initial;
 }
 
 .grid-card__image {
