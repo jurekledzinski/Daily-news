@@ -1,3 +1,4 @@
+import { detectMobile } from '../../../../helpers';
 import { GridTemplateCardProps } from './types';
 import { Image } from '../../../shared';
 import './GridTemplateCard.css';
@@ -6,7 +7,7 @@ export const GridTemplateCard = ({
   data,
   image,
   isDisabled,
-  onTouchStart,
+  onClick,
 }: GridTemplateCardProps) => {
   return (
     <div
@@ -24,12 +25,14 @@ export const GridTemplateCard = ({
           `${JSON.stringify({ ...data, image })}`
         );
       }}
-      onTouchStart={(e) => {
-        if (isDisabled) {
+      onClick={(e) => {
+        const isMobile = detectMobile();
+
+        if (isDisabled || !isMobile) {
           e.preventDefault();
           return;
         }
-        onTouchStart({ ...data, image });
+        onClick({ ...data, image });
       }}
       unselectable="on"
     >

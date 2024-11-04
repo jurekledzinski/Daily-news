@@ -111,7 +111,7 @@ export const Dashboard = () => {
       />
       <Aside
         layout={layout}
-        onTouchStart={(data) => {
+        onClick={(data) => {
           handleAddCardOnTouch(data, layout, (newLayout) => {
             setLayout(newLayout);
             handleSetLayout(newLayout);

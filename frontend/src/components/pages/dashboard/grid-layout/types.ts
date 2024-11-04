@@ -17,7 +17,7 @@ export type GridTemplateCardProps = {
   data: IDataCategories;
   image: string;
   isDisabled: boolean;
-  onTouchStart: (data: IDataCategories) => void;
+  onClick: (data: IDataCategories) => void;
 };
 
 export type GridLayoutProps = {
