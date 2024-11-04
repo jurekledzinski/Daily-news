@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Header } from './Header';
 import { sanitizeContent } from '../../../helpers';
 import './ArticleDetails.css';
+import { InfoMessage } from '../../shared';
 
 export const ArticleDetails = ({
   actionData,
@@ -45,7 +46,7 @@ export const ArticleDetails = ({
       <div className="details-article__footer">
         {data.webPublicationDate ? (
           <p>
-            Published on: {new Date(data.webPublicationDate).toLocaleString()}
+            Published on: {new Date(data.webPublicationDate).toDateString()}
           </p>
         ) : null}
       </div>
@@ -56,13 +57,10 @@ export const ArticleDetails = ({
           onSubmit={(data) => methodSubmitComment(data)}
         />
       ) : (
-        <div
-          className="message-info"
-          style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-        >
+        <InfoMessage className="info-message--article">
           <FontAwesomeIcon icon={faLock} />
           <p>Sign in to add comment</p>
-        </div>
+        </InfoMessage>
       )}
 
       {actionData && actionData.action === 'create-comment' && (
