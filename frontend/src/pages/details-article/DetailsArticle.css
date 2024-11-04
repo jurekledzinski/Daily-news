@@ -1,6 +1,7 @@
 .section--details-article {
   opacity: 0;
   animation: fadeIn 0.7s forwards;
+  padding: 0.5rem 0 !important;
 }
 
 @keyframes fadeIn {
