@@ -37,3 +37,20 @@
   margin: 0 auto;
   color: var(--negative-color);
 }
+
+.info-message {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: max-content;
+}
+
+.info-message svg {
+  font-size: 1rem;
+  color: #555555;
+}
+
+.info-message.info-message--article {
+  margin: 1rem 0;
+}
