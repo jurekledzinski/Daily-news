@@ -1,13 +1,17 @@
 export type TabProps = {
   activeTab: string;
+  className?: string;
   children: React.ReactNode;
   id: string;
   onClick: (id: string) => void;
+  title: string;
 };
 
 export type TabCloseProps = {
   children: React.ReactNode;
-  onClose: (e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
+  onClose: (
+    e: React.MouseEvent<HTMLSpanElement, globalThis.MouseEvent>
+  ) => void;
 };
 
 export type TabsProps = {

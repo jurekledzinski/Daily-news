@@ -4,6 +4,8 @@ import { Outlet, useNavigation } from 'react-router-dom';
 import { TabsCategoriesArticlesProps } from './types';
 import { useRef } from 'react';
 import './TabsCategories.css';
+import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
   Tab,
@@ -33,7 +35,9 @@ export const TabsCategoriesArticles = ({
     <Tabs>
       <TabsListConainer ref={tabsListContainerRef}>
         <TabsList>
-          <button onClick={onRedirectThree}>Home</button>
+          <button className="button-home" onClick={onRedirectThree}>
+            Home
+          </button>
           {state.map((item) => (
             <Tab
               activeTab={activeTabs[0]}
@@ -44,10 +48,11 @@ export const TabsCategoriesArticles = ({
                 onSetActiveTabs([item.id]);
                 onRedirectOne(item.id);
               }}
+              title={item.title}
             >
               <TabText>{item.title}</TabText>
               <TabClose onClose={(e) => handleCloseTab(e, item.id ?? '')}>
-                x
+                <FontAwesomeIcon icon={faXmarkSquare} />
               </TabClose>
             </Tab>
           ))}
@@ -65,6 +70,7 @@ export const TabsCategoriesArticles = ({
           ).map(({ id, title }) => (
             <Tab
               activeTab={activeTabs[1]}
+              className="tabs__tab--sub"
               id={id}
               key={id}
               onClick={() => {
@@ -73,9 +79,12 @@ export const TabsCategoriesArticles = ({
                 onSetActiveTabs([...copy]);
                 onRedirectTwo(activeTabs[0], id);
               }}
+              title={title}
             >
               <TabText>{title}</TabText>
-              <TabClose onClose={(e) => handleCloseSubTab(e, id)}>x</TabClose>
+              <TabClose onClose={(e) => handleCloseSubTab(e, id)}>
+                <FontAwesomeIcon icon={faXmarkSquare} />
+              </TabClose>
             </Tab>
           ))}
         </TabsList>

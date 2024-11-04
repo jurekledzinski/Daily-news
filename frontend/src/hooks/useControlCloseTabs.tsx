@@ -18,7 +18,7 @@ export const useControlCloseTabs = ({
   onSetActiveTabs,
 }: UseControlTabsProps) => {
   const handleCloseTab = (
-    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
+    e: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>,
     id: string
   ) => {
     e.stopPropagation();

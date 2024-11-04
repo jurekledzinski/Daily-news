@@ -5,11 +5,11 @@ export type TabsCategoriesArticlesProps = {
   state: LocalData[];
   handleAddSubArticle: (value: { id: string; title: string }) => void;
   handleCloseTab: (
-    e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
+    e: React.MouseEvent<HTMLSpanElement, globalThis.MouseEvent>,
     id: string
   ) => void;
   handleCloseSubTab: (
-    e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
+    e: React.MouseEvent<HTMLSpanElement, globalThis.MouseEvent>,
     id: string
   ) => void;
   onSetActiveTabs: (value: string[] | []) => void;

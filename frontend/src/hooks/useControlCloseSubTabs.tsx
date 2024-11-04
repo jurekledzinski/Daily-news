@@ -22,7 +22,7 @@ export const useControlCloseSubTabs = ({
   onRedirectTwo,
 }: UseControlCloseSubTabs) => {
   const handleCloseSubTab = (
-    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
+    e: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>,
     id: string
   ) => {
     e.stopPropagation();
