@@ -7,6 +7,7 @@ import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import session from 'express-session';
 import { z } from 'zod';
+import morgan from 'morgan';
 
 import {
   commentRoutes,
@@ -24,6 +25,7 @@ const mongoStore = new MongoStore({
   dbName: process.env.MONGO_NAME_DB_SESSION,
 });
 
+app.use(morgan('dev'));
 app.set('trust proxy', 1);
 app.use(helmet());
 app.use(express.json());
