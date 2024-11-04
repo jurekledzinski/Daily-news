@@ -1,12 +1,17 @@
 .comment-panel {
-  border: 1px solid #ddd;
-  padding: 0.8rem;
   margin: 0.5rem 0;
+  border: 1px solid #ddd;
+  background-color: white;
+  padding: 0.8rem;
 }
 
 .comment-panel__header {
   display: flex;
   justify-content: space-between;
+}
+
+.comment-panel__title {
+  color: #444444;
 }
 
 .comment-panel__footer {
@@ -16,12 +21,15 @@
 }
 
 .comment-panel__time {
+  color: #555555;
   font-size: 0.7rem;
 }
 
 .comment-panel__content {
-  font-size: 0.85rem;
   padding: 0.8rem 0;
+  color: #555555;
+  font-weight: 400;
+  font-size: 0.85rem;
   text-align: left;
 }
 
@@ -42,10 +50,51 @@
 .comment-form button {
   display: block;
   margin-top: 0.5rem;
-  background-color: #fff685;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
   width: 10rem;
+  color: white;
+}
+
+.comment-form button:hover {
+  --primary-color-hover: #3565b5;
+  background-color: var(--primary-color-hover);
 }
 
 .comment-section.nested {
   margin-left: 1.6rem;
+}
+
+.comment-panel__likes {
+  position: relative;
+  background-color: transparent;
+}
+
+.comment-panel__likes:hover {
+  background-color: transparent;
+}
+
+.comment-panel__icon {
+  color: var(--primary-color);
+}
+
+.comment-panel__like {
+  margin-left: 4px;
+  color: #555;
+  font-size: 0.6rem;
+}
+
+.comment-panel__reply {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.comment-panel__icon-reply {
+  color: var(--primary-color);
+}
+
+.comment-panel__reply-text {
+  color: var(--primary-color);
 }

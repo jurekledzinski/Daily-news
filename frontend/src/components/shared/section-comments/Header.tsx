@@ -10,10 +10,7 @@ export const Header = ({
 }: HeaderProps) => {
   return (
     <div className="comment-panel__header">
-      <strong className="comment-panel__title">
-        {user} <p>CommentID: {commentId}</p>
-        <p>ParentCommentID: {parentCommentId ? parentCommentId : 'null'}</p>
-      </strong>
+      <strong className="comment-panel__title">{user}</strong>
       <ButtonLikes
         commentId={commentId}
         likes={likes}

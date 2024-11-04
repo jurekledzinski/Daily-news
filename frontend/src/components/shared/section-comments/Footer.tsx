@@ -1,3 +1,5 @@
+import { faReply } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FooterProps } from './types';
 import { formatDistanceToNow } from 'date-fns';
 import './SectionComments.css';
@@ -25,7 +27,10 @@ export const Footer = ({
         ) : null}
         {children && (
           <button className="comment-panel__reply" onClick={onShowForm}>
-            Reply
+            <span className="comment-panel__icon-reply">
+              <FontAwesomeIcon icon={faReply} />
+            </span>
+            <span className="comment-panel__reply-text">Reply</span>
           </button>
         )}
       </div>

@@ -1,9 +1,10 @@
-import { AiOutlineLike } from 'react-icons/ai';
 import { Form } from 'react-router-dom';
 import { getValueLike, setLikes } from '../../../helpers';
 import { Likes } from '../../../api';
 import { useState } from 'react';
 import './SectionComments.css';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type ButtonLikesProps = {
   commentId: string;
@@ -32,7 +33,10 @@ export const ButtonLikes = ({
       }}
     >
       <button className="comment-panel__likes" type="submit">
-        <AiOutlineLike /> ({likes})
+        <span className="comment-panel__icon">
+          <FontAwesomeIcon icon={faThumbsUp} />
+        </span>
+        <span className="comment-panel__like">{likes}</span>
       </button>
     </Form>
   );
