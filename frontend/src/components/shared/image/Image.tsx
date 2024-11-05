@@ -19,7 +19,7 @@ export const Image = ({ altText, className, src }: ImageProps) => {
       {src && loading && !error && <Loader />}
       {!error ? (
         <img
-          alt={altText}
+          {...(!loading && { alt: altText })}
           className={className}
           src={src}
           onLoad={() => setLoading(false)}
