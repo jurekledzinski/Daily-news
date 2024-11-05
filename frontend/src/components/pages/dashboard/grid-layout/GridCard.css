@@ -44,11 +44,11 @@
 .grid-card__handle {
   display: block;
   border: none;
-  padding: 0.25rem;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.3);
   border: initial;
   border-radius: initial;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0.25rem;
+  color: white;
 }
 
 .grid-card__remove {
@@ -63,9 +63,9 @@
 
 .grid-card__handle:hover,
 .grid-card__remove:hover {
-  background-color: rgba(0, 0, 0, 0.5);
   border: initial;
   border-radius: initial;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .grid-card__image {
