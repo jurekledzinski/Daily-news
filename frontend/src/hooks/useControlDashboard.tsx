@@ -43,9 +43,11 @@ export const useControlDashboard = ({
   ) => {
     const dataTransfer = e.dataTransfer?.getData('text/plain') ?? '';
     const tranformedData = JSON.parse(dataTransfer);
-
     const tempId = '__dropping-elem__';
     const newId = uuidv4();
+    const isValidLayout = layout.some((item) => item.i === tempId);
+
+    if (!isValidLayout) return;
 
     const item = {
       ...cloneDeep(newItem),

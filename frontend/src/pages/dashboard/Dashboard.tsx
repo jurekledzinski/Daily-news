@@ -84,11 +84,10 @@ export const Dashboard = () => {
         };
       });
 
-      if (Object.keys(acc).length) {
-        const accData = Object.entries(acc).map((i) => [
-          i[0],
-          [...i[1], tempAcc[i[0]][0]],
-        ]);
+      if (Object.keys(acc).length && Object.keys(tempAcc).length) {
+        const accData = Object.entries(acc).map((i) => {
+          return [i[0], [...i[1], ...tempAcc[i[0]]]];
+        });
         return (acc = Object.fromEntries(accData));
       } else {
         return (acc = tempAcc);
