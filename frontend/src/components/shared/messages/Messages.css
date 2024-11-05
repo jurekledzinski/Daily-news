@@ -8,7 +8,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #555555;
+  color: var(--color-text-secondary);
   text-align: center;
   text-transform: uppercase;
 }
@@ -48,7 +48,7 @@
 
 .info-message svg {
   font-size: 1rem;
-  color: #555555;
+  color: var(--color-text-secondary);
 }
 
 .info-message.info-message--article {

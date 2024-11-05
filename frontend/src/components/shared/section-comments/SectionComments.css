@@ -1,8 +1,8 @@
 .comment-panel {
   margin: 0.5rem 0;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border-200);
   border-radius: 2px;
-  background-color: white;
+  background-color: var(--ligh-color);
   padding: 0.8rem;
 }
 
@@ -12,7 +12,7 @@
 }
 
 .comment-panel__title {
-  color: #444444;
+  color: var(--color-text-secondary);
 }
 
 .comment-panel__footer {
@@ -22,7 +22,7 @@
 }
 
 .comment-panel__time {
-  color: #555555;
+  color: var(--color-text-secondary);
   font-size: 0.7rem;
 }
 
@@ -35,12 +35,12 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  color: #555555;
+  color: var(--color-text-secondary);
 }
 
 .comment-panel__content {
   padding: 0.8rem 0;
-  color: #555555;
+  color: var(--color-text-secondary);
   font-weight: 400;
   font-size: 0.85rem;
   text-align: left;
@@ -64,11 +64,10 @@
   border: 1px solid var(--primary-color);
   background-color: var(--primary-color);
   width: 10rem;
-  color: white;
+  color: var(--color-text-primary-light);
 }
 
 .comment-form button:hover {
-  --primary-color-hover: #3565b5;
   background-color: var(--primary-color-hover);
 }
 
@@ -78,11 +77,11 @@
 
 .comment-panel__likes {
   position: relative;
-  background-color: transparent;
+  background-color: var(--transparent-color);
 }
 
 .comment-panel__likes:hover {
-  background-color: transparent;
+  background-color: var(--transparent-color);
 }
 
 .comment-panel__icon {
@@ -91,7 +90,7 @@
 
 .comment-panel__like {
   margin-left: 4px;
-  color: #555;
+  color: var(--color-text-secondary);
   font-size: 0.6rem;
 }
 

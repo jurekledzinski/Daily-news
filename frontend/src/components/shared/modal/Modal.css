@@ -1,9 +1,10 @@
 dialog {
+  --box-shadow: #cccccc;
   transform: translateY(0rem);
   opacity: 0;
   transition: all 0.3s allow-discrete;
   margin: auto;
-  box-shadow: 0 0px 0px 1px #cccccc;
+  box-shadow: 0 0px 0px 1px var(--box-shadow);
   border: none;
   border-radius: 2px;
   width: 20rem;
@@ -23,17 +24,18 @@ dialog[open] {
 }
 
 dialog::backdrop {
+  --bg-black-rgb: 0, 0, 0;
   transition: all 0.3s allow-discrete;
-  background-color: rgb(0 0 0 / 0%);
+  background-color: rgb(var(--bg-black-rgb) / 0%);
 }
 
 dialog[open]::backdrop {
-  background-color: rgb(0 0 0 / 50%);
+  background-color: rgb(var(--bg-black-rgb) / 50%);
 }
 
 @starting-style {
   dialog[open]::backdrop {
-    background-color: rgb(0 0 0 / 0%);
+    background-color: rgb(var(--bg-black-rgb) / 0%);
   }
 }
 
@@ -60,9 +62,9 @@ dialog[open]::backdrop {
 }
 
 .modal__footer button:nth-child(1) {
-  border: 1px solid #0074d9;
-  background-color: #0074d9;
-  color: white;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--color-text-primary-light);
 }
 
 .modal__text {
@@ -78,11 +80,10 @@ dialog.modal--delete {
 }
 
 .modal--delete .modal__header {
-  --delete-color: 255, 65, 54;
-  background-color: rgba(var(--delete-color), 1);
+  background-color: var(--negative-color);
 }
 
 .modal--delete .modal__title {
-  color: white;
+  color: var(--color-text-primary-light);
   font-weight: 500;
 }

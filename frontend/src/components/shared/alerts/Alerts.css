@@ -9,11 +9,11 @@
 
 .alert-error__icon {
   display: inline-block;
-  color: white;
+  color: var(--color-text-primary-light);
 }
 
 .alert-error__text {
-  color: white;
+  color: var(--color-text-primary-light);
   font-size: 0.7rem;
 }
 

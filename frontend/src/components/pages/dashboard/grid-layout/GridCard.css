@@ -9,14 +9,15 @@
 }
 
 .grid-card__title {
+  --bg-black-rgb: 0, 0, 0;
   position: absolute;
   bottom: 0;
   left: 0;
   z-index: 1;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(var(--bg-black-rgb), 0.5);
   padding: 0.5rem 0;
   width: 100%;
-  color: white;
+  color: var(--color-text-primary-light);
   user-select: none;
   text-align: center;
   text-transform: uppercase;
@@ -42,30 +43,33 @@
 }
 
 .grid-card__handle {
+  --bg-black-rgb: 0, 0, 0;
   display: block;
   border: none;
   border: initial;
   border-radius: initial;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(var(--bg-black-rgb), 0.3);
   padding: 0.25rem;
-  color: white;
+  color: var(--color-text-primary-light);
 }
 
 .grid-card__remove {
+  --bg-black-rgb: 0, 0, 0;
   display: block;
   cursor: pointer;
   border: initial;
   border-radius: initial;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(var(--bg-black-rgb), 0.3);
   padding: 0.25rem;
   color: var(--negative-color);
 }
 
 .grid-card__handle:hover,
 .grid-card__remove:hover {
+  --bg-black-rgb: 0, 0, 0;
   border: initial;
   border-radius: initial;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(var(--bg-black-rgb), 0.5);
 }
 
 .grid-card__image {

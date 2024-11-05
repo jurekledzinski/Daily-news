@@ -11,7 +11,7 @@
 
 .tabs__list:nth-child(2) {
   gap: 0.5rem;
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid var(--color-border-200);
 }
 
 .tabs__tab {
@@ -35,20 +35,20 @@
   box-shadow: initial;
   border: none;
   border-radius: initial;
-  background-color: transparent;
+  background-color: var(--transparent-color);
   padding: initial;
   padding-bottom: 2px;
 }
 
 .tabs__tab--sub:hover {
-  background-color: transparent;
+  background-color: var(--transparent-color);
 }
 
 .tabs__tab--sub.tabs__tab--active {
   border-bottom: 2px solid var(--primary-color);
   border-radius: initial;
-  background-color: transparent;
-  color: #555;
+  background-color: var(--transparent-color);
+  color: var(--color-text-secondary);
 }
 
 .tabs__tab--sub .tabs__text {
@@ -68,7 +68,7 @@
   position: absolute;
   right: 4px;
   padding: 0 0.25rem;
-  color: white;
+  color: var(--color-text-primary-light);
 }
 
 .tabs__tab--active .tabs__text {
@@ -78,7 +78,7 @@
 .tabs__tab--active {
   background-color: var(--primary-color);
   min-width: max-content;
-  color: white;
+  color: var(--color-text-primary-light);
 }
 
 .tabs__tab--active .tabs__close {
@@ -90,19 +90,19 @@
 
 .tabs__list::-webkit-scrollbar-track {
   border-radius: 100vh;
-  background-color: #f5f5f5;
+  background-color: var(--transparent-color);
 }
 
 .tabs__list::-webkit-scrollbar {
-  background-color: #f5f5f5;
+  background-color: var(--transparent-color);
   height: 6px;
 }
 
 .tabs__list::-webkit-scrollbar-thumb {
-  border: 2px solid transparent;
+  border: 2px solid var(--transparent-color);
   border-radius: 100vh;
   background-clip: padding-box;
-  background-color: #555;
+  background-color: var(--secondary-color);
 }
 
 .tabs__list::-webkit-scrollbar-thumb:hover {
@@ -125,7 +125,7 @@
   }
 
   .tabs__tab--sub:hover {
-    background-color: transparent;
+    background-color: var(--transparent-color);
   }
 
   .tabs__list {
