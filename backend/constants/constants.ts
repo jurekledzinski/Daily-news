@@ -14,5 +14,5 @@ export enum STATUS_CODE {
 
 export const PAGE_SIZE = 10;
 
-export const IP_ATTEMPTS_LIMIT = 100;
+export const IP_ATTEMPTS_LIMIT = 50;
 export const LOGIN_ATTEMPTS_LIMIT = 10;
