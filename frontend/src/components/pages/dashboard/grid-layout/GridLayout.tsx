@@ -81,6 +81,8 @@ export const GridLayout = ({
         })}
         rowHeight={30}
         isResizable={false}
+        margin={[8, 8]}
+        containerPadding={[0, 0]}
       >
         {layout[currentBreakPoint as keyof typeof layout].map((item) => {
           return (

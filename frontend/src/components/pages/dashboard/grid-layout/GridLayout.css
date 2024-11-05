@@ -1,25 +1,22 @@
 .grid-layout-container {
   position: relative;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  background-color: var(--ligh-color);
+  padding: 0.5rem 0.35rem 0.5rem 0.5rem;
   width: 100%;
   min-height: 100%;
   max-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  background-color: var(--ligh-color);
-  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
 .grid-layout {
   opacity: 1;
+  background-color: var(--ligh-color);
   width: 100%;
   min-height: 100%;
   max-height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: var(--ligh-color);
-  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
 .grid-layout.grid-layout--transparent {
