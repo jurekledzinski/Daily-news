@@ -2,9 +2,9 @@ import { CardProps } from './types';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { forwardRef, Ref } from 'react';
-import { Image } from '../../shared';
+import { Image } from '../../../shared';
 import { Link } from 'react-router-dom';
-import { sanitizeContent } from '../../../helpers';
+import { sanitizeContent } from '../../../../helpers';
 import './Card.css';
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(

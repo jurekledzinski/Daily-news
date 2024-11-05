@@ -1,4 +1,4 @@
-import { LocalData } from '../dashboard';
+import { LocalData } from '../../dashboard';
 
 export type CardProps = {
   article: LocalData['listArticles'][0];

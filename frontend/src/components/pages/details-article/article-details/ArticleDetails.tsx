@@ -1,11 +1,11 @@
-import { AlertError, FormComment, SectionComments } from '../../shared';
+import { AlertError, FormComment, SectionComments } from '../../../shared';
 import { ArticleDetailsProps } from './types';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Header } from './Header';
-import { sanitizeContent } from '../../../helpers';
+import { Header } from '../header/Header';
+import { sanitizeContent } from '../../../../helpers';
 import './ArticleDetails.css';
-import { InfoMessage } from '../../shared';
+import { InfoMessage } from '../../../shared';
 
 export const ArticleDetails = ({
   actionData,

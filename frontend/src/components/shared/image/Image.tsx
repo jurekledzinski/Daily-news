@@ -1,14 +1,9 @@
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ImageProps } from './types';
 import { Loader } from '../loader';
 import { useState } from 'react';
 import './Image.css';
-
-type ImageProps = {
-  altText: string;
-  className: string;
-  src: string;
-};
 
 export const Image = ({ altText, className, src }: ImageProps) => {
   const [loading, setLoading] = useState(true);

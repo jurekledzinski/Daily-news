@@ -1,11 +1,7 @@
+import { AlertErrorProps } from './types';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Alerts.css';
-
-type AlertErrorProps = {
-  children?: React.ReactNode;
-  className?: string;
-};
 
 export const AlertError = ({ className, children }: AlertErrorProps) => {
   return (

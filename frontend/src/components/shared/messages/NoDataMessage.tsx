@@ -1,4 +1,5 @@
 import { NoDataMessageProps } from './types';
+import './Messages.css';
 
 export const NoDataMessage = ({ children, className }: NoDataMessageProps) => {
   return (

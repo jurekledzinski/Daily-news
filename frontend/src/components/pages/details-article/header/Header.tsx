@@ -1,7 +1,5 @@
-type ArticleHeaderProps = {
-  title: string;
-  trailText: string;
-};
+import { ArticleHeaderProps } from './types';
+import '../article-details';
 
 export const Header = ({ title, trailText }: ArticleHeaderProps) => {
   return (

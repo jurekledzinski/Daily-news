@@ -1,13 +1,9 @@
-import { GridTemplateCard, LayoutData } from '../grid-layout';
+import { AsideProps } from './types';
+import { GridTemplateCard } from '../grid-layout';
 import { IDataCategories } from '../../../../api';
 import { images } from '../../../../images';
 import { NoDataMessage } from '../../../shared';
 import { useOutletContext } from 'react-router-dom';
-
-type AsideProps = {
-  layout: LayoutData;
-  onClick: (data: IDataCategories) => void;
-};
 
 export const Aside = ({ layout, onClick }: AsideProps) => {
   const { categories } = useOutletContext<{ categories: IDataCategories[] }>();

@@ -1,7 +1,7 @@
-import { ArticleData, Likes } from '../../../api';
-import { CommentInput, CommentsWithReplies } from '../../shared';
-import { UserState } from '../../../store';
-import { ActionData } from '../../../types';
+import { ArticleData, Likes } from '../../../../api';
+import { CommentInput, CommentsWithReplies } from '../../../shared';
+import { UserState } from '../../../../store';
+import { ActionData } from '../../../../types';
 
 export type ArticleDetailsProps = {
   actionData: ActionData;

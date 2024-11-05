@@ -1,8 +1,9 @@
+import { HeaderProps } from './types';
 import { NavBarActions, NavBarAuth } from '../nav-bar';
-import { PathMatch, useNavigate, useNavigation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useCallback, useRef } from 'react';
 import { useControlServerError } from '../../../../hooks/useControlServerError';
+import { useNavigate, useNavigation } from 'react-router-dom';
 import { useUserStore } from '../../../../store';
 import './Header.css';
 import {
@@ -11,11 +12,6 @@ import {
   useLogoutUser,
   useRegisterForm,
 } from '../../../../hooks';
-
-type HeaderProps = {
-  matchHome: PathMatch<string> | null;
-  matchProfile: PathMatch<string> | null;
-};
 
 export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const navigate = useNavigate();
