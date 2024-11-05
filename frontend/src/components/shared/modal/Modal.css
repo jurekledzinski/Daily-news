@@ -1,10 +1,9 @@
 dialog {
-  --box-shadow: #cccccc;
   transform: translateY(0rem);
   opacity: 0;
   transition: all 0.3s allow-discrete;
   margin: auto;
-  box-shadow: 0 0px 0px 1px var(--box-shadow);
+  box-shadow: 0 0px 0px 1px #cccccc;
   border: none;
   border-radius: 2px;
   width: 20rem;
@@ -24,18 +23,17 @@ dialog[open] {
 }
 
 dialog::backdrop {
-  --bg-black-rgb: 0, 0, 0;
   transition: all 0.3s allow-discrete;
-  background-color: rgb(var(--bg-black-rgb) / 0%);
+  background-color: rgb(0, 0, 0 / 0%);
 }
 
 dialog[open]::backdrop {
-  background-color: rgb(var(--bg-black-rgb) / 50%);
+  background-color: rgb(0, 0, 0 / 50%);
 }
 
 @starting-style {
   dialog[open]::backdrop {
-    background-color: rgb(var(--bg-black-rgb) / 0%);
+    background-color: rgb(0, 0, 0/ 0%);
   }
 }
 
