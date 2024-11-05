@@ -10,25 +10,24 @@ export const FormComment = ({ buttonText, onSubmit }: FormProps) => {
   const { errors } = formState;
 
   return (
-    <div className="comment-form">
-      <Form
-        method="post"
-        onSubmit={(event) => {
-          formMethods.handleSubmit(onSubmit)(event);
-          formMethods.reset();
-        }}
-        noValidate
-      >
-        <textarea
-          cols={40}
-          rows={8}
-          {...formMethods.register('text', {
-            required: { message: 'Comment is required', value: true },
-          })}
-        />
-        {errors.text && <ErrorMessage>{errors.text.message}</ErrorMessage>}
-        <button type="submit">{buttonText}</button>
-      </Form>
-    </div>
+    <Form
+      className="comment-form"
+      method="post"
+      onSubmit={(event) => {
+        formMethods.handleSubmit(onSubmit)(event);
+        formMethods.reset();
+      }}
+      noValidate
+    >
+      <textarea
+        cols={40}
+        rows={8}
+        {...formMethods.register('text', {
+          required: { message: 'Comment is required', value: true },
+        })}
+      />
+      {errors.text && <ErrorMessage>{errors.text.message}</ErrorMessage>}
+      <button type="submit">{buttonText}</button>
+    </Form>
   );
 };

@@ -25,6 +25,18 @@
   font-size: 0.7rem;
 }
 
+.comment-panel__buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.comment-panel__show-replies {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #555555;
+}
+
 .comment-panel__content {
   padding: 0.8rem 0;
   color: #555555;
@@ -34,13 +46,11 @@
 }
 
 .comment-form {
-  margin: 0.5rem 0;
-}
-
-.comment-form form {
   display: flex;
   flex-direction: column;
   align-items: end;
+  gap: 0.25rem;
+  margin: 0.5rem 0;
 }
 
 .comment-panel__form.nested {
@@ -86,8 +96,8 @@
 
 .comment-panel__reply {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: 0.5rem;
 }
 
