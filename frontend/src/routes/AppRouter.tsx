@@ -15,11 +15,6 @@ import {
   loaderCategories,
   loaderDetailsArticle,
 } from '../api';
-// import { UserAction } from '../store';
-
-// TODO:
-
-// Get this queryClient and invalidate queries comments when change tabs and close tabs
 
 const queryClient = new QueryClient();
 
@@ -34,23 +29,23 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Dashboard />,
-        errorElement: <div>Error page dashboard index</div>,
+        errorElement: <ErrorPage />,
       },
       {
         path: 'categories/:category/articles',
         element: <CategoriesArticles />,
-        errorElement: <div>Error page categories</div>,
+        errorElement: <ErrorPage />,
         children: [
           {
             index: true,
             element: <GridArticles />,
-            errorElement: <div>Error grid list articles</div>,
+            errorElement: <ErrorPage />,
             loader: loaderArticles(queryClient),
           },
           {
             path: 'article/:id',
             element: <DetailsArticle />,
-            errorElement: <div>Error page details article</div>,
+            errorElement: <ErrorPage />,
             loader: loaderDetailsArticle(queryClient),
             action: actionDetailsArticle(queryClient),
           },
