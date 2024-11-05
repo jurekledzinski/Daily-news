@@ -1,6 +1,7 @@
 .comment-panel {
   margin: 0.5rem 0;
   border: 1px solid #ddd;
+  border-radius: 2px;
   background-color: white;
   padding: 0.8rem;
 }
@@ -72,7 +73,7 @@
 }
 
 .comment-section.nested {
-  margin-left: 1.6rem;
+  margin-left: 0.35rem;
 }
 
 .comment-panel__likes {
