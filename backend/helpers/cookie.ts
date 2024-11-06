@@ -1,8 +1,10 @@
 import { Response } from 'express';
 
 export const responseCookie = (res: Response, maxAge: number | undefined) => {
+  const domain = new URL(process.env.FRONTEND_URL!).hostname;
+
   res.cookie('tsge', 'true', {
-    domain: process.env.NODE_ENV === 'production' ? '' : 'localhost', //add later domain after deploy frontend
+    domain,
     path: '/',
     secure: process.env.NODE_ENV === 'production',
     httpOnly: false,

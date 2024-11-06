@@ -1,13 +1,13 @@
 require('dotenv').config();
 import cors from 'cors';
-import { CustomError } from './error';
 import express, { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
 import MongoStore from 'connect-mongo';
+import morgan from 'morgan';
 import passport from 'passport';
 import session from 'express-session';
+import { CustomError } from './error';
 import { z } from 'zod';
-import morgan from 'morgan';
 
 import {
   commentRoutes,
@@ -16,6 +16,8 @@ import {
   registerRoutes,
   userRoutes,
 } from './routes';
+
+const domain = new URL(process.env.FRONTEND_URL!).hostname;
 
 const app = express();
 app.disable('x-powered-by');
@@ -33,7 +35,7 @@ app.use(
   cors({
     allowedHeaders: ['Content-Type', 'X-CSRF-Token'],
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-    origin: 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
@@ -46,7 +48,7 @@ app.use(
     saveUninitialized: false,
     store: mongoStore,
     cookie: {
-      domain: process.env.NODE_ENV === 'production' ? '' : 'localhost', //add url for production later after deploy frontend
+      domain,
       path: '/',
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
@@ -59,10 +61,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// get routes
-// crsfRoutes musza być za session
-
-// use routes
 app.use('/api/v1/csrf-token', csrfRoutes);
 app.use('/api/v1/login', loginRoutes);
 app.use('/api/v1/register', registerRoutes);
