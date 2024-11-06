@@ -113,7 +113,13 @@ export const CategoriesArticles = () => {
   };
 
   return (
-    <section className="section" style={{ marginTop: id ? '1rem' : 73 }}>
+    <section
+      className={
+        id
+          ? 'section sectiom--article-details'
+          : 'section sectiom--grid-articles'
+      }
+    >
       <TabsCategoriesArticles
         activeTabs={currentActiveTab}
         handleAddSubArticle={handleAddSubArticle}
