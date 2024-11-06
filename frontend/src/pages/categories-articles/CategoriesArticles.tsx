@@ -125,14 +125,20 @@ export const CategoriesArticles = () => {
         handleAddSubArticle={handleAddSubArticle}
         handleCloseSubTab={handleCloseSubTab}
         handleCloseTab={handleCloseTab}
-        onRedirectOne={(category) => {
-          const page = getCurrentCategory(category)?.page ?? '1';
-          const url = `/categories/${category}/articles?page=${page}`;
+        onRedirectOne={(categoryArt) => {
+          if (category === categoryArt && !id) return;
+
+          const page = getCurrentCategory(categoryArt)?.page ?? '1';
+          const url = `/categories/${categoryArt}/articles?page=${page}`;
+
           navigate(url, { preventScrollReset: true });
         }}
-        onRedirectTwo={(category, id) => {
-          const articleId = encodeURIComponent(id);
-          const url = `/categories/${category}/articles/article/${articleId}?page=1`;
+        onRedirectTwo={(categoryArt, idArticle) => {
+          if (id && id === idArticle) return;
+
+          const articleId = encodeURIComponent(idArticle);
+          const url = `/categories/${categoryArt}/articles/article/${articleId}?page=1`;
+
           navigate(url, { preventScrollReset: true });
         }}
         onRedirectThree={() => {
