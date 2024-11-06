@@ -1,0 +1,110 @@
+.grid-card {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.grid-card__title {
+  --bg-black-rgb: 0, 0, 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background-color: rgba(var(--bg-black-rgb), 0.5);
+  padding: 0.5rem 0;
+  width: 100%;
+  color: var(--color-text-primary-light);
+  user-select: none;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.drag-start {
+  cursor: grab;
+}
+
+.drag-move {
+  cursor: grabbing;
+}
+
+.grid-card__header {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+  width: 100%;
+  height: 1.25rem;
+}
+
+.grid-card__handle {
+  --bg-black-rgb: 0, 0, 0;
+  display: block;
+  border: none;
+  border: initial;
+  border-radius: initial;
+  background-color: rgba(var(--bg-black-rgb), 0.3);
+  padding: 0.2rem;
+  width: 1rem;
+  height: 100%;
+  color: var(--color-text-primary-light);
+  font-size: 10px;
+  line-height: 1;
+}
+
+.grid-card__remove {
+  --bg-black-rgb: 0, 0, 0;
+  display: block;
+  cursor: pointer;
+  border: initial;
+  border-radius: initial;
+  background-color: rgba(var(--bg-black-rgb), 0.3);
+  padding: 0.2rem;
+  width: 1rem;
+  height: 100%;
+  color: var(--negative-color);
+  font-size: 10px;
+  line-height: 1;
+  text-align: center;
+}
+
+.grid-card__handle:hover,
+.grid-card__remove:hover {
+  --bg-black-rgb: 0, 0, 0;
+  border: initial;
+  border-radius: initial;
+  background-color: rgba(var(--bg-black-rgb), 0.5);
+}
+
+.grid-card__image {
+  display: block;
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
+}
+
+@media (hover: hover) {
+  .grid-card__remove {
+    display: none;
+  }
+
+  .grid-card__header:hover .grid-card__remove {
+    display: block;
+  }
+
+  .grid-card__handle:active + .grid-card__remove {
+    display: none;
+  }
+
+  .grid-card__remove:active,
+  .grid-card__remove:focus,
+  .grid-card__remove:focus-within {
+    display: none;
+  }
+}

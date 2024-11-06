@@ -1,0 +1,52 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__label {
+  display: block;
+  margin-bottom: 0.15rem;
+  font-size: 0.75rem;
+}
+
+.form__input {
+  margin-bottom: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+}
+
+.form__fieldset {
+  margin-bottom: 0.25rem;
+  border: none;
+}
+
+.form__wrapper-input > .form__input {
+  margin-bottom: initial;
+}
+
+.form__wrapper-input {
+  position: relative;
+  margin-bottom: 0.25rem;
+}
+
+.form__icon {
+  position: absolute;
+  right: 4px;
+  bottom: 5px;
+  transition: 0.3s color linear;
+  cursor: pointer;
+  border: none;
+  background-color: var(--transparent-color);
+  padding: 0;
+  width: 1.125rem;
+  color: var(--color-text-secondary);
+}
+
+.form__icon:hover {
+  background-color: var(--transparent-color);
+}
+
+.form__icon--visible {
+  transition: 0.3s color linear;
+  color: black;
+}

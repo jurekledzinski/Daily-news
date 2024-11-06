@@ -1,0 +1,40 @@
+.header {
+  border-bottom: 1px solid var(--color-border-200);
+  background: var(--ligh-color);
+  width: 100%;
+}
+
+.header.header--fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+.header__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.header__logo {
+  font-weight: 900;
+  line-height: 1px;
+}
+
+.header__buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.header__button {
+  padding: 0.35rem 0.75rem;
+}
+
+.header__actions,
+.header__auth {
+  display: flex;
+  gap: 0.5rem;
+}
