@@ -1,5 +1,6 @@
 require('dotenv').config();
 import { MongoClient } from 'mongodb';
+import logger from '../helpers/logger';
 
 const url = process.env.MONGO_DB_ATLAS_URL!;
 
@@ -8,9 +9,9 @@ export const client = new MongoClient(url);
 async function connectDB() {
   try {
     await client.connect();
-    console.log('Connected to MongoDB');
-  } catch (err) {
-    console.error('Error connecting to MongoDB', err);
+    logger.info('Connected to MongoDB');
+  } catch (error) {
+    logger.error('Error connecting to MongoDB', error);
   }
 }
 

@@ -8,6 +8,7 @@ import passport from 'passport';
 import session from 'express-session';
 import { CustomError } from './error';
 import { z } from 'zod';
+import logger from './helpers/logger';
 
 import {
   commentRoutes,
@@ -68,6 +69,7 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/comments', commentRoutes);
 
 app.use((error: CustomError, _: Request, res: Response, next: NextFunction) => {
+  logger.error('Base error middleware', error.message);
   if (error instanceof z.ZodError) {
     res.status(error.statusCode || 500).json({
       error: { message: 'Incorrect data types', success: false },

@@ -1,5 +1,6 @@
 import app from './main';
 import { connectDB } from './config';
+import logger from './helpers/logger';
 
 const PORT = process.env.PORT || 5000;
 
@@ -8,10 +9,10 @@ const runServer = async () => {
 
   try {
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+      logger.info(`Server is running on port ${PORT}`);
     });
-  } catch (err) {
-    console.log('Server start error', err);
+  } catch (error) {
+    logger.error('Server start error', error);
   }
 };
 
