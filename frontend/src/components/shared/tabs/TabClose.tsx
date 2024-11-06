@@ -1,4 +1,5 @@
 import { TabCloseProps } from './types';
+import './Tabs.css';
 
 export const TabClose = ({ children, onClose }: TabCloseProps) => {
   return (

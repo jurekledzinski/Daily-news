@@ -3,6 +3,7 @@ import { TabsCategoriesArticles } from '@components/pages';
 import { useControlCloseSubTabs, useControlCloseTabs } from '@hooks/index';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import './CategoriesArticles.css';
 import {
   getCurrentCategory,
   getLocalData,

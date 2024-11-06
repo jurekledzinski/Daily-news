@@ -8,7 +8,7 @@ import {
   getLocalData,
   handleAddCardOnTouch,
   setLocalData,
-} from '../../helpers';
+} from '@helpers/index';
 
 export const Dashboard = () => {
   const navigate = useNavigate();

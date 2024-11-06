@@ -1,4 +1,5 @@
 import { TabsPanelProps } from './types';
+import './Tabs.css';
 
 export const TabsPanel = ({ children }: TabsPanelProps) => {
   return (

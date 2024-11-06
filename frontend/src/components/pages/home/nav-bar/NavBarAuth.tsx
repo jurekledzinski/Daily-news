@@ -1,6 +1,7 @@
 import { LoginForm, RegisterForm } from '@components/pages/home';
 import { Modal } from '@components/shared';
 import { NavBarAuthProps } from './types';
+import '../header/Header.css';
 
 export const NavBarAuth = ({
   isLoggedInUser,

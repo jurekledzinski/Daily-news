@@ -1,5 +1,6 @@
 import { forwardRef, Ref } from 'react';
 import { TabsListContainerProps } from './types';
+import './Tabs.css';
 
 export const TabsListConainer = forwardRef<
   HTMLDivElement,

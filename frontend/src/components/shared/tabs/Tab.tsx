@@ -1,4 +1,5 @@
 import { TabProps } from './types';
+import './Tabs.css';
 
 export const Tab = ({
   activeTab,

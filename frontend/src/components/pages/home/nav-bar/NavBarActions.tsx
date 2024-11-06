@@ -1,5 +1,6 @@
 import { NavBarActionsProps } from './types';
 import { useMatch } from 'react-router-dom';
+import '../header/Header.css';
 
 export const NavBarActions = ({
   isLoggedInUser,
