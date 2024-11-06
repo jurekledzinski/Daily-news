@@ -12,7 +12,7 @@ export const requestLogout = (
     req.session.destroy((err: Error) => {
       if (err) return next(err);
 
-      res.clearCookie('time', {
+      res.clearCookie('tsge', {
         path: '/',
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
