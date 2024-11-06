@@ -32,7 +32,7 @@
 .form__icon {
   position: absolute;
   right: 4px;
-  bottom: 5px;
+  bottom: 6px;
   transition: 0.3s color linear;
   cursor: pointer;
   border: none;
