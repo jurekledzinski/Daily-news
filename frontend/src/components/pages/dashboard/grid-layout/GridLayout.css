@@ -22,3 +22,8 @@
 .grid-layout.grid-layout--transparent {
   opacity: 0;
 }
+
+.react-grid-placeholder {
+  background-color: blue !important;
+  opacity: 0.2;
+}
