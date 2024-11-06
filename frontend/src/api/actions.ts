@@ -222,6 +222,7 @@ const actionUpdateUserProfile = async (data: FormData, id: string) => {
 
   toast.success('Profile updated successfully!', {
     position: 'top-right',
+    toastId: 'update-profile',
   });
 
   const redirectTo = window.location.pathname;

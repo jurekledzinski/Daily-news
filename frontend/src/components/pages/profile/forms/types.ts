@@ -9,6 +9,7 @@ export type InputsPassword = {
 };
 
 export type UpdateProfileFormProps = {
+  isDisabled: boolean;
   methods: UseFormReturn<InputsProfile, unknown, undefined>;
   onSubmit: () => void;
   serverError: string | null;

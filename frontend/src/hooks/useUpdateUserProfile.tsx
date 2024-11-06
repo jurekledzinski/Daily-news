@@ -18,6 +18,7 @@ export const useUpdateUserProfile = ({
       name: initialData.user?.name ?? '',
     },
   });
+
   const submit = useSubmit();
 
   const onSubmit = (data: InputsProfile) => {

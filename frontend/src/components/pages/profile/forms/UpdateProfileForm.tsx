@@ -4,6 +4,7 @@ import { UpdateProfileFormProps } from './types';
 import './Forms.css';
 
 export const UpdateProfileForm = ({
+  isDisabled,
   methods,
   onSubmit,
   serverError,
@@ -45,7 +46,9 @@ export const UpdateProfileForm = ({
 
       {serverError && <AlertError>{serverError}</AlertError>}
 
-      <button type="submit">Update profile</button>
+      <button disabled={isDisabled} type="submit">
+        Update profile
+      </button>
     </Form>
   );
 };

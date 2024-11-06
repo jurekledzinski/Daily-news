@@ -15,3 +15,4 @@ export * from './useUpdateUserProfile';
 export * from './useFetchProtection';
 export * from './useChangePassword';
 export * from './useControlServerError';
+export * from './useGetStatusPost';
