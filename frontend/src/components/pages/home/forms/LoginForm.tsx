@@ -76,7 +76,9 @@ export const LoginForm = ({
           <ErrorMessage> {errors.password.message}</ErrorMessage>
         )}
       </fieldset>
-      {serverError && <AlertError> {serverError}</AlertError>}
+      {serverError && (
+        <AlertError className="alert-error--login"> {serverError}</AlertError>
+      )}
     </Form>
   );
 };

@@ -154,7 +154,12 @@ export const RegisterForm = ({
         )}
       </fieldset>
 
-      {serverError && <AlertError> {serverError}</AlertError>}
+      {serverError && (
+        <AlertError className="alert-error--register">
+          {' '}
+          {serverError}
+        </AlertError>
+      )}
     </form>
   );
 };

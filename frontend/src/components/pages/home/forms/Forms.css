@@ -50,3 +50,9 @@
   transition: 0.3s color linear;
   color: black;
 }
+
+.alert-error--login > .alert-error__text,
+.alert-error--register > .alert-error__text {
+  font-size: 0.7rem;
+  font-weight: 300;
+}
