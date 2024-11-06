@@ -1,4 +1,4 @@
-import { AlertError, ErrorMessage } from '../../../shared';
+import { AlertError, ErrorMessage } from '@components/shared';
 import { Form } from 'react-router-dom';
 import { UpdateProfileFormProps } from './types';
 import './Forms.css';

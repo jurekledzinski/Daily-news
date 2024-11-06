@@ -1,5 +1,5 @@
-import { Footer, Header } from '../../components/pages';
-import { loaderCategories } from '../../api';
+import { Footer, Header } from '@components/pages';
+import { loaderCategories } from '@api/index';
 import { Suspense } from 'react';
 import './Home.css';
 

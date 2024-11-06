@@ -1,6 +1,6 @@
-import { invalidateQueries, refetchQueries, setResponse } from '../helpers';
+import { invalidateQueries, refetchQueries, setResponse } from '@helpers/index';
 import { LoaderFunctionArgs, Params, redirect } from 'react-router-dom';
-import { queryClient as useQueryClient } from '../main';
+import { queryClient as useQueryClient } from '@/main';
 import { toast } from 'react-toastify';
 import type { QueryClient } from '@tanstack/react-query';
 import {

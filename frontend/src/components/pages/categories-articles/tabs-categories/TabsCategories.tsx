@@ -1,11 +1,11 @@
-import { Backdrop, Loader } from '../../../shared';
-import { ObjArticles } from '../../dashboard';
+import { Backdrop, Loader } from '@components/shared';
+import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ObjArticles } from '@components/pages/dashboard';
 import { Outlet, useNavigation } from 'react-router-dom';
 import { TabsCategoriesArticlesProps } from './types';
 import { useRef } from 'react';
 import './TabsCategories.css';
-import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
   Tab,

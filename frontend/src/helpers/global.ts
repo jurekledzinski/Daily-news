@@ -1,5 +1,5 @@
 import DOMPurify from 'dompurify';
-import { LocalData } from '../components/pages';
+import { LocalData } from '@components/pages';
 
 export const sanitizeContent = (content: string) => DOMPurify.sanitize(content);
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import router from './routes/AppRouter';
+import router from '@routes/AppRouter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { UserProvider } from './store';
+import { UserProvider } from '@store/index';
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 

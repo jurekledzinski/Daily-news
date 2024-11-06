@@ -1,17 +1,17 @@
 import { HeaderProps } from './types';
-import { NavBarActions, NavBarAuth } from '../nav-bar';
+import { NavBarActions, NavBarAuth } from '@components/pages';
 import { toast } from 'react-toastify';
 import { useCallback, useRef } from 'react';
-import { useControlServerError } from '../../../../hooks/useControlServerError';
+import { useControlServerError } from '@hooks/index';
 import { useNavigate, useNavigation } from 'react-router-dom';
-import { useUserStore } from '../../../../store';
+import { useUserStore } from '@store/index';
 import './Header.css';
 import {
   useFetchUserData,
   useLoginForm,
   useLogoutUser,
   useRegisterForm,
-} from '../../../../hooks';
+} from '@hooks/index';
 
 export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const navigate = useNavigate();

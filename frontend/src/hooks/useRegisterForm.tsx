@@ -1,10 +1,7 @@
+import { FormResigsterValues, useRegisterFormProps } from '@components/pages';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSubmit } from 'react-router-dom';
-import {
-  FormResigsterValues,
-  useRegisterFormProps,
-} from '../components/pages/';
 
 export const useRegisterForm = ({
   error,

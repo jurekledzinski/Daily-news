@@ -1,4 +1,4 @@
-import { FormLoginValues, useLoginFormProps } from '../components/pages';
+import { FormLoginValues, useLoginFormProps } from '@components/pages';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSubmit } from 'react-router-dom';

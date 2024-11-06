@@ -1,6 +1,6 @@
-import { InputsProfile } from '../components/pages';
+import { InputsProfile } from '@components/pages';
 import { useForm } from 'react-hook-form';
-import { UserState } from '../store';
+import { UserState } from '@store/index';
 import { useSubmit } from 'react-router-dom';
 
 type useUpdateUserProfileProps = {

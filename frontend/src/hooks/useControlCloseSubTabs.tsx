@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import { MouseEvent } from 'react';
-import { LocalData, ObjArticles } from '../components/pages';
+import { LocalData, ObjArticles } from '@components/pages';
 
 type UseControlCloseSubTabs = {
   activeTabs: string[];

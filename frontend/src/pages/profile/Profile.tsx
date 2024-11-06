@@ -1,18 +1,15 @@
 import { ActionData } from '../../types';
-import { AlertError, Modal } from '../../components/shared';
+import { AlertError, Modal } from '@components/shared';
+import { ChangePasswordForm, UpdateProfileForm } from '@components/pages';
 import { Form, useActionData } from 'react-router-dom';
-import { useChangePassword } from '../../hooks/useChangePassword';
-import { useUserStore } from '../../store';
+import { useChangePassword } from '@hooks/index';
+import { useUserStore } from '@store/index';
 import './Profile.css';
 import {
   useDeleteUserAccount,
   useFetchProtection,
   useUpdateUserProfile,
-} from '../../hooks';
-import {
-  UpdateProfileForm,
-  ChangePasswordForm,
-} from '../../components/pages/profile';
+} from '@hooks/index';
 
 export const Profile = () => {
   const actionData = useActionData() as ActionData;

@@ -1,5 +1,5 @@
-import { LoginForm, RegisterForm } from '../forms';
-import { Modal } from '../../../shared';
+import { LoginForm, RegisterForm } from '@components/pages/home';
+import { Modal } from '@components/shared';
 import { NavBarAuthProps } from './types';
 
 export const NavBarAuth = ({

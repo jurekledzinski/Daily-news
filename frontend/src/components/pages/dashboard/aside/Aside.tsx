@@ -1,8 +1,8 @@
 import { AsideProps } from './types';
-import { GridTemplateCard } from '../grid-layout';
-import { IDataCategories } from '../../../../api';
-import { images } from '../../../../images';
-import { NoDataMessage } from '../../../shared';
+import { GridTemplateCard } from '@components/pages';
+import { IDataCategories } from '@api/index';
+import { images } from '@images/index';
+import { NoDataMessage } from '@components/shared';
 import { useOutletContext } from 'react-router-dom';
 
 export const Aside = ({ layout, onClick }: AsideProps) => {

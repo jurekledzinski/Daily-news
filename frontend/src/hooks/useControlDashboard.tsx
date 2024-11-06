@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
-import { findPosition } from '../helpers';
-import { LayoutData } from '../components/pages/dashboard';
+import { findPosition } from '@helpers/index';
+import { LayoutData } from '@components/pages';
 import { v4 as uuidv4 } from 'uuid';
 import type ReactGridLayout from 'react-grid-layout';
 

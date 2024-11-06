@@ -1,6 +1,6 @@
-import { ArticleDetailsElements } from '../api';
+import { ArticleDetailsElements } from '@api/index';
 import { cloneDeep, uniqBy } from 'lodash';
-import { CommentsWithReplies } from '../components/shared';
+import { CommentsWithReplies } from '@components/shared';
 
 export const getDetailsArticleImageData = (
   elements: ArticleDetailsElements[]

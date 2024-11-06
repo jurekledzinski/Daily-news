@@ -1,4 +1,4 @@
-import { tryCatch } from '../helpers';
+import { tryCatch } from '@helpers/index';
 import { URLS } from './urls';
 import {
   APIGuardianResponseSuccess,

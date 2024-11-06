@@ -1,24 +1,24 @@
 import { ActionData, UseOutletContext } from '../../types';
-import { ArticleDetails } from '../../components/pages';
+import { ArticleDetails } from '@components/pages';
 import { cloneDeep } from 'lodash';
-import { CommentsWithReplies, NoDataMessage } from '../../components/shared';
+import { CommentsWithReplies, NoDataMessage } from '@components/shared';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { loaderDetailsArticle } from '../../api';
+import { loaderDetailsArticle } from '@api/index';
 import { useCallback, useState } from 'react';
-import { useUserStore } from '../../store';
+import { useUserStore } from '@store/index';
 import './DetailsArticle.css';
 import {
   getDetailsArticleImageData,
   updateNestedRepliesLikes,
-} from '../../helpers';
+} from '@helpers/index';
 import {
   useAddComment,
   useFetchOnScroll,
   useFetchProtection,
   useLoadComments,
   useUpdateLikes,
-} from '../../hooks';
+} from '@hooks/index';
 import {
   Params,
   useLoaderData,

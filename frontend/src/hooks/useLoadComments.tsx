@@ -1,6 +1,6 @@
-import { APIResponsePagniationSuccess, Comment } from '../api';
-import { CommentsWithReplies } from '../components/shared';
-import { udpatedNestedReplies } from '../helpers';
+import { APIResponsePagniationSuccess, Comment } from '@api/index';
+import { CommentsWithReplies } from '@components/shared';
+import { udpatedNestedReplies } from '@helpers/index';
 import { uniqBy } from 'lodash';
 import { useEffect } from 'react';
 

@@ -1,5 +1,5 @@
-import { APICSRFTokenResponse, APIErrorResponse, URLS } from '../api';
-import { useQuery, } from '@tanstack/react-query';
+import { APICSRFTokenResponse, APIErrorResponse, URLS } from '@api/index';
+import { useQuery } from '@tanstack/react-query';
 
 export const useFetchProtection = () => {
   const data = useQuery<APICSRFTokenResponse, APIErrorResponse>({

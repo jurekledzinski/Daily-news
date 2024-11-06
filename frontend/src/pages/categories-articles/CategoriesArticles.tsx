@@ -1,9 +1,13 @@
 import { cloneDeep } from 'lodash';
-import { getCurrentCategory, getLocalData, setLocalData } from '../../helpers';
-import { TabsCategoriesArticles } from '../../components/pages';
-import { useControlCloseSubTabs, useControlCloseTabs } from '../../hooks';
+import { TabsCategoriesArticles } from '@components/pages';
+import { useControlCloseSubTabs, useControlCloseTabs } from '@hooks/index';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import {
+  getCurrentCategory,
+  getLocalData,
+  setLocalData,
+} from '@helpers/global';
 
 export const CategoriesArticles = () => {
   const navigate = useNavigate();

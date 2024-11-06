@@ -1,17 +1,17 @@
+import { LocalData } from '@components/pages';
+import { useEffect } from 'react';
 import {
   APIGuardianResponseError,
   APIGuardianResponsePagniationSuccess,
   IArticles,
-} from '../api';
-import { LocalData } from '../components/pages';
-import { useEffect } from 'react';
+} from '@api/index';
 import {
   getCurrentCategory,
   getFormatedData,
   getLocalData,
   setLocalData,
   updateLocalData,
-} from '../helpers';
+} from '@helpers/index';
 
 type UseLoadGridArticlesProps = {
   category: string | undefined;

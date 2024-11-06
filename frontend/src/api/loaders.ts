@@ -1,4 +1,4 @@
-import { fetchOrCache, getUrlQuery } from '../helpers';
+import { fetchOrCache, getUrlQuery } from '@helpers/index';
 import { LoaderFunctionArgs, Params } from 'react-router-dom';
 import {
   APIGuardianResponseSuccess,

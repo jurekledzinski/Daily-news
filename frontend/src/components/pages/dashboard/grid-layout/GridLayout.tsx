@@ -1,6 +1,6 @@
 import { GridCard } from './GridCard';
 import { GridLayoutProps } from './types';
-import { NoDataMessage } from '../../../shared';
+import { NoDataMessage } from '@components/shared';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import { useRef, useState } from 'react';
 import './GridLayout.css';

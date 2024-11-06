@@ -1,8 +1,9 @@
-import { Aside } from '../../components/pages';
-import { GridLayout, LayoutData, LocalData } from '../../components/pages';
+import { Aside } from '@components/pages';
+import { GridLayout, LayoutData, LocalData } from '@components/pages';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
+
 import {
   getLocalData,
   handleAddCardOnTouch,

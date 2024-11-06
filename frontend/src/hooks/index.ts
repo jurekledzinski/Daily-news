@@ -13,3 +13,5 @@ export * from './useLogoutUser';
 export * from './useDeleteUserAccount';
 export * from './useUpdateUserProfile';
 export * from './useFetchProtection';
+export * from './useChangePassword';
+export * from './useControlServerError';

@@ -1,4 +1,4 @@
-import { CommentInput } from '../components/shared';
+import { CommentInput } from '@components/shared';
 import { useSubmit } from 'react-router-dom';
 
 type UseAddCommentProps = {

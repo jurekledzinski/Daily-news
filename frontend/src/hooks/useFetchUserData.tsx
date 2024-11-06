@@ -1,7 +1,7 @@
-import { APIErrorResponse, APISuccess, URLS } from '../api';
+import { APIErrorResponse, APISuccess, URLS } from '@api/index';
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useUserStore } from '../store';
+import { useUserStore } from '@store/index';
 
 export const useFetchUserData = () => {
   const { dispatch } = useUserStore();

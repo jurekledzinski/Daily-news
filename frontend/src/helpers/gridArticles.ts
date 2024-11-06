@@ -1,5 +1,5 @@
-import { IArticles, ArticleData } from '../api';
-import { LocalData } from '../components/pages';
+import { IArticles, ArticleData } from '@api/index';
+import { LocalData } from '@components/pages';
 import { uniqBy } from 'lodash';
 
 export const getFormatedData = (article: IArticles) => {

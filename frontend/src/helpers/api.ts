@@ -1,4 +1,4 @@
-import { APIErrorResponse, APISuccessResponse } from '../api';
+import { APIErrorResponse, APISuccessResponse } from '@api/index';
 import { RedirectFunction } from 'react-router-dom';
 import { removeCookie, setCookie } from './global';
 import type { QueryClient } from '@tanstack/react-query';

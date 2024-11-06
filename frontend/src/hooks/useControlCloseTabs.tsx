@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash';
-import { LocalData } from '../components/pages';
+import { LocalData } from '@components/pages';
 import { MouseEvent } from 'react';
 
 type UseControlTabsProps = {

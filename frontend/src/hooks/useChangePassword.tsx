@@ -1,4 +1,4 @@
-import { InputsPassword } from '../components/pages';
+import { InputsPassword } from '@components/pages';
 import { useForm } from 'react-hook-form';
 import { useSubmit } from 'react-router-dom';
 

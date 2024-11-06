@@ -1,6 +1,6 @@
-import { detectMobile } from '../../../../helpers';
+import { detectMobile } from '@helpers/index';
 import { GridTemplateCardProps } from './types';
-import { Image } from '../../../shared';
+import { Image } from '@components/shared';
 import './GridTemplateCard.css';
 
 export const GridTemplateCard = ({

@@ -1,4 +1,4 @@
-import { Likes } from '../api';
+import { Likes } from '@api/index';
 import { useSubmit } from 'react-router-dom';
 
 type UseUpdateLikesProps = {

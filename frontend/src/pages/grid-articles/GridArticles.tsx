@@ -1,11 +1,11 @@
-import { Backdrop, Loader, NoDataMessage } from '../../components/shared';
-import { Card, LocalData } from '../../components/pages';
+import { Backdrop, Loader, NoDataMessage } from '@components/shared';
+import { Card, LocalData } from '@components/pages';
 import { faNewspaper } from '@fortawesome/free-regular-svg-icons';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { loaderArticles } from '../../api';
+import { loaderArticles } from '@api/index';
 import { useCallback, useRef, useState } from 'react';
-import { useFetchOnScroll, useLoadGridArticles } from '../../hooks';
+import { useFetchOnScroll, useLoadGridArticles } from '@hooks/index';
 import { UseOutletContext } from '../../types/global';
 import './GridArticles.css';
 import {
