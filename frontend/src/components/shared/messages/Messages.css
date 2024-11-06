@@ -15,7 +15,7 @@
 
 .no-data p {
   font-weight: 500;
-  font-size: 1.25rem;
+  font-size: 0.875rem;
 }
 
 .no-data.aside-message > p {
@@ -53,4 +53,11 @@
 
 .info-message.info-message--article {
   margin: 1rem 0;
+}
+
+@media (min-width: 768px) {
+  .no-data p {
+    font-weight: 500;
+    font-size: 1.25rem;
+  }
 }
