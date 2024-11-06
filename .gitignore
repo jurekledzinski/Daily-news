@@ -31,7 +31,7 @@ Thumbs.db
 .vscode/
 
 # TypeScript declaration files
-*.d.ts
+
 
 # Compiled JavaScript files
 *.js
