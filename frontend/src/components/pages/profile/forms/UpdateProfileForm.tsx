@@ -30,6 +30,7 @@ export const UpdateProfileForm = ({
       <fieldset className="form__fieldset">
         <label className="form__label">Email:</label>
         <input
+          autoComplete="username"
           className="form__input"
           type="email"
           {...methods.register('email', {

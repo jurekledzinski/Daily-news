@@ -37,6 +37,7 @@ export const RegisterForm = ({
       <fieldset className="form__fieldset">
         <label className="form__label">Email:</label>
         <input
+          autoComplete="username"
           className="form__input"
           type="email"
           {...methods.register('email', {
@@ -55,6 +56,7 @@ export const RegisterForm = ({
         <label className="form__label">Password:</label>
         <div className="form__wrapper-input">
           <input
+            autoComplete="new-password"
             className="form__input"
             type={showPassword ? 'text' : 'password'}
             {...methods.register('password', {
@@ -100,6 +102,7 @@ export const RegisterForm = ({
         <label className="form__label">Confrim password:</label>
         <div className="form__wrapper-input">
           <input
+            autoComplete="new-password"
             className="form__input"
             type={showConfirmPasswod ? 'text' : 'password'}
             {...methods.register('confirmPassword', {

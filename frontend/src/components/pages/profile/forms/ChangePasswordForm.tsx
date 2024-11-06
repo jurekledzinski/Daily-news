@@ -22,6 +22,7 @@ export const ChangePasswordForm = ({
         <label className="form__label">Password:</label>
         <div className="form__wrapper-input">
           <input
+            autoComplete="new-password"
             className="form__input"
             type={showPassword ? 'text' : 'password'}
             {...methods.register('password', {
@@ -66,6 +67,7 @@ export const ChangePasswordForm = ({
         <label className="form__label">Confirm password:</label>
         <div className="form__wrapper-input">
           <input
+            autoComplete="new-password"
             className="form__input"
             type={showConfirmPasswod ? 'text' : 'password'}
             {...methods.register('confirmPassword', {

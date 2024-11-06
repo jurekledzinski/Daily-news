@@ -20,8 +20,9 @@ export const LoginForm = ({
       <fieldset className="form__fieldset">
         <label className="form__label">Email:</label>
         <input
+          autoComplete="username"
           className="form__input"
-          type="text"
+          type="email"
           {...methods.register('email', {
             required: { message: 'Email is required', value: true },
             pattern: {
@@ -38,6 +39,7 @@ export const LoginForm = ({
         <label className="form__label">Password:</label>
         <div className="form__wrapper-input">
           <input
+            autoComplete="current-password"
             className="form__input"
             type={showPassword ? 'text' : 'password'}
             {...methods.register('password', {
