@@ -14,12 +14,12 @@
 
 .alert-error__text {
   color: var(--color-text-primary-light);
-  font-size: 0.7rem;
+  font-size: 0.875rem;
 }
 
 .alert-error--profile {
   margin-top: 1rem;
-  width: 400px;
+  width: 25rem;
 }
 
 .alert-error--article-details {
