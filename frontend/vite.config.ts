@@ -33,6 +33,7 @@ export default defineConfig({
         },
       },
     },
+    chunkSizeWarningLimit: 600,
   },
   preview: {
     port: 8080,
