@@ -31,7 +31,9 @@ passport.use(
         });
 
         if (!user) {
-          return done(null, false, { message: 'User not found' });
+          return done(null, false, {
+            message: 'Login unsuccessful. Please check your credentials',
+          });
         }
 
         const isPasswordSame = await bcrypt.compare(
@@ -42,7 +44,7 @@ passport.use(
         if (isPasswordSame) {
           return done(null, user);
         } else {
-          return done(null, false, { message: 'Incorrect password' });
+          return done(null, false, { message: 'Incorrect email or password' });
         }
       } catch (error) {
         return done(error);
