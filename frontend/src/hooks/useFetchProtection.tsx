@@ -17,7 +17,7 @@ export const useFetchProtection = () => {
 
       return await response.json();
     },
-    enabled: document.cookie.split('=').includes('time'),
+    enabled: document.cookie.split('=').includes('tsge'),
   });
 
   return { token: data.data?.token ?? '' };

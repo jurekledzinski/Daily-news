@@ -27,7 +27,7 @@ export const useFetchUserData = () => {
 
       return await response.json();
     },
-    enabled: document.cookie.split('=').includes('time'),
+    enabled: document.cookie.split('=').includes('tsge'),
     retry: false,
   });
 
