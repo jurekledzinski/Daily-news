@@ -2,7 +2,6 @@ import { ActionData } from '../../types';
 import { AlertError, Modal } from '@components/shared';
 import { ChangePasswordForm, UpdateProfileForm } from '@components/pages';
 import { Form, useActionData } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useUserStore } from '@store/index';
 import './Profile.css';
 
@@ -35,13 +34,6 @@ export const Profile = () => {
 
   return (
     <div className="profile">
-      <button
-        onClick={() => {
-          toast.dismiss('update-profile');
-        }}
-      >
-        Click
-      </button>
       <UpdateProfileForm
         isDisabled={isDisabled}
         methods={submitUpdateUser.methods}
