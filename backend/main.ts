@@ -47,7 +47,7 @@ app.use(
     secret: process.env.SECRET_KEY!,
     resave: false,
     saveUninitialized: false,
-    store: mongoStore as session.Store,
+    store: mongoStore,
     cookie: {
       domain,
       path: '/',
