@@ -26,9 +26,3 @@
     opacity: 1;
   }
 }
-
-@media (hover: none) {
-  .tabs__list-container {
-    gap: initial;
-  }
-}
