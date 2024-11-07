@@ -18,8 +18,6 @@ import {
   userRoutes,
 } from './routes';
 
-const domain = new URL(config.frontend_url!).hostname;
-
 const app = express();
 app.disable('x-powered-by');
 
@@ -49,7 +47,6 @@ app.use(
     saveUninitialized: false,
     store: mongoStore,
     cookie: {
-      domain,
       path: '/',
       secure: config.node_env === 'production',
       sameSite: 'none',
