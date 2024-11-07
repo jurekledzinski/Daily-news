@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": ".build/server.js",
+  "main": "build/server.js",
   "scripts": {
     "watch": "tsc --watch",
     "build": "tsc",
