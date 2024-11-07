@@ -16,7 +16,14 @@ export const LoginForm = ({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Form className="form" id={id} onSubmit={onSubmit} method="POST" noValidate>
+    <Form
+      className="form"
+      id={id}
+      onSubmit={onSubmit}
+      method="POST"
+      noValidate
+      tabIndex={0}
+    >
       <fieldset className="form__fieldset">
         <label className="form__label">Email:</label>
         <input

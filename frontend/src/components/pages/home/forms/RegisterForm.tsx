@@ -16,7 +16,7 @@ export const RegisterForm = ({
   const [showConfirmPasswod, setShowConfirmPassword] = useState(false);
 
   return (
-    <form className="form" id={id} onSubmit={onSubmit} noValidate>
+    <form className="form" id={id} onSubmit={onSubmit} noValidate tabIndex={0}>
       <fieldset className="form__fieldset">
         <label className="form__label">Name:</label>
         <input

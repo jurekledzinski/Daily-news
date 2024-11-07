@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.form:focus-visible {
+  outline: initial;
+}
+
 .form__label {
   display: block;
   margin-bottom: 0.15rem;
