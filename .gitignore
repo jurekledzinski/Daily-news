@@ -36,6 +36,3 @@ Thumbs.db
 # Compiled JavaScript files
 *.js
 *.jsx
-
-#fake api data
-/frontend/src/dummy-api
