@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { STATUS_CODE } from '../constants';
+import { CustomError } from '../error';
 
 export const requestLogout = (
   req: Request,
@@ -8,6 +9,9 @@ export const requestLogout = (
 ) => {
   req.logout((err: Error) => {
     if (err) return next(err);
+    if (!req.session) {
+      throw new CustomError('SERVER ERROR', STATUS_CODE.NOT_FOUND);
+    }
 
     req.session.destroy((err: Error) => {
       if (err) return next(err);

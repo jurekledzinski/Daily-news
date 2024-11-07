@@ -49,7 +49,7 @@ export const loginUser = tryCatch<{ message: '' }>(
         );
       }
 
-      const maxAge = req.session.cookie.maxAge;
+      const maxAge = req.session?.cookie.maxAge!;
 
       responseCookie(res, maxAge);
 

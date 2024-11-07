@@ -24,7 +24,7 @@ export const getUser = tryCatch<UserData[]>(
       );
     }
 
-    const maxAge = req.session.cookie.maxAge;
+    const maxAge = req.session?.cookie.maxAge!;
 
     responseCookie(res, maxAge);
 
