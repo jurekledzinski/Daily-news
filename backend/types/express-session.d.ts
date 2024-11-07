@@ -3,6 +3,7 @@ declare module 'express-session' {
     id?: string;
     email?: string;
     name?: string;
+    isAuthenticated?: boolean;
   }
 }
 
