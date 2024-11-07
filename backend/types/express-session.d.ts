@@ -1,11 +1,9 @@
-import { Session } from 'express-session';
-
-declare module 'express-session';
+import 'express-session';
 
 declare global {
   namespace Express {
     interface Request {
-      session: Session;
+      session: session.Session;
     }
   }
 }
