@@ -6,8 +6,8 @@
   "scripts": {
     "watch": "tsc --watch",
     "build": "tsc",
-    "dev": "nodemon --env-file=.env build/server.js",
-    "start": "node --env-file=.env build/server.js",
+    "dev": "nodemon build/server.js",
+    "start": "node build/server.js",
     "postinstall": "npm list @types/node"
   },
   "author": "Jerzy Ledziński",
