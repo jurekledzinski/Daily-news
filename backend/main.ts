@@ -1,4 +1,3 @@
-require('dotenv').config();
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
