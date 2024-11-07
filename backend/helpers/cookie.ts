@@ -1,12 +1,13 @@
 import { Response } from 'express';
+import { config } from '../config';
 
 export const responseCookie = (res: Response, maxAge: number | undefined) => {
-  const domain = new URL(process.env.FRONTEND_URL!).hostname;
+  const domain = new URL(config.frontend_url!).hostname;
 
   res.cookie('tsge', 'true', {
     domain,
     path: '/',
-    secure: process.env.NODE_ENV === 'production',
+    secure: config.node_env === 'production',
     httpOnly: false,
     sameSite: 'strict',
     maxAge: maxAge,

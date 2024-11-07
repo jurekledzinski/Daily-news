@@ -1,6 +1,7 @@
+import { config } from '../config';
+import { CustomError } from '../error';
 import { NextFunction, Request, Response } from 'express';
 import { STATUS_CODE } from '../constants';
-import { CustomError } from '../error';
 
 export const requestLogout = (
   req: Request,
@@ -18,13 +19,13 @@ export const requestLogout = (
 
       res.clearCookie('tsge', {
         path: '/',
-        secure: process.env.NODE_ENV === 'production',
+        secure: config.node_env === 'production',
         sameSite: 'strict',
       });
       res.clearCookie('bmg-seqdk', {
         path: '/',
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: config.node_env === 'production',
         sameSite: 'strict',
       });
 

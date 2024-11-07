@@ -1,7 +1,8 @@
 import { MongoClient } from 'mongodb';
 import logger from '../helpers/logger';
+import { config } from './config';
 
-const url = process.env.MONGO_DB_ATLAS_URL!;
+const url = config.mongo_db_atlas_url!;
 
 export const client = new MongoClient(url);
 

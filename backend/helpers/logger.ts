@@ -1,9 +1,10 @@
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import path from 'path';
+import { config } from '../config';
 
-const isProduction = process.env.NODE_ENV === 'production';
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isProduction = config.node_env === 'production';
+const isDevelopment = config.node_env === 'development';
 
 const transports = [];
 
@@ -39,7 +40,7 @@ if (isProduction) {
 }
 
 const logger = winston.createLogger({
-  level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
+  level: config.node_env === 'production' ? 'info' : 'debug',
   transports,
 });
 

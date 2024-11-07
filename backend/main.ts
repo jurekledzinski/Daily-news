@@ -8,6 +8,7 @@ import session from 'express-session';
 import { CustomError } from './error';
 import { z } from 'zod';
 import logger from './helpers/logger';
+import { config } from './config';
 
 import {
   commentRoutes,
@@ -17,14 +18,14 @@ import {
   userRoutes,
 } from './routes';
 
-const domain = new URL(process.env.FRONTEND_URL!).hostname;
+const domain = new URL(config.frontend_url!).hostname;
 
 const app = express();
 app.disable('x-powered-by');
 
 const mongoStore = new MongoStore({
-  mongoUrl: process.env.MONGO_DB_URL_SESSION,
-  dbName: process.env.MONGO_NAME_DB_SESSION,
+  mongoUrl: config.mongo_db_url_session,
+  dbName: config.mongo_name_db_session,
 });
 
 app.use(morgan('dev'));
@@ -35,7 +36,7 @@ app.use(
   cors({
     allowedHeaders: ['Content-Type', 'X-CSRF-Token'],
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-    origin: process.env.FRONTEND_URL,
+    origin: config.frontend_url,
     credentials: true,
   })
 );
@@ -43,14 +44,14 @@ app.use(
 app.use(
   session({
     name: 'bmg-seqdk',
-    secret: process.env.SECRET_KEY!,
+    secret: config.secret_key!,
     resave: false,
     saveUninitialized: false,
     store: mongoStore,
     cookie: {
       domain,
       path: '/',
-      secure: process.env.NODE_ENV === 'production',
+      secure: config.node_env === 'production',
       sameSite: 'strict',
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 1,
