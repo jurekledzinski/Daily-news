@@ -62,6 +62,7 @@
 
 .tabs__tab--sub.tabs__tab--active .tabs__close {
   color: var(--primary-color);
+  right: -2px;
 }
 
 .tabs__close {
