@@ -1,9 +1,13 @@
-// import { Session } from 'express-session';
+import type { CookieOptions } from 'express-session';
 
 declare global {
   namespace Express {
     interface Request {
-      session: session;
+      session: {
+        id?: string;
+        email?: string;
+        cookie: CookieOptions;
+      };
     }
   }
 }
