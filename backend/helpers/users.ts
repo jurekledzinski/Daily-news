@@ -20,13 +20,13 @@ export const requestLogout = (
       res.clearCookie('tsge', {
         path: '/',
         secure: config.node_env === 'production',
-        sameSite: 'strict',
+        sameSite: 'none',
       });
       res.clearCookie('bmg-seqdk', {
         path: '/',
         httpOnly: true,
         secure: config.node_env === 'production',
-        sameSite: 'strict',
+        sameSite: 'none',
       });
 
       return res.status(STATUS_CODE.OK).json({ success: true });

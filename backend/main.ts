@@ -52,7 +52,7 @@ app.use(
       domain,
       path: '/',
       secure: config.node_env === 'production',
-      sameSite: 'strict',
+      sameSite: 'none',
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 1,
     },
