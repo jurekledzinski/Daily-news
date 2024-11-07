@@ -1,9 +1,0 @@
-import type { Session } from 'express-session';
-
-declare global {
-  namespace Express {
-    interface Request {
-      session: Session;
-    }
-  }
-}
