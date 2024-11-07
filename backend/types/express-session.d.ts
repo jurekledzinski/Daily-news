@@ -1,16 +1,9 @@
-declare module 'express-session' {
-  interface SessionData {
-    id?: string;
-    email?: string;
-    name?: string;
-    isAuthenticated?: boolean;
-  }
-}
+import { Session } from 'express-session';
 
 declare global {
   namespace Express {
     interface Request {
-      session?: SessionData;
+      session: Session;
     }
   }
 }
