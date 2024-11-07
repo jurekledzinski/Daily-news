@@ -6,8 +6,8 @@
   "scripts": {
     "watch": "tsc --watch",
     "build": "tsc",
-    "dev": "nodemon ./build/server.js",
-    "prod": "nodemon ./build/server.js"
+    "dev": "nodemon build/server.js",
+    "start": "node build/server.js"
   },
   "author": "Jerzy Ledziński",
   "license": "ISC",
