@@ -1,2 +1,10 @@
 import 'express';
-import 'express-session';
+import type session from 'express-session';
+
+declare global {
+  namespace Express {
+    interface Request {
+      session: session;
+    }
+  }
+}
