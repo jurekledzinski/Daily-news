@@ -19,6 +19,7 @@ export const requestLogout = (
 
       res.clearCookie('tsge', {
         path: '/',
+        httpOnly: false,
         secure: config.node_env === 'production',
         sameSite: 'none',
       });
