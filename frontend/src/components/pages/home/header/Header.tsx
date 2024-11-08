@@ -1,7 +1,7 @@
 import { HeaderProps } from './types';
 import { NavBarActions, NavBarAuth } from '@components/pages';
 import { toast } from 'react-toastify';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useControlServerError } from '@hooks/index';
 import { useNavigate, useNavigation } from 'react-router-dom';
 import { useUserStore } from '@store/index';
@@ -12,7 +12,7 @@ import {
   useLogoutUser,
   useRegisterForm,
 } from '@hooks/index';
-import { getCookie, removeCookie } from '@helpers/index';
+import { getCookie } from '@helpers/index';
 
 export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const navigate = useNavigate();
@@ -24,6 +24,7 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const isLog = arrCookies.some((cookie) => cookie.trim().startsWith('tsge='));
   const { onGetCookie, onRemoveCookie } = useControlServerError('serverError');
   const { state, dispatch } = useUserStore();
+  const [, setIsLoggedOut] = useState(false);
 
   console.log('header isLog', isLog);
 
@@ -36,7 +37,7 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
       toast.success('Logout successful', {
         position: 'top-right',
       });
-      removeCookie('tsge');
+      setIsLoggedOut((prev) => !prev);
       if (matchProfile) navigate('/', { replace: true });
     },
   });
