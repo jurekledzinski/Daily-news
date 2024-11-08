@@ -324,7 +324,7 @@ export const actionLoginUser = async (
 export const actionLogoutUser = async () => {
   const result = await logoutUser({});
 
-  useQueryClient.removeQueries({ queryKey: ['user'] });
+  useQueryClient.invalidateQueries({ queryKey: ['user'] });
 
   const redirectTo = window.location.pathname;
   return setResponse('logout-user', redirect, result, redirectTo);
