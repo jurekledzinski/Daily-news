@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(
   cors({
     allowedHeaders: ['Content-Type', 'X-CSRF-Token'],
-    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
     origin: config.frontend_url,
     credentials: true,
   })
