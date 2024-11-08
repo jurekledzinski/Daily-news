@@ -20,36 +20,36 @@ const sections = [
   'world',
 ];
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+// const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export const URLS = {
-  FETCH_USER: () => `${backendUrl}/api/v1/users`,
+  FETCH_USER: () => `/api/v1/users`,
 
-  CREATE_USER: () => `${backendUrl}/api/v1/register`,
+  CREATE_USER: () => `/api/v1/register`,
 
-  LOGIN_USER: () => `${backendUrl}/api/v1/login`,
+  LOGIN_USER: () => `/api/v1/login`,
 
-  LOGOUT_USER: () => `${backendUrl}/api/v1/users/logout`,
+  LOGOUT_USER: () => `/api/v1/users/logout`,
 
   UPDATE_USER_PROFILE: (id: string) => {
-    const url = `${backendUrl}/api/v1/users/update_profile/${id}`;
+    const url = `/api/v1/users/update_profile/${id}`;
 
     return url;
   },
 
   CHANGE_USER_PASSWORD: (id: string) => {
-    const url = `${backendUrl}/api/v1/users/change_password/${id}`;
+    const url = `/api/v1/users/change_password/${id}`;
 
     return url;
   },
 
   DELETE_USER_ACCOUNT: (id: string) => {
-    const url = `${backendUrl}/api/v1/users/delete_user/${id}`;
+    const url = `/api/v1/users/delete_user/${id}`;
 
     return url;
   },
 
-  GET_CSRF_TOKEN: () => `${backendUrl}/api/v1/csrf-token`,
+  GET_CSRF_TOKEN: () => `/api/v1/csrf-token`,
 
   GET_CATEGORIES_ARTICLES: () => {
     const url = `https://content.guardianapis.com/sections?q=${sections.join()}&format=json&api-key=${
@@ -76,21 +76,21 @@ export const URLS = {
   },
 
   GET_COMMENTS: (id: string, page: string) => {
-    const url = `${backendUrl}/api/v1/comments/${id}?page=${page}`;
+    const url = `/api/v1/comments/${id}?page=${page}`;
 
     return url;
   },
 
   GET_COMMENT_REPLIES: (id: string, commentId: string, page: string) => {
-    const url = `${backendUrl}/api/v1/comments/${id}/${commentId}?page_reply=${page}`;
+    const url = `/api/v1/comments/${id}/${commentId}?page_reply=${page}`;
 
     return url;
   },
 
-  CREATE_COMMENT: () => `${backendUrl}/api/v1/comments/create`,
+  CREATE_COMMENT: () => `/api/v1/comments/create`,
 
   UPDATE_COMMENT_LIKE: (id: string, commentId: string) => {
-    const url = `${backendUrl}/api/v1/comments/likes/${id}/${commentId}`;
+    const url = `/api/v1/comments/likes/${id}/${commentId}`;
 
     return url;
   },
