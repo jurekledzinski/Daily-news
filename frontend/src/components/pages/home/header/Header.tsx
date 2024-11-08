@@ -12,7 +12,7 @@ import {
   useLogoutUser,
   useRegisterForm,
 } from '@hooks/index';
-import { getCookie } from '@helpers/index';
+import { getCookie, removeCookie } from '@helpers/index';
 
 export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const navigate = useNavigate();
@@ -20,9 +20,7 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const dialogLoginRef = useRef<HTMLDialogElement | null>(null);
   const dialogRegisterRef = useRef<HTMLDialogElement | null>(null);
   useFetchUserData();
-  console.log('header cookie', document.cookie);
   const arrCookies = document.cookie.split(';');
-  console.log('header arrCookies', arrCookies);
   const isLog = arrCookies.some((cookie) => cookie.trim().startsWith('tsge='));
   const { onGetCookie, onRemoveCookie } = useControlServerError('serverError');
   const { state, dispatch } = useUserStore();
@@ -38,6 +36,7 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
       toast.success('Logout successful', {
         position: 'top-right',
       });
+      removeCookie('tsge');
       if (matchProfile) navigate('/', { replace: true });
     },
   });
