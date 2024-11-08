@@ -20,16 +20,12 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const dialogLoginRef = useRef<HTMLDialogElement | null>(null);
   const dialogRegisterRef = useRef<HTMLDialogElement | null>(null);
   useFetchUserData();
-  const arrCookies = document.cookie.split(';');
-  const isLog = arrCookies.some((cookie) => cookie.trim().startsWith('tsge='));
+  const isLog = getCookie('tsge');
   const { onGetCookie, onRemoveCookie } = useControlServerError('serverError');
   const { state, dispatch } = useUserStore();
   const [, setIsLoggedOut] = useState(false);
 
-  console.log('header isLog', isLog);
-
-  const cookie = getCookie('tsge');
-  console.log('cookie header fn get', cookie);
+  console.log('cookie header fn get', isLog);
 
   const logoutUser = useLogoutUser({
     onSuccess: () => {
@@ -77,12 +73,12 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
           <h4 className="header__logo">Daily news</h4>
           <div className="header__buttons">
             <NavBarActions
-              isLoggedInUser={isLog}
+              isLoggedInUser={Boolean(isLog)}
               onBack={() => navigate(-1)}
               onClick={() => navigate(`profile/${state.user?.id}`)}
             />
             <NavBarAuth
-              isLoggedInUser={isLog}
+              isLoggedInUser={Boolean(isLog)}
               logout={logoutUser}
               modalLoginRef={dialogLoginRef}
               modalRegisterRef={dialogRegisterRef}
