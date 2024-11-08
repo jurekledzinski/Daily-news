@@ -20,9 +20,12 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const dialogRegisterRef = useRef<HTMLDialogElement | null>(null);
   useFetchUserData();
   const arrCookies = document.cookie.split(';');
+  console.log('header arrCookies', arrCookies);
   const isLog = arrCookies.some((cookie) => cookie.trim().startsWith('tsge='));
   const { onGetCookie, onRemoveCookie } = useControlServerError('serverError');
   const { state, dispatch } = useUserStore();
+
+  console.log('header isLog', isLog);
 
   const logoutUser = useLogoutUser({
     onSuccess: () => {
