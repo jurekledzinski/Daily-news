@@ -19,6 +19,7 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const dialogLoginRef = useRef<HTMLDialogElement | null>(null);
   const dialogRegisterRef = useRef<HTMLDialogElement | null>(null);
   useFetchUserData();
+  console.log('header cookie', document.cookie);
   const arrCookies = document.cookie.split(';');
   console.log('header arrCookies', arrCookies);
   const isLog = arrCookies.some((cookie) => cookie.trim().startsWith('tsge='));
