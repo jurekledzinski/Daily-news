@@ -32,7 +32,6 @@ app.use(helmet());
 app.use(express.json());
 app.use(
   cors({
-    allowedHeaders: ['Content-Type', 'X-CSRF-Token'],
     origin: config.frontend_url,
     credentials: true,
   })
