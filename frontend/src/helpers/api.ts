@@ -53,6 +53,8 @@ export function setResponse(
     return redirect(url);
   }
 
+  if (action === 'logout-user') removeCookie('tsge');
+
   removeCookie('serverError');
   return redirect(url);
 }

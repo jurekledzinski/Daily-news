@@ -1,7 +1,7 @@
 import { HeaderProps } from './types';
 import { NavBarActions, NavBarAuth } from '@components/pages';
 import { toast } from 'react-toastify';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { useControlServerError } from '@hooks/index';
 import { useNavigate, useNavigation } from 'react-router-dom';
 import { useUserStore } from '@store/index';
@@ -61,10 +61,6 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
       });
     }, []),
   });
-
-  useEffect(() => {
-    console.log('header useEffect ', document.cookie);
-  }, []);
 
   return (
     <>
