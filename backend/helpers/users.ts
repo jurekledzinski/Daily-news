@@ -21,13 +21,13 @@ export const requestLogout = (
         path: '/',
         httpOnly: false,
         secure: config.node_env === 'production',
-        sameSite: 'none',
+        sameSite: config.node_env === 'production' ? 'none' : 'strict',
       });
       res.clearCookie('bmg-seqdk', {
         path: '/',
         httpOnly: true,
         secure: config.node_env === 'production',
-        sameSite: 'none',
+        sameSite: config.node_env === 'production' ? 'none' : 'strict',
       });
 
       return res.status(STATUS_CODE.OK).json({ success: true });

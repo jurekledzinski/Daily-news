@@ -6,7 +6,7 @@ export const responseCookie = (res: Response, maxAge: number | undefined) => {
     path: '/',
     secure: config.node_env === 'production',
     httpOnly: false,
-    sameSite: 'none',
+    sameSite: config.node_env === 'production' ? 'none' : 'strict',
     maxAge: maxAge,
   });
 };

@@ -47,7 +47,7 @@ app.use(
     cookie: {
       path: '/',
       secure: config.node_env === 'production',
-      sameSite: 'none',
+      sameSite: config.node_env === 'production' ? 'none' : 'strict',
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 1,
     },
