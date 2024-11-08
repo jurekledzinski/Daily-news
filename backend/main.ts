@@ -49,7 +49,7 @@ app.use(
     cookie: {
       path: '/',
       secure: config.node_env === 'production',
-      sameSite: 'none',
+      sameSite: 'lax',
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 1,
     },
