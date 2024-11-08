@@ -12,6 +12,7 @@ import {
   useLogoutUser,
   useRegisterForm,
 } from '@hooks/index';
+import { getCookie } from '@helpers/index';
 
 export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const navigate = useNavigate();
@@ -27,6 +28,9 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const { state, dispatch } = useUserStore();
 
   console.log('header isLog', isLog);
+
+  const cookie = getCookie('tsge');
+  console.log('cookie header fn get', cookie);
 
   const logoutUser = useLogoutUser({
     onSuccess: () => {
