@@ -20,8 +20,6 @@ const sections = [
   'world',
 ];
 
-// const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
 export const URLS = {
   FETCH_USER: () => `/api/v1/users`,
 

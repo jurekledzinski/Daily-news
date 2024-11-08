@@ -1,3 +1,4 @@
+import { getCookie } from '@helpers/index';
 import { HeaderProps } from './types';
 import { NavBarActions, NavBarAuth } from '@components/pages';
 import { toast } from 'react-toastify';
@@ -12,7 +13,6 @@ import {
   useLogoutUser,
   useRegisterForm,
 } from '@hooks/index';
-import { getCookie } from '@helpers/index';
 
 export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const navigate = useNavigate();
@@ -24,8 +24,6 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const { onGetCookie, onRemoveCookie } = useControlServerError('serverError');
   const { state, dispatch } = useUserStore();
   const [, setIsLoggedOut] = useState(false);
-
-  console.log('cookie header fn get', isLog);
 
   const logoutUser = useLogoutUser({
     onSuccess: () => {
