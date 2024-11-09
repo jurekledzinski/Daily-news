@@ -40,8 +40,9 @@ export const GridCard = forwardRef<HTMLDivElement, GridCardProps>(
             <FontAwesomeIcon icon={faTrash} />
           </button>
         </header>
-
-        <h6 className="grid-card__title">{gridItem.title}</h6>
+        <div className="grid-card__body">
+          <h6 className="grid-card__title">{gridItem.title}</h6>
+        </div>
         {children}
         <Image
           className="grid-card__image"
