@@ -109,7 +109,7 @@ export const DetailsArticle = () => {
     );
   }
 
-  console.log('Comments', data);
+  console.log('Details article component useLoaderData', data);
 
   return (
     <section

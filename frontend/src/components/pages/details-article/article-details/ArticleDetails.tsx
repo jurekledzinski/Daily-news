@@ -22,6 +22,11 @@ export const ArticleDetails = ({
   const cleanCaption = sanitizeContent(data.caption);
   const cleanContent = sanitizeContent(data.content);
 
+  console.log('details action data', actionData);
+  console.log('details userData', userData);
+  console.log('details comments', comments);
+  console.log('details data', data);
+
   return (
     <div className="details-article">
       <Header title={data.title} trailText={data.trailText ?? ''} />
@@ -75,7 +80,30 @@ export const ArticleDetails = ({
         </AlertError>
       )}
 
-      {!successComments || !successRepliesComments ? (
+      <SectionComments
+        comments={comments}
+        onShowReplies={onShowReplies}
+        onShowMoreReplies={onShowMoreReplies}
+        onSubmitLike={methodSubmitLike}
+      >
+        {userData.user
+          ? (commentId, onClose) => {
+              return (
+                <>
+                  <FormComment
+                    buttonText="Reply to comment"
+                    onSubmit={(data) => {
+                      methodSubmitComment(data, commentId);
+                      onClose();
+                    }}
+                  />
+                </>
+              );
+            }
+          : null}
+      </SectionComments>
+
+      {/* {!successComments || !successRepliesComments ? (
         <AlertError className="alert-error--article-details">
           Couldn't fetch data comments
         </AlertError>
@@ -102,7 +130,7 @@ export const ArticleDetails = ({
               }
             : null}
         </SectionComments>
-      )}
+      )} */}
     </div>
   );
 };

@@ -31,6 +31,8 @@ export const TabsCategoriesArticles = ({
   const tabsListContainerRef = useRef<HTMLDivElement | null>(null);
   const navigation = useNavigation();
 
+  console.log('navigation', navigation);
+
   return (
     <Tabs>
       <TabsListConainer ref={tabsListContainerRef}>
