@@ -17,6 +17,10 @@ const collection = getCollectionDb<IComment>('comments');
 
 export const getComments = tryCatch<IComment[]>(
   async (req: Request, res: Response) => {
+    console.log('get comments collection', collection);
+    console.log('req params', req.params);
+    console.log('req query', req.query);
+
     if (!collection) {
       throw new CustomError(
         'Internal server error',
@@ -28,10 +32,16 @@ export const getComments = tryCatch<IComment[]>(
     const page = req.query.page ?? '1';
     const skipCount = calculateSkipCount(page);
 
+    console.log('req idArticle decoded', idArticle);
+    console.log('req page number from query', page);
+    console.log('req skipCount', skipCount);
+
     const total = await collection.countDocuments({
       idArticle,
       parentCommentId: null,
     });
+
+    console.log('total', total);
 
     const result = await commentAggergation(
       idArticle,
@@ -40,9 +50,17 @@ export const getComments = tryCatch<IComment[]>(
       PAGE_SIZE
     );
 
+    console.log('result commentAggergation', result);
+
     const formatResults = transformDocument<IComment>(result);
 
+    console.log('formatResults', formatResults);
+
     const totalPages = Math.ceil(total / PAGE_SIZE);
+    console.log('totalPages', totalPages);
+
+    const aaa = buildResponse(formatResults, page, totalPages);
+    console.log('get comments ', buildResponse);
 
     return res.status(STATUS_CODE.OK).json({
       ...buildResponse(formatResults, page, totalPages),
