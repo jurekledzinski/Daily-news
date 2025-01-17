@@ -52,6 +52,8 @@ export const loaderArticles =
       queryClient.getQueryData(query.queryKey) ??
       (await queryClient.fetchQuery(query));
 
+    console.log('api loaderArticles articles', articles);
+
     if (articles.response.status === 'error' || !articles) {
       return {
         response: {
@@ -110,6 +112,10 @@ export const loaderDetailsArticle =
     >(queryClient, queryCommentReplies.queryKey, () =>
       queryClient.fetchQuery(queryCommentReplies)
     );
+
+    console.log('api loaderDetailsArticle detailsArticle', detailsArticle);
+    console.log('api loaderDetailsArticle comments', comments);
+    console.log('api loaderDetailsArticle commentReplies', commentReplies);
 
     return {
       detailsArticle:
