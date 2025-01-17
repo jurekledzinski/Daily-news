@@ -60,7 +60,7 @@ export const getComments = tryCatch<IComment[]>(
     console.log('totalPages', totalPages);
 
     const aaa = buildResponse(formatResults, page, totalPages);
-    console.log('get comments ', buildResponse);
+    console.log('get comments ', aaa);
 
     return res.status(STATUS_CODE.OK).json({
       ...buildResponse(formatResults, page, totalPages),
