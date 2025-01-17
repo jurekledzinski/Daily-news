@@ -26,6 +26,8 @@ export const ArticleDetails = ({
   console.log('details userData', userData);
   console.log('details comments', comments);
   console.log('details data', data);
+  console.log('details successComments', successComments);
+  console.log('details successRepliesComments', successRepliesComments);
 
   return (
     <div className="details-article">
