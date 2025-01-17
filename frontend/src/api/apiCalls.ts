@@ -69,10 +69,9 @@ export const getComments = tryCatch<
   });
 
   console.log('Get comments response fetch', response);
-  const text = await response.text();
-  console.log('Check the comments response body fetch', text);
-
-  return await response.json();
+  const result = await response.json();
+  console.log('result get comments fetch', result);
+  return result;
 });
 
 export const getCommentReplies = tryCatch<
