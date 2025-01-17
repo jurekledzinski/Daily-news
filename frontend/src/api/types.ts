@@ -1,3 +1,6 @@
+import type { QueryClient } from '@tanstack/react-query';
+import { LoaderFunctionArgs } from 'react-router-dom';
+
 type GuardianResponse<T> = {
   results: T;
   status: string;
@@ -171,3 +174,25 @@ interface ResponsePagination<T = IArticles[]> extends APIGuardian<T> {
 export interface APIGuardianResponseError {
   response: ResponsePagination;
 }
+
+export type LoaderCategoriesFn = (
+  queryClient: QueryClient
+) => () => Promise<APIGuardianResponseSuccess<CategoriesData[]>>;
+
+export type LoaderArticlesFn = (
+  queryClient: QueryClient
+) => ({
+  params,
+  request,
+}: LoaderFunctionArgs) => Promise<
+  APIGuardianResponsePagniationSuccess<IArticles[]> | APIGuardianResponseError
+>;
+
+export type LoaderDetailsArticleFn = (queryClient: QueryClient) => ({
+  params,
+  request,
+}: LoaderFunctionArgs) => Promise<{
+  detailsArticle: APIResponseDetailsSuccess<IDetailsArticle>;
+  comments: APIResponsePagniationSuccess<Comment[]>;
+  commentReplies: APIResponsePagniationSuccess<Comment[]>;
+}>;
