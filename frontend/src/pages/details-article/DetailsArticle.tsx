@@ -109,6 +109,8 @@ export const DetailsArticle = () => {
     );
   }
 
+  console.log('Comments', data);
+
   return (
     <section
       className="section section--details-article"
