@@ -1,5 +1,5 @@
 import { fetchOrCache, getUrlQuery } from '@helpers/index';
-import { LoaderFunctionArgs, Params } from 'react-router-dom';
+import { Params } from 'react-router-dom';
 import {
   APIGuardianResponseSuccess,
   CategoriesData,
@@ -9,7 +9,9 @@ import {
   APIGuardianResponsePagniationSuccess,
   Comment,
   APIResponsePagniationSuccess,
-  APIGuardianResponseError,
+  LoaderCategoriesFn,
+  LoaderArticlesFn,
+  LoaderDetailsArticleFn,
 } from './types';
 import {
   getArticlesQuery,
@@ -19,11 +21,8 @@ import {
   getCommentRepliesQuery,
 } from './queries';
 
-import type { QueryClient } from '@tanstack/react-query';
-
-export const loaderCategories =
-  (queryClient: QueryClient) =>
-  async (): Promise<APIGuardianResponseSuccess<CategoriesData[]>> => {
+export const loaderCategories: LoaderCategoriesFn =
+  (queryClient) => async () => {
     const query = getCategoriesArticlesQuery();
 
     const categories: APIGuardianResponseSuccess<CategoriesData[]> =
@@ -35,17 +34,11 @@ export const loaderCategories =
       : { response: { results: [], status: '', total: 1, userTier: '' } };
   };
 
-export const loaderArticles =
-  (queryClient: QueryClient) =>
-  async ({
-    params,
-    request,
-  }: LoaderFunctionArgs): Promise<
-    APIGuardianResponsePagniationSuccess<IArticles[]> | APIGuardianResponseError
-  > => {
+export const loaderArticles: LoaderArticlesFn =
+  (queryClient) =>
+  async ({ params, request }) => {
     const { category } = params as Params;
     const page = getUrlQuery(request, 'page', '1');
-
     const query = getArticlesQuery(category ?? 'about', page);
 
     const articles: APIGuardianResponsePagniationSuccess<IArticles[]> =
@@ -73,16 +66,9 @@ export const loaderArticles =
     }
   };
 
-export const loaderDetailsArticle =
-  (queryClient: QueryClient) =>
-  async ({
-    params,
-    request,
-  }: LoaderFunctionArgs): Promise<{
-    detailsArticle: APIResponseDetailsSuccess<IDetailsArticle>;
-    comments: APIResponsePagniationSuccess<Comment[]>;
-    commentReplies: APIResponsePagniationSuccess<Comment[]>;
-  }> => {
+export const loaderDetailsArticle: LoaderDetailsArticleFn =
+  (queryClient) =>
+  async ({ params, request }) => {
     const { category, id } = params as Params;
     const articleId = decodeURIComponent(id ?? '');
     const commentId = getUrlQuery(request, 'comment_id', 'initial');

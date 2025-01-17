@@ -110,6 +110,7 @@ export const DetailsArticle = () => {
   }
 
   console.log('Details article component useLoaderData', data);
+  console.log('Details article component actionData', actionData);
 
   return (
     <section

@@ -65,7 +65,7 @@ export const GridArticles = () => {
     ),
   });
 
-  console.log('data useLoaderData GridArticles', navigation);
+  console.log('data useLoaderData GridArticles', data);
   console.log('navigation GridArticles', navigation);
 
   if (data.response.status === 'error' && 'message' in data.response) {

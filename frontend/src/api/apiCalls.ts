@@ -58,12 +58,19 @@ export const getComments = tryCatch<
   { articleId: string; page: string }
 >(async (data: { articleId: string; page: string }) => {
   const id = encodeURIComponent(data.articleId);
+  const ur = URLS.GET_COMMENTS(id, data.page);
+
+  console.log('get comments fetch api url', ur);
 
   const response = await fetch(URLS.GET_COMMENTS(id, data.page), {
     method: 'GET',
     mode: 'cors',
     credentials: 'include',
   });
+
+  console.log('Get comments response fetch', response);
+  const text = await response.text();
+  console.log('Check the comments response body fetch', text);
 
   return await response.json();
 });
