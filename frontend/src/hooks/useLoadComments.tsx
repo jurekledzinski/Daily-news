@@ -5,8 +5,8 @@ import { uniqBy } from 'lodash';
 import { useEffect } from 'react';
 
 type UseLoadCommentsProps = {
-  dataComments: APIResponsePagniationSuccess<Comment[]>;
-  dataCommentReplies: APIResponsePagniationSuccess<Comment[]>;
+  dataComments: APIResponsePagniationSuccess<Comment[]> | null;
+  dataCommentReplies: APIResponsePagniationSuccess<Comment[]> | null;
   id: string | undefined;
   setStateComments: React.Dispatch<
     React.SetStateAction<Record<string, CommentsWithReplies[]>>
@@ -20,7 +20,7 @@ export const useLoadComments = ({
   setStateComments,
 }: UseLoadCommentsProps) => {
   useEffect(() => {
-    if (!id) return;
+    if (!id || !dataComments || !dataCommentReplies) return;
     const comments = dataComments.payload.result as CommentsWithReplies[];
     const replies = dataCommentReplies.payload.result as CommentsWithReplies[];
     const pageReply = dataCommentReplies.page;

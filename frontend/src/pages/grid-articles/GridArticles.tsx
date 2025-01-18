@@ -1,7 +1,6 @@
 import { Backdrop, Loader, NoDataMessage } from '@components/shared';
 import { Card, LocalData } from '@components/pages';
 import { faNewspaper } from '@fortawesome/free-regular-svg-icons';
-import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { loaderArticles } from '@api/index';
 import { useCallback, useRef, useState } from 'react';
@@ -23,6 +22,7 @@ export const GridArticles = () => {
   const [state, setState] = useState<Record<string, LocalData['listArticles']>>(
     {}
   );
+
   const context = useOutletContext<UseOutletContext>();
   const firstChildRef = useRef<HTMLDivElement | null>(null);
   const navigation = useNavigation();
@@ -34,7 +34,7 @@ export const GridArticles = () => {
   useFetchOnScroll({
     onChangeVisible: useCallback(
       (value) => {
-        if (!value) return;
+        if (!data || !value) return;
 
         const currentPage = Number(searchParams.get('page')) || 1;
         if (data.response.pages === currentPage) return;
@@ -42,7 +42,7 @@ export const GridArticles = () => {
         const nextPage = currentPage + 1;
         setSearchParams({ page: `${nextPage}` }, { replace: true });
       },
-      [data.response.pages, setSearchParams, searchParams]
+      [data, setSearchParams, searchParams]
     ),
   });
 
@@ -66,15 +66,13 @@ export const GridArticles = () => {
   });
 
   console.log('data useLoaderData GridArticles', data);
-  console.log('navigation GridArticles', navigation);
+  //   console.log('navigation GridArticles', navigation);
 
-  if (data.response.status === 'error' && 'message' in data.response) {
+  if (!data) {
     return (
-      <NoDataMessage className="articles server-error">
-        <FontAwesomeIcon icon={faTriangleExclamation} />
-        <p>
-          {data.response.message ?? "Couldn't fetch data, please try later."}
-        </p>
+      <NoDataMessage className="articles">
+        <FontAwesomeIcon icon={faNewspaper} />
+        <p>No articles</p>
       </NoDataMessage>
     );
   }

@@ -1,10 +1,6 @@
+import { APIGuardianResponsePagniationSuccess, IArticles } from '@api/index';
 import { LocalData } from '@components/pages';
 import { useEffect } from 'react';
-import {
-  APIGuardianResponseError,
-  APIGuardianResponsePagniationSuccess,
-  IArticles,
-} from '@api/index';
 import {
   getCurrentCategory,
   getFormatedData,
@@ -15,9 +11,7 @@ import {
 
 type UseLoadGridArticlesProps = {
   category: string | undefined;
-  data:
-    | APIGuardianResponsePagniationSuccess<IArticles[]>
-    | APIGuardianResponseError;
+  data: APIGuardianResponsePagniationSuccess<IArticles[]> | null;
   searchParams: URLSearchParams;
   onSetState: (articles: LocalData['listArticles']) => void;
 };
@@ -29,7 +23,7 @@ export const useLoadGridArticles = ({
   onSetState,
 }: UseLoadGridArticlesProps) => {
   useEffect(() => {
-    if (!category) return;
+    if (!data || !category) return;
 
     const formatedData = data.response.results.map((i) => getFormatedData(i));
 

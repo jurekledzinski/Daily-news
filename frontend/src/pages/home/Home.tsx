@@ -18,13 +18,15 @@ export const Home = () => {
     ReturnType<ReturnType<typeof loaderCategories>>
   >;
 
+  console.log('Data ', data);
+
   return (
     <div className="container">
       <Header matchHome={matchHome} matchProfile={matchProfile} />
       <Suspense>
         <Outlet
           context={{
-            categories: (data.response?.results ?? [])
+            categories: (data ? data.response.results : [])
               .map((c) => ({
                 id: c.id,
                 title: c.webTitle,
