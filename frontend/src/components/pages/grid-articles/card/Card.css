@@ -1,6 +1,4 @@
 .card {
-  opacity: 0;
-  animation: fadeIn 0.7s forwards;
   box-shadow: inset rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
     inset rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
   height: 15.625rem;
@@ -9,11 +7,12 @@
 .card__header {
   position: relative;
   cursor: pointer;
-  background: var(--ligh-color);
+  background: var(--light-color);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   height: 50%;
+  width: 100%;
 }
 
 .card__header a {
@@ -56,10 +55,4 @@
 
 .card__content h2 {
   font-size: 0.75rem;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
 }
