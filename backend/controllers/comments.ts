@@ -17,9 +17,10 @@ const collection = getCollectionDb<IComment>('comments');
 
 export const getComments = tryCatch<IComment[]>(
   async (req: Request, res: Response) => {
-    console.log('get comments collection', collection);
     console.log('req params', req.params);
     console.log('req query', req.query);
+
+    // ewentualnie comment ten check collection i zobacz co będzie się działó
 
     if (!collection) {
       throw new CustomError(
