@@ -2,13 +2,14 @@ import { ActionData, UseOutletContext } from '../../types';
 import { ArticleDetails } from '@components/pages';
 import { cloneDeep } from 'lodash';
 import { CommentsWithReplies, NoDataMessage } from '@components/shared';
-import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { loaderDetailsArticle } from '@api/index';
 import { useCallback, useState } from 'react';
 import { useUserStore } from '@store/index';
 import './DetailsArticle.css';
 import {
+  getCookie,
   getDetailsArticleImageData,
   updateNestedRepliesLikes,
 } from '@helpers/index';
@@ -39,8 +40,8 @@ export const DetailsArticle = () => {
   const articleId = decodeURIComponent(id ?? '');
   const [searchParams, setSearchParams] = useSearchParams();
   const data = useLoaderData() as LoaderData;
-  const article = data.detailsArticle.response.content;
-  const dataToken = useFetchProtection();
+  const isLoggedIn = getCookie('tsge');
+  const dataToken = useFetchProtection({ isLoggedIn: Boolean(isLoggedIn) });
   const actionData = useActionData() as ActionData;
   const context = useOutletContext<UseOutletContext>();
 
@@ -53,7 +54,9 @@ export const DetailsArticle = () => {
 
   const methodSubmitLike = useUpdateLikes({
     onLikes: (data) => {
-      if (!id || !stateComments[id]) return;
+      if (!id) return;
+      if (!stateComments[id]) return;
+
       const { commentId, likes } = data;
 
       const update = cloneDeep(stateComments[id]).map((topComment) => ({
@@ -75,15 +78,20 @@ export const DetailsArticle = () => {
   useFetchOnScroll({
     onChangeVisible: useCallback(
       (value) => {
+        if (!data.comments || !data.comments.payload.result?.length) return;
+        if (!data.commentReplies || !data.commentReplies.payload.result?.length)
+          return;
         if (!value) return;
 
         const currentPage = Number(searchParams.get('page')) || 1;
         if (data.comments.totalPages === currentPage) return;
 
+        console.log('fetch on scroll');
+
         const nextPage = currentPage + 1;
         setSearchParams({ page: `${nextPage}` }, { replace: true });
       },
-      [data.comments.totalPages, setSearchParams, searchParams]
+      [data.comments, data.commentReplies, setSearchParams, searchParams]
     ),
   });
 
@@ -94,23 +102,19 @@ export const DetailsArticle = () => {
     setStateComments,
   });
 
-  if (
-    data.detailsArticle.response.status === 'error' &&
-    'message' in data.detailsArticle.response
-  ) {
+  console.log('Details article component useLoaderData', data);
+  console.log('Details article component actionData', actionData);
+
+  if (!data.detailsArticle) {
     return (
-      <NoDataMessage className="articles server-error">
-        <FontAwesomeIcon icon={faTriangleExclamation} />
-        <p>
-          {data.detailsArticle.response.message ??
-            "Couldn't fetch data, please try later"}
-        </p>
+      <NoDataMessage className="articles">
+        <FontAwesomeIcon icon={faNewspaper} />
+        <p>No article</p>
       </NoDataMessage>
     );
   }
 
-  console.log('Details article component useLoaderData', data);
-  console.log('Details article component actionData', actionData);
+  const article = data.detailsArticle.response.content;
 
   return (
     <section
@@ -145,8 +149,10 @@ export const DetailsArticle = () => {
           currentParams.set('page_reply', (page + 1).toString());
           setSearchParams(currentParams);
         }}
-        successComments={data.comments.success}
-        successRepliesComments={data.commentReplies.success}
+        successComments={data.comments ? data.comments.success : false}
+        successRepliesComments={
+          data.commentReplies ? data.commentReplies.success : false
+        }
         userData={state}
       />
     </section>

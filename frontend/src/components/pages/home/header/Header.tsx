@@ -19,8 +19,8 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const navigation = useNavigation();
   const dialogLoginRef = useRef<HTMLDialogElement | null>(null);
   const dialogRegisterRef = useRef<HTMLDialogElement | null>(null);
-  useFetchUserData();
   const isLog = getCookie('tsge');
+  useFetchUserData({ isLoggedIn: Boolean(isLog) });
   const { onGetCookie, onRemoveCookie } = useControlServerError('serverError');
   const { state, dispatch } = useUserStore();
   const [, setIsLoggedOut] = useState(false);
@@ -60,7 +60,7 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
     }, []),
   });
 
-  console.log('navigation Header', navigation);
+  //   console.log('navigation Header', navigation);
 
   return (
     <>
