@@ -23,7 +23,7 @@ import {
 
 export const getCategoriesArticles = tryCatch<
   APIGuardianResponseSuccess<CategoriesData[]>,
-  APIGuardianResponseError
+  null
 >(async () => {
   const response = await fetch(URLS.GET_CATEGORIES_ARTICLES());
 
@@ -32,7 +32,7 @@ export const getCategoriesArticles = tryCatch<
 
 export const getArticles = tryCatch<
   APIGuardianResponsePagniationSuccess<IArticles[]>,
-  APIGuardianResponseError,
+  null,
   { category: string; page: string }
 >(async (data: { category: string; page: string }) => {
   const response = await fetch(URLS.GET_ARTICLES(data.category, data.page));
@@ -54,7 +54,7 @@ export const getDetailsArticle = tryCatch<
 
 export const getComments = tryCatch<
   APIResponsePagniationSuccess<Comment[]>,
-  APIErrorResponse,
+  null,
   { articleId: string; page: string }
 >(async (data: { articleId: string; page: string }) => {
   const id = encodeURIComponent(data.articleId);
@@ -76,7 +76,7 @@ export const getComments = tryCatch<
 
 export const getCommentReplies = tryCatch<
   APIResponsePagniationSuccess<Comment[]>,
-  APIErrorResponse,
+  null,
   { articleId: string; commentId: string; page: string }
 >(async (data: { articleId: string; commentId: string; page: string }) => {
   const id = encodeURIComponent(data.articleId);
@@ -147,6 +147,8 @@ export const updateUserProfile = tryCatch<
   { id: string; body: DataProfile }
 >(async (data: { id: string; body: DataProfile }) => {
   const { csrfToken, ...body } = data.body;
+
+  console.log('update profile api call', data);
 
   const response = await fetch(URLS.UPDATE_USER_PROFILE(data.id), {
     method: 'PATCH',
