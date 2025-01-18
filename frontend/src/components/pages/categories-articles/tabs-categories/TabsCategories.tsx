@@ -1,4 +1,3 @@
-import { Backdrop, Loader } from '@components/shared';
 import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ObjArticles } from '@components/pages/dashboard';
@@ -93,12 +92,6 @@ export const TabsCategoriesArticles = ({
       </TabsListConainer>
 
       <TabsPanel>
-        {navigation.state === 'loading' && (
-          <Backdrop>
-            <Loader className="fixed" />
-          </Backdrop>
-        )}
-
         <Outlet
           context={{
             handleAddSubArticle,
