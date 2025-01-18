@@ -1,4 +1,9 @@
-import { AlertError, FormComment, SectionComments } from '@components/shared';
+import {
+  AlertError,
+  FormComment,
+  Image,
+  SectionComments,
+} from '@components/shared';
 import { ArticleDetailsProps } from './types';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,7 +41,7 @@ export const ArticleDetails = ({
       {data.image ? (
         <figure className="details-article__figure">
           <div className="details-article__image">
-            <img src={data.image} alt={data.altText} />
+            <Image className="image" altText="image" src={data.image} />
             <span>{data.credit}</span>
           </div>
           <figcaption
