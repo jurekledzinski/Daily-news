@@ -12,11 +12,13 @@ import {
   useFetchProtection,
   useUpdateUserProfile,
 } from '@hooks/index';
+import { getCookie } from '@/helpers';
 
 export const Profile = () => {
   const actionData = useActionData() as ActionData;
   const { state } = useUserStore();
-  const dataToken = useFetchProtection();
+  const isLoggedIn = getCookie('tsge');
+  const dataToken = useFetchProtection({ isLoggedIn: Boolean(isLoggedIn) });
   const isDisabled = useGetStatusPost({ idToast: 'update-profile' });
 
   const submitDeleteUser = useDeleteUserAccount({
