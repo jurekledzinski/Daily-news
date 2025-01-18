@@ -25,13 +25,13 @@ export const loaderCategories: LoaderCategoriesFn =
   (queryClient) => async () => {
     const query = getCategoriesArticlesQuery();
 
-    const categories: APIGuardianResponseSuccess<CategoriesData[]> =
-      queryClient.getQueryData(query.queryKey) ??
-      (await queryClient.fetchQuery(query));
+    const categories = await fetchOrCache<
+      APIGuardianResponseSuccess<CategoriesData[]>
+    >(queryClient, query.queryKey, () => queryClient.fetchQuery(query));
 
-    return categories
+    return categories && categories.response.status === 'ok'
       ? categories
-      : { response: { results: [], status: '', total: 1, userTier: '' } };
+      : null;
   };
 
 export const loaderArticles: LoaderArticlesFn =
@@ -41,29 +41,11 @@ export const loaderArticles: LoaderArticlesFn =
     const page = getUrlQuery(request, 'page', '1');
     const query = getArticlesQuery(category ?? 'about', page);
 
-    const articles: APIGuardianResponsePagniationSuccess<IArticles[]> =
-      queryClient.getQueryData(query.queryKey) ??
-      (await queryClient.fetchQuery(query));
+    const articles = await fetchOrCache<
+      APIGuardianResponsePagniationSuccess<IArticles[]>
+    >(queryClient, query.queryKey, () => queryClient.fetchQuery(query));
 
-    console.log('api loaderArticles articles', articles);
-
-    if (articles.response.status === 'error' || !articles) {
-      return {
-        response: {
-          currentPage: 1,
-          pages: 1,
-          pageSize: 1,
-          results: [],
-          startIndex: 1,
-          status: 'error',
-          total: 1,
-          userTier: '',
-          message: articles.response.message,
-        },
-      };
-    } else {
-      return articles;
-    }
+    return articles && articles.response.status === 'ok' ? articles : null;
   };
 
 export const loaderDetailsArticle: LoaderDetailsArticleFn =
@@ -75,7 +57,7 @@ export const loaderDetailsArticle: LoaderDetailsArticleFn =
     const page = getUrlQuery(request, 'page', '1');
     const pageReply = getUrlQuery(request, 'page_reply', '1');
 
-    const query = getDetailsArticleQuery(category ?? 'about', articleId);
+    const queryArticle = getDetailsArticleQuery(category ?? 'about', articleId);
     const queryComments = getCommentsQuery(articleId, page);
     const queryCommentReplies = getCommentRepliesQuery(
       articleId,
@@ -83,9 +65,11 @@ export const loaderDetailsArticle: LoaderDetailsArticleFn =
       pageReply
     );
 
-    const detailsArticle = await fetchOrCache<
+    const article = await fetchOrCache<
       APIResponseDetailsSuccess<IDetailsArticle>
-    >(queryClient, query.queryKey, () => queryClient.fetchQuery(query));
+    >(queryClient, queryArticle.queryKey, () =>
+      queryClient.fetchQuery(queryArticle)
+    );
 
     const comments = await fetchOrCache<
       APIResponsePagniationSuccess<Comment[]>
@@ -99,50 +83,14 @@ export const loaderDetailsArticle: LoaderDetailsArticleFn =
       queryClient.fetchQuery(queryCommentReplies)
     );
 
-    console.log('api loaderDetailsArticle detailsArticle', detailsArticle);
+    console.log('api loaderDetailsArticle detailsArticle', article);
     console.log('api loaderDetailsArticle comments', comments);
     console.log('api loaderDetailsArticle commentReplies', commentReplies);
 
     return {
       detailsArticle:
-        detailsArticle && detailsArticle.response.status === 'ok'
-          ? detailsArticle
-          : {
-              response: {
-                content: {
-                  apiUrl: '',
-                  elements: [],
-                  fields: { body: '', headline: '', trailText: '' },
-                  id: '',
-                  sectionId: '',
-                  webPublicationDate: '',
-                  webTitle: '',
-                },
-                status: 'error',
-                total: 1,
-                userTier: '',
-                message: detailsArticle.response.message,
-              },
-            },
-      comments: comments.success
-        ? comments
-        : {
-            page: 1,
-            payload: { result: [] },
-            success: false,
-            totalPages: 1,
-            replyCount: 1,
-            message: comments.message,
-          },
-      commentReplies: commentReplies.success
-        ? commentReplies
-        : {
-            page: 1,
-            payload: { result: [] },
-            success: false,
-            totalPages: 1,
-            replyCount: 1,
-            message: commentReplies.message,
-          },
+        article && article.response.status === 'ok' ? article : null,
+      comments: comments.success ? comments : null,
+      commentReplies: commentReplies.success ? commentReplies : null,
     };
   };

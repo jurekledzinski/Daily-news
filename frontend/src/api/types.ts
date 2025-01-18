@@ -177,22 +177,22 @@ export interface APIGuardianResponseError {
 
 export type LoaderCategoriesFn = (
   queryClient: QueryClient
-) => () => Promise<APIGuardianResponseSuccess<CategoriesData[]>>;
+) => () => Promise<APIGuardianResponseSuccess<CategoriesData[]> | null>;
 
 export type LoaderArticlesFn = (
   queryClient: QueryClient
 ) => ({
   params,
   request,
-}: LoaderFunctionArgs) => Promise<
-  APIGuardianResponsePagniationSuccess<IArticles[]> | APIGuardianResponseError
->;
+}: LoaderFunctionArgs) => Promise<APIGuardianResponsePagniationSuccess<
+  IArticles[]
+> | null>;
 
 export type LoaderDetailsArticleFn = (queryClient: QueryClient) => ({
   params,
   request,
 }: LoaderFunctionArgs) => Promise<{
-  detailsArticle: APIResponseDetailsSuccess<IDetailsArticle>;
-  comments: APIResponsePagniationSuccess<Comment[]>;
-  commentReplies: APIResponsePagniationSuccess<Comment[]>;
+  detailsArticle: APIResponseDetailsSuccess<IDetailsArticle> | null;
+  comments: APIResponsePagniationSuccess<Comment[]> | null;
+  commentReplies: APIResponsePagniationSuccess<Comment[]> | null;
 }>;
