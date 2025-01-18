@@ -47,6 +47,7 @@ export const GridCard = forwardRef<HTMLDivElement, GridCardProps>(
         <Image
           className="grid-card__image"
           src={gridItem.image}
+          spinner={true}
           altText={gridItem.title}
         />
       </div>
