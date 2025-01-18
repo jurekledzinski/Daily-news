@@ -1,7 +1,11 @@
 import { APICSRFTokenResponse, APIErrorResponse, URLS } from '@api/index';
 import { useQuery } from '@tanstack/react-query';
 
-export const useFetchProtection = () => {
+type UseFetchProtectionProps = {
+  isLoggedIn: boolean;
+};
+
+export const useFetchProtection = ({ isLoggedIn }: UseFetchProtectionProps) => {
   const data = useQuery<APICSRFTokenResponse, APIErrorResponse>({
     queryKey: ['crsf-token'],
     queryFn: async () => {
@@ -17,7 +21,7 @@ export const useFetchProtection = () => {
 
       return await response.json();
     },
-    enabled: document.cookie.split('=').includes('tsge'),
+    enabled: isLoggedIn,
   });
 
   return { token: data.data?.token ?? '' };

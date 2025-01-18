@@ -3,7 +3,11 @@ import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useUserStore } from '@store/index';
 
-export const useFetchUserData = () => {
+type UseFetchUserDataProps = {
+  isLoggedIn: boolean;
+};
+
+export const useFetchUserData = ({ isLoggedIn }: UseFetchUserDataProps) => {
   const { dispatch } = useUserStore();
 
   const result = useQuery<
@@ -27,7 +31,7 @@ export const useFetchUserData = () => {
 
       return await response.json();
     },
-    enabled: document.cookie.split('=').includes('tsge'),
+    enabled: isLoggedIn,
     retry: false,
   });
 
