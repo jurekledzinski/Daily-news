@@ -6,6 +6,7 @@ import Home from '@pages/home';
 import Profile from '@pages/profile';
 import { createBrowserRouter } from 'react-router-dom';
 import { ErrorPage } from '@components/pages';
+import { ProtectedRoute } from '@/components/shared';
 import { QueryClient } from '@tanstack/react-query';
 import {
   actionDetailsArticle,
@@ -53,7 +54,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'profile/:id',
-        element: <Profile />,
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
         action: actionProfileUser,
         errorElement: <ErrorPage />,
       },
