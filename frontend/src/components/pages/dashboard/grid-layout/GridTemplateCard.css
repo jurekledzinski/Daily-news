@@ -15,7 +15,7 @@
   position: absolute;
   opacity: 0.5;
   inset: 0;
-  background-color: var(--ligh-color);
+  background-color: var(--light-color);
   content: '';
 }
 
