@@ -1,7 +1,7 @@
 import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ObjArticles } from '@components/pages/dashboard';
-import { Outlet, useNavigation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { TabsCategoriesArticlesProps } from './types';
 import { useRef } from 'react';
 import './TabsCategories.css';
@@ -28,9 +28,6 @@ export const TabsCategoriesArticles = ({
   onRedirectThree,
 }: TabsCategoriesArticlesProps) => {
   const tabsListContainerRef = useRef<HTMLDivElement | null>(null);
-  const navigation = useNavigation();
-
-  console.log('navigation TabsCategoriesArticles', navigation);
 
   return (
     <Tabs>
