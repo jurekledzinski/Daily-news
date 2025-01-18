@@ -9,10 +9,6 @@
   width: 100%;
 }
 
-.tabs__list:nth-child(2) {
-  border-bottom: 1px solid var(--color-border-200);
-}
-
 .tabs__tab {
   display: flex;
   position: relative;
@@ -30,8 +26,6 @@
   background-color: var(--primary-color-hover);
 }
 
-/* new styles sub */
-
 .tabs__tab--sub .tabs__text {
   min-width: 1rem;
   max-width: 80px;
@@ -39,8 +33,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-/* ----- */
 
 .tabs__close {
   display: none;
