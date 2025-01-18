@@ -82,32 +82,9 @@ export const ArticleDetails = ({
         </AlertError>
       )}
 
-      <SectionComments
-        comments={comments}
-        onShowReplies={onShowReplies}
-        onShowMoreReplies={onShowMoreReplies}
-        onSubmitLike={methodSubmitLike}
-      >
-        {userData.user
-          ? (commentId, onClose) => {
-              return (
-                <>
-                  <FormComment
-                    buttonText="Reply to comment"
-                    onSubmit={(data) => {
-                      methodSubmitComment(data, commentId);
-                      onClose();
-                    }}
-                  />
-                </>
-              );
-            }
-          : null}
-      </SectionComments>
-
-      {/* {!successComments || !successRepliesComments ? (
+      {!successComments || !successRepliesComments ? (
         <AlertError className="alert-error--article-details">
-          Couldn't fetch data comments
+          Couldn't load comments
         </AlertError>
       ) : (
         <SectionComments
@@ -132,7 +109,7 @@ export const ArticleDetails = ({
               }
             : null}
         </SectionComments>
-      )} */}
+      )}
     </div>
   );
 };
