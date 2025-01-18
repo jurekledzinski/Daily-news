@@ -1,8 +1,8 @@
-import { Backdrop, Loader, NoDataMessage } from '@components/shared';
 import { Card, LocalData } from '@components/pages';
 import { faNewspaper } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { loaderArticles } from '@api/index';
+import { NoDataMessage } from '@components/shared';
 import { useCallback, useRef, useState } from 'react';
 import { useFetchOnScroll, useLoadGridArticles } from '@hooks/index';
 import { UseOutletContext } from '../../types/global';
@@ -13,7 +13,6 @@ import {
   useSearchParams,
   useParams,
   Params,
-  useNavigation,
 } from 'react-router-dom';
 
 export const GridArticles = () => {
@@ -25,7 +24,6 @@ export const GridArticles = () => {
 
   const context = useOutletContext<UseOutletContext>();
   const firstChildRef = useRef<HTMLDivElement | null>(null);
-  const navigation = useNavigation();
 
   const data = useLoaderData() as Awaited<
     ReturnType<ReturnType<typeof loaderArticles>>
@@ -79,9 +77,8 @@ export const GridArticles = () => {
 
   return (
     <div className="grid-articles">
-      {navigation.state === 'idle' ? (
-        category && state[category] && state[category].length ? (
-          state[category].map((article, index) => (
+      {category && state[category] && state[category].length
+        ? state[category].map((article, index) => (
             <Card
               key={article.id}
               handleAddSubArticle={context.handleAddSubArticle}
@@ -89,20 +86,13 @@ export const GridArticles = () => {
               ref={index === 0 ? firstChildRef : null}
             />
           ))
-        ) : (
-          category &&
+        : category &&
           state[category] && (
             <NoDataMessage className="articles">
               <FontAwesomeIcon icon={faNewspaper} />
               <p>No articles</p>
             </NoDataMessage>
-          )
-        )
-      ) : (
-        <Backdrop>
-          <Loader className="fixed" />
-        </Backdrop>
-      )}
+          )}
     </div>
   );
 };
