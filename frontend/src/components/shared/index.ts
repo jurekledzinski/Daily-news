@@ -5,3 +5,4 @@ export * from './messages';
 export * from './loader';
 export * from './image';
 export * from './section-comments';
+export * from './protected-route';
