@@ -60,8 +60,6 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
     }, []),
   });
 
-  //   console.log('navigation Header', navigation);
-
   return (
     <>
       <header
