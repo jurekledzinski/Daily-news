@@ -69,8 +69,12 @@ export const getComments = tryCatch<
   });
 
   console.log('Get comments response fetch', response);
+
+  if (!response.ok) {
+    throw new Error('Failed to load data');
+  }
+
   const result = await response.json();
-  console.log('result get comments fetch', result);
   return result;
 });
 
@@ -89,6 +93,10 @@ export const getCommentReplies = tryCatch<
       credentials: 'include',
     }
   );
+
+  if (!response.ok) {
+    throw new Error('Failed to load data');
+  }
 
   return await response.json();
 });
@@ -147,8 +155,6 @@ export const updateUserProfile = tryCatch<
   { id: string; body: DataProfile }
 >(async (data: { id: string; body: DataProfile }) => {
   const { csrfToken, ...body } = data.body;
-
-  console.log('update profile api call', data);
 
   const response = await fetch(URLS.UPDATE_USER_PROFILE(data.id), {
     method: 'PATCH',
