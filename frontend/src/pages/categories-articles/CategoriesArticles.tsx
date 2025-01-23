@@ -135,7 +135,6 @@ export const CategoriesArticles = () => {
           navigate(url, { preventScrollReset: true });
         }}
         onRedirectTwo={(categoryArt, idArticle) => {
-          console.log('id', id, idArticle);
           if (id && id === idArticle) return;
 
           const articleId = encodeURIComponent(idArticle);

@@ -86,8 +86,6 @@ export const DetailsArticle = () => {
         const currentPage = Number(searchParams.get('page')) || 1;
         if (data.comments.totalPages === currentPage) return;
 
-        console.log('fetch on scroll');
-
         const nextPage = currentPage + 1;
         setSearchParams({ page: `${nextPage}` }, { replace: true });
       },
@@ -101,9 +99,6 @@ export const DetailsArticle = () => {
     id,
     setStateComments,
   });
-
-  console.log('Details article component useLoaderData', data);
-  console.log('Details article component actionData', actionData);
 
   if (!data.detailsArticle) {
     return (

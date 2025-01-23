@@ -27,13 +27,6 @@ export const ArticleDetails = ({
   const cleanCaption = sanitizeContent(data.caption);
   const cleanContent = sanitizeContent(data.content);
 
-  console.log('details action data', actionData);
-  console.log('details userData', userData);
-  console.log('details comments', comments);
-  console.log('details data', data);
-  console.log('details successComments', successComments);
-  console.log('details successRepliesComments', successRepliesComments);
-
   return (
     <div className="details-article">
       <Header title={data.title} trailText={data.trailText ?? ''} />

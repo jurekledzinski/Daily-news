@@ -63,9 +63,6 @@ export const GridArticles = () => {
     ),
   });
 
-  console.log('data useLoaderData GridArticles', data);
-  //   console.log('navigation GridArticles', navigation);
-
   if (!data) {
     return (
       <NoDataMessage className="articles">

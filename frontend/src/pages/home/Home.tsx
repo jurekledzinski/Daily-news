@@ -18,8 +18,6 @@ export const Home = () => {
     ReturnType<ReturnType<typeof loaderCategories>>
   >;
 
-  console.log('Data ', data);
-
   return (
     <div className="container">
       <Header matchHome={matchHome} matchProfile={matchProfile} />

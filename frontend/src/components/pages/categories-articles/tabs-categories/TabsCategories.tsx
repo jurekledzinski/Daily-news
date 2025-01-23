@@ -29,6 +29,8 @@ export const TabsCategoriesArticles = ({
 }: TabsCategoriesArticlesProps) => {
   const tabsListContainerRef = useRef<HTMLDivElement | null>(null);
 
+  console.log('state', state);
+
   return (
     <Tabs>
       <TabsListConainer ref={tabsListContainerRef}>
@@ -72,7 +74,7 @@ export const TabsCategoriesArticles = ({
               id={id}
               key={id}
               onClick={() => {
-                const copy = activeTabs;
+                const copy = [...activeTabs];
                 copy[1] = id;
                 onSetActiveTabs([...copy]);
                 onRedirectTwo(activeTabs[0], id);
