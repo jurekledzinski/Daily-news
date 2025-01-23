@@ -29,8 +29,6 @@ export const TabsCategoriesArticles = ({
 }: TabsCategoriesArticlesProps) => {
   const tabsListContainerRef = useRef<HTMLDivElement | null>(null);
 
-  console.log('state', state);
-
   return (
     <Tabs>
       <TabsListConainer ref={tabsListContainerRef}>
