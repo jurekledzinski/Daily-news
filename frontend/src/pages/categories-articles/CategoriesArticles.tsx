@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash';
 import { TabsCategoriesArticles } from '@components/pages';
 import { useControlCloseSubTabs, useControlCloseTabs } from '@hooks/index';
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './CategoriesArticles.css';
 import {
@@ -14,13 +14,10 @@ export const CategoriesArticles = () => {
   const navigate = useNavigate();
   const { category, id } = useParams();
   const decId = decodeURIComponent(id ?? '');
+  const condtion = category && decId;
+  const active = condtion ? [category, decId] : category ? [category] : [];
   const [state, setState] = useState(cloneDeep(getLocalData()));
-  const [activeTabs, setActiveTabs] = useState<string[]>([]);
-
-  const currentActiveTab = useMemo(
-    () => (category && decId ? [category, decId] : category ? [category] : []),
-    [category, decId]
-  );
+  const [activeTabs, setActiveTabs] = useState<string[]>([...active]);
 
   const { handleCloseTab } = useControlCloseTabs({
     data: state,
@@ -97,21 +94,17 @@ export const CategoriesArticles = () => {
         : itemCategory
     );
 
+    setActiveTabs((prev) => [prev[0], value.id]);
     setLocalData(filteredData);
-
-    setState((prev) =>
-      prev.map((item) =>
-        item.id === category
-          ? {
-              ...item,
-              articles: item.articles.some((article) => article.id === value.id)
-                ? item.articles
-                : [...item.articles, value],
-            }
-          : item
-      )
-    );
+    setState(filteredData);
   };
+
+  useEffect(() => {
+    if (activeTabs.length) return;
+    const condition = category && decId;
+    const active = condition ? [category, decId] : category ? [category] : [];
+    setActiveTabs(active);
+  }, [activeTabs, category, decId]);
 
   return (
     <section
@@ -122,7 +115,7 @@ export const CategoriesArticles = () => {
       }
     >
       <TabsCategoriesArticles
-        activeTabs={currentActiveTab}
+        activeTabs={activeTabs}
         handleAddSubArticle={handleAddSubArticle}
         handleCloseSubTab={handleCloseSubTab}
         handleCloseTab={handleCloseTab}
