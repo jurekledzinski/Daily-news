@@ -20,8 +20,6 @@ export const getComments = tryCatch<IComment[]>(
     console.log('req params', req.params);
     console.log('req query', req.query);
 
-    // ewentualnie comment ten check collection i zobacz co będzie się działó
-
     if (!collection) {
       throw new CustomError(
         'Internal server error',
@@ -33,39 +31,43 @@ export const getComments = tryCatch<IComment[]>(
     const page = req.query.page ?? '1';
     const skipCount = calculateSkipCount(page);
 
-    console.log('req idArticle decoded', idArticle);
-    console.log('req page number from query', page);
-    console.log('req skipCount', skipCount);
+    console.log('req comment idArticle decoded', idArticle);
+    console.log('req comment page number from query', page);
+    console.log('req comment skipCount', skipCount);
 
-    const total = await collection.countDocuments({
-      idArticle,
-      parentCommentId: null,
-    });
+    // const total = await collection.countDocuments({
+    //   idArticle,
+    //   parentCommentId: null,
+    // });
 
-    console.log('total', total);
+    // console.log('total', total);
 
-    const result = await commentAggergation(
-      idArticle,
-      null,
-      skipCount,
-      PAGE_SIZE
-    );
+    // const result = await commentAggergation(
+    //   idArticle,
+    //   null,
+    //   skipCount,
+    //   PAGE_SIZE
+    // );
 
-    console.log('result commentAggergation', result);
+    // console.log('result commentAggergation', result);
 
-    const formatResults = transformDocument<IComment>(result);
+    // const formatResults = transformDocument<IComment>(result);
 
-    console.log('formatResults', formatResults);
+    // console.log('formatResults', formatResults);
 
-    const totalPages = Math.ceil(total / PAGE_SIZE);
-    console.log('totalPages', totalPages);
+    // const totalPages = Math.ceil(total / PAGE_SIZE);
+    // console.log('totalPages', totalPages);
 
-    const aaa = buildResponse(formatResults, page, totalPages);
-    console.log('get comments ', aaa);
+    // const aaa = buildResponse(formatResults, page, totalPages);
+    // console.log('get comments ', aaa);
 
-    return res.status(STATUS_CODE.OK).json({
-      ...buildResponse(formatResults, page, totalPages),
-    });
+    // return res.status(STATUS_CODE.OK).json({
+    //   ...buildResponse(formatResults, page, totalPages),
+    // });
+
+    return res
+      .status(STATUS_CODE.OK)
+      .json({ payload: { result: [] }, success: true, totalPages: 1, page: 1 });
   }
 );
 
@@ -83,26 +85,35 @@ export const getCommentReplies = tryCatch<IComment[]>(
     const page = req.query.page_reply ?? '1';
     const skipCount = calculateSkipCount(page);
 
-    const total = await collection.countDocuments({
-      idArticle,
-      parentCommentId: comment_id,
-    });
+    console.log('req reply comment idArticle decoded', idArticle);
+    console.log('req reply comment comment_id decoded', comment_id);
+    console.log('req reply comment page number from query', page);
+    console.log('req reply comment skipCount', skipCount);
 
-    const result = await commentAggergation(
-      idArticle,
-      comment_id,
-      skipCount,
-      PAGE_SIZE
-    );
+    // const total = await collection.countDocuments({
+    //   idArticle,
+    //   parentCommentId: comment_id,
+    // });
 
-    const formatResults = transformDocument<IComment>(result);
+    // const result = await commentAggergation(
+    //   idArticle,
+    //   comment_id,
+    //   skipCount,
+    //   PAGE_SIZE
+    // );
 
-    const totalPages = Math.ceil(total / PAGE_SIZE);
+    // const formatResults = transformDocument<IComment>(result);
 
-    return res.status(STATUS_CODE.OK).json({
-      ...buildResponse(formatResults, page, totalPages),
-      replyCount: total,
-    });
+    // const totalPages = Math.ceil(total / PAGE_SIZE);
+
+    // return res.status(STATUS_CODE.OK).json({
+    //   ...buildResponse(formatResults, page, totalPages),
+    //   replyCount: total,
+    // });
+
+    return res
+      .status(STATUS_CODE.OK)
+      .json({ payload: { result: [] }, success: true, totalPages: 1, page: 1 });
   }
 );
 
