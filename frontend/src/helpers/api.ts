@@ -28,7 +28,6 @@ export const tryCatch = <T, K, N = unknown>(
     try {
       return await fn(body);
     } catch (error) {
-      console.error('Error in tryCatch:', error);
       return error as K;
     }
   };

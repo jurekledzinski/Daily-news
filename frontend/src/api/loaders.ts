@@ -83,10 +83,6 @@ export const loaderDetailsArticle: LoaderDetailsArticleFn =
       queryClient.fetchQuery(queryCommentReplies)
     );
 
-    console.log('api loader details detailsArticle ---- ', article);
-    console.log('api loader details comments ---- ', comments);
-    console.log('api loader details ---- ', commentReplies);
-
     return {
       detailsArticle:
         article && article.response.status === 'ok' ? article : null,
