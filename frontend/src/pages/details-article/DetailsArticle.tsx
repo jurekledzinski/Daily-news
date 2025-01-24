@@ -4,8 +4,14 @@ import { cloneDeep } from 'lodash';
 import { CommentsWithReplies, NoDataMessage } from '@components/shared';
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { loaderDetailsArticle } from '@api/index';
+import {
+  APIResponsePagniationSuccess,
+  loaderDetailsArticle,
+  URLS,
+  Comment,
+} from '@api/index';
 import { useCallback, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useUserStore } from '@store/index';
 import './DetailsArticle.css';
 import {
@@ -44,12 +50,50 @@ export const DetailsArticle = () => {
   const dataToken = useFetchProtection({ isLoggedIn: Boolean(isLoggedIn) });
   const actionData = useActionData() as ActionData;
   const context = useOutletContext<UseOutletContext>();
+  const commentsPage = searchParams.get('page') ?? '1';
+  const commentId = searchParams.get('comment_id') ?? 'initial';
+  const commentReplyPage = searchParams.get('page_reply') ?? '1';
+  const encodedIdArticle = encodeURIComponent(id!);
 
   const methodSubmitComment = useAddComment({
     artId: articleId,
     token: dataToken.token,
     user: state.user?.name ?? '',
     userId: state.user?.id ?? '',
+  });
+
+  const dataComments = useQuery<APIResponsePagniationSuccess<Comment[]>>({
+    queryKey: ['list-comments', articleId, commentsPage],
+    queryFn: async () => {
+      const response = await fetch(
+        URLS.GET_COMMENTS(encodedIdArticle, commentsPage),
+        {
+          method: 'GET',
+          mode: 'cors',
+          credentials: 'include',
+        }
+      );
+
+      return await response.json();
+    },
+    enabled: Boolean(data.detailsArticle),
+  });
+
+  const dataReplies = useQuery<APIResponsePagniationSuccess<Comment[]>>({
+    queryKey: ['list-comment-replies', articleId, commentReplyPage, commentId],
+    queryFn: async () => {
+      const response = await fetch(
+        URLS.GET_COMMENT_REPLIES(encodedIdArticle, commentId, commentReplyPage),
+        {
+          method: 'GET',
+          mode: 'cors',
+          credentials: 'include',
+        }
+      );
+
+      return await response.json();
+    },
+    enabled: Boolean(data.detailsArticle),
   });
 
   const methodSubmitLike = useUpdateLikes({
@@ -78,24 +122,23 @@ export const DetailsArticle = () => {
   useFetchOnScroll({
     onChangeVisible: useCallback(
       (value) => {
-        if (!data.comments || !data.comments.payload.result?.length) return;
-        if (!data.commentReplies || !data.commentReplies.payload.result?.length)
-          return;
+        if (!dataComments.data) return;
+        if (!dataReplies.data) return;
         if (!value) return;
 
         const currentPage = Number(searchParams.get('page')) || 1;
-        if (data.comments.totalPages === currentPage) return;
+        if (dataComments.data.totalPages === currentPage) return;
 
         const nextPage = currentPage + 1;
         setSearchParams({ page: `${nextPage}` }, { replace: true });
       },
-      [data.comments, data.commentReplies, setSearchParams, searchParams]
+      [dataComments, dataReplies, setSearchParams, searchParams]
     ),
   });
 
   useLoadComments({
-    dataComments: data.comments,
-    dataCommentReplies: data.commentReplies,
+    dataComments: dataComments.data,
+    dataCommentReplies: dataReplies.data,
     id,
     setStateComments,
   });
@@ -110,8 +153,6 @@ export const DetailsArticle = () => {
   }
 
   const article = data.detailsArticle.response.content;
-
-  console.log('data loader details', data);
 
   return (
     <section
@@ -138,7 +179,10 @@ export const DetailsArticle = () => {
         methodSubmitComment={methodSubmitComment}
         methodSubmitLike={methodSubmitLike}
         onShowReplies={(commentId) => {
-          setSearchParams({ comment_id: commentId, page_reply: '1' });
+          const currentParams = new URLSearchParams(searchParams);
+          currentParams.set('comment_id', commentId);
+          currentParams.set('page_reply', '1');
+          setSearchParams(currentParams);
         }}
         onShowMoreReplies={(parentCommentId, page) => {
           const currentParams = new URLSearchParams(searchParams);
@@ -146,10 +190,8 @@ export const DetailsArticle = () => {
           currentParams.set('page_reply', (page + 1).toString());
           setSearchParams(currentParams);
         }}
-        successComments={data.comments ? data.comments.success : false}
-        successRepliesComments={
-          data.commentReplies ? data.commentReplies.success : false
-        }
+        successComments={!dataComments.isError}
+        successRepliesComments={!dataReplies.isError}
         userData={state}
       />
     </section>
