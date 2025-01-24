@@ -111,6 +111,8 @@ export const DetailsArticle = () => {
 
   const article = data.detailsArticle.response.content;
 
+  console.log('data loader details', data);
+
   return (
     <section
       className="section section--details-article"
