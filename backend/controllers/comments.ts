@@ -17,9 +17,6 @@ const collection = getCollectionDb<IComment>('comments');
 
 export const getComments = tryCatch<IComment[]>(
   async (req: Request, res: Response) => {
-    console.log('req params', req.params);
-    console.log('req query', req.query);
-
     if (!collection) {
       throw new CustomError(
         'Internal server error',
@@ -31,43 +28,25 @@ export const getComments = tryCatch<IComment[]>(
     const page = req.query.page ?? '1';
     const skipCount = calculateSkipCount(page);
 
-    console.log('req comment idArticle decoded', idArticle);
-    console.log('req comment page number from query', page);
-    console.log('req comment skipCount', skipCount);
+    const total = await collection.countDocuments({
+      idArticle,
+      parentCommentId: null,
+    });
 
-    // const total = await collection.countDocuments({
-    //   idArticle,
-    //   parentCommentId: null,
-    // });
+    const result = await commentAggergation(
+      idArticle,
+      null,
+      skipCount,
+      PAGE_SIZE
+    );
 
-    // console.log('total', total);
+    const formatResults = transformDocument<IComment>(result);
 
-    // const result = await commentAggergation(
-    //   idArticle,
-    //   null,
-    //   skipCount,
-    //   PAGE_SIZE
-    // );
+    const totalPages = Math.ceil(total / PAGE_SIZE);
 
-    // console.log('result commentAggergation', result);
-
-    // const formatResults = transformDocument<IComment>(result);
-
-    // console.log('formatResults', formatResults);
-
-    // const totalPages = Math.ceil(total / PAGE_SIZE);
-    // console.log('totalPages', totalPages);
-
-    // const aaa = buildResponse(formatResults, page, totalPages);
-    // console.log('get comments ', aaa);
-
-    // return res.status(STATUS_CODE.OK).json({
-    //   ...buildResponse(formatResults, page, totalPages),
-    // });
-
-    return res
-      .status(STATUS_CODE.OK)
-      .json({ payload: { result: [] }, success: true, totalPages: 1, page: 1 });
+    return res.status(STATUS_CODE.OK).json({
+      ...buildResponse(formatResults, page, totalPages),
+    });
   }
 );
 
@@ -85,35 +64,26 @@ export const getCommentReplies = tryCatch<IComment[]>(
     const page = req.query.page_reply ?? '1';
     const skipCount = calculateSkipCount(page);
 
-    console.log('req reply comment idArticle decoded', idArticle);
-    console.log('req reply comment comment_id decoded', comment_id);
-    console.log('req reply comment page number from query', page);
-    console.log('req reply comment skipCount', skipCount);
+    const total = await collection.countDocuments({
+      idArticle,
+      parentCommentId: comment_id,
+    });
 
-    // const total = await collection.countDocuments({
-    //   idArticle,
-    //   parentCommentId: comment_id,
-    // });
+    const result = await commentAggergation(
+      idArticle,
+      comment_id,
+      skipCount,
+      PAGE_SIZE
+    );
 
-    // const result = await commentAggergation(
-    //   idArticle,
-    //   comment_id,
-    //   skipCount,
-    //   PAGE_SIZE
-    // );
+    const formatResults = transformDocument<IComment>(result);
 
-    // const formatResults = transformDocument<IComment>(result);
+    const totalPages = Math.ceil(total / PAGE_SIZE);
 
-    // const totalPages = Math.ceil(total / PAGE_SIZE);
-
-    // return res.status(STATUS_CODE.OK).json({
-    //   ...buildResponse(formatResults, page, totalPages),
-    //   replyCount: total,
-    // });
-
-    return res
-      .status(STATUS_CODE.OK)
-      .json({ payload: { result: [] }, success: true, totalPages: 1, page: 1 });
+    return res.status(STATUS_CODE.OK).json({
+      ...buildResponse(formatResults, page, totalPages),
+      replyCount: total,
+    });
   }
 );
 

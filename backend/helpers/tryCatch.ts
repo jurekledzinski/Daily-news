@@ -13,7 +13,6 @@ export const tryCatch = <T>(fn: AsyncHandler<T>) => {
     try {
       await fn(req, res, next);
     } catch (err) {
-      console.log('Error server in trycatch contorllers', err);
       next(err);
     }
   };

@@ -64,9 +64,7 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/comments', commentRoutes);
 
 app.use((error: CustomError, _: Request, res: Response, next: NextFunction) => {
-  console.log('middleware server error 1', error);
   logger.error('Base error middleware', error.message);
-  console.log('middleware server error 2', error);
   if (error instanceof z.ZodError) {
     res.status(error.statusCode || 500).json({
       error: { message: 'Incorrect data types', success: false },
