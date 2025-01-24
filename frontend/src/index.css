@@ -4,6 +4,34 @@
   padding: 0;
 }
 
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 300;
+  src: url('assets/fonts/roboto-300.woff2') format('woff2'),
+    url('assets/fonts/roboto-300.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 400;
+  src: url('assets/fonts/roboto-regular.woff2') format('woff2'),
+    url('assets/fonts/roboto-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Oswald';
+  font-weight: 400;
+  src: url('assets/fonts/oswald-regular.woff2') format('woff2'),
+    url('assets/fonts/oswald-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Oswald';
+  font-weight: 700;
+  src: url('assets/fonts/oswald-700.woff2') format('woff2'),
+    url('assets/fonts/oswald-700.woff') format('woff');
+}
+
 :root {
   --primary-color: #3b71ca;
   --secondary-color: #555555;
@@ -33,6 +61,8 @@ body {
   height: 100%;
   min-height: 100vh;
   font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
 
 #root {
@@ -44,34 +74,14 @@ body {
   min-height: inherit;
 }
 
-h1 {
-  font-weight: 700;
-  font-size: 2.5rem;
-}
-
-h2 {
-  font-weight: 600;
-  font-size: 2rem;
-}
-
-h3 {
-  font-weight: 600;
-  font-size: 1.75rem;
-}
-
-h4 {
-  font-weight: 500;
-  font-size: 1.5rem;
-}
-
-h5 {
-  font-weight: 500;
-  font-size: 1.25rem;
-}
-
+h1,
+h2,
+h3,
+h4,
+h5,
 h6 {
-  font-weight: 500;
-  font-size: 1rem;
+  color: var(--color-text-secondary);
+  font-family: 'Oswald', serif;
 }
 
 button {
@@ -79,6 +89,8 @@ button {
   border: 1px solid #ddd;
   border-radius: 2px;
   padding: 0.35rem 0.5rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
 }
 
 button:hover {
