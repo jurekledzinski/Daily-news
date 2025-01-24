@@ -24,7 +24,7 @@
 .details-article__title {
   margin-bottom: 1rem;
   color: var(--color-text-secondary);
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .details-article__trail {
@@ -71,15 +71,15 @@
 }
 
 .details-article__body p {
-  margin-bottom: 20px;
+  margin-bottom: 4px;
   color: var(--color-text-secondary);
   font-size: 14px;
-  line-height: 1.2;
+  line-height: 1;
 }
 
 .details-article__body h2 {
   margin-bottom: 1rem;
-  font-size: 1rem;
+  /* font-size: 1rem; */
 }
 
 .details-article__footer {

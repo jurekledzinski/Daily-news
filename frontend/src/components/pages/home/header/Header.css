@@ -20,8 +20,14 @@
 }
 
 .header__logo {
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1px;
+  text-transform: uppercase;
+}
+
+.header__logo a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
 }
 
 .header__buttons {

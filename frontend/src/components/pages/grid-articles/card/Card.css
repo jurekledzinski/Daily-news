@@ -28,8 +28,7 @@
 .card__title {
   margin-bottom: 0.5rem;
   overflow: hidden;
-  font-weight: Verdana, sans-serif;
-  font-weight: 900;
+  font-weight: 700;
   font-size: 0.75rem;
   text-overflow: ellipsis;
   text-transform: uppercase;
@@ -48,11 +47,6 @@
   max-height: calc(100% - 1.5rem);
   -webkit-line-clamp: 5;
   overflow: hidden;
-  font-weight: Verdana, sans-serif;
   font-size: 0.75rem;
   text-overflow: ellipsis;
-}
-
-.card__content h2 {
-  font-size: 0.75rem;
 }

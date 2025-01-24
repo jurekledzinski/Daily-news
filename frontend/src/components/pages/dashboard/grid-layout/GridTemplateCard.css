@@ -29,8 +29,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--color-text-primary-light);
-  font-weight: 900;
-  font-size: 0.85rem;
+  font-weight: 700;
 }
 
 .grid-template-card__image {

@@ -37,7 +37,7 @@
 
 .grid-card__title {
   color: var(--color-text-primary-light);
-  font-weight: 500;
+  font-weight: 700;
   user-select: none;
   text-align: center;
   text-transform: uppercase;
