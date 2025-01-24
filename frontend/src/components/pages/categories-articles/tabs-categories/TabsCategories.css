@@ -1,7 +1,7 @@
 .tabs__list-container {
   display: flex;
   position: fixed;
-  top: 45px;
+  top: 47px;
   left: 0px;
   flex-direction: column;
   gap: 0.25rem;
