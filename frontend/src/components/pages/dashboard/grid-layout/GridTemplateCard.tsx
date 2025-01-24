@@ -42,7 +42,7 @@ export const GridTemplateCard = ({
         spinner={true}
         altText={data.title}
       />
-      <h6 className="grid-template-card__title">{data.title}</h6>
+      <h4 className="grid-template-card__title">{data.title}</h4>
     </div>
   );
 };

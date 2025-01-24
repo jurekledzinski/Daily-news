@@ -41,7 +41,7 @@ export const GridCard = forwardRef<HTMLDivElement, GridCardProps>(
           </button>
         </header>
         <div className="grid-card__body">
-          <h6 className="grid-card__title">{gridItem.title}</h6>
+          <h4 className="grid-card__title">{gridItem.title}</h4>
         </div>
         {children}
         <Image
