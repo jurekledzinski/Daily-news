@@ -18,6 +18,8 @@ export const Aside = ({ layout, onClick }: AsideProps) => {
               (cardItem) => cardItem.id === section.id
             );
 
+            console.log('sectionId', section.id);
+
             const image = images.find((link) =>
               new RegExp(section.id, 'i').test(link)
             );
