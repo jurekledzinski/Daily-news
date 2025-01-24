@@ -1,10 +1,10 @@
 import { getCookie } from '@helpers/index';
 import { HeaderProps } from './types';
+import { Link, useNavigate, useNavigation } from 'react-router-dom';
 import { NavBarActions, NavBarAuth } from '@components/pages';
 import { toast } from 'react-toastify';
 import { useCallback, useRef, useState } from 'react';
 import { useControlServerError } from '@hooks/index';
-import { useNavigate, useNavigation } from 'react-router-dom';
 import { useUserStore } from '@store/index';
 import './Header.css';
 import {
@@ -68,7 +68,9 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
         }
       >
         <nav className="header__nav">
-          <h4 className="header__logo">Daily news</h4>
+          <h2 className="header__logo">
+            <Link to="/">Daily news</Link>
+          </h2>
           <div className="header__buttons">
             <NavBarActions
               isLoggedInUser={Boolean(isLog)}
