@@ -12,15 +12,6 @@ export const invalidateQueries = async (
   });
 };
 
-export const refetchQueries = async (
-  queryClient: QueryClient,
-  queryKey: string[]
-) => {
-  await queryClient.refetchQueries({
-    queryKey,
-  });
-};
-
 export const tryCatch = <T, K, N = unknown>(
   fn: (body: N) => Promise<T>
 ): ((body: N) => Promise<T | K>) => {
