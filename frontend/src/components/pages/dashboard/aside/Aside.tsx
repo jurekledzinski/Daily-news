@@ -18,11 +18,13 @@ export const Aside = ({ layout, onClick }: AsideProps) => {
               (cardItem) => cardItem.id === section.id
             );
 
-            console.log('sectionId', section.id);
+            const image = images.find((link) => {
+              const filename = link.split('/').pop()?.split('.')[0];
+              return filename === section.id;
+            });
 
-            const image = images.find((link) =>
-              new RegExp(section.id, 'i').test(link)
-            );
+            console.log('sectionId', section.id);
+            console.log('image', image);
 
             return (
               <GridTemplateCard

@@ -38,7 +38,7 @@ export const GridTemplateCard = ({
     >
       <Image
         className="grid-template-card__image"
-        src={`${image}&tr=w-170,h-100,c-at_least`}
+        src={image}
         spinner={true}
         altText={data.title}
       />

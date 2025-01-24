@@ -7,16 +7,16 @@ const food = '/images/food.jpg';
 const football = '/images/football.jpg';
 const games = '/images/games.jpg';
 const music = '/images/music.jpg';
-const news = '/images/music.jpg';
-const politics = '/images/music.jpg';
-const science = '/images/music.jpg';
-const sport = '/images/music.jpg';
-const technology = '/images/music.jpg';
-const travel = '/images/music.jpg';
-const uk_news = '/images/music.jpg';
-const us_news = '/images/music.jpg';
-const weather = '/images/music.jpg';
-const world = '/images/music.jpg';
+const news = '/images/news.jpg';
+const politics = '/images/politics.jpg';
+const science = '/images/science.jpg';
+const sport = '/images/sport.jpg';
+const technology = '/images/technology.jpg';
+const travel = '/images/travel.jpg';
+const uk_news = '/images/uk-news.jpg';
+const us_news = '/images/us-news.jpg';
+const weather = '/images/weather.jpg';
+const world = '/images/world.jpg';
 
 export const images = [
   australia_news,
