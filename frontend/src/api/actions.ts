@@ -1,4 +1,4 @@
-import { invalidateQueries, refetchQueries, setResponse } from '@helpers/index';
+import { invalidateQueries, setResponse } from '@helpers/index';
 import { LoaderFunctionArgs, Params, redirect } from 'react-router-dom';
 import { queryClient as useQueryClient } from '@/main';
 import { toast } from 'react-toastify';
@@ -26,7 +26,7 @@ import {
 // ----------------- Actions comment -----------------
 
 export const actionDetailsArticle =
-  (queryClient: QueryClient) =>
+  () =>
   async ({ params, request }: LoaderFunctionArgs<unknown>) => {
     const { id } = params as Params;
     const articleId = decodeURIComponent(id ?? '');
@@ -38,22 +38,15 @@ export const actionDetailsArticle =
     const actionType = data.get('actionType');
 
     if (actionType === 'create-comment') {
-      return actionCreateComment(queryClient, data, articleId, page);
+      return actionCreateComment(data, articleId, page);
     } else if (actionType === 'create-reply') {
-      return actionCreateCommentReply(queryClient, data, articleId, page, '1');
+      return actionCreateCommentReply(data, articleId, page, '1');
     } else if (actionType === 'update-likes') {
-      return actionUpdateLikesComment(
-        queryClient,
-        data,
-        articleId,
-        page,
-        pageReply
-      );
+      return actionUpdateLikesComment(data, articleId, page, pageReply);
     }
   };
 
 export const actionCreateComment = async (
-  queryClient: QueryClient,
   data: FormData,
   articleId: string,
   page: string
@@ -62,8 +55,12 @@ export const actionCreateComment = async (
   const newComment = Object.fromEntries(data) as unknown as CommentCreate;
   const result = await createComment(newComment);
 
-  await invalidateQueries(queryClient, ['list-comments', articleId, page]);
-  await refetchQueries(queryClient, ['list-comments', articleId, page]);
+  useQueryClient.invalidateQueries({
+    queryKey: ['list-comments', articleId, page],
+  });
+  useQueryClient.refetchQueries({
+    queryKey: ['list-comments', articleId, page],
+  });
   useQueryClient.invalidateQueries({ queryKey: ['crsf-token'] });
 
   const redirectTo = window.location.pathname;
@@ -83,7 +80,6 @@ export const actionCreateComment = async (
 };
 
 export const actionCreateCommentReply = async (
-  queryClient: QueryClient,
   data: FormData,
   articleId: string,
   page: string,
@@ -94,23 +90,23 @@ export const actionCreateCommentReply = async (
   const result = await createComment(newReply);
   const parentId = newReply.parentCommentId ?? '';
 
-  await invalidateQueries(queryClient, ['list-comments', articleId, page]);
-  await refetchQueries(queryClient, ['list-comments', articleId, page]);
+  useQueryClient.invalidateQueries({
+    queryKey: ['list-comments', articleId, page],
+  });
+
+  useQueryClient.refetchQueries({
+    queryKey: ['list-comments', articleId, page],
+  });
+
+  useQueryClient.invalidateQueries({
+    queryKey: ['list-comment-replies', articleId, pageReply, parentId],
+  });
+
+  useQueryClient.refetchQueries({
+    queryKey: ['list-comment-replies', articleId, pageReply, parentId],
+  });
+
   useQueryClient.invalidateQueries({ queryKey: ['crsf-token'] });
-
-  await invalidateQueries(queryClient, [
-    'list-comment-replies',
-    articleId,
-    pageReply,
-    parentId,
-  ]);
-
-  await refetchQueries(queryClient, [
-    'list-comment-replies',
-    articleId,
-    pageReply,
-    parentId,
-  ]);
 
   const redirectTo = `${window.location.pathname}?comment_id=${newReply.parentCommentId}`;
 
@@ -129,7 +125,6 @@ export const actionCreateCommentReply = async (
 };
 
 export const actionUpdateLikesComment = async (
-  queryClient: QueryClient,
   data: FormData,
   articleId: string,
   page: string,
@@ -150,8 +145,13 @@ export const actionUpdateLikesComment = async (
       };
     }
 
-    await invalidateQueries(queryClient, ['list-comments', articleId, page]);
-    await refetchQueries(queryClient, ['list-comments', articleId, page]);
+    useQueryClient.invalidateQueries({
+      queryKey: ['list-comments', articleId, page],
+    });
+
+    useQueryClient.refetchQueries({
+      queryKey: ['list-comments', articleId, page],
+    });
 
     return redirect(redirectTo);
   }
@@ -167,19 +167,13 @@ export const actionUpdateLikesComment = async (
 
   const parentId = comment.parentCommentId ?? '';
 
-  await invalidateQueries(queryClient, [
-    'list-comment-replies',
-    articleId,
-    pageReply,
-    parentId,
-  ]);
+  useQueryClient.invalidateQueries({
+    queryKey: ['list-comment-replies', articleId, pageReply, parentId],
+  });
 
-  await refetchQueries(queryClient, [
-    'list-comment-replies',
-    articleId,
-    pageReply,
-    parentId,
-  ]);
+  useQueryClient.refetchQueries({
+    queryKey: ['list-comment-replies', articleId, pageReply, parentId],
+  });
 
   return redirect(redirectTo);
 };

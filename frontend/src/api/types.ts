@@ -193,6 +193,4 @@ export type LoaderDetailsArticleFn = (queryClient: QueryClient) => ({
   request,
 }: LoaderFunctionArgs) => Promise<{
   detailsArticle: APIResponseDetailsSuccess<IDetailsArticle> | null;
-  comments: APIResponsePagniationSuccess<Comment[]> | null;
-  commentReplies: APIResponsePagniationSuccess<Comment[]> | null;
 }>;

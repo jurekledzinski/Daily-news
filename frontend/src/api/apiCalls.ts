@@ -16,7 +16,6 @@ import {
   User,
   APIErrorResponse,
   APIGuardianResponseError,
-  APIResponsePagniationSuccess,
 } from './types';
 
 // ----------------- Api articles -----------------
@@ -51,50 +50,6 @@ export const getDetailsArticle = tryCatch<
 });
 
 // ----------------- Api comments -----------------
-
-export const getComments = tryCatch<
-  APIResponsePagniationSuccess<Comment[]>,
-  null,
-  { articleId: string; page: string }
->(async (data: { articleId: string; page: string }) => {
-  const id = encodeURIComponent(data.articleId);
-
-  const response = await fetch(URLS.GET_COMMENTS(id, data.page), {
-    method: 'GET',
-    mode: 'cors',
-    credentials: 'include',
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to load data');
-  }
-
-  const result = await response.json();
-  return result;
-});
-
-export const getCommentReplies = tryCatch<
-  APIResponsePagniationSuccess<Comment[]>,
-  null,
-  { articleId: string; commentId: string; page: string }
->(async (data: { articleId: string; commentId: string; page: string }) => {
-  const id = encodeURIComponent(data.articleId);
-
-  const response = await fetch(
-    URLS.GET_COMMENT_REPLIES(id, data.commentId, data.page),
-    {
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'include',
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to load data');
-  }
-
-  return await response.json();
-});
 
 export const createComment = tryCatch<
   APISuccessResponse,
