@@ -5,8 +5,8 @@ import { uniqBy } from 'lodash';
 import { useEffect } from 'react';
 
 type UseLoadCommentsProps = {
-  dataComments: APIResponsePagniationSuccess<Comment[]> | null;
-  dataCommentReplies: APIResponsePagniationSuccess<Comment[]> | null;
+  dataComments: APIResponsePagniationSuccess<Comment[]> | undefined;
+  dataCommentReplies: APIResponsePagniationSuccess<Comment[]> | undefined;
   id: string | undefined;
   setStateComments: React.Dispatch<
     React.SetStateAction<Record<string, CommentsWithReplies[]>>
