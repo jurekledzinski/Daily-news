@@ -23,9 +23,6 @@ export const Aside = ({ layout, onClick }: AsideProps) => {
               return filename === section.id;
             });
 
-            console.log('sectionId', section.id);
-            console.log('image', image);
-
             return (
               <GridTemplateCard
                 data={section}
