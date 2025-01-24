@@ -7,8 +7,8 @@ import {
   APIResponseDetailsSuccess,
   IDetailsArticle,
   APIGuardianResponsePagniationSuccess,
-  Comment,
-  APIResponsePagniationSuccess,
+  //   Comment,
+  //   APIResponsePagniationSuccess,
   LoaderCategoriesFn,
   LoaderArticlesFn,
   LoaderDetailsArticleFn,
@@ -17,8 +17,8 @@ import {
   getArticlesQuery,
   getCategoriesArticlesQuery,
   getDetailsArticleQuery,
-  getCommentsQuery,
-  getCommentRepliesQuery,
+  //   getCommentsQuery,
+  //   getCommentRepliesQuery,
 } from './queries';
 
 export const loaderCategories: LoaderCategoriesFn =
@@ -50,20 +50,20 @@ export const loaderArticles: LoaderArticlesFn =
 
 export const loaderDetailsArticle: LoaderDetailsArticleFn =
   (queryClient) =>
-  async ({ params, request }) => {
+  async ({ params }) => {
     const { category, id } = params as Params;
     const articleId = decodeURIComponent(id ?? '');
-    const commentId = getUrlQuery(request, 'comment_id', 'initial');
-    const page = getUrlQuery(request, 'page', '1');
-    const pageReply = getUrlQuery(request, 'page_reply', '1');
+    // const commentId = getUrlQuery(request, 'comment_id', 'initial');
+    // const page = getUrlQuery(request, 'page', '1');
+    // const pageReply = getUrlQuery(request, 'page_reply', '1');
 
     const queryArticle = getDetailsArticleQuery(category ?? 'about', articleId);
-    const queryComments = getCommentsQuery(articleId, page);
-    const queryCommentReplies = getCommentRepliesQuery(
-      articleId,
-      commentId,
-      pageReply
-    );
+    // const queryComments = getCommentsQuery(articleId, page);
+    // const queryCommentReplies = getCommentRepliesQuery(
+    //   articleId,
+    //   commentId,
+    //   pageReply
+    // );
 
     const article = await fetchOrCache<
       APIResponseDetailsSuccess<IDetailsArticle>
@@ -71,22 +71,39 @@ export const loaderDetailsArticle: LoaderDetailsArticleFn =
       queryClient.fetchQuery(queryArticle)
     );
 
-    const comments = await fetchOrCache<
-      APIResponsePagniationSuccess<Comment[]>
-    >(queryClient, queryComments.queryKey, () =>
-      queryClient.fetchQuery(queryComments)
-    );
+    // const comments = await fetchOrCache<
+    //   APIResponsePagniationSuccess<Comment[]>
+    // >(queryClient, queryComments.queryKey, () =>
+    //   queryClient.fetchQuery(queryComments)
+    // );
 
-    const commentReplies = await fetchOrCache<
-      APIResponsePagniationSuccess<Comment[]>
-    >(queryClient, queryCommentReplies.queryKey, () =>
-      queryClient.fetchQuery(queryCommentReplies)
-    );
+    // const commentReplies = await fetchOrCache<
+    //   APIResponsePagniationSuccess<Comment[]>
+    // >(queryClient, queryCommentReplies.queryKey, () =>
+    //   queryClient.fetchQuery(queryCommentReplies)
+    // );
+
+    // return {
+    //   detailsArticle:
+    //     article && article.response.status === 'ok' ? article : null,
+    //   comments: comments.success ? comments : null,
+    //   commentReplies: commentReplies.success ? commentReplies : null,
+    // };
 
     return {
       detailsArticle:
         article && article.response.status === 'ok' ? article : null,
-      comments: comments.success ? comments : null,
-      commentReplies: commentReplies.success ? commentReplies : null,
+      comments: {
+        payload: { result: [] },
+        success: true,
+        totalPages: 1,
+        page: 1,
+      },
+      commentReplies: {
+        payload: { result: [] },
+        success: true,
+        totalPages: 1,
+        page: 1,
+      },
     };
   };
