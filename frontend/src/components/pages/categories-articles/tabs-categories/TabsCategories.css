@@ -1,11 +1,11 @@
 .tabs__list-container {
   display: flex;
   position: fixed;
-  top: 47px;
+  top: 45px;
   left: 0px;
   flex-direction: column;
   gap: 0.25rem;
-  z-index: 3;
+  z-index: 1;
   background-color: var(--color-surface);
   padding: 0.5rem;
   width: 100%;
