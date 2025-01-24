@@ -48,7 +48,7 @@ const router = createBrowserRouter([
             element: <DetailsArticle />,
             errorElement: <ErrorPage />,
             loader: loaderDetailsArticle(queryClient),
-            action: actionDetailsArticle(queryClient),
+            action: actionDetailsArticle(),
           },
         ],
       },
