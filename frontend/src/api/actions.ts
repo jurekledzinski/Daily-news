@@ -58,9 +58,7 @@ export const actionCreateComment = async (
   useQueryClient.invalidateQueries({
     queryKey: ['list-comments', articleId, page],
   });
-  useQueryClient.refetchQueries({
-    queryKey: ['list-comments', articleId, page],
-  });
+
   useQueryClient.invalidateQueries({ queryKey: ['crsf-token'] });
 
   const redirectTo = window.location.pathname;
@@ -94,15 +92,7 @@ export const actionCreateCommentReply = async (
     queryKey: ['list-comments', articleId, page],
   });
 
-  useQueryClient.refetchQueries({
-    queryKey: ['list-comments', articleId, page],
-  });
-
   useQueryClient.invalidateQueries({
-    queryKey: ['list-comment-replies', articleId, pageReply, parentId],
-  });
-
-  useQueryClient.refetchQueries({
     queryKey: ['list-comment-replies', articleId, pageReply, parentId],
   });
 
@@ -149,10 +139,6 @@ export const actionUpdateLikesComment = async (
       queryKey: ['list-comments', articleId, page],
     });
 
-    useQueryClient.refetchQueries({
-      queryKey: ['list-comments', articleId, page],
-    });
-
     return redirect(redirectTo);
   }
 
@@ -168,10 +154,6 @@ export const actionUpdateLikesComment = async (
   const parentId = comment.parentCommentId ?? '';
 
   useQueryClient.invalidateQueries({
-    queryKey: ['list-comment-replies', articleId, pageReply, parentId],
-  });
-
-  useQueryClient.refetchQueries({
     queryKey: ['list-comment-replies', articleId, pageReply, parentId],
   });
 
