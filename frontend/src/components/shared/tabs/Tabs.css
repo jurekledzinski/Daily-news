@@ -26,6 +26,7 @@
   background-color: var(--primary-color-hover);
 }
 
+.tabs__tab .tabs__text,
 .tabs__tab--sub .tabs__text {
   min-width: 1rem;
   max-width: 80px;
@@ -78,16 +79,6 @@
 
 .tabs__list::-webkit-scrollbar-thumb:hover {
   border-width: 1px;
-}
-
-@media (hover: hover) and (max-width: 700px) {
-  .tabs__list {
-    overflow-x: auto;
-  }
-
-  .tabs__tab {
-    overflow: initial;
-  }
 }
 
 @media (hover: none) {
