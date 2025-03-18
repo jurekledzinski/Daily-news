@@ -1,28 +1,31 @@
 import { fetchOrCache, getUrlQuery } from '@helpers/index';
 import { Params } from 'react-router-dom';
 import {
-  APIGuardianResponseSuccess,
-  CategoriesData,
-  IArticles,
-  APIResponseDetailsSuccess,
-  IDetailsArticle,
-  APIGuardianResponsePagniationSuccess,
-  LoaderCategoriesFn,
-  LoaderArticlesFn,
-  LoaderDetailsArticleFn,
-} from './types';
-import {
   getArticlesQuery,
   getCategoriesArticlesQuery,
   getDetailsArticleQuery,
 } from './queries';
+
+import {
+  APIGuardianResSuccess,
+  APIGuardianResPaginationSuccess,
+  APIGuardianResDetailsSuccess,
+} from './types/guardian';
+
+import { Articles, CategoriesData, ArticleDetails } from './types/articles';
+
+import {
+  LoaderArticlesFn,
+  LoaderCategoriesFn,
+  LoaderDetailsArticleFn,
+} from './types/loaders';
 
 export const loaderCategories: LoaderCategoriesFn =
   (queryClient) => async () => {
     const query = getCategoriesArticlesQuery();
 
     const categories = await fetchOrCache<
-      APIGuardianResponseSuccess<CategoriesData[]>
+      APIGuardianResSuccess<CategoriesData[]>
     >(queryClient, query.queryKey, () => queryClient.fetchQuery(query));
 
     return categories && categories.response.status === 'ok'
@@ -38,7 +41,7 @@ export const loaderArticles: LoaderArticlesFn =
     const query = getArticlesQuery(category ?? 'about', page);
 
     const articles = await fetchOrCache<
-      APIGuardianResponsePagniationSuccess<IArticles[]>
+      APIGuardianResPaginationSuccess<Articles[]>
     >(queryClient, query.queryKey, () => queryClient.fetchQuery(query));
 
     return articles && articles.response.status === 'ok' ? articles : null;
@@ -52,7 +55,7 @@ export const loaderDetailsArticle: LoaderDetailsArticleFn =
     const queryArticle = getDetailsArticleQuery(category ?? 'about', articleId);
 
     const article = await fetchOrCache<
-      APIResponseDetailsSuccess<IDetailsArticle>
+      APIGuardianResDetailsSuccess<ArticleDetails>
     >(queryClient, queryArticle.queryKey, () =>
       queryClient.fetchQuery(queryArticle)
     );

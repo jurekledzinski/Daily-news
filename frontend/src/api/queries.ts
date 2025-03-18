@@ -2,7 +2,7 @@ import {
   getCategoriesArticles,
   getArticles,
   getDetailsArticle,
-} from './apiCalls';
+} from './api-calls';
 
 export const getCategoriesArticlesQuery = () => ({
   queryKey: ['list-categories'],
