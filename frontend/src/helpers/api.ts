@@ -1,9 +1,9 @@
-import { APIErrorResponse, APISuccessResponse } from '@api/index';
-import { RedirectFunction } from 'react-router-dom';
+import { ApiResError, APIResSuccess } from '@api/index';
+import { redirect } from 'react-router-dom';
 import { removeCookie, setCookie } from './global';
 import type { QueryClient } from '@tanstack/react-query';
 
-export const invalidateQueries = async (
+export const invalidateQueryClient = async (
   queryClient: QueryClient,
   queryKey: string[]
 ) => {
@@ -34,8 +34,7 @@ export const fetchOrCache = async <T>(
 
 export function setResponse(
   action: string,
-  redirect: RedirectFunction,
-  result: APISuccessResponse<unknown> | APIErrorResponse,
+  result: APIResSuccess | ApiResError,
   url: string
 ) {
   if ('message' in result && !result.success) {
