@@ -1,13 +1,13 @@
 import { AsideProps } from './types';
 import { GridTemplateCard } from '@components/pages';
-import { IDataCategories } from '@api/index';
+import { Categories } from '@api/index';
 import { images } from '@images/index';
 import { NoDataMessage } from '@components/shared';
 import { useOutletContext } from 'react-router-dom';
 import './Aside.css';
 
 export const Aside = ({ layout, onClick }: AsideProps) => {
-  const { categories } = useOutletContext<{ categories: IDataCategories[] }>();
+  const { categories } = useOutletContext<{ categories: Categories[] }>();
 
   return (
     <div className="aside-container">

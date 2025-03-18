@@ -1,10 +1,8 @@
-import { ArticleDetailsElements } from '@api/index';
+import { ArticleElements } from '@api/index';
 import { cloneDeep, uniqBy } from 'lodash';
 import { CommentsWithReplies } from '@components/shared';
 
-export const getDetailsArticleImageData = (
-  elements: ArticleDetailsElements[]
-) => {
+export const getDetailsArticleImageData = (elements: ArticleElements[]) => {
   if (elements && elements.length) {
     const main = elements.sort((a, b) => a.relation.localeCompare(b.relation));
 

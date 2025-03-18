@@ -1,4 +1,4 @@
-import { IDataCategories } from '../../../../api';
+import { Categories } from '../../../../api';
 import type ReactGridLayout from 'react-grid-layout';
 
 export type LayoutItem = {
@@ -14,10 +14,10 @@ export type LayoutData = {
 };
 
 export type GridTemplateCardProps = {
-  data: IDataCategories;
+  data: Categories;
   image: string;
   isDisabled: boolean;
-  onClick: (data: IDataCategories) => void;
+  onClick: (data: Categories) => void;
 };
 
 export type GridLayoutProps = {

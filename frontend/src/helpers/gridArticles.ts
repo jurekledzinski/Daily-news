@@ -1,8 +1,8 @@
-import { IArticles, ArticleData } from '@api/index';
+import { Articles, ArticleData } from '@api/index';
 import { LocalData } from '@components/pages';
 import { uniqBy } from 'lodash';
 
-export const getFormatedData = (article: IArticles) => {
+export const getFormatedData = (article: Articles) => {
   const transformedData = {
     content: article.fields.trailText,
     id: article.id,

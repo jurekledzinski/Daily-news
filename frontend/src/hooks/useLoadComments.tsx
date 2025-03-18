@@ -1,12 +1,12 @@
-import { APIResponsePagniationSuccess, Comment } from '@api/index';
+import { APIResPagination, Comment } from '@api/index';
 import { CommentsWithReplies } from '@components/shared';
 import { udpatedNestedReplies } from '@helpers/index';
 import { uniqBy } from 'lodash';
 import { useEffect } from 'react';
 
 type UseLoadCommentsProps = {
-  dataComments: APIResponsePagniationSuccess<Comment[]> | undefined;
-  dataCommentReplies: APIResponsePagniationSuccess<Comment[]> | undefined;
+  dataComments: APIResPagination<Comment[]> | undefined;
+  dataCommentReplies: APIResPagination<Comment[]> | undefined;
   id: string | undefined;
   setStateComments: React.Dispatch<
     React.SetStateAction<Record<string, CommentsWithReplies[]>>

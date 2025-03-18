@@ -1,4 +1,4 @@
-import { APIErrorResponse, APISuccess, URLS } from '@api/index';
+import { ApiResError, APIResSuccessPayload, URLS } from '@api/index';
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useUserStore } from '@store/index';
@@ -11,8 +11,8 @@ export const useFetchUserData = ({ isLoggedIn }: UseFetchUserDataProps) => {
   const { dispatch } = useUserStore();
 
   const result = useQuery<
-    APISuccess<{ email: string; name: string }>,
-    APIErrorResponse
+    APIResSuccessPayload<{ email: string; name: string }>,
+    ApiResError
   >({
     queryKey: ['user'],
     queryFn: async () => {

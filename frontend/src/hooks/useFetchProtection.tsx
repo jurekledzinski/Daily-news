@@ -1,4 +1,4 @@
-import { APICSRFTokenResponse, APIErrorResponse, URLS } from '@api/index';
+import { APIResCSRFToken, ApiResError, URLS } from '@api/index';
 import { useQuery } from '@tanstack/react-query';
 
 type UseFetchProtectionProps = {
@@ -6,7 +6,7 @@ type UseFetchProtectionProps = {
 };
 
 export const useFetchProtection = ({ isLoggedIn }: UseFetchProtectionProps) => {
-  const data = useQuery<APICSRFTokenResponse, APIErrorResponse>({
+  const data = useQuery<APIResCSRFToken, ApiResError>({
     queryKey: ['crsf-token'],
     queryFn: async () => {
       const response = await fetch(URLS.GET_CSRF_TOKEN(), {

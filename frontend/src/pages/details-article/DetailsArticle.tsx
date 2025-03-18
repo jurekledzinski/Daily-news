@@ -5,7 +5,7 @@ import { CommentsWithReplies, NoDataMessage } from '@components/shared';
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  APIResponsePagniationSuccess,
+  APIResPagination,
   loaderDetailsArticle,
   URLS,
   Comment,
@@ -62,7 +62,7 @@ export const DetailsArticle = () => {
     userId: state.user?.id ?? '',
   });
 
-  const dataComments = useQuery<APIResponsePagniationSuccess<Comment[]>>({
+  const dataComments = useQuery<APIResPagination<Comment[]>>({
     queryKey: ['list-comments', articleId, commentsPage],
     queryFn: async () => {
       const response = await fetch(
@@ -79,7 +79,7 @@ export const DetailsArticle = () => {
     enabled: Boolean(data.detailsArticle),
   });
 
-  const dataReplies = useQuery<APIResponsePagniationSuccess<Comment[]>>({
+  const dataReplies = useQuery<APIResPagination<Comment[]>>({
     queryKey: ['list-comment-replies', articleId, commentReplyPage, commentId],
     queryFn: async () => {
       const response = await fetch(

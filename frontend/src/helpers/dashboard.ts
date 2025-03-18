@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import { colsLayouts } from '@hooks/index';
-import { IDataCategories } from '@api/index';
+import { Categories } from '@api/index';
 import { LayoutData, LayoutItem } from '@components/pages';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -50,7 +50,7 @@ export const findPosition = (params: fnFindPositionParams) => {
 };
 
 export function handleAddCardOnTouch(
-  data: IDataCategories,
+  data: Categories,
   layout: LayoutData,
   onSetLayout: (newLayout: LayoutData) => void
 ) {
