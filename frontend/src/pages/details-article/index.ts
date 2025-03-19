@@ -1,2 +1,4 @@
 export * from './DetailsArticle';
-export { DetailsArticle as default } from './DetailsArticle';
+export * from './helpers';
+export * from './types';
+export { RootDetailsArticle as default } from './RootDetailsArticle';
