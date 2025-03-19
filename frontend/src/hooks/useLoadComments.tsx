@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 type UseLoadCommentsProps = {
   dataComments: APIResPagination<Comment[]> | undefined;
   dataCommentReplies: APIResPagination<Comment[]> | undefined;
-  id: string | undefined;
+  articleId: string | undefined;
   setStateComments: React.Dispatch<
     React.SetStateAction<Record<string, CommentsWithReplies[]>>
   >;
@@ -16,11 +16,11 @@ type UseLoadCommentsProps = {
 export const useLoadComments = ({
   dataComments,
   dataCommentReplies,
-  id,
+  articleId,
   setStateComments,
 }: UseLoadCommentsProps) => {
   useEffect(() => {
-    if (!id || !dataComments || !dataCommentReplies) return;
+    if (!articleId || !dataComments || !dataCommentReplies) return;
     const comments = dataComments.payload.result as CommentsWithReplies[];
     const replies = dataCommentReplies.payload.result as CommentsWithReplies[];
     const pageReply = dataCommentReplies.page;
@@ -30,8 +30,8 @@ export const useLoadComments = ({
     setStateComments((prev) => {
       return {
         ...prev,
-        [id]: (prev[id]
-          ? uniqBy([...prev[id], ...comments], 'id')
+        [articleId]: (prev[articleId]
+          ? uniqBy([...prev[articleId], ...comments], 'id')
           : uniqBy([...comments], 'id')
         )
           .map((topComment) => {
@@ -91,5 +91,5 @@ export const useLoadComments = ({
           ),
       };
     });
-  }, [dataComments, dataCommentReplies, id, setStateComments]);
+  }, [dataComments, dataCommentReplies, articleId, setStateComments]);
 };
