@@ -1,10 +1,11 @@
-import { Card, LocalData } from '@components/pages';
+import { Card, LocalData } from '@/components/pages';
 import { faNewspaper } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { loaderArticles } from '@api/index';
-import { NoDataMessage } from '@components/shared';
+import { loaderArticles } from '@/api';
+import { NoDataMessage } from '@/components/shared';
 import { useCallback, useRef, useState } from 'react';
-import { useFetchOnScroll, useLoadGridArticles } from '@hooks/index';
+import { useFetchOnScroll } from '@/hooks';
+import { useLoadGridArticles } from './hooks';
 import { UseOutletContext } from '../../types/global';
 import './GridArticles.css';
 import {
