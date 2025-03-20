@@ -1,4 +1,4 @@
-import { ActionData } from '../../types';
+import { ActionData } from '@/types';
 import { AlertError, Modal } from '@/components/shared';
 import { ChangePasswordForm, UpdateProfileForm } from '@/components/pages';
 import { Form, useActionData } from 'react-router-dom';
