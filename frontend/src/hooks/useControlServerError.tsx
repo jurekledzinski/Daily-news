@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { getCookie, removeCookie } from '@helpers/index';
+import { getCookie, removeCookie } from '@/helpers';
 
 export const useControlServerError = (cookieName: string) => {
   const [, setFlag] = useState(false);

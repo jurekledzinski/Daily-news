@@ -1,4 +1,4 @@
-import { APIResCSRFToken, ApiResError, URLS } from '@api/index';
+import { APIResCSRFToken, ApiResError, URLS } from '@/api';
 import { useQuery } from '@tanstack/react-query';
 
 type UseFetchProtectionProps = {
