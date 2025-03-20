@@ -7,6 +7,7 @@ import {
   APIResPagination,
   ArticleDetails,
   Comment,
+  CommentAndReplies,
   loaderDetailsArticle,
 } from '@/api';
 
@@ -20,7 +21,7 @@ export type DetailsArticleProps = {
   articleId: string;
   actionData: ActionData;
   comments: UseQueryResult<APIResPagination<Comment[]>, Error>;
-  commentsReplies: UseQueryResult<APIResPagination<Comment[]>, Error>;
+  commentsReplies: UseQueryResult<APIResPagination<CommentAndReplies[]>, Error>;
   loaderData: APIGuardianResDetailsSuccess<ArticleDetails> | null;
   token: string;
   onSetSearchParams: (
