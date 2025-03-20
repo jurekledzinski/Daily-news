@@ -1,4 +1,4 @@
-import { AlertError, ErrorMessage } from '@components/shared';
+import { AlertError, ErrorMessage } from '@/components/shared';
 import { ChangeUserPasswordProps } from './types';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

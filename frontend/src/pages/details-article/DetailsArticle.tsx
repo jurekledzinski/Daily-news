@@ -1,21 +1,17 @@
-import { ArticleDetails } from '@components/pages';
+import { ArticleDetails } from '@/components/pages';
 import { DetailsArticleProps, StateComments } from './types';
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { formatArticleData, updateStateLikes } from './helpers';
-import { NoDataMessage } from '@components/shared';
+import { NoDataMessage } from '@/components/shared';
 import { useCallback, useState } from 'react';
 import { UseOutletContext } from '../../types';
 import { useOutletContext } from 'react-router-dom';
-import { useUserStore } from '@store/index';
+import { useUserStore } from '@/store';
 import './DetailsArticle.css';
 
-import {
-  useAddComment,
-  useFetchOnScroll,
-  useLoadComments,
-  useUpdateLikes,
-} from '@hooks/index';
+import { useFetchOnScroll } from '@/hooks';
+import { useAddComment, useLoadComments, useUpdateLikes } from './hooks';
+import { formatArticleData, updateStateLikes } from './helpers';
 
 export const DetailsArticle = ({
   articleId,

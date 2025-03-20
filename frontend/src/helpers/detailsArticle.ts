@@ -1,6 +1,6 @@
-import { ArticleElements } from '@api/index';
+import { ArticleElements } from '@/api';
 import { cloneDeep, uniqBy } from 'lodash';
-import { CommentsWithReplies } from '@components/shared';
+import { CommentsWithReplies } from '@/components/shared';
 
 export const getDetailsArticleImageData = (elements: ArticleElements[]) => {
   if (elements && elements.length) {

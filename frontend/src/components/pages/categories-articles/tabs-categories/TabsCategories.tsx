@@ -1,6 +1,6 @@
 import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ObjArticles } from '@components/pages/dashboard';
+import { ObjArticles } from '@/components/pages';
 import { Outlet } from 'react-router-dom';
 import { TabsCategoriesArticlesProps } from './types';
 import { useRef } from 'react';
@@ -14,7 +14,7 @@ import {
   TabsPanel,
   TabText,
   TabsListConainer,
-} from '../../../shared';
+} from '@/components/shared';
 
 export const TabsCategoriesArticles = ({
   activeTabs,

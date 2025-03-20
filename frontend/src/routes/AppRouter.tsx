@@ -1,11 +1,11 @@
-import CategoriesArticles from '@pages/categories-articles';
-import Dashboard from '@pages/dashboard';
-import DetailsArticle from '@pages/details-article';
-import GridArticles from '@pages/grid-articles';
-import Home from '@pages/home';
-import Profile from '@pages/profile';
+import CategoriesArticles from '@/pages/categories-articles';
+import Dashboard from '@/pages/dashboard';
+import DetailsArticle from '@/pages/details-article';
+import GridArticles from '@/pages/grid-articles';
+import Home from '@/pages/home';
+import Profile from '@/pages/profile';
 import { createBrowserRouter } from 'react-router-dom';
-import { ErrorPage } from '@components/pages';
+import { ErrorPage } from '@/components/pages';
 import { ProtectedRoute } from '@/components/shared';
 import { QueryClient } from '@tanstack/react-query';
 import {
@@ -15,7 +15,7 @@ import {
   loaderArticles,
   loaderCategories,
   loaderDetailsArticle,
-} from '@api/index';
+} from '@/api';
 
 const queryClient = new QueryClient();
 

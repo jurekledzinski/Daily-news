@@ -1,18 +1,18 @@
 import { GridCard } from './GridCard';
 import { GridLayoutProps } from './types';
-import { NoDataMessage } from '@components/shared';
+import { NoDataMessage } from '@/components/shared';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import { useRef, useState } from 'react';
 import './GridLayout.css';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import {
-  colsLayouts,
-  useControlDashboard,
-  breakpoints,
-} from '../../../../hooks';
 
 import type ReactGridLayout from 'react-grid-layout';
+import {
+  useControlDashboard,
+  colsLayouts,
+  breakpoints,
+} from '@/pages/dashboard';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 

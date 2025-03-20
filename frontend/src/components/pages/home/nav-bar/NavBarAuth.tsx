@@ -1,5 +1,5 @@
-import { LoginForm, RegisterForm } from '@components/pages/home';
-import { Modal } from '@components/shared';
+import { LoginForm, RegisterForm } from '@/components/pages';
+import { Modal } from '@/components/shared';
 import { NavBarAuthProps } from './types';
 import '../header/Header.css';
 
@@ -16,12 +16,7 @@ export const NavBarAuth = ({
   return (
     <div className="header__auth">
       {isLoggedInUser && (
-        <button
-          className="header__logout"
-          onClick={() => {
-            logout();
-          }}
-        >
+        <button className="header__logout" onClick={() => logout()}>
           Logout
         </button>
       )}

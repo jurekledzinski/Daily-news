@@ -1,2 +1,2 @@
-export * from './grid-layout';
 export * from './aside';
+export * from './grid-layout';

@@ -1,7 +1,7 @@
+import { Categories } from '@/api';
 import { cloneDeep } from 'lodash';
-import { colsLayouts } from '@hooks/index';
-import { Categories } from '@api/index';
-import { LayoutData, LayoutItem } from '@components/pages';
+import { colsLayouts } from '@/pages/dashboard';
+import { LayoutData, LayoutItem } from '@/components/pages';
 import { v4 as uuidv4 } from 'uuid';
 
 type fnFindPositionParams = {

@@ -1,16 +1,16 @@
 import { ArticleDetailsProps } from './types';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Header } from '@components/pages/details-article';
-import { InfoMessage } from '@components/shared';
-import { sanitizeContent } from '@helpers/index';
+import { Header } from '@/components/pages/details-article';
+import { InfoMessage } from '@/components/shared';
+import { sanitizeContent } from '@/helpers';
 import './ArticleDetails.css';
 import {
   AlertError,
   FormComment,
   Image,
   SectionComments,
-} from '@components/shared';
+} from '@/components/shared';
 
 export const ArticleDetails = ({
   actionData,

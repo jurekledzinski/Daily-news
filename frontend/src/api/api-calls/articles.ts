@@ -1,6 +1,6 @@
 import { ArticleDetails, Articles, CategoriesData } from '../types';
 import { fetchApi } from './helpers';
-import { tryCatch } from '@helpers/index';
+import { tryCatch } from '@/helpers';
 import { URLS } from '../urls';
 import {
   APIGuardianResDetailsSuccess,

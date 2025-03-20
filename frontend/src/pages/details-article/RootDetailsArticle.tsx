@@ -1,11 +1,17 @@
 import { ActionData } from '@/types';
-import { APIResPagination, Comment, fetchApi, URLS } from '@/api';
 import { DetailsArticle } from './DetailsArticle';
 import { formatSearchQuery, getCookie } from '@/helpers';
 import { LoaderData } from './types';
 import { useCallback } from 'react';
 import { useFetchProtection } from '@/hooks';
 import { useQuery } from '@tanstack/react-query';
+import {
+  APIResPagination,
+  Comment,
+  CommentAndReplies,
+  fetchApi,
+  URLS,
+} from '@/api';
 import {
   useActionData,
   useLoaderData,
@@ -37,7 +43,7 @@ export const RootDetailsArticle = () => {
     enabled: Boolean(loaderData.detailsArticle),
   });
 
-  const dataReplies = useQuery<APIResPagination<Comment[]>>({
+  const dataReplies = useQuery<APIResPagination<CommentAndReplies[]>>({
     queryKey: [
       'list-comment-replies',
       articleIdDecode,

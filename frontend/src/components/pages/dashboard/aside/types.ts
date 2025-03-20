@@ -1,4 +1,4 @@
-import { Categories } from '../../../../api';
+import { Categories } from '@/api';
 import { LayoutData } from '../grid-layout';
 
 export type AsideProps = {

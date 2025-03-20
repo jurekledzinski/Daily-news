@@ -1,4 +1,4 @@
-import { fetchOrCache, getUrlQuery } from '@helpers/index';
+import { fetchOrCache, getUrlQuery } from '@/helpers';
 import { Params } from 'react-router-dom';
 import {
   getArticlesQuery,

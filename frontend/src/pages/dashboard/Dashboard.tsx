@@ -1,6 +1,5 @@
-import { Aside } from '@components/pages';
-import { GridLayout, LayoutData } from '@components/pages';
-import { handleAddCardOnTouch, setLocalData } from '@helpers/index';
+import { Aside, GridLayout, LayoutData } from '@/components/pages';
+import { handleAddCardOnTouch, setLocalData } from '@/helpers';
 import { useCallback, useState } from 'react';
 import { useLoadGrid, useSetLayout } from './hooks';
 import { useNavigate } from 'react-router-dom';

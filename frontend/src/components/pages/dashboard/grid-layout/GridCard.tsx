@@ -2,7 +2,7 @@ import { faGripVertical, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { forwardRef, Ref } from 'react';
 import { GridCardProps } from './types';
-import { Image } from '@components/shared';
+import { Image } from '@/components/shared';
 import './GridCard.css';
 
 export const GridCard = forwardRef<HTMLDivElement, GridCardProps>(

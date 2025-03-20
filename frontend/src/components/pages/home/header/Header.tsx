@@ -2,16 +2,16 @@ import { getCookie, showSuccessToast } from '@/helpers';
 import { HeaderProps } from './types';
 import { Link, useNavigate, useNavigation } from 'react-router-dom';
 import { NavBarActions, NavBarAuth } from '@/components/pages';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import { useUserStore } from '@/store';
 import './Header.css';
+import { useControlServerError } from '@/hooks';
 import {
   useFetchUserData,
   useLoginForm,
   useLogoutUser,
   useRegisterForm,
-  useControlServerError,
-} from '@/hooks';
+} from '@/pages/home';
 
 export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const navigate = useNavigate();
@@ -22,13 +22,11 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   useFetchUserData({ isLoggedIn: Boolean(isLog) });
   const { onGetCookie, onRemoveCookie } = useControlServerError('serverError');
   const { state, dispatch } = useUserStore();
-  const [, setIsLoggedOut] = useState(false);
 
   const logoutUser = useLogoutUser({
     onSuccess: () => {
       dispatch({ type: 'LOGOUT_USER' });
       showSuccessToast('Logout successful', 'top-right');
-      setIsLoggedOut(false);
       if (matchProfile) navigate('/', { replace: true });
     },
   });

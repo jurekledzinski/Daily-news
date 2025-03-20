@@ -1,13 +1,9 @@
-import { TabsCategoriesArticles } from '@components/pages';
+import { getCurrentCategory, getLocalData, setLocalData } from '@/helpers';
+import { TabsCategoriesArticles } from '@/components/pages';
 import { useControlTabs } from './hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import './CategoriesArticles.css';
-import {
-  getCurrentCategory,
-  getLocalData,
-  setLocalData,
-} from '@helpers/global';
 
 export const CategoriesArticles = () => {
   const navigate = useNavigate();
