@@ -1,4 +1,4 @@
-import { UseFormReset, UseFormReturn } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 
 export type FormResigsterValues = {
   name: string;
@@ -21,20 +21,4 @@ export type LoginFormProps = {
   methods: UseFormReturn<FormLoginValues, unknown, undefined>;
   serverError?: string;
   onSubmit: () => void;
-};
-
-export type useLoginFormProps = {
-  error: { message: string; action: string } | null;
-  onSuccess: (reset: UseFormReset<FormLoginValues>) => void;
-  status: 'idle' | 'loading' | 'submitting';
-};
-
-export type useLogoutUserProps = {
-  onSuccess: () => void;
-};
-
-export type useRegisterFormProps = {
-  error: { message: string; action: string } | null;
-  onSuccess: (reset: UseFormReset<FormResigsterValues>) => void;
-  status: 'idle' | 'loading' | 'submitting';
 };
