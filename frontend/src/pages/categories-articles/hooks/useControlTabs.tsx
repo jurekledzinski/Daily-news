@@ -36,6 +36,7 @@ export const useControlTabs = ({
       onRedirectTwo('/');
     }
   };
+
   const handleCloseSubTab: HandleCloseTab = (e, id) => {
     e.stopPropagation();
 
