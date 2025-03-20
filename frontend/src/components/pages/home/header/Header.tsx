@@ -1,18 +1,17 @@
-import { getCookie } from '@helpers/index';
+import { getCookie, showSuccessToast } from '@/helpers';
 import { HeaderProps } from './types';
 import { Link, useNavigate, useNavigation } from 'react-router-dom';
-import { NavBarActions, NavBarAuth } from '@components/pages';
-import { toast } from 'react-toastify';
+import { NavBarActions, NavBarAuth } from '@/components/pages';
 import { useCallback, useRef, useState } from 'react';
-import { useControlServerError } from '@hooks/index';
-import { useUserStore } from '@store/index';
+import { useUserStore } from '@/store';
 import './Header.css';
 import {
   useFetchUserData,
   useLoginForm,
   useLogoutUser,
   useRegisterForm,
-} from '@hooks/index';
+  useControlServerError,
+} from '@/hooks';
 
 export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const navigate = useNavigate();
@@ -28,10 +27,8 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
   const logoutUser = useLogoutUser({
     onSuccess: () => {
       dispatch({ type: 'LOGOUT_USER' });
-      toast.success('Logout successful', {
-        position: 'top-right',
-      });
-      setIsLoggedOut((prev) => !prev);
+      showSuccessToast('Logout successful', 'top-right');
+      setIsLoggedOut(false);
       if (matchProfile) navigate('/', { replace: true });
     },
   });
@@ -42,9 +39,7 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
     onSuccess: useCallback((reset) => {
       dialogRegisterRef.current?.close();
       reset();
-      toast.success('Registration successful', {
-        position: 'top-right',
-      });
+      showSuccessToast('Registration successful', 'top-right');
     }, []),
   });
 
@@ -54,9 +49,7 @@ export const Header = ({ matchHome, matchProfile }: HeaderProps) => {
     onSuccess: useCallback((reset) => {
       dialogLoginRef.current?.close();
       reset();
-      toast.success('Login successful', {
-        position: 'top-right',
-      });
+      showSuccessToast('Login successful', 'top-right');
     }, []),
   });
 
