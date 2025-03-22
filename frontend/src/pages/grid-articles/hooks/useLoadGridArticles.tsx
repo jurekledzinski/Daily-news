@@ -3,7 +3,6 @@ import { UseLoadGridArticlesProps } from './types';
 import {
   getCurrentCategory,
   getFormatedData,
-  getLocalData,
   setLocalData,
   updateLocalData,
 } from '@/helpers';
@@ -16,26 +15,17 @@ export const useLoadGridArticles = ({
 }: UseLoadGridArticlesProps) => {
   useEffect(() => {
     if (!data || !category) return;
+    const currentCategory = getCurrentCategory(category);
+    if (!currentCategory) return;
 
     const formatedData = data.response.results.map((i) => getFormatedData(i));
 
-    const isCategoryInLocalStorage = getCurrentCategory(category);
+    const updateData = updateLocalData(category, formatedData, searchParams);
 
-    if (isCategoryInLocalStorage) {
-      const localData1 = getLocalData();
-      const updateData = updateLocalData(
-        localData1,
-        category,
-        formatedData,
-        searchParams
-      );
-      setLocalData(updateData);
+    setLocalData(updateData);
 
-      const currentCategory = getCurrentCategory(category);
+    const updatedCategory = getCurrentCategory(category);
 
-      if (!currentCategory) return;
-
-      onSetState(currentCategory.listArticles);
-    }
+    onSetState(updatedCategory ? updatedCategory.listArticles : []);
   }, [category, data, searchParams, onSetState]);
 };
