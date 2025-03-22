@@ -1,12 +1,13 @@
 import { Card, LocalData } from '@/components/pages';
+import { checkIsExistArticle, useLoadGridArticles } from './hooks';
 import { faNewspaper } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getCurrentCategory } from '@/helpers';
 import { loaderArticles } from '@/api';
 import { NoDataMessage } from '@/components/shared';
 import { useCallback, useRef, useState } from 'react';
 import { useFetchOnScroll } from '@/hooks';
-import { useLoadGridArticles } from './hooks';
-import { UseOutletContext } from '../../types/global';
+import { UseOutletContext } from '@/types';
 import './GridArticles.css';
 import {
   useLoaderData,
@@ -18,6 +19,7 @@ import {
 
 export const GridArticles = () => {
   const { category } = useParams() as Params;
+  const currentCategory = getCurrentCategory(category ?? '');
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, setState] = useState<Record<string, LocalData['listArticles']>>(
     {}
@@ -53,6 +55,9 @@ export const GridArticles = () => {
       (articles) => {
         if (!category) return;
 
+        const isExist = checkIsExistArticle(state[category], articles);
+        if (!isExist) return;
+
         setState((prev) => {
           return {
             ...prev,
@@ -60,7 +65,7 @@ export const GridArticles = () => {
           };
         });
       },
-      [category]
+      [category, state]
     ),
   });
 
@@ -74,7 +79,13 @@ export const GridArticles = () => {
   }
 
   return (
-    <div className="grid-articles">
+    <div
+      className={
+        currentCategory && currentCategory.articles.length
+          ? 'grid-articles grid-articles__sub-articles'
+          : 'grid-articles'
+      }
+    >
       {category && state[category] && state[category].length
         ? state[category].map((article, index) => (
             <Card
