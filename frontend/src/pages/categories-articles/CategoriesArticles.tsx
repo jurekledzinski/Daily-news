@@ -37,8 +37,8 @@ export const CategoriesArticles = () => {
     <section
       className={
         id
-          ? 'section sectiom--article-details'
-          : 'section sectiom--grid-articles'
+          ? 'section section--article-details'
+          : 'section section--grid-articles'
       }
     >
       <TabsCategoriesArticles
@@ -52,7 +52,10 @@ export const CategoriesArticles = () => {
           if (category === categoryArt && !id) return;
           const page = getCurrentCategory(categoryArt)?.page ?? '1';
           const url = `/categories/${categoryArt}/articles?page=${page}`;
-          navigate(url, { preventScrollReset: true });
+          navigate(url, {
+            preventScrollReset: true,
+            unstable_viewTransition: true,
+          });
         }}
         onRedirectTwo={(categoryArt, idArticle) => {
           if (id && id === idArticle) return;
@@ -60,9 +63,12 @@ export const CategoriesArticles = () => {
           const url = `/categories/${categoryArt}/articles/article/${articleId}?page=1`;
           navigate(url, { preventScrollReset: true });
         }}
-        onRedirectThree={() => {
-          navigate('/', { preventScrollReset: true });
-        }}
+        onRedirectThree={() =>
+          navigate('/', {
+            preventScrollReset: true,
+            unstable_viewTransition: true,
+          })
+        }
         onSetActiveTabs={(value) => setActiveTabs(value)}
         state={state}
       />
