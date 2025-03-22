@@ -22,9 +22,10 @@
 }
 
 .details-article__title {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: var(--color-text-secondary);
   font-weight: 700;
+  line-height: 1;
 }
 
 .details-article__trail {
