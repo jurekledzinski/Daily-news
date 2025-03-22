@@ -27,8 +27,5 @@ export type LoaderDetailsArticleFn = (queryClient: QueryClient) => ({
   params,
   request,
 }: LoaderFunctionArgs) => Promise<{
-  detailsArticle:
-    | APIGuardianResDetailsSuccess<ArticleDetails>
-    | APIGuardianResError
-    | null;
+  detailsArticle: APIGuardianResDetailsSuccess<ArticleDetails> | null;
 }>;

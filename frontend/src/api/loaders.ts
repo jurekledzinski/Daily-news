@@ -57,9 +57,7 @@ export const loaderDetailsArticle: LoaderDetailsArticleFn =
     const queryArticle = getDetailsArticleQuery(category ?? 'about', articleId);
 
     const article = await fetchOrCache<
-      Promise<
-        APIGuardianResDetailsSuccess<ArticleDetails> | APIGuardianResError
-      >
+      Promise<APIGuardianResDetailsSuccess<ArticleDetails>>
     >(queryClient, queryArticle.queryKey, () =>
       queryClient.fetchQuery(queryArticle)
     );
