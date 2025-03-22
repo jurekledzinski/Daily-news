@@ -4,10 +4,10 @@
   top: 45px;
   left: 0px;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 1px;
   z-index: 1;
   background-color: var(--color-surface);
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 4px;
   width: 100%;
 }
 
