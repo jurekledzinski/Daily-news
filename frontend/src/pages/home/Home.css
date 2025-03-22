@@ -11,11 +11,3 @@
   background-color: var(--color-surface);
   padding: 0.5rem;
 }
-
-.section.sectiom--grid-articles {
-  margin-top: 80px;
-}
-
-.section.sectiom--article-details {
-  margin-top: 0.5rem;
-}
