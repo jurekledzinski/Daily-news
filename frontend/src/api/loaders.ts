@@ -1,3 +1,4 @@
+import { ArticleDetails, Articles, CategoriesData } from './types';
 import { fetchOrCache, getUrlQuery } from '@/helpers';
 import { Params } from 'react-router-dom';
 import {
@@ -10,9 +11,8 @@ import {
   APIGuardianResSuccess,
   APIGuardianResPaginationSuccess,
   APIGuardianResDetailsSuccess,
+  APIGuardianResError,
 } from './types/guardian';
-
-import { Articles, CategoriesData, ArticleDetails } from './types/articles';
 
 import {
   LoaderArticlesFn,
@@ -25,12 +25,12 @@ export const loaderCategories: LoaderCategoriesFn =
     const query = getCategoriesArticlesQuery();
 
     const categories = await fetchOrCache<
-      APIGuardianResSuccess<CategoriesData[]>
+      Promise<APIGuardianResSuccess<CategoriesData[]> | APIGuardianResError>
     >(queryClient, query.queryKey, () => queryClient.fetchQuery(query));
 
-    return categories && categories.response.status === 'ok'
-      ? categories
-      : null;
+    if ('message' in categories) return null;
+
+    return categories;
   };
 
 export const loaderArticles: LoaderArticlesFn =
@@ -41,10 +41,12 @@ export const loaderArticles: LoaderArticlesFn =
     const query = getArticlesQuery(category ?? 'about', page);
 
     const articles = await fetchOrCache<
-      APIGuardianResPaginationSuccess<Articles[]>
+      Promise<APIGuardianResPaginationSuccess<Articles[]> | APIGuardianResError>
     >(queryClient, query.queryKey, () => queryClient.fetchQuery(query));
 
-    return articles && articles.response.status === 'ok' ? articles : null;
+    if ('message' in articles) return null;
+
+    return articles;
   };
 
 export const loaderDetailsArticle: LoaderDetailsArticleFn =
@@ -55,13 +57,16 @@ export const loaderDetailsArticle: LoaderDetailsArticleFn =
     const queryArticle = getDetailsArticleQuery(category ?? 'about', articleId);
 
     const article = await fetchOrCache<
-      APIGuardianResDetailsSuccess<ArticleDetails>
+      Promise<
+        APIGuardianResDetailsSuccess<ArticleDetails> | APIGuardianResError
+      >
     >(queryClient, queryArticle.queryKey, () =>
       queryClient.fetchQuery(queryArticle)
     );
 
+    if ('message' in article) return { detailsArticle: null };
+
     return {
-      detailsArticle:
-        article && article.response.status === 'ok' ? article : null,
+      detailsArticle: article,
     };
   };
