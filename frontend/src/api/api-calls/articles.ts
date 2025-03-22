@@ -11,12 +11,12 @@ import {
 
 export const getCategoriesArticles = tryCatch<
   APIGuardianResSuccess<CategoriesData[]>,
-  null
+  APIGuardianResError
 >(async () => fetchApi({ url: URLS.GET_CATEGORIES_ARTICLES() }));
 
 export const getArticles = tryCatch<
   APIGuardianResPaginationSuccess<Articles[]>,
-  null,
+  APIGuardianResError,
   { category: string; page: string }
 >(
   async (data: { category: string; page: string }) =>
