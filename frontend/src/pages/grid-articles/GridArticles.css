@@ -3,6 +3,10 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 0.5rem;
   opacity: 1;
-  margin: 0.5rem 0;
+  margin: 0;
   height: calc(100% - 45px);
+}
+
+.grid-articles__sub-articles {
+  margin: 27px 0;
 }
