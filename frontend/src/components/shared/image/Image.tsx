@@ -15,11 +15,11 @@ export const Image = ({ altText, className, src, spinner }: ImageProps) => {
       {!error ? (
         <img
           {...(!loading && { alt: altText })}
-          className={`${
+          className={
             !spinner && src && loading && !error
               ? `${className} skeleton`
               : className
-          }`}
+          }
           src={src}
           onLoad={() => setLoading(false)}
           onError={() => {
