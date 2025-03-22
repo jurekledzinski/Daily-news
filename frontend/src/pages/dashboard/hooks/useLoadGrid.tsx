@@ -36,7 +36,6 @@ export const useLoadGrid = ({ onSetLayout }: UseLoadGridProps) => {
       }
     }, {});
 
-    // setLayout(transformedData);
     onSetLayout(transformedData);
   }, [onSetLayout]);
 };
