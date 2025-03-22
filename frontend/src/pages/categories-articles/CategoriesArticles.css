@@ -1,1 +1,9 @@
 @import '../home/Home.css';
+
+.section.section--grid-articles {
+  margin-top: 79px;
+}
+
+.section.section--article-details {
+  margin-top: 0.5rem;
+}
