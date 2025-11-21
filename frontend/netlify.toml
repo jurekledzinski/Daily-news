@@ -1,5 +1,2 @@
-[[redirects]]
-  from = "/api/v1/*"
-  to = "https://dailynewsapi.onrender.com/api/v1/:splat"
-  status = 200
-  force = true
+[build]
+  publish = "."

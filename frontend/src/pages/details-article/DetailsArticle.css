@@ -1,9 +1,0 @@
-.section--details-article {
-  padding: 0.5rem 0 !important;
-}
-
-@media (min-width: 768px) {
-  .section--details-article {
-    padding: 0.5rem 2rem !important;
-  }
-}

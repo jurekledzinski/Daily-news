@@ -5,10 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Discover the latest articles from The Guardian"
-    />
+    <meta name="description" content="Discover the latest articles from The Guardian" />
     <meta property="og:title" content="Daily news" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://daily24news.netlify.app" />
@@ -17,32 +14,79 @@
       property="og:image"
       content=" https://ik.imagekit.io/mdklwracd5rti/News/daily_news_bbMyRVUYom.png"
     />
-    <meta
-      property="og:description"
-      content="Discover the latest articles from The Guardian"
-    />
+    <meta property="og:description" content="Discover the latest articles from The Guardian" />
 
     <link rel="icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="/android-chrome-192x192.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="512x512"
-      href="/android-chrome-512x512.png"
-    />
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
     <link rel="manifest" href="/manifest.json" />
     <title>Daily news</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+          Cantarell, 'Helvetica Neue', Arial, sans-serif;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        width: min(calc(100% - 2rem), 575px);
+        max-height: 100%;
+      }
+
+      .heading {
+        width: 100%;
+        color: #333333;
+        line-height: 1;
+        text-align: center;
+      }
+
+      .text {
+        color: #555555;
+        font-size: 1rem;
+        text-align: center;
+      }
+
+      .wrapper-image {
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+        padding: 1rem;
+        width: 50%;
+      }
+
+      .image {
+        display: block;
+        width: 100%;
+        max-height: 100%;
+      }
+    </style>
   </head>
   <body>
-    <!DOCTYPE html>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div class="container">
+      <h2 class="heading">This website is temporarily unavailable</h2>
+      <p class="text">Currently under maintenance.</p>
+      <div class="wrapper-image">
+        <img src="maintance-icon.png" alt="maintance-icon" class="image" />
+      </div>
+    </div>
   </body>
 </html>
