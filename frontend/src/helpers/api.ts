@@ -1,12 +1,9 @@
-import { ApiResError, APIResSuccess } from '@/api';
-import { redirect } from 'react-router-dom';
+import { APIErrorResponse, APISuccessResponse } from '@/api';
+import { redirect } from 'react-router';
 import { removeCookie, setCookie } from './global';
 import type { QueryClient } from '@tanstack/react-query';
 
-export const invalidateQueryClient = async (
-  queryClient: QueryClient,
-  queryKey: string[]
-) => {
+export const invalidateQueryClient = async (queryClient: QueryClient, queryKey: string[]) => {
   await queryClient.invalidateQueries({
     queryKey,
   });
@@ -34,7 +31,7 @@ export const fetchOrCache = async <T>(
 
 export function setResponse(
   action: string,
-  result: APIResSuccess | ApiResError,
+  result: Omit<APISuccessResponse<unknown>, 'payload'> | APIErrorResponse,
   url: string
 ) {
   if ('message' in result && !result.success) {
@@ -47,11 +44,7 @@ export function setResponse(
   return redirect(url);
 }
 
-export function getUrlQuery(
-  request: Request,
-  nameQuery: string,
-  initial: string
-) {
+export function getUrlQuery(request: Request, nameQuery: string, initial: string) {
   const url = new URL(request.url);
   return url.searchParams.get(nameQuery) ?? initial;
 }
