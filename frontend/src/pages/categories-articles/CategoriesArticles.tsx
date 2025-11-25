@@ -1,9 +1,8 @@
 import styles from './CategoriesArticles.module.css';
 import { getLocalData } from '@helpers';
 import { GridStackNode } from 'gridstack';
-import { Outlet, useNavigate, useParams } from 'react-router';
-import { Section } from '@guardian/content-api-models/v1/section';
-import { Tab, Tabs, TabsList, TabsPanel } from '@components/shared';
+import { TabsCategories } from '@components/pages';
+import { useNavigate, useParams } from 'react-router';
 import { useState } from 'react';
 
 export const CategoriesArticles = () => {
@@ -17,24 +16,11 @@ export const CategoriesArticles = () => {
 
   return (
     <section className={styles.section}>
-      <Tabs
-        color="secondary"
-        defaultSelectedKey={category}
-        size="size-xs"
-        selectedKey={category}
-        onSelectChange={navigateCategory}
-        variant="text"
-      >
-        <TabsList>
-          {categories.map((category) => {
-            const content = JSON.parse(category.content!) as Section;
-            return <Tab key={category.id} id={category.id} label={content.webTitle} />;
-          })}
-        </TabsList>
-        <TabsPanel>
-          <Outlet />
-        </TabsPanel>
-      </Tabs>
+      <TabsCategories
+        categories={categories}
+        category={category}
+        navigateCategory={navigateCategory}
+      />
     </section>
   );
 };
