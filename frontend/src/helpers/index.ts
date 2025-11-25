@@ -1,9 +1,10 @@
 export * from './api';
-export * from './dashboard';
-export * from './detailsArticle';
 export * from './global';
-export * from './gridArticles';
-export * from './gridTemplateCard';
 export * from './navigation';
-export * from './sectionComments';
 export * from './toasts';
+// ----- new
+export * from './classNames';
+export * from './cssVariables';
+export * from './filterProps';
+export * from './formatText';
+export * from './localStorage';
