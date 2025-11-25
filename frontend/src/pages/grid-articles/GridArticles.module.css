@@ -1,0 +1,24 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.heading {
+  font-weight: 400;
+  font-size: 14px;
+  font-family: Robot, sans-serif;
+}
+
+.photograph {
+  display: block;
+  width: 100%;
+  font-size: 10px;
+  text-align: right;
+}
+
+.button {
+  border-radius: 2px;
+  font-size: 10px;
+}
