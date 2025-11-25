@@ -1,0 +1,100 @@
+.loader {
+  display: block;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  border: 1px solid var(--loader-track-color);
+  border-top: 1px solid var(--loader-spin-color);
+  border-radius: 50%;
+
+  --size: 16px;
+  --size-xs: 14px;
+  --size-xxs: 14px;
+  --size-sm: 16px;
+  --size-md: 16px;
+  --size-lg: 16px;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Sizes */
+
+.size-xs {
+  --size: var(var(--size-xs));
+  width: 14px;
+  height: 14px;
+}
+
+.size-xxs {
+  --size: var(var(--size-xxs));
+  width: 14px;
+  height: 14px;
+}
+
+.size-sm {
+  --size: var(var(--size-sm));
+  width: 16px;
+  height: 16px;
+}
+
+.size-md {
+  --size: var(var(--size-md));
+  width: 16px;
+  height: 16px;
+}
+
+.size-lg {
+  --size: var(var(--size-lg));
+  width: 16px;
+  height: 16px;
+}
+
+/* Position */
+
+.element {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.viewport {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Border */
+
+.border-xs {
+  border-width: 1px;
+  border-top-width: 1px;
+}
+
+.border-sm {
+  border-width: 2px;
+  border-top-width: 2px;
+}
+
+.border-md {
+  border-width: 3px;
+  border-top-width: 3px;
+}
+
+.border-lg {
+  border-width: 4px;
+  border-top-width: 4px;
+}
+
+.border-xl {
+  border-width: 5px;
+  border-top-width: 5px;
+}
