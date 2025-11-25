@@ -3,7 +3,7 @@ import type { AsideProps } from './types';
 
 export const Aside = ({ children, ...props }: AsideProps) => {
   return (
-    <div className={styles.asideContainer} {...props}>
+    <div className={styles.container} {...props}>
       <div className={styles.aside}>{children}</div>
     </div>
   );
