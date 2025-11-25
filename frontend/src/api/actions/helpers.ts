@@ -1,5 +1,5 @@
+import { APIErrorResponse, APISuccessResponse } from '../api';
 import { queryClient as useQueryClient } from '@/main';
-import { APIResSuccess, ApiResError } from '../types';
 
 export const formatDataToObject = <T>(data: FormData) => {
   return Object.fromEntries(data.entries()) as T;
@@ -23,7 +23,7 @@ export const getMessageError = (message: string, action: string) => ({
 });
 
 export const validateAction = (
-  result: APIResSuccess | ApiResError,
+  result: Omit<APISuccessResponse<unknown>, 'payload'> | APIErrorResponse,
   action: string
 ) => {
   if (!result.success) return getMessageError(result.message!, action);

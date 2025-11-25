@@ -1,4 +1,3 @@
-export * from './articles';
 export * from './comments';
 export * from './helpers';
 export * from './profile';

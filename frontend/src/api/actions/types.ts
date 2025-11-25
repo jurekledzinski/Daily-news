@@ -1,50 +1,14 @@
-import { QueryClient } from '@tanstack/react-query';
+type Params = { data: FormData; articleId: string; page: string; pageReply: string };
+type WithFormData = { data: FormData };
+type WithId = { id: string };
+type Action<T> = (params: T) => Promise<Response>;
 
-type Message = {
-  message: string | undefined;
-  action: string;
-};
+export type ActionCreateComment = Action<Omit<Params, 'pageReply'>>;
+export type ActionCreateCommentReply = Action<Params>;
+export type ActionUpdateLikesComment = Action<Params>;
 
-type PromiseRes = Promise<Response | Message>;
-
-export type ActionCreateComment = (
-  data: FormData,
-  articleId: string,
-  page: string
-) => PromiseRes;
-
-export type ActionCreateCommentReply = (
-  data: FormData,
-  articleId: string,
-  page: string,
-  pageReply: string
-) => PromiseRes;
-
-export type ActionUpdateLikesComment = (
-  data: FormData,
-  articleId: string,
-  page: string,
-  pageReply: string
-) => PromiseRes;
-
-export type ActionUpdateUserProfile = (
-  data: FormData,
-  id: string
-) => PromiseRes;
-
-export type ActionChangeUserPassword = (
-  data: FormData,
-  id: string
-) => PromiseRes;
-
-export type ActionDeleteUserAccount = (
-  data: FormData,
-  id: string
-) => PromiseRes;
-
-export type ActionRegisterUser = (data: FormData) => Promise<Response>;
-
-export type ActionLoginUser = (
-  queryClient: QueryClient,
-  data: FormData
-) => Promise<Response>;
+export type ActionUpdateUserProfile = Action<WithFormData & WithId>;
+export type ActionChangeUserPassword = Action<WithFormData & WithId>;
+export type ActionDeleteUserAccount = Action<WithFormData & WithId>;
+export type ActionRegisterUser = Action<WithFormData>;
+export type ActionLoginUser = Action<WithFormData>;

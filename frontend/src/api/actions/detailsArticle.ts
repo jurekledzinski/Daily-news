@@ -1,13 +1,9 @@
-import { CommentCreate, Likes } from '../types';
+import { ActionCreateComment, ActionCreateCommentReply, ActionUpdateLikesComment } from './types';
+import { Comment, Likes } from '@models';
 import { createComment, updateLikesComment } from '../api-calls';
 import { formatDataToObject, queryInvalidate, validateAction } from './helpers';
-import { LoaderFunctionArgs, Params, redirect } from 'react-router-dom';
-import { showSuccessToast } from '@/helpers';
-import {
-  ActionCreateComment,
-  ActionCreateCommentReply,
-  ActionUpdateLikesComment,
-} from './types';
+import { LoaderFunctionArgs, Params, redirect } from 'react-router';
+import { showSuccessToast } from '@helpers';
 
 export const actionDetailsArticle =
   () =>
@@ -22,21 +18,17 @@ export const actionDetailsArticle =
     const actionType = data.get('actionType');
 
     if (actionType === 'create-comment') {
-      return actionCreateComment(data, articleId, page);
+      return actionCreateComment({ data, articleId, page });
     } else if (actionType === 'create-reply') {
-      return actionCreateCommentReply(data, articleId, page, '1');
+      return actionCreateCommentReply({ data, articleId, page, pageReply: '1' });
     } else if (actionType === 'update-likes') {
-      return actionUpdateLikesComment(data, articleId, page, pageReply);
+      return actionUpdateLikesComment({ data, articleId, page, pageReply });
     }
   };
 
-export const actionCreateComment: ActionCreateComment = async (
-  data,
-  articleId,
-  page
-) => {
+export const actionCreateComment: ActionCreateComment = async ({ data, articleId, page }) => {
   data.delete('actionType');
-  const newComment = formatDataToObject<CommentCreate>(data);
+  const newComment = formatDataToObject<Omit<Comment, 'id'>>(data);
   const result = await createComment(newComment);
 
   queryInvalidate(['list-comments', articleId, page]);
@@ -44,19 +36,19 @@ export const actionCreateComment: ActionCreateComment = async (
 
   validateAction(result, 'create-comment');
 
-  showSuccessToast('Comment added successfully!', 'top-right');
+  showSuccessToast('Comment added successfully!');
 
   return redirect(window.location.pathname);
 };
 
-export const actionCreateCommentReply: ActionCreateCommentReply = async (
+export const actionCreateCommentReply: ActionCreateCommentReply = async ({
   data,
   articleId,
   page,
-  pageReply
-) => {
+  pageReply,
+}) => {
   data.delete('actionType');
-  const newReply = formatDataToObject<CommentCreate>(data);
+  const newReply = formatDataToObject<Omit<Comment, 'id'>>(data);
   const result = await createComment(newReply);
   const parentId = newReply.parentCommentId ?? '';
 
@@ -66,19 +58,19 @@ export const actionCreateCommentReply: ActionCreateCommentReply = async (
 
   validateAction(result, 'create-reply');
 
-  showSuccessToast('Comment added successfully!', 'top-right');
+  showSuccessToast('Comment added successfully!');
 
   const redirectTo = `${window.location.pathname}?comment_id=${newReply.parentCommentId}`;
 
   return redirect(redirectTo);
 };
 
-export const actionUpdateLikesComment: ActionUpdateLikesComment = async (
+export const actionUpdateLikesComment: ActionUpdateLikesComment = async ({
   data,
   articleId,
   page,
-  pageReply
-) => {
+  pageReply,
+}) => {
   data.delete('actionType');
   const comment = formatDataToObject<Likes>(data);
   const result = await updateLikesComment({ articleId, body: comment });

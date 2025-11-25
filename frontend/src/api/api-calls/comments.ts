@@ -1,13 +1,15 @@
-import { ApiResError, APIResSuccess, CommentCreate, Likes } from '../types';
+import { APIErrorResponse, APISuccessResponse } from '../api';
+import { Comment } from '@/models';
 import { fetchApi } from './helpers';
+import { Likes } from '@models';
 import { tryCatch } from '@/helpers';
 import { URLS } from '../urls';
 
 export const createComment = tryCatch<
-  APIResSuccess,
-  ApiResError,
-  CommentCreate
->(async (data: CommentCreate) => {
+  Omit<APISuccessResponse<unknown>, 'payload'>,
+  APIErrorResponse,
+  Omit<Comment, 'id'>
+>(async (data) => {
   const { csrfToken, ...body } = data;
 
   return await fetchApi({
@@ -21,8 +23,8 @@ export const createComment = tryCatch<
 });
 
 export const updateLikesComment = tryCatch<
-  APIResSuccess,
-  ApiResError,
+  Omit<APISuccessResponse<unknown>, 'payload'>,
+  APIErrorResponse,
   { articleId: string; body: Likes }
 >(async (data: { articleId: string; body: Likes }) => {
   const id = encodeURIComponent(data.articleId);
