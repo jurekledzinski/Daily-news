@@ -27,14 +27,34 @@
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
+      "@components": ["./src/components/index.ts"],
+
       "@helpers/*": ["./src/helpers/*"],
+      "@helpers": ["./src/helpers/index.ts"],
+
       "@hooks/*": ["./src/hooks/*"],
+      "@hooks": ["./src/hooks/index.ts"],
+
       "@types/*": ["./src/types/*"],
+      "@types": ["./src/types/index.ts"],
+
       "@api/*": ["./src/api/*"],
+      "@api": ["./src/api/index.ts"],
+
       "@images/*": ["./src/images/*"],
+      "@images": ["./src/images/index.ts"],
+
+      "@models/*": ["./src/models/*"],
+      "@models": ["./src/models/index.ts"],
+
       "@pages/*": ["./src/pages/*"],
+      "@pages": ["./src/pages/index.ts"],
+
       "@routes/*": ["./src/routes/*"],
-      "@store/*": ["./src/store/*"]
+      "@routes": ["./src/routes/index.ts"],
+
+      "@store/*": ["./src/store/*"],
+      "@store": ["./src/store/index.ts"]
     }
   },
   "include": ["src/**/*", "vite-env.d.ts"],

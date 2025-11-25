@@ -18,15 +18,16 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@api': path.resolve(__dirname, 'src/api'),
       '@components': path.resolve(__dirname, 'src/components'),
       '@helpers': path.resolve(__dirname, 'src/helpers'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
-      '@types': path.resolve(__dirname, 'src/types'),
-      '@api': path.resolve(__dirname, 'src/api'),
       '@images': path.resolve(__dirname, 'src/images'),
+      '@models': path.resolve(__dirname, 'src/models'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@routes': path.resolve(__dirname, 'src/routes'),
       '@store': path.resolve(__dirname, 'src/store'),
+      '@types': path.resolve(__dirname, 'src/types'),
     },
   },
   build: {
