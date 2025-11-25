@@ -1,0 +1,163 @@
+.gridItem {
+  display: grid;
+  position: relative;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'icon';
+  place-content: center;
+  align-items: center;
+  cursor: grab;
+  border-radius: 2px;
+  background-color: white;
+  padding: 1rem;
+  width: 100%;
+  min-height: 1.5rem;
+  touch-action: none;
+  color: #555555;
+  user-select: none;
+}
+
+.gridItem.disabled::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.disabled {
+  transition: 500ms linear;
+  pointer-events: none;
+  user-select: none;
+}
+
+.icon {
+  grid-area: icon;
+  width: 1rem;
+}
+
+.image {
+  display: block;
+  z-index: 1;
+  width: 100%;
+}
+
+.title {
+  display: none;
+  grid-area: title;
+  color: white;
+  font-weight: 500;
+  font-size: 0.875rem;
+  font-family: Oswald, sans-serif;
+  text-transform: uppercase;
+}
+
+.text {
+  display: none;
+  grid-area: text;
+  color: white;
+  font-size: 0.75rem;
+}
+
+.artanddesign {
+  background: linear-gradient(to right, #ff6a77, #ffa3aa);
+}
+
+.australia-news {
+  background: linear-gradient(to right, #d9b173, #a8c88c);
+}
+
+.cities {
+  background: linear-gradient(to right, #5daf98, #5a8bcb);
+}
+
+.environment {
+  background: linear-gradient(to right, #4ed590, #17afcb);
+}
+
+.fashion {
+  background: linear-gradient(to right, #eb7ca8, #d58cee);
+}
+
+.film {
+  background: linear-gradient(to right, #7f54e0, #b992f0);
+}
+
+.food {
+  background: linear-gradient(to right, #ffa533, #ffc78b);
+}
+
+.football {
+  background: linear-gradient(to right, #e23f3f, #ff8b8b);
+}
+
+.games {
+  background: linear-gradient(to right, #2c9ad6, #70bfc7);
+}
+
+.music {
+  background: linear-gradient(to right, #ffdd63, #fff190);
+}
+
+.news {
+  background: linear-gradient(to right, #5f7fd1, #9fb3e0);
+}
+
+.politics {
+  background: linear-gradient(to right, #d85d5d, #f0a3a3);
+}
+
+.science {
+  background: linear-gradient(to right, #42b0ff, #8ed8b6);
+}
+
+.sport {
+  background: linear-gradient(to right, #ff7b70, #ffb88f);
+}
+
+.technology {
+  background: linear-gradient(to right, #7f5be5, #b89aff);
+}
+
+.travel {
+  background: linear-gradient(to right, #49aedc, #8fe8c7);
+}
+
+.uk-news {
+  background: linear-gradient(to right, #f06d94, #f5afc0);
+}
+
+.us-news {
+  background: linear-gradient(to right, #2f63b8, #5a9be0);
+}
+
+.weather {
+  background: linear-gradient(to right, #6fc9b9, #9ee6cc);
+}
+
+.world {
+  background: linear-gradient(to right, #ff6c91, #ffb5cc);
+}
+
+@media (min-width: 768px) {
+  .gridItem {
+    grid-template-columns: 2rem 1fr;
+    grid-template-areas:
+      'icon title'
+      'icon text';
+    min-height: 100px;
+  }
+
+  .title {
+    display: block;
+  }
+
+  .text {
+    display: block;
+  }
+
+  .icon {
+    width: 1.5rem;
+  }
+}
