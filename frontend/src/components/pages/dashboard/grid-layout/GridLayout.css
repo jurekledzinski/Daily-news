@@ -1,29 +1,24 @@
 .grid-layout-container {
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-  background-color: var(--light-color);
-  padding: 0.5rem 0.35rem 0.5rem 0.5rem;
+  flex: 1;
+  border: 1px solid var(--color-secondary-50);
+  background-color: var(--color-white);
+  padding: 0.5rem 0 0 0.5rem;
   width: 100%;
-  min-height: 100%;
-  max-height: 100%;
+  height: calc(100% - 178px);
 }
 
-.grid-layout {
+.grid-stack {
+  flex: 1;
   opacity: 1;
-  background-color: var(--light-color);
-  width: 100%;
+  background-color: var(--color-white);
+  height: 100%;
   min-height: 100%;
   max-height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-.grid-layout.grid-layout--transparent {
-  opacity: 0;
-}
-
-.react-grid-placeholder {
-  background-color: blue !important;
-  opacity: 0.2;
+div.grid-stack-item-content {
+  touch-action: none;
 }
