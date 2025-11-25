@@ -1,6 +1,3 @@
-export type ImageProps = {
-  altText: string;
-  className: string;
-  src: string;
-  spinner?: boolean;
-};
+import { ImgHTMLAttributes } from 'react';
+
+export type ImageProps = ImgHTMLAttributes<HTMLImageElement>;
