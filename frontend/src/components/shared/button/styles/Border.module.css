@@ -1,0 +1,41 @@
+/* border */
+
+.border-xs {
+  border-width: 1px;
+}
+
+.border-sm {
+  border-width: 2px;
+}
+
+.border-md {
+  border-width: 3px;
+}
+
+.border-lg {
+  border-width: 4px;
+}
+
+.border-xl {
+  border-width: 5px;
+}
+
+.radius-xs {
+  border-radius: 2px;
+}
+
+.radius-sm {
+  border-radius: 4px;
+}
+
+.radius-md {
+  border-radius: 6px;
+}
+
+.radius-lg {
+  border-radius: 8px;
+}
+
+.radius-xl {
+  border-radius: 100vh;
+}

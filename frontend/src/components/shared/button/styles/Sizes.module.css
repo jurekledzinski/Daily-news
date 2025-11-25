@@ -1,0 +1,32 @@
+/* sizes */
+
+/* 28px; */
+.size-xs {
+  padding: 5px 12px;
+  font-size: 14px;
+}
+
+/* 30px; */
+.size-sm {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+/* 32px */
+.size-md {
+  padding: 7px 12px;
+  font-size: 14px;
+}
+
+/* 36px */
+.size-lg {
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
+/* full width */
+
+a.fullWidth,
+button.fullWidth {
+  width: 100%;
+}

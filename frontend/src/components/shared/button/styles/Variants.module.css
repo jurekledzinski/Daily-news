@@ -1,0 +1,115 @@
+/* --- variants --- */
+
+.outlined.info,
+.outlined.primary,
+.outlined.secondary,
+.outlined.success,
+.outlined.negative,
+.outlined.warning,
+.outlined.white {
+  background: initial;
+  background-color: transparent;
+}
+
+.outlined.info,
+.text.info {
+  color: var(--color-info-500);
+}
+
+.outlined.primary,
+.text.primary {
+  color: var(--color-primary-700);
+}
+
+.outlined.secondary,
+.text.secondary {
+  color: var(--color-secondary-700);
+}
+
+.outlined.success,
+.text.success {
+  color: var(--color-success-400);
+}
+
+.outlined.negative,
+.text.negative {
+  color: var(--color-negative-500);
+}
+
+.outlined.warning,
+.text.warning {
+  color: var(--color-warning-900);
+}
+
+.outlined.white,
+.text.white {
+  color: var(--color-white);
+}
+
+/* Variant minimal */
+
+a.minimal {
+  background-color: transparent;
+  border: none;
+  padding: initial;
+  min-width: initial;
+  color: var(--icon-color-default);
+  transition: 300ms linear;
+}
+
+a.minimal:hover {
+  color: var(--icon-color-hover);
+}
+
+a.minimal.primary {
+  background-color: transparent;
+}
+
+/* --- Hover outline variant --- */
+
+.outlined.info:hover,
+.text.info:hover {
+  background-color: var(--color-info-alpha-10);
+}
+
+.outlined.primary:hover,
+.text.primary:hover {
+  background-color: var(--color-primary-alpha-10);
+}
+
+.outlined.secondary:hover,
+.text.secondary:hover {
+  background-color: var(--color-secondary-alpha-10);
+}
+
+.outlined.success:hover,
+.text.success:hover {
+  background-color: var(--color-success-alpha-10);
+}
+
+.outlined.negative:hover,
+.text.negative:hover {
+  background-color: var(--color-negative-alpha-10);
+}
+
+.outlined.warning:hover,
+.text.warning:hover {
+  background-color: var(--color-warning-alpha-10);
+}
+
+.outlined.white:hover,
+.text.white:hover {
+  background-color: var(--color-white-alpha-10);
+}
+
+.text.info,
+.text.primary,
+.text.secondary,
+.text.success,
+.text.negative,
+.text.warning,
+.text.white {
+  background: initial;
+  background-color: transparent;
+  border-color: transparent;
+}

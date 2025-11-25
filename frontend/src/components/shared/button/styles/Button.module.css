@@ -1,0 +1,51 @@
+@import './Colors.module.css';
+@import './Variants.module.css';
+@import './Sizes.module.css';
+@import './Disabled.module.css';
+
+.button {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  transition: 0.3s linear;
+  cursor: pointer;
+  width: fit-content;
+  min-width: 64px;
+  line-height: normal;
+  user-select: none;
+  text-decoration: none;
+  border-width: 1px;
+}
+
+.label {
+  display: contents;
+}
+
+.iconStart {
+  position: relative;
+  display: inherit;
+  width: 1.2em;
+  min-width: 1.2em;
+}
+
+.iconEnd svg,
+.iconStart svg {
+  color: inherit;
+}
+
+.iconCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.iconEnd {
+  position: relative;
+  display: inherit;
+  margin-right: -4px;
+  margin-left: 4px;
+  width: 1.2em;
+  min-width: 1.2em;
+}

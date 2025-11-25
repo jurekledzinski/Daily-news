@@ -1,0 +1,59 @@
+/* --- Disabled --- */
+
+.iconButton:disabled,
+.button:disabled,
+a.disabled {
+  position: relative;
+  background-color: var(--color-disabled-100);
+  border-color: var(--color-disabled-100);
+  cursor: not-allowed;
+}
+
+a.disabled {
+  pointer-events: none;
+}
+
+.iconButton.outlined:disabled,
+.button.outlined:disabled,
+a.outlined.disabled {
+  background-color: transparent;
+  border-color: var(--color-disabled-100);
+  color: var(--color-text-disabled);
+}
+
+.iconButton.text:disabled,
+.button.text:disabled,
+a.text.disabled {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-text-disabled);
+}
+
+a:focus-visible.disabled,
+a:focus-visible.disabled svg {
+  box-shadow: none;
+}
+
+/* --- Clear hover on disable --- */
+
+.button:disabled:hover,
+.iconButton:disabled:hover,
+a.disabled:hover {
+  background-color: var(--color-disabled-100);
+  border-color: var(--color-disabled-100);
+}
+
+.button.outlined:disabled:hover,
+.button.text:disabled:hover,
+.iconButton.outlined:disabled:hover,
+.iconButton.text:disabled:hover,
+a.outlined.disabled:hover,
+a.text.disabled:hover {
+  background-color: transparent;
+}
+
+.button.text:disabled:hover,
+.iconButton.text:disabled:hover,
+a.text.disabled:hover {
+  border-color: transparent;
+}
