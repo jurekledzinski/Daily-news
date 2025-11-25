@@ -27,10 +27,17 @@ export const Dashboard = () => {
         <p className={styles.subTitle}>
           Drag categories from the sidebar to organize your news feeds
         </p>
-        <GridLayout />
+        <GridLayout>
+          <EmptyState text="Drag categories here to view articles" src="images/mouse.png" />
+        </GridLayout>
       </Box>
       <Aside>
-        {/* {!sortedCategories.length && <EmptyState title="" />} */}
+        {!sortedCategories.length && (
+          <EmptyState
+            text="API limit has been reached. Please try again later."
+            src="images/api-limit.png"
+          />
+        )}
         {sortedCategories.map((item) => (
           <GridItem item={item} gridItemIds={gridItemIds} key={item.id} />
         ))}
