@@ -1,4 +1,4 @@
 export type EmptyStateProps = {
-  title: string;
+  text: string;
   src?: string;
 };

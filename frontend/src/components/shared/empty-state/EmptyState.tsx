@@ -1,10 +1,12 @@
 import styles from './EmptyState.module.css';
 import { EmptyStateProps } from './types';
+import { Image } from '../image';
 
-export const EmptyState = ({ title, src }: EmptyStateProps) => {
+export const EmptyState = ({ text, src }: EmptyStateProps) => {
   return (
     <div className={styles.emptyState}>
-      <img className={styles.image} src="images/mouse-click.png" alt="Empty state image" />
+      <Image className={styles.image} src={src} alt="Empty state image" />
+      <p className={styles.text}>{text}</p>
     </div>
   );
 };
