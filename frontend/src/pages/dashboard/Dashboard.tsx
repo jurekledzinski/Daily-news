@@ -1,9 +1,13 @@
 import styles from './Dashboard.module.css';
 import { Aside, GridItem, GridLayout, useGridInitialize } from '@components/pages';
-import { Box, Container, Heading, EmptyState } from '@components/shared';
+import { Box, Container, EmptyState, Heading } from '@components/shared';
 import { useCallback, useMemo } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import type { Section } from '@guardian/content-api-models/v1/section';
+
+const tempCategories = [
+  { id: 'artanddesign', webTitle: 'Art and design', webUrl: '', apiUrl: '', editions: [] },
+];
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -28,17 +32,19 @@ export const Dashboard = () => {
           Drag categories from the sidebar to organize your news feeds
         </p>
         <GridLayout>
-          <EmptyState text="Drag categories here to view articles" src="images/mouse.png" />
+          {!gridItemIds.length && (
+            <EmptyState text="Drag categories here to view articles" src="images/mouse.png" />
+          )}
         </GridLayout>
       </Box>
       <Aside>
-        {!sortedCategories.length && (
+        {!tempCategories.length && (
           <EmptyState
             text="API limit has been reached. Please try again later."
             src="images/api-limit.png"
           />
         )}
-        {sortedCategories.map((item) => (
+        {tempCategories.map((item) => (
           <GridItem item={item} gridItemIds={gridItemIds} key={item.id} />
         ))}
       </Aside>
