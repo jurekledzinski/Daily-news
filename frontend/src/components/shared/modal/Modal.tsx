@@ -1,63 +1,41 @@
-import { forwardRef, Ref, useImperativeHandle, useRef } from 'react';
+import { Backdrop } from '../backdrop';
+import { createPortal } from 'react-dom';
+import { modalClassNames } from './utils';
 import { ModalProps } from './types';
-import './Modal.css';
+import { Popover } from '../pop-over';
+import { useState } from 'react';
 
-export const Modal = forwardRef<HTMLDialogElement, ModalProps>(
-  (
-    {
-      form,
-      onClose,
-      className,
-      cancelButton = 'Cancel',
-      confirmButton = 'Confirm',
-      openButton = 'Open modal',
-      children,
-      title,
-    },
-    ref: Ref<HTMLDialogElement>
-  ) => {
-    const localRef = useRef<HTMLDialogElement>(null);
+export const Modal = ({ children, open = false, portal }: ModalProps) => {
+  const [showBackdrop, setShowBackdrop] = useState(false);
 
-    useImperativeHandle(ref, () => localRef.current!);
+  const classNames = modalClassNames();
 
+  const modalElement = (
+    <Popover
+      open={open}
+      timeout={300}
+      className={classNames.modalElement}
+      classNames={classNames.modal}
+      onEnter={() => setShowBackdrop(true)}
+      onExited={() => setShowBackdrop(false)}
+    >
+      {children}
+    </Popover>
+  );
+
+  if (portal) {
     return (
       <>
-        <button
-          className="button-open-modal"
-          onClick={() => {
-            if (!localRef.current) return;
-            localRef.current.showModal();
-          }}
-        >
-          {openButton}
-        </button>
-        <dialog
-          className={['modal', className].filter(Boolean).join(' ')}
-          role="dialog"
-          ref={localRef}
-        >
-          <header className="modal__header">
-            <h5 className="modal__title">{title}</h5>
-          </header>
-          <div className="modal__body">{children}</div>
-          <footer className="modal__footer">
-            <button className="modal__button" form={form} type="submit">
-              {confirmButton}
-            </button>
-            <button
-              autoFocus
-              className="modal__button"
-              onClick={() => {
-                if (!localRef.current) return;
-                localRef.current.close();
-                onClose && onClose();
-              }}
-            >
-              {cancelButton}
-            </button>
-          </footer>
-        </dialog>
+        <Backdrop open={showBackdrop} portal={portal} zIndex={200} />
+        {createPortal(modalElement, document.body)}
       </>
     );
   }
-);
+
+  return (
+    <>
+      <Backdrop open={showBackdrop} portal={portal} zIndex={200} />
+      {modalElement}
+    </>
+  );
+};

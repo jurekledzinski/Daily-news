@@ -1,10 +1,5 @@
 export type ModalProps = {
-  className?: string;
-  confirmButton?: string;
-  cancelButton?: string;
+  open: boolean;
   children: React.ReactNode;
-  form: string;
-  title: string;
-  onClose?: () => void;
-  openButton?: string;
+  portal?: boolean;
 };

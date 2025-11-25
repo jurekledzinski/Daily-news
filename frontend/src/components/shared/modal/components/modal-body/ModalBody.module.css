@@ -1,0 +1,5 @@
+.body {
+  padding: 1rem 0.75rem 0;
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-elevated-0);
+}
