@@ -1,0 +1,19 @@
+.slide {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: var(--color-white);
+  animation: slide 600ms linear forwards;
+  z-index: 1;
+}
+
+@keyframes slide {
+  from {
+    transform: translateY(-50px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
