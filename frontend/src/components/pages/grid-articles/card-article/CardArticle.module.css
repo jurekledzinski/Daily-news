@@ -1,0 +1,26 @@
+.heading {
+  font-weight: 400;
+  font-size: 0.75rem;
+  font-family: Robot, sans-serif;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  font-family: 'Inter', sans-serif;
+  color: var(--color-text-primary);
+}
+
+.photograph {
+  position: absolute;
+  right: 0.25rem;
+  bottom: 0.25rem;
+  font-size: 8px;
+  color: var(--color-text-white);
+}
+
+.button {
+  border-radius: 2px;
+  font-size: 10px;
+}
