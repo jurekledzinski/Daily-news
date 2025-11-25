@@ -1,0 +1,8 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  z-index: 0;
+  background-color: transparent;
+}
