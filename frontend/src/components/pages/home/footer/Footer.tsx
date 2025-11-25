@@ -1,6 +1,6 @@
 import { FooterProps } from './types';
-import './Footer.css';
+import styles from './Footer.module.css';
 
 export const Footer = ({ children }: FooterProps) => {
-  return <footer className="footer">{children}</footer>;
+  return <footer className={styles.footer}>{children}</footer>;
 };
