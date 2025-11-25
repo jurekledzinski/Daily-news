@@ -1,0 +1,138 @@
+.button-group {
+  display: flex;
+  width: fit-content;
+}
+
+/* Direction */
+
+.row {
+  flex-direction: row;
+}
+
+.column {
+  flex-direction: column;
+}
+
+/* Full width */
+
+.button-group.full-width {
+  width: 100%;
+}
+
+.button-group.row.none > button:first-child,
+.button-group.row.none > button:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right-color: transparent;
+}
+
+.button-group.row.none > button:last-child,
+.button-group.row.none > button:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left-color: transparent;
+}
+
+.button-group.column.none > button:first-child,
+.button-group.column.none > button:first-child {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-color: transparent;
+}
+
+.button-group.column.none > button:last-child,
+.button-group.column.none > button:last-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top-color: transparent;
+}
+
+.button-group.row:not(.none) > button:first-child,
+.button-group.row:not(.none) > button:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.button-group.row:not(.none) > button:last-child,
+.button-group.row:not(.none) > button:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.button-group.column:not(.none) > button:first-child,
+.button-group.column:not(.none) > button:first-child {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.button-group.column:not(.none) > button:last-child,
+.button-group.column:not(.none) > button:last-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* --- Spacing --- */
+
+.none {
+  gap: initial;
+}
+
+.tight {
+  gap: 0.25rem;
+}
+
+.normal {
+  gap: 0.5rem;
+}
+
+.loose {
+  gap: 0.75rem;
+}
+
+.extra-loose {
+  gap: 1rem;
+}
+
+/* --- Justify --- */
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.space-evenly {
+  justify-content: space-evenly;
+}
+
+/* --- Aligment --- */
+
+.aligment-start {
+  align-items: flex-start;
+}
+
+.aligment-end {
+  align-items: flex-end;
+}
+
+.aligment-center {
+  align-items: center;
+}
+
+.stretch {
+  align-items: stretch;
+}
