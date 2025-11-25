@@ -1,0 +1,69 @@
+.info.active:not(.outlined, .text) {
+  background-color: var(--color-info-700);
+  border-color: var(--color-info-700);
+}
+
+.primary.active:not(.outlined, .text) {
+  background-color: var(--color-primary-900);
+  border-color: var(--color-primary-900);
+}
+
+.secondary.active:not(.outlined, .text) {
+  background-color: var(--color-secondary-600);
+  border-color: var(--color-secondary-600);
+}
+
+.success.active:not(.outlined, .text) {
+  background-color: var(--color-success-600);
+  border-color: var(--color-success-600);
+}
+
+.negative.active:not(.outlined, .text) {
+  background-color: var(--color-negative-700);
+  border-color: var(--color-negative-700);
+}
+
+.warning.active:not(.outlined, .text) {
+  background-color: var(--color-warning-1100);
+  border-color: var(--color-warning-1100);
+}
+
+.white.active:not(.outlined, .text) {
+  background-color: var(--color-secondary-100);
+  border-color: var(--color-secondary-100);
+}
+
+.outlined.info.active,
+.text.info.active {
+  background-color: var(--color-info-alpha-10);
+}
+
+.outlined.primary.active,
+.text.primary.active {
+  background-color: var(--color-primary-alpha-10);
+}
+
+.outlined.secondary.active,
+.text.secondary.active {
+  background-color: var(--color-secondary-alpha-10);
+}
+
+.outlined.success.active,
+.text.success.active {
+  background-color: var(--color-success-alpha-10);
+}
+
+.outlined.negative.active,
+.text.negative.active {
+  background-color: var(--color-negative-alpha-10);
+}
+
+.outlined.warning.active,
+.text.warning.active {
+  background-color: var(--color-warning-alpha-10);
+}
+
+.outlined.white.active,
+.text.white.active {
+  background-color: var(--color-white-alpha-10);
+}
