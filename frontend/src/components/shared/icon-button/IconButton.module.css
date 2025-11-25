@@ -1,0 +1,127 @@
+@import '../button/styles/Colors.module.css';
+@import '../button/styles/Variants.module.css';
+@import '../button/styles/Disabled.module.css';
+
+.iconButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.3s linear;
+  text-decoration: none;
+  border-width: 1px;
+}
+
+.iconButton svg {
+  color: inherit;
+}
+
+/* 20px */
+.size-xxs {
+  min-width: 24px;
+  padding: 4px;
+  font-size: 14px;
+}
+
+/* 28px */
+.size-xs {
+  min-width: 28px;
+  padding: 6px;
+  font-size: 14px;
+}
+
+/* 30px */
+.size-sm {
+  min-width: 30px;
+  padding: 6.5px;
+  font-size: 15px;
+}
+
+/* 32px */
+.size-md {
+  min-width: 32px;
+  padding: 7px;
+  font-size: 16px;
+}
+
+/* 36px */
+.size-lg {
+  min-width: 36px;
+  padding: 8px;
+  font-size: 18px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.iconButton.minimal {
+  background-color: transparent;
+  border: none;
+  padding: initial;
+  min-width: initial;
+  transition: 300ms linear;
+}
+
+.iconButton.minimal svg {
+  color: var(--icon-color-default);
+}
+
+.iconButton.minimal:hover svg {
+  color: var(--icon-color-hover);
+}
+
+.iconButton.minimal.white svg {
+  color: var(--color-text-white);
+}
+
+.iconButton.minimal.info svg {
+  color: var(--color-info-700);
+}
+
+.iconButton.minimal.info:hover svg {
+  color: var(--color-info-800);
+}
+
+.iconButton.minimal.primary svg {
+  color: var(--color-primary-700);
+}
+
+.iconButton.minimal.primary:hover svg {
+  color: var(--color-primary-800);
+}
+
+.iconButton.minimal.secondary svg {
+  color: var(--color-secondary-400);
+}
+
+.iconButton.minimal.secondary:hover svg {
+  color: var(--color-secondary-500);
+}
+
+.iconButton.minimal.success svg {
+  color: var(--color-success-400);
+}
+
+.iconButton.minimal.success:hover svg {
+  color: var(--color-success-500);
+}
+
+.iconButton.minimal.negative svg {
+  color: var(--color-negative-500);
+}
+
+.iconButton.minimal.negative:hover svg {
+  color: var(--color-negative-600);
+}
+
+.iconButton.minimal.warning svg {
+  color: var(--color-warning-900);
+}
+
+.iconButton.minimal.warning:hover svg {
+  color: var(--color-warning-1000);
+}
