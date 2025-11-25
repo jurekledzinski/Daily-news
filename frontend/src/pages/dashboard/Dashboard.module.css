@@ -1,0 +1,22 @@
+.section {
+  display: flex;
+  background-color: var(--color-surface);
+  overflow: hidden;
+  flex: 1;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0.5rem;
+}
+
+.title {
+  margin-top: 1rem;
+}
+
+.subTitle {
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
