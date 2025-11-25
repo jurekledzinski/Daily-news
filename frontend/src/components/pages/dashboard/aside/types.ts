@@ -1,7 +1,3 @@
-import { Categories } from '@/api';
-import { LayoutData } from '../grid-layout';
+import type { HTMLAttributes } from 'react';
 
-export type AsideProps = {
-  layout: LayoutData;
-  onClick: (data: Categories) => void;
-};
+export type AsideProps = HTMLAttributes<HTMLDivElement>;

@@ -1,44 +1,10 @@
-import { AsideProps } from './types';
-import { GridTemplateCard } from '@/components/pages';
-import { Categories } from '@/api';
-import { images } from '@/images';
-import { NoDataMessage } from '@/components/shared';
-import { useOutletContext } from 'react-router-dom';
-import './Aside.css';
+import styles from './Aside.module.css';
+import type { AsideProps } from './types';
 
-export const Aside = ({ layout, onClick }: AsideProps) => {
-  const { categories } = useOutletContext<{ categories: Categories[] }>();
-
+export const Aside = ({ children, ...props }: AsideProps) => {
   return (
-    <div className="aside-container">
-      <div className="aside">
-        {categories.length ? (
-          categories.map((section) => {
-            const card = layout.lg.find(
-              (cardItem) => cardItem.id === section.id
-            );
-
-            const image = images.find((link) => {
-              const filename = link.split('/').pop()?.split('.')[0];
-              return filename === section.id;
-            });
-
-            return (
-              <GridTemplateCard
-                data={section}
-                image={image ?? ''}
-                key={section.id}
-                isDisabled={card ? true : false}
-                onClick={onClick}
-              />
-            );
-          })
-        ) : (
-          <NoDataMessage className="aside-message">
-            <p>Please try later, api has limited amount of requestes per day</p>
-          </NoDataMessage>
-        )}
-      </div>
+    <div className={styles.asideContainer} {...props}>
+      <div className={styles.aside}>{children}</div>
     </div>
   );
 };
