@@ -1,0 +1,142 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-image: url('/images/world.png');
+  background-position: bottom center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  aspect-ratio: 16/9;
+  width: 100%;
+  height: 100%;
+}
+
+.artanddesign {
+  background-image: url('/images/artanddesign.png');
+}
+
+.australia-news {
+  background-image: url('/images/australia-news.png');
+}
+
+.cities {
+  background-image: url('/images/cities.png');
+}
+
+.environment {
+  background-image: url('/images/environment.png');
+}
+
+.fashion {
+  background-image: url('/images/fashion.png');
+}
+
+.film {
+  background-image: url('/images/film.png');
+}
+
+.food {
+  background-image: url('/images/food.png');
+}
+
+.football {
+  background-image: url('/images/football.png');
+}
+
+.games {
+  background-image: url('/images/games.png');
+}
+
+.music {
+  background-image: url('/images/music.png');
+}
+
+.news {
+  background-image: url('/images/news.png');
+}
+
+.politics {
+  background-image: url('/images/politics.png');
+}
+
+.science {
+  background-image: url('/images/science.png');
+}
+
+.sport {
+  background-image: url('/images/sport.png');
+}
+
+.technology {
+  background-image: url('/images/technology.png');
+}
+
+.travel {
+  background-image: url('/images/travel.png');
+}
+
+.uk-news {
+  background-image: url('/images/uk-news.png');
+}
+
+.us-news {
+  background-image: url('/images/us-news.png');
+}
+
+.weather {
+  background-image: url('/images/weather.png');
+}
+
+.world {
+  background-image: url('/images/world.png');
+}
+
+.header {
+  padding: 0.5rem;
+  width: 100%;
+  color: white;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 0.875rem;
+  font-family: Oswald, sans-serif;
+  text-transform: uppercase;
+}
+
+.subTitle {
+  font-size: 0.75rem;
+}
+
+.footer {
+  padding: 0.5rem;
+}
+
+button.button {
+  border-radius: 2px;
+  font-size: 10px;
+}
+
+.container:hover button.closeButton {
+  display: block;
+  pointer-events: all;
+  user-select: all;
+}
+
+button.closeButton {
+  display: none;
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+button.closeButton svg {
+  transition: color 300ms linear;
+  color: var(--color-negative-300);
+}
+
+button.closeButton:hover svg {
+  color: var(--color-negative-700);
+}
