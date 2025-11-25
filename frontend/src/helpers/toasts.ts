@@ -1,7 +1,9 @@
-import { toast, ToastPosition } from 'react-toastify';
+import toast from 'react-hot-toast';
 
-export const showSuccessToast = (
-  message: string,
-  position: ToastPosition | undefined,
-  toastId?: string
-) => toast.success(message, { position, ...(toastId && { toastId }) });
+export const showSuccessToast = (message: string, autoClose?: number) => {
+  toast.success(message, { ...(autoClose && { duration: autoClose }) });
+};
+
+export const showErrorToast = (message: string, autoClose?: number) => {
+  toast.error(message, { ...(autoClose && { duration: autoClose }) });
+};
