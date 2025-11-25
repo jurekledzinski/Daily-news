@@ -1,5 +1,5 @@
 import { UseLogoutUserProps } from './types';
-import { useSubmit } from 'react-router-dom';
+import { useSubmit } from 'react-router';
 
 export const useLogoutUser = ({ onSuccess }: UseLogoutUserProps) => {
   const submit = useSubmit();
