@@ -1,0 +1,318 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+  border: 1px solid var(--color-surface-30);
+  transition: box-shadow 300ms linear;
+}
+
+.wrapper input,
+.wrapper textarea {
+  border: none;
+}
+
+/* --- Focus --- */
+
+.wrapper input:focus,
+.wrapper textarea:focus {
+  outline: none;
+}
+
+.wrapper:focus-within,
+.wrapper.focused {
+  border-color: var(--color-focus-primary);
+  outline: 1px solid var(--color-focus-primary);
+}
+
+/* --- Styled elements inside --- */
+
+.wrapper > .endIcon,
+.wrapper > .startIcon {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: var(--color-surface-elevated-0);
+  color: var(--color-black-600);
+  padding: 6px 8px;
+  width: 38px;
+  min-width: 38px;
+  box-shadow: none;
+  outline: none;
+}
+
+.wrapper > button.startIcon:focus {
+  outline: none;
+}
+
+.wrapper > button:focus-visible {
+  color: var(--color-focus-primary);
+  outline: none;
+}
+
+.wrapper-startIcon input {
+  padding-left: 0;
+}
+
+.inValid input,
+.valid input,
+.wrapper-endIcon input {
+  padding-right: 0;
+}
+
+/* --- Size icons --- */
+
+.startIcon-size-xs,
+.endIcon-size-xs {
+  max-height: 28px;
+  font-size: 14px;
+}
+
+.startIcon-size-sm,
+.endIcon-size-sm,
+.startIcon-size-md,
+.endIcon-size-md {
+  font-size: 14px;
+}
+
+.startIcon-size-sm,
+.endIcon-size-sm {
+  max-height: 30px;
+}
+
+.startIcon-size-md,
+.endIcon-size-md {
+  max-height: 32px;
+}
+
+.startIcon-size-lg,
+.endIcon-size-lg {
+  max-height: 36px;
+  font-size: 16px;
+}
+
+/* --- Status --- */
+
+.inValid {
+  border-color: var(--color-focus-negative);
+}
+
+.valid {
+  border-color: var(--color-focus-success);
+}
+
+.inValid span.endIcon svg {
+  color: var(--color-focus-negative);
+}
+
+.valid span.endIcon svg {
+  color: var(--color-focus-success);
+}
+
+.valid:focus-within,
+.valid.focused {
+  outline: 1px solid var(--color-focus-success);
+  border-color: var(--color-focus-success);
+}
+
+.inValid:focus-within,
+.inValid.focused {
+  outline: 1px solid var(--color-focus-negative);
+  border-color: var(--color-focus-negative);
+}
+
+.valid:focus-within input,
+.inValid:focus-within input,
+.valid:focus-within textarea,
+.inValid:focus-within textarea {
+  box-shadow: none;
+}
+
+/* --- Variant basic --- */
+
+.basic {
+  background-color: var(--color-surface-elevated-0);
+}
+
+/* --- Variant contained and underline--- */
+
+.contained,
+.underline {
+  border-right: none;
+  border-left: none;
+  border-top: none;
+}
+
+.contained {
+  z-index: 0;
+  background-color: var(--color-surface-10);
+}
+
+.wrapper.contained fieldset::before {
+  background-color: transparent;
+}
+
+.contained:focus-within,
+.underline:focus-within,
+.contained.focused,
+.underline.focused {
+  outline: none;
+  box-shadow: inset 0 -1px 0 0 var(--color-focus-primary);
+}
+
+.wrapper > .fieldset-contained::before {
+  content: none;
+}
+
+.contained > .startIcon,
+.contained > .endIcon {
+  align-items: center;
+  margin-top: 1rem;
+  z-index: -1;
+}
+
+.contained > .startIcon,
+.contained > .endIcon,
+.underline > .startIcon,
+.underline > .endIcon {
+  background-color: transparent;
+}
+
+.wrapper-area.contained > .startIcon,
+.wrapper-area.contained > .endIcon {
+  align-items: flex-start;
+  margin-top: 15px;
+  z-index: -1;
+}
+
+/* --- Variant outlined --- */
+
+.outlined > .startIcon,
+.outlined > .endIcon {
+  background-color: transparent;
+}
+
+.wrapper-startIcon.outlined legend {
+  left: -2px;
+}
+
+.wrapper-startIcon.outlined input:not(:placeholder-shown) + legend,
+.wrapper-startIcon.outlined input:focus + legend,
+.wrapper-startIcon.outlined textarea:not(:placeholder-shown) + legend,
+.wrapper-startIcon.outlined textarea:focus + legend {
+  left: -26px;
+}
+
+/* --- Variant underline --- */
+
+.wrapper-startIcon.underline input:not(:placeholder-shown) + legend,
+.wrapper-startIcon.underline input:focus + legend,
+.wrapper-startIcon.underline textarea:not(:placeholder-shown) + legend,
+.wrapper-startIcon.underline textarea:focus + legend {
+  left: -38px;
+}
+
+/* --- Variant contained and underline --- */
+
+.valid.underline:focus-within,
+.valid.contained:focus-within {
+  outline: none;
+  border-color: var(--color-focus-success);
+  box-shadow: inset 0 -1px 0 0 var(--color-focus-success);
+}
+
+.inValid.underline:focus-within,
+.inValid.contained:focus-within {
+  outline: none;
+  border-color: var(--color-focus-negative);
+  box-shadow: inset 0 -1px 0 0 var(--color-focus-negative);
+}
+
+.wrapper-area.wrapper-startIcon.contained legend {
+  left: 0.3rem;
+}
+
+.wrapper-startIcon.contained legend {
+  left: -1.6rem;
+}
+
+/* --- Legend --- */
+
+.valid legend {
+  color: var(--color-focus-success);
+}
+
+.inValid legend {
+  color: var(--color-focus-negative);
+}
+
+/* --- Disabled --- */
+
+.disabled,
+.disabled:focus-within,
+.disabled.inValid:focus-within,
+.disabled.valid:focus-within {
+  border-color: var(--color-disabled-100);
+  outline: none;
+  box-shadow: none;
+}
+
+.disabled .startIcon,
+.disabled .endIcon,
+.disabled.inValid .startIcon,
+.disabled.inValid .endIcon svg,
+.disabled.valid .startIcon,
+.disabled.valid .endIcon svg,
+.disabled .startIcon:focus-visible,
+.disabled .endIcon:focus-visible {
+  color: var(--color-disabled-200);
+  background-color: var(--color-disabled-50);
+  pointer-events: none;
+}
+
+.disabled .startIcon svg,
+.disabled .endIcon svg {
+  color: var(--color-disabled-200);
+  cursor: not-allowed;
+}
+
+.disabled.contained .startIcon,
+.disabled.contained .endIcon,
+.disabled.underline .startIcon,
+.disabled.underline .endIcon,
+.disabled.wrapper-area .endIcon,
+.disabled.wrapper-area .startIcon {
+  background-color: transparent;
+}
+
+.wrapper-readOnly .startIcon,
+.wrapper-readOnly .endIcon {
+  pointer-events: none;
+}
+
+.disabled legend {
+  color: var(--color-disabled-200);
+}
+
+.disabled.contained {
+  background-color: var(--color-disabled-50);
+}
+
+/* Disabled textarea with icons */
+
+.wrapper-area.wrapper-endIcon.disabled:not(.underline),
+.wrapper-area.disabled.inValid:not(.underline),
+.wrapper-area.disabled.valid:not(.underline) {
+  background-color: var(--color-disabled-50);
+}
+
+.wrapper-area.wrapper-endIcon textarea:disabled,
+.wrapper-area.inValid textarea:disabled,
+.wrapper-area.valid textarea:disabled {
+  background-color: transparent;
+}
+
+.wrapper-area.wrapper-endIcon textarea {
+  padding-right: 0;
+}
