@@ -4,33 +4,33 @@ import DetailsArticle from '@/pages/details-article';
 import GridArticles from '@/pages/grid-articles';
 import Home from '@/pages/home';
 import Profile from '@/pages/profile';
-import { createBrowserRouter } from 'react-router-dom';
-import { ErrorPage } from '@/components/pages';
-import { ProtectedRoute } from '@/components/shared';
+import { createBrowserRouter } from 'react-router';
+import { ErrorPage } from '@components/pages';
+import { ProtectedRoute } from '@components/shared';
 import { QueryClient } from '@tanstack/react-query';
 import {
   actionDetailsArticle,
   actionHome,
   actionProfileUser,
-  loaderArticles,
-  loaderCategories,
-  loaderDetailsArticle,
-} from '@/api';
+  loaderArticleDetailsPage,
+  loaderArticlesListPage,
+  loaderHomePage,
+} from '@api';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
     errorElement: <ErrorPage />,
-    loader: loaderCategories(queryClient),
-    action: actionHome(queryClient),
+    action: actionHome,
     children: [
       {
         index: true,
         element: <Dashboard />,
         errorElement: <ErrorPage />,
+        loader: loaderHomePage,
       },
       {
         path: 'categories/:category/articles',
@@ -41,14 +41,14 @@ const router = createBrowserRouter([
             index: true,
             element: <GridArticles />,
             errorElement: <ErrorPage />,
-            loader: loaderArticles(queryClient),
+            loader: loaderArticlesListPage,
           },
           {
             path: 'article/:id',
             element: <DetailsArticle />,
             errorElement: <ErrorPage />,
-            loader: loaderDetailsArticle(queryClient),
-            action: actionDetailsArticle(),
+            loader: loaderArticleDetailsPage,
+            action: actionDetailsArticle,
           },
         ],
       },
