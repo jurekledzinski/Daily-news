@@ -1,0 +1,70 @@
+/* --- Legend --- */
+
+.legend-underline {
+  position: absolute;
+  top: 50%;
+  left: 0.3rem;
+  z-index: -1;
+  transform: translateY(-50%);
+}
+
+.legend-underline {
+  left: -1px;
+}
+
+.textarea + .legend-underline {
+  top: 0px;
+}
+
+/* --- Disabled --- */
+
+.input-underline:disabled,
+.textarea-underline:disabled {
+  background-color: transparent;
+}
+
+.input-underline:disabled:focus,
+.textarea-underline:disabled:focus {
+  box-shadow: inset 0 -1px 0 0 var(--color-disabled-100);
+}
+
+/* --- Focus --- */
+
+.input-underline:focus,
+.textarea-underline:focus {
+  outline: none;
+  box-shadow: inset 0 -1px 0 0 var(--color-focus-primary);
+}
+
+/* --- Status in focus --- */
+
+.input-underline.input-valid:focus,
+.textarea-underline.textarea-valid:focus {
+  box-shadow: inset 0 -1px 0 0 var(--color-focus-success);
+}
+
+.input-underline.input-inValid:focus,
+.textarea-underline.textarea-inValid:focus {
+  box-shadow: inset 0 -1px 0 0 var(--color-focus-negative);
+}
+
+/* Rest for underline */
+
+.input-underline,
+.textarea-underline {
+  padding-left: 0;
+  padding-right: 0;
+  background-color: transparent;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
+
+/* --- Legend on focus --- */
+
+.input-underline:not(:placeholder-shown) + .legend,
+.input-underline:focus + .legend,
+.textarea-underline:not(:placeholder-shown) + .legend,
+.textarea-underline:focus + .legend {
+  top: -4px;
+}

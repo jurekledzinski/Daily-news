@@ -1,0 +1,18 @@
+/* --- Legend --- */
+
+.legend-outlined {
+  position: absolute;
+  top: 50%;
+  left: 0.4rem;
+  z-index: -1;
+  transform: translateY(-50%);
+}
+
+.textarea + .legend-outlined {
+  top: 14px;
+}
+
+.input-outlined,
+.textarea-outlined {
+  background-color: transparent;
+}

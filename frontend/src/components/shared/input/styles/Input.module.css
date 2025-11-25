@@ -1,0 +1,207 @@
+.input,
+.textarea {
+  display: flex;
+  width: 100%;
+  padding: 4px 6px;
+  color: var(--color-text-primary);
+  font-size: 15px;
+  border: 1px solid var(--color-surface-30);
+  background-color: var(--color-surface-elevated-0);
+  transition: box-shadow 300ms linear;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-black-500);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.input:disabled::placeholder,
+.textarea:disabled::placeholder {
+  color: var(--color-disabled-200);
+}
+
+.input:focus:placeholder-shown::placeholder,
+.textarea:focus:placeholder-shown::placeholder {
+  color: transparent;
+}
+
+.input:read-only:focus:placeholder-shown::placeholder,
+.textarea:read-only:focus:placeholder-shown::placeholder {
+  color: var(--color-black-500);
+}
+
+.input-outlined::placeholder,
+.textarea-outlined::placeholder,
+.input-underline::placeholder,
+.textarea-underline::placeholder,
+.input-outlined:read-only:focus:placeholder-shown::placeholder,
+.textarea-outlined:read-only:focus:placeholder-shown::placeholder,
+.input-underline:read-only:focus:placeholder-shown::placeholder,
+.textarea-underline:read-only:focus:placeholder-shown::placeholder {
+  color: transparent;
+}
+
+.textarea {
+  resize: none;
+}
+
+/* --- Font size in inputs and height --- */
+
+.input-size-xs,
+.textarea-size-xs {
+  padding: 4.5px 6px;
+}
+
+.input-size-sm,
+.textarea-size-sm {
+  padding: 5.5px 6px;
+}
+
+.input-size-md,
+.textarea-size-md {
+  padding: 6.5px 6px;
+}
+
+.input-size-lg,
+.textarea-size-lg {
+  padding: 8px 6px;
+  font-size: 16px;
+}
+
+/* --- Disabled --- */
+
+.input:disabled,
+.textarea:disabled,
+.input:disabled:focus,
+.textarea:disabled:focus {
+  border-color: var(--color-disabled-100);
+  background-color: var(--color-disabled-50);
+  color: var(--color-disabled-200);
+  cursor: not-allowed;
+}
+
+.input:disabled + .legend,
+.textarea:disabled + .legend,
+.input:disabled:not(:placeholder-shown) + .legend,
+.input:disabled:focus + .legend,
+.textarea:disabled:not(:placeholder-shown) + .legend,
+.textarea:disabled:focus + .legend {
+  color: var(--color-disabled-200);
+  cursor: not-allowed;
+}
+
+/* --- Legend --- */
+
+.legend {
+  position: absolute;
+  top: 50%;
+  left: 0.35rem;
+  z-index: -1;
+  font-size: 14px;
+  transition-property: color, top, left, font-size;
+  transition-duration: 200ms;
+  transition-timing-function: linear;
+}
+
+.legend-size-xs {
+  font-size: 14px;
+}
+
+.legend-size-sm {
+  font-size: 14px;
+}
+
+.legend-size-md {
+  font-size: 15px;
+}
+
+.legend-size-lg {
+  font-size: 16px;
+}
+
+/* --- Status legend --- */
+
+.legend-valid {
+  color: var(--color-focus-success);
+}
+
+.legend-inValid {
+  color: var(--color-focus-negative);
+}
+
+/* --- Focus legend --- */
+
+.input:not(:placeholder-shown) + .legend,
+.input:focus + .legend,
+.textarea:not(:placeholder-shown) + .legend,
+.textarea:focus + .legend {
+  top: -1px;
+  z-index: 1;
+  background-color: var(--color-surface);
+  color: var(--color-focus-primary);
+  font-size: 12px;
+}
+
+.input-size-md:not(:placeholder-shown) + .legend,
+.input-size-md:focus + .legend,
+.textarea-size-md:not(:placeholder-shown) + .legend,
+.textarea-size-md:focus + .legend {
+  font-size: 13px;
+}
+
+.input-size-lg:not(:placeholder-shown) + .legend,
+.input-size-lg:focus + .legend,
+.textarea-size-lg:not(:placeholder-shown) + .legend,
+.textarea-size-lg:focus + .legend {
+  font-size: 14px;
+}
+
+/* --- Focus input --- */
+
+.input:focus,
+.textarea:focus {
+  border-color: var(--color-focus-primary);
+  outline: 1px solid var(--color-focus-primary);
+}
+
+/* --- Status input --- */
+
+.input-valid,
+.textarea-valid {
+  border-color: var(--color-focus-success);
+}
+
+.input-inValid,
+.textarea-inValid {
+  border-color: var(--color-focus-negative);
+}
+
+.input-valid:focus,
+.textarea-valid:focus {
+  border-color: var(--color-focus-success);
+  outline-color: var(--color-focus-success);
+}
+
+.input-inValid:focus,
+.textarea-inValid:focus {
+  border-color: var(--color-focus-negative);
+  outline-color: var(--color-focus-negative);
+}
+
+/* --- Status legend on focus --- */
+
+.input-valid:not(:placeholder-shown) + .legend,
+.input-valid:focus + .legend,
+.textarea-valid:not(:placeholder-shown) + .legend,
+.textarea-valid:focus + .legend {
+  color: var(--color-focus-success);
+}
+
+.input-inValid:not(:placeholder-shown) + .legend,
+.input-inValid:focus + .legend,
+.textarea-inValid:not(:placeholder-shown) + .legend,
+.textarea-inValid:focus + .legend {
+  color: var(--color-focus-negative);
+}
