@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import { ProtectedRouteProps } from './types';
 import { useUserStore } from '@/store';
 
