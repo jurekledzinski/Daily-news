@@ -1,4 +1,4 @@
 export * from './click-outside';
-export * from './useFetchOnScroll';
+export * from './fetch-on-scroll';
 export * from './window-resize';
 export * from './window-scroll';
