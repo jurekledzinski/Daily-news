@@ -5,10 +5,6 @@ import { useCallback, useMemo } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import type { Section } from '@guardian/content-api-models/v1/section';
 
-const tempCategories = [
-  { id: 'artanddesign', webTitle: 'Art and design', webUrl: '', apiUrl: '', editions: [] },
-];
-
 export const Dashboard = () => {
   const navigate = useNavigate();
   const categories = useLoaderData<{ data: Section[] }>();
@@ -33,18 +29,18 @@ export const Dashboard = () => {
         </p>
         <GridLayout>
           {!gridItemIds.length && (
-            <EmptyState text="Drag categories here to view articles" src="images/mouse.png" />
+            <EmptyState text="Drag categories here to view articles" src="/images/mouse.png" />
           )}
         </GridLayout>
       </Box>
       <Aside>
-        {!tempCategories.length && (
+        {!sortedCategories.length && (
           <EmptyState
             text="API limit has been reached. Please try again later."
-            src="images/api-limit.png"
+            src="/images/api-limit.png"
           />
         )}
-        {tempCategories.map((item) => (
+        {sortedCategories.map((item) => (
           <GridItem item={item} gridItemIds={gridItemIds} key={item.id} />
         ))}
       </Aside>
