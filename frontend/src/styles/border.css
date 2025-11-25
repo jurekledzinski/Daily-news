@@ -1,0 +1,35 @@
+body .b-xs {
+  border-width: var(--border-xs);
+}
+
+body .b-sm {
+  border-width: var(--border-sm);
+}
+
+body .b-md {
+  border-width: var(--border-md);
+}
+
+body .b-lg {
+  border-width: var(--border-lg);
+}
+
+body .r-xs {
+  border-radius: var(--radius-xs);
+}
+
+body .r-sm {
+  border-radius: var(--radius-sm);
+}
+
+body .r-md {
+  border-radius: var(--radius-md);
+}
+
+body .r-lg {
+  border-radius: var(--radius-lg);
+}
+
+body .r-xl {
+  border-radius: var(--radius-xl);
+}

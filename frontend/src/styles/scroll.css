@@ -1,0 +1,27 @@
+::-moz-scrollbar {
+  scrollbar-color: #555555 #f1f1f1;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 100vh;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 1px solid transparent;
+  border-radius: 100vh;
+  background-clip: padding-box;
+  background-color: var(--color-black-500);
+  cursor: default;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-width: 0;
+}

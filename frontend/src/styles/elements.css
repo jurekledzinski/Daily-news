@@ -1,0 +1,29 @@
+a,
+button,
+input,
+textarea {
+  font-family: var(--font-family);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+/* Możesz włączać lub wyłączać outline lub boxshadow dla button */
+/* a input natomiast lokalnie ale color focus primary itp */
+/* to zmieni kolory focus input */
+
+button:focus-visible,
+a:focus-visible {
+  transition: none;
+  outline: none;
+  /* outline: 2px solid var(--color-focus, var(--color-primary-500, #2095f3));
+  outline-offset: var(--focus-offset); */
+  box-shadow: 0 0 0 0.1rem var(--color-focus, var(--color-primary-500, #2095f3));
+}

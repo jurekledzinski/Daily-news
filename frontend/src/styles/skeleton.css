@@ -1,0 +1,27 @@
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: #e0e0e0;
+}
+
+.skeleton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right, transparent, #f0f0f0 50%, transparent);
+  animation: skeleton 1.2s infinite;
+}
+
+@keyframes skeleton {
+  0% {
+    transform: translateX(-100%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
