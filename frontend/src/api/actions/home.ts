@@ -3,7 +3,7 @@ import { formatDataToObject, queryInvalidate } from './helpers';
 import { invalidateQueryClient, setResponse } from '@/helpers';
 import { LoaderFunctionArgs } from 'react-router';
 import { loginUser, logoutUser, registerUser } from '../api-calls';
-import { queryClient } from '@/routes';
+import { queryClient } from '@routes';
 import { User } from '@models';
 
 export const actionHome =
