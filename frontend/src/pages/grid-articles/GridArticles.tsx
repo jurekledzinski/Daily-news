@@ -1,32 +1,50 @@
 import styles from './GridArticles.module.css';
+import { Button, ButtonGroup, EmptyState, Loader } from '@components/shared';
 import { CardArticle } from '@components/pages';
-import { EmptyState } from '@components/shared';
 import { SearchResponse } from '@guardian/content-api-models/v1/SearchResponse';
-import { useFetchOnScroll } from '@hooks';
-import { useLoaderData, useSearchParams } from 'react-router';
+import { URLS } from '@api';
+import { useInfiniteQueryFetch, usePageSearchParam, usePersistedScrollPage } from '@hooks';
 
 export const GridArticles = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const articles = useLoaderData<SearchResponse>();
+  const { saveInLocalstoragePage } = usePersistedScrollPage();
+  const { page, params, setPage } = usePageSearchParam();
 
-  useFetchOnScroll({
-    onReachBottom: () => {
-      const page = Number(searchParams.get('page') ?? '1');
-      setSearchParams({ page: String(page + 1) });
-    },
-  });
+  const { allData, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, isPending } =
+    useInfiniteQueryFetch<SearchResponse['results']>({
+      query: params.category,
+      queryKey: ['list-articles', params.category],
+      url: (query, pageParam) => URLS.GET_ARTICLES(query!, String(pageParam)),
+    });
 
-  //   czasem error gdy szybko przełączasz taby
-
-  if (!articles?.results?.length) {
+  if (!allData.length && !isFetching && !isPending) {
     return <EmptyState text="No articles found." src="/images/api-limit.png" />;
   }
 
   return (
-    <div className={styles.grid}>
-      {(articles?.results ?? []).map((article) => (
-        <CardArticle article={article} key={article.id} />
-      ))}
-    </div>
+    <>
+      <div className={styles.grid}>
+        {(isFetching || isPending) && <Loader position="viewport" />}
+        {allData?.map((article) => (
+          <CardArticle article={article} key={article.id} />
+        ))}
+      </div>
+
+      {!!params.category && hasNextPage && !isPending && (
+        <ButtonGroup className="mt-sm" justify="justify-center" fullWidth>
+          <Button
+            color="info"
+            isLoading={isFetchingNextPage}
+            label={isFetchingNextPage ? 'Loading more...' : 'Load more ...'}
+            onClick={() => {
+              fetchNextPage();
+              setPage(page);
+              saveInLocalstoragePage('pages', params.category!, page + 1);
+            }}
+            type="button"
+            variant="outlined"
+          />
+        </ButtonGroup>
+      )}
+    </>
   );
 };
