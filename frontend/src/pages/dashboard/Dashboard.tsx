@@ -1,22 +1,15 @@
 import styles from './Dashboard.module.css';
 import { Aside, GridItem, GridLayout, useGridInitialize } from '@components/pages';
 import { Box, Container, EmptyState, Heading } from '@components/shared';
-import { useCallback, useMemo } from 'react';
-import { useLoaderData, useNavigate } from 'react-router';
+import { useLoaderData } from 'react-router';
+import { useNavigateToArticles, useSortedCategories } from './hooks';
 import type { Section } from '@guardian/content-api-models/v1/section';
 
 export const Dashboard = () => {
-  const navigate = useNavigate();
   const categories = useLoaderData<{ data: Section[] }>();
-
-  const { gridItemIds } = useGridInitialize({
-    navigateArticles: useCallback((id) => navigate(`categories/${id}/articles`), [navigate]),
-  });
-
-  const sortedCategories = useMemo(
-    () => (categories.data ?? []).sort((a, b) => a.id.localeCompare(b.id)),
-    [categories.data]
-  );
+  const navigateArticles = useNavigateToArticles();
+  const { gridItemIds } = useGridInitialize({ navigateArticles });
+  const sortedCategories = useSortedCategories(categories.data);
 
   return (
     <Container className={styles.section}>
