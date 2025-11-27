@@ -4,8 +4,8 @@ import { Button, Card, CardContent, CardFooter, CardHeader, Heading } from '@com
 import { CardArticleProps } from './types';
 import { htmlToText } from 'html-to-text';
 
-export const CardArticle = ({ article }: CardArticleProps) => {
-  const { elements, fields } = article;
+export const CardArticle = ({ article, onReadMore }: CardArticleProps) => {
+  const { elements, fields, id } = article;
   const imageUrl = elements?.length ? elements[0].assets[1].file : '';
   const imageCredit = elements?.length ? elements[0].assets[1].typeData?.credit : '';
 
@@ -21,7 +21,13 @@ export const CardArticle = ({ article }: CardArticleProps) => {
         <p className={styles.text}>{htmlToText(fields?.trailText ?? '')}</p>
       </CardContent>
       <CardFooter className={cardStyles.footer}>
-        <Button className={styles.button} color="info" label="Read more ..." size="size-xs" />
+        <Button
+          className={styles.button}
+          color="info"
+          label="Read more ..."
+          size="size-xs"
+          onClick={() => onReadMore(id)}
+        />
       </CardFooter>
     </Card>
   );
