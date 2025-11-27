@@ -1,26 +1,44 @@
 .heading {
-  font-weight: 400;
-  font-size: 0.75rem;
-  font-family: Robot, sans-serif;
+  font-weight: 700;
+  font-size: 0.6125rem;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   line-clamp: 3;
+  font-family: 'Oswald', sans-serif;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.text {
+  padding-top: 0.25rem;
+  font-size: 0.6125rem;
+  font-family: Robot, sans-serif;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   font-family: 'Inter', sans-serif;
   color: var(--color-text-primary);
 }
 
 .photograph {
   position: absolute;
-  right: 0.25rem;
-  bottom: 0.25rem;
-  font-size: 8px;
+  right: 0;
+  bottom: 0;
+  padding: 4px;
+  font-size: 0.5rem;
   color: var(--color-text-white);
+  text-align: right;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .button {
   border-radius: 2px;
-  font-size: 10px;
+  font-size: 0.6125rem;
 }
