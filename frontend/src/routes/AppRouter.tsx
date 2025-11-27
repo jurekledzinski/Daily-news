@@ -1,14 +1,14 @@
-import CategoriesArticles from '@/pages/categories-articles';
-import Dashboard from '@/pages/dashboard';
-import DetailsArticle from '@/pages/details-article';
-import GridArticles from '@/pages/grid-articles';
-import Home from '@/pages/home';
-import Profile from '@/pages/profile';
+import CategoriesArticles from '@pages/categories-articles';
+import Dashboard from '@pages/dashboard';
+import DetailsArticle from '@pages/details-article';
+import GridArticles from '@pages/grid-articles';
+import Home from '@pages/home';
+import Profile from '@pages/profile';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { createBrowserRouter } from 'react-router';
 import { del, get, set } from 'idb-keyval';
 import { ErrorPage } from '@components/pages';
-import { ProtectedRoute } from '@components/shared';
+import { Loader, ProtectedRoute } from '@components/shared';
 import { QueryClient } from '@tanstack/react-query';
 import {
   actionDetailsArticle,
@@ -41,6 +41,7 @@ const router = createBrowserRouter([
     element: <Home />,
     errorElement: <ErrorPage />,
     action: actionHome,
+    hydrateFallbackElement: <Loader position="viewport" />,
     children: [
       {
         index: true,
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
             errorElement: <ErrorPage />,
           },
           {
-            path: 'article/:id',
+            path: ':id/*',
             element: <DetailsArticle />,
             errorElement: <ErrorPage />,
             loader: loaderArticleDetailsPage,
