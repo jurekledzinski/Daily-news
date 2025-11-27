@@ -4,8 +4,10 @@ import { CardArticle } from '@components/pages';
 import { SearchResponse } from '@guardian/content-api-models/v1/SearchResponse';
 import { URLS } from '@api';
 import { useInfiniteQueryFetch, usePageSearchParam, usePersistedScrollPage } from '@hooks';
+import { useNavigateToDetailsArticle } from './hooks';
 
 export const GridArticles = () => {
+  const navigateDetailsArticle = useNavigateToDetailsArticle();
   const { saveInLocalstoragePage } = usePersistedScrollPage();
   const { page, params, setPage } = usePageSearchParam();
 
@@ -24,8 +26,8 @@ export const GridArticles = () => {
     <>
       <div className={styles.grid}>
         {(isFetching || isPending) && <Loader position="viewport" />}
-        {allData?.map((article) => (
-          <CardArticle article={article} key={article.id} />
+        {allData?.map((article, i) => (
+          <CardArticle article={article} key={article.id + i} onReadMore={navigateDetailsArticle} />
         ))}
       </div>
 
