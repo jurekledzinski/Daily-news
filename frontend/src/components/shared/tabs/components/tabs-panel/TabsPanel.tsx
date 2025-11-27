@@ -1,4 +1,3 @@
-import styles from './TabsPanel.module.css';
 import { TabsPanelProps } from './types';
 import { useTabs } from '../../store';
 
@@ -8,7 +7,7 @@ export const TabsPanel = ({ children, ...props }: TabsPanelProps) => {
   if (selectedKey !== props.id && props.id) return null;
 
   return (
-    <div {...props} className={styles.tabsPanel} role="tabpanel">
+    <div {...props} role="tabpanel">
       {children}
     </div>
   );
