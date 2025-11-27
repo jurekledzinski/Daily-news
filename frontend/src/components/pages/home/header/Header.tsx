@@ -29,7 +29,7 @@ export const Header = () => {
         <ButtonGroup spacing="normal">
           <NavActions
             isLoggedIn={false}
-            onBack={() => navigate('/')}
+            onBack={() => navigate('/', { viewTransition: true })}
             onNavigateProfile={() => navigate(`profile/${state.user?.id}`)}
           />
           <NavAuth isLoggedIn={false} onLogout={logoutUser} />
