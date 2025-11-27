@@ -6,8 +6,10 @@ import { htmlToText } from 'html-to-text';
 
 export const CardArticle = ({ article, onReadMore }: CardArticleProps) => {
   const { elements, fields, id } = article;
-  const imageUrl = elements?.length ? elements[0].assets[1].file : '';
-  const imageCredit = elements?.length ? elements[0].assets[1].typeData?.credit : '';
+  const asset = elements?.[0]?.assets?.[1] ?? elements?.[0]?.assets?.[0];
+
+  const imageUrl = asset?.file ?? '';
+  const imageCredit = asset?.typeData?.credit ?? '';
 
   return (
     <Card className={cardStyles.card}>
