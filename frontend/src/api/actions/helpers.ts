@@ -1,5 +1,5 @@
 import { APIErrorResponse, APISuccessResponse } from '../api';
-import { queryClient as useQueryClient } from '@/main';
+import { queryClient as useQueryClient } from '@routes';
 
 export const formatDataToObject = <T>(data: FormData) => {
   return Object.fromEntries(data.entries()) as T;
