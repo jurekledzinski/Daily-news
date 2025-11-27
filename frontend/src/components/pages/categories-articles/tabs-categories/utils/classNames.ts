@@ -5,5 +5,6 @@ import { TablistClassNames } from './types';
 export const tablistClassNames: TablistClassNames = (isTabslistVisible: boolean) => {
   return generateClassNames(styles, {
     slide: !isTabslistVisible,
+    tabsList: true,
   });
 };
