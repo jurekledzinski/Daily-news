@@ -9,6 +9,10 @@
   z-index: 1;
 }
 
+.tabsList {
+  padding-bottom: 0.5rem;
+}
+
 @keyframes slide {
   from {
     transform: translateY(-50px);
