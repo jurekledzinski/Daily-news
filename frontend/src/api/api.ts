@@ -9,11 +9,10 @@ export type APIErrorResponse = {
   message?: string;
 };
 
+export interface APIPaginationSuccessResponse<T> extends APISuccessResponse<T> {
+  currentPage?: number;
+}
+
 export type APIGuardianSuccessResponse<T> = {
   response: T;
-};
-
-export type APIGuardianErrorResponse = {
-  success: boolean;
-  message?: string;
 };
