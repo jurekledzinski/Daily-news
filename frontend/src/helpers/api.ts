@@ -2,6 +2,7 @@ import { APIErrorResponse, APISuccessResponse } from '@/api';
 import { redirect } from 'react-router';
 import { removeCookie, setCookie } from './global';
 import type { QueryClient } from '@tanstack/react-query';
+import { Content } from '@guardian/content-api-models/v1/content';
 
 export const invalidateQueryClient = async (queryClient: QueryClient, queryKey: string[]) => {
   await queryClient.invalidateQueries({
@@ -48,3 +49,20 @@ export function getUrlQuery(request: Request, nameQuery: string, initial: string
   const url = new URL(request.url);
   return url.searchParams.get(nameQuery) ?? initial;
 }
+
+export const findTheBiggestImageInArticle = (data: APISuccessResponse<Content>) => {
+  console.log('data', data);
+  const elementsAssets = data.payload.elements ?? [];
+  const mainAssets = elementsAssets.find((item) => item.relation === 'main');
+
+  if (mainAssets) {
+    return mainAssets.assets.reduce((acc, curr) => {
+      const sizeA = acc.typeData?.width;
+      const sizeB = curr.typeData?.width;
+      if (!sizeA || !sizeB) return curr;
+      return Number(sizeB) > Number(sizeA) ? curr : acc;
+    });
+  }
+
+  return elementsAssets[0]?.assets?.[0];
+};
