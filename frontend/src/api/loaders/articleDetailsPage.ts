@@ -1,5 +1,6 @@
 import { APIErrorResponse, APISuccessResponse } from '../api';
 import { fetchApi } from '../api-calls';
+import { findTheBiggestImageInArticle } from '@helpers';
 import { queryClient } from '@routes';
 import { URLS } from '../urls';
 import type { LoaderFunction } from 'react-router';
@@ -14,11 +15,13 @@ export const loaderArticleDetailsPage: LoaderFunction = async ({ params }) => {
       queryKey: ['details-article', category, id],
       queryFn: async () => {
         const response = await fetchApi({ url: URLS.GET_DETAILS_ARTICLE(id) });
-        return await response.json();
+        return { payload: response.response.content, success: true };
       },
     });
+    const biggestImage = findTheBiggestImageInArticle(data);
+    const formattedData = { ...data.payload, image: biggestImage };
 
-    return { data: data.payload, success: true };
+    return { data: formattedData, success: true };
   } catch {
     return { success: false };
   }
