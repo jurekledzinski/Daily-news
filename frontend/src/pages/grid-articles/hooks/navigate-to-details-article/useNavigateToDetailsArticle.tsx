@@ -5,7 +5,7 @@ export const useNavigateToDetailsArticle = () => {
 
   const navigateDetailsArticle = (id: string) => {
     const url = new URL(window.location.href);
-    navigate({ pathname: `${url.pathname}/${id}` });
+    navigate({ pathname: `${url.pathname}/${encodeURIComponent(id)}` });
   };
 
   return navigateDetailsArticle;
