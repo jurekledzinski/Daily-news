@@ -11,15 +11,22 @@ export const GridArticles = () => {
   const { saveInLocalstoragePage } = usePersistedScrollPage();
   const { page, params, setPage } = usePageSearchParam();
 
-  const { allData, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, isPending } =
-    useInfiniteQueryFetch<SearchResponse['results']>({
-      query: params.category,
-      queryKey: ['list-articles', params.category],
-      url: (query, pageParam) => URLS.GET_ARTICLES(query!, String(pageParam)),
-    });
+  const {
+    allData,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    isPending,
+    isError,
+  } = useInfiniteQueryFetch<SearchResponse['results']>({
+    query: params.category,
+    queryKey: ['list-articles', params.category],
+    url: (query, pageParam) => URLS.GET_ARTICLES(query!, String(pageParam)),
+  });
 
-  if (!allData.length && !isFetching && !isPending) {
-    return <EmptyState text="No articles found." src="/images/api-limit.png" />;
+  if ((!allData.length && !isFetching && !isPending) || isError) {
+    return <EmptyState text="No articles found." src="/info/article.png" />;
   }
 
   return (
