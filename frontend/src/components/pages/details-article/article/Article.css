@@ -1,56 +1,47 @@
-/* Base Layout */
-.container-details {
-  margin: 0 auto;
-  padding: 0 0.5rem;
-  width: min(1400px, 100%);
-  line-height: 1.4;
-  font-family: Roboto, system-ui, sans-serif;
-}
-
 /* Headings */
-.container-details .headling {
+.article .headling {
   margin-bottom: 0.25rem;
   font-size: 1.25rem;
   line-height: 1;
 }
 
-.container-details h1 {
+.article h1 {
   font-weight: 700;
   font-size: 1.25rem;
 }
 
-.container-details h2 {
+.article h2 {
   font-weight: 600;
   font-size: 1.25rem;
 }
 
-.container-details h3 {
+.article h3 {
   font-weight: 600;
   font-size: 1.25rem;
 }
 
-.container-details h4 {
+.article h4 {
   font-weight: 600;
   font-size: 1.125rem;
 }
 
-.container-details h5 {
+.article h5 {
   font-weight: 600;
   font-size: 1rem;
 }
 
-.container-details h6 {
+.article h6 {
   font-weight: 600;
   font-size: 0.875rem;
 }
 
 /* Paragraphs */
 
-.container-details p:not(:first-child) {
+.article p:not(:first-child) {
   margin: 0.75rem 0;
 }
 
-.container-details p,
+.article p,
 .block-elements p {
   font-size: 0.875rem;
 }
@@ -60,7 +51,7 @@
 }
 
 /* Links */
-.container-details a {
+.article a {
   transition: color 0.25s;
   border-bottom: 1px solid var(--color-secondary-50);
   color: var(--color-info-500);
@@ -69,12 +60,12 @@
   text-decoration: none;
 }
 
-.container-details a:hover {
+.article a:hover {
   color: var(--color-info-600);
 }
 
 /* Blockquotes */
-.container-details blockquote {
+.article blockquote {
   margin: 1.5rem 0;
   border-left: 4px solid var(--color-info-500);
   background: var(--color-surface-0);
@@ -82,40 +73,40 @@
   font-style: italic;
 }
 
-.container-details blockquote p {
+.article blockquote p {
   margin: 0;
 }
 
 /* Lists */
-.container-details ul,
-.container-details ol {
+.article ul,
+.article ol {
   margin: 1rem 0;
   padding-left: 1.5rem;
 }
 
-.container-details li {
+.article li {
   margin: 0.4rem 0;
 }
 
 /* Images */
 
-.container-details .container-image {
+.article .container-image {
   position: relative;
 }
 
-.container-details img {
+.article img {
   object-fit: cover;
   margin-bottom: 0.5rem;
   border-radius: 2px;
 }
 
-.container-details .datePublish {
+.article .datePublish {
   display: block;
   font-size: 0.75rem;
   text-align: right;
 }
 
-.container-details .caption {
+.article .caption {
   display: block;
   position: absolute;
   right: 0;
@@ -128,8 +119,8 @@
 }
 
 /* Code Snippets */
-.container-details pre,
-.container-details code {
+.article pre,
+.article code {
   border-radius: 6px;
   background: #f3f4f6;
   padding: 0.6rem 0.8rem;
@@ -140,8 +131,8 @@
 
 /* Trail text  */
 
-.container-details em,
-.container-details i {
+.article em,
+.article i {
   display: inline-block;
   margin-bottom: 0.5rem;
   font-style: italic;
@@ -151,7 +142,7 @@
 
 /* Element video */
 
-.container-details .element-video {
+.article .element-video {
   position: relative;
   margin-bottom: 0.5rem;
   border-radius: 2px;
@@ -161,7 +152,7 @@
   overflow: hidden;
 }
 
-.container-details .element-atom {
+.article .element-atom {
   position: relative;
   margin-bottom: 0.5rem;
   border-radius: 2px;
@@ -170,8 +161,8 @@
   overflow: hidden;
 }
 
-.container-details iframe,
-.container-details video {
+.article iframe,
+.article video {
   position: absolute;
   top: 0;
   left: 0;
@@ -187,12 +178,12 @@
 
 /* Strong tags */
 
-.container-details strong {
+.article strong {
   color: var(--color-text-primary);
 }
 
 @media (min-width: 575px) {
-  .container-details .headling {
+  .article .headling {
     font-size: 1.5rem;
   }
 }

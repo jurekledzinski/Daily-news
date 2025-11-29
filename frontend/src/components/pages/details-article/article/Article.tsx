@@ -5,20 +5,20 @@ import { htmlToText } from 'html-to-text';
 import './Article.css';
 
 export const Article = ({ article }: ArticleProps) => {
-  const data = formatDateLocalString({
+  const createdAt = formatDateLocalString({
     date: article.webPublicationDate ? String(article.webPublicationDate) : new Date(),
     options: optionsFormatDate1,
   });
 
   return (
-    <>
+    <div className="article">
       <Heading className="headling mt-md" level={4}>
         {article.webTitle}
       </Heading>
 
       <i>{htmlToText(article.fields?.trailText ?? '')}</i>
 
-      <span className="datePublish">Publish date: {data}</span>
+      <span className="datePublish">Publish date: {createdAt}</span>
 
       {article.image.file && (
         <div className="container-image">
@@ -31,6 +31,6 @@ export const Article = ({ article }: ArticleProps) => {
       )}
 
       <div dangerouslySetInnerHTML={{ __html: article.fields?.body ?? '' }}></div>
-    </>
+    </div>
   );
 };
