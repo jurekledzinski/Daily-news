@@ -51,8 +51,7 @@ export function getUrlQuery(request: Request, nameQuery: string, initial: string
 }
 
 export const findTheBiggestImageInArticle = (data: APISuccessResponse<Content>) => {
-  console.log('data', data);
-  const elementsAssets = data.payload.elements ?? [];
+  const elementsAssets = data.payload?.elements ?? [];
   const mainAssets = elementsAssets.find((item) => item.relation === 'main');
 
   if (mainAssets) {
@@ -64,5 +63,5 @@ export const findTheBiggestImageInArticle = (data: APISuccessResponse<Content>) 
     });
   }
 
-  return elementsAssets[0]?.assets?.[0];
+  return undefined;
 };
