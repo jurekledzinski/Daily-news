@@ -1,0 +1,7 @@
+.container {
+  width: min(1400px, 100%);
+  margin: 0 auto;
+  padding: 0 0.5rem;
+  line-height: 1.4;
+  font-family: Roboto, system-ui, sans-serif;
+}
