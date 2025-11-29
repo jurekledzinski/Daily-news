@@ -34,11 +34,7 @@ export const DetailsArticle = () => {
       )}
       {Boolean(userId) && (
         <CommentsSection>
-          <CommentForm
-            controls={form.methods}
-            isPending={false}
-            onSubmit={form.onSubmit}
-          ></CommentForm>
+          <CommentForm controls={form.methods} isPending={false} onSubmit={form.onSubmit} />
           <Comment
             comment={{
               createdAt: createAt,
