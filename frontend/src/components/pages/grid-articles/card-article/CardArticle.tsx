@@ -8,7 +8,7 @@ export const CardArticle = ({ article, onReadMore }: CardArticleProps) => {
   const { elements, fields, id } = article;
   const asset = elements?.[0]?.assets?.[1] ?? elements?.[0]?.assets?.[0];
 
-  const imageUrl = asset?.file ?? '';
+  const imageUrl = asset?.file ?? '/images/empty-image.jpg';
   const imageCredit = asset?.typeData?.credit ?? '';
 
   return (
