@@ -20,9 +20,9 @@ export const Article = ({ article }: ArticleProps) => {
 
       <span className="datePublish">Publish date: {createdAt}</span>
 
-      {article.image.file && (
+      {Boolean(article?.image) && (
         <div className="container-image">
-          <ImageWithLoader src={article.image.file} />
+          <ImageWithLoader src={article.image.file ?? '/images/empty-image.jpg'} />
 
           {article.image.typeData?.photographer && (
             <span className="caption">{article.image.typeData?.credit}</span>
