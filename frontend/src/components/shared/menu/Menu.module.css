@@ -1,0 +1,47 @@
+.menu {
+  list-style-type: none;
+}
+
+.menuItem {
+  transition: 300ms linear;
+}
+
+.menuItem:hover {
+  background-color: var(--color-primary-alpha-10);
+  cursor: pointer;
+}
+
+.menu.size-xs .menuItem {
+  --padding: 5px;
+  font-size: 14px;
+}
+
+.menu.size-sm .menuItem {
+  --padding: 6px;
+  font-size: 14px;
+}
+
+.menu.size-md .menuItem {
+  --padding: 7px;
+  font-size: 15px;
+}
+
+.menu.size-lg .menuItem {
+  --padding: 8px;
+  font-size: 16px;
+}
+
+.menu.size-xs .menuItem:not(.link),
+.menu.size-sm .menuItem:not(.link),
+.menu.size-md .menuItem:not(.link),
+.menu.size-lg .menuItem:not(.link) {
+  padding: var(--padding);
+}
+
+.menu.size-xs .menuItem.link a,
+.menu.size-sm .menuItem.link a,
+.menu.size-md .menuItem.link a,
+.menu.size-lg .menuItem.link a {
+  display: block;
+  padding: var(--padding);
+}
