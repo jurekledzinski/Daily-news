@@ -22,7 +22,7 @@ export const Dashboard = () => {
         </p>
         <GridLayout>
           {!gridItemIds.length && (
-            <EmptyState text="Drag categories here to view articles" src="/images/mouse.png" />
+            <EmptyState text="Drag categories here to view articles" src="/info/mouse.png" />
           )}
         </GridLayout>
       </Box>
@@ -30,7 +30,7 @@ export const Dashboard = () => {
         {!sortedCategories.length && (
           <EmptyState
             text="API limit has been reached. Please try again later."
-            src="/images/api-limit.png"
+            src="/info/api-limit.png"
           />
         )}
         {sortedCategories.map((item) => (
