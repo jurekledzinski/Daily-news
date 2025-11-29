@@ -7,5 +7,3 @@ export type LoginFormProps = {
   isPending: boolean;
   onSubmit?: FormEventHandler<HTMLFormElement>;
 };
-
-//   onSubmit: SubmitHandler<LoginFormValues>;
