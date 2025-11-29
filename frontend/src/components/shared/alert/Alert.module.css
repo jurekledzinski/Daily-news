@@ -1,0 +1,229 @@
+.alert {
+  display: flex;
+  align-items: stretch;
+  width: fit-content;
+}
+
+.column {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon svg,
+.iconClose svg {
+  color: inherit;
+}
+
+.iconClose {
+  display: flex;
+  align-items: center;
+}
+
+.wrapperIconClose {
+  display: flex;
+  padding: 0 0.5rem;
+}
+
+.wrapperIconClose:first-child {
+  padding: 0 0 0 0.5rem;
+}
+
+.wrapperIconClose:last-child {
+  padding: 0 0.5rem 0 0;
+}
+
+.message {
+  width: 100%;
+  align-self: flex-end;
+}
+
+.column .message {
+  text-align: center;
+}
+
+/* --- Size --- */
+
+.message.size-xs {
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+.message.size-sm {
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+/* --- Border --- */
+
+.radius-xs {
+  border-radius: 2px;
+}
+
+.radius-sm {
+  border-radius: 4px;
+}
+
+.radius-md {
+  border-radius: 6px;
+}
+
+.radius-lg {
+  border-radius: 8px;
+}
+
+.radius-xl {
+  border-radius: 100vh;
+}
+
+/* --- Size icon --- */
+
+.icon.size-xs {
+  padding: 6px 8px 6px 16px;
+  font-size: 20px;
+}
+
+.icon.size-sm {
+  padding: 8px 10px 8px 20px;
+  font-size: 24px;
+}
+
+.filled .icon.size-xs {
+  padding: 6px 8px;
+}
+
+.filled .icon.size-sm {
+  padding: 8px 10px;
+}
+
+/* --- Colors icon --- */
+
+.filled .icon.info {
+  background-color: var(--color-info-500);
+}
+
+.filled .icon.secondary {
+  background-color: var(--color-secondary-700);
+}
+
+.filled .icon.success {
+  background-color: var(--color-success-700);
+}
+
+.filled .icon.negative {
+  background-color: var(--color-negative-700);
+}
+
+.filled .icon.warning {
+  background-color: var(--color-warning-1000);
+}
+
+/* --- Variant contained --- */
+
+.contained,
+.filled {
+  color: var(--color-text-white);
+}
+
+.contained.info {
+  background-color: var(--color-info-500);
+}
+
+.contained.secondary {
+  background-color: var(--color-secondary-500);
+}
+
+.contained.success {
+  background-color: var(--color-success-400);
+}
+
+.contained.negative {
+  background-color: var(--color-negative-500);
+}
+
+.contained.warning {
+  background-color: var(--color-warning-900);
+}
+
+/* Variant filled */
+
+.filled.info {
+  background-color: var(--color-info-600);
+}
+
+.filled.secondary {
+  background-color: var(--color-secondary-600);
+}
+
+.filled.success {
+  background-color: var(--color-success-600);
+}
+
+.filled.negative {
+  background-color: var(--color-negative-600);
+}
+
+.filled.warning {
+  background-color: var(--color-warning-900);
+}
+
+/* --- Variant outlined --- */
+
+.light.info,
+.outlined.info {
+  background-color: var(--color-info-alpha-10);
+  color: var(--color-info-600);
+}
+
+.light.secondary,
+.outlined.secondary {
+  background-color: var(--color-secondary-alpha-10);
+  color: var(--color-secondary-600);
+}
+
+.light.success,
+.outlined.success {
+  background-color: var(--color-success-alpha-10);
+  color: var(--color-success-900);
+}
+
+.light.negative,
+.outlined.negative {
+  background-color: var(--color-negative-alpha-10);
+  color: var(--color-negative-800);
+}
+
+.light.warning,
+.outlined.warning {
+  background-color: var(--color-warning-alpha-10);
+  color: var(--color-warning-1100);
+}
+
+.outlined.info {
+  border: 1px solid var(--color-info-500);
+}
+
+.outlined.secondary {
+  border: 1px solid var(--color-secondary-500);
+}
+
+.outlined.success {
+  border: 1px solid var(--color-success-500);
+}
+
+.outlined.negative {
+  border: 1px solid var(--color-negative-400);
+}
+
+.outlined.warning {
+  border: 1px solid var(--color-warning-900);
+}
