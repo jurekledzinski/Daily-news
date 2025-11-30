@@ -30,7 +30,13 @@ export const Header = () => {
           Daily News
         </Heading>
         <ActionsNavigation navigateBack={navigate.navigateBack} />
-        <MobileNavigation onLogout={logoutUser} navigateProfile={navigate.navigateProfile} />
+        <MobileNavigation
+          isLoggedIn={isLoggedIn}
+          navigateProfile={navigate.navigateProfile}
+          onLogout={logoutUser}
+          onOpenModalSignIn={modal.handleOpenSignIn}
+          onOpenModalSignUp={modal.handleOpenSignUp}
+        />
         <DesktopNavigation
           isLoggedIn={isLoggedIn}
           onLogout={logoutUser}
