@@ -1,24 +1,27 @@
 import styles from './Header.module.css';
-import { AppBar, ButtonGroup, Heading } from '@components/shared';
-import { NavActions, NavAuth } from '@components/pages';
-import { showSuccessToast } from '@helpers';
-import { useLogoutUser } from '@/pages/home';
-import { useMatch, useNavigate } from 'react-router';
-import { useUserStore } from '@/store';
+import { AppBar, Heading } from '@components/shared';
+import { LoginModal } from '../login-modal';
+import { RegisterModal } from '../register-modal';
+import { useLogoutUser } from '@pages/home';
+
+import {
+  ActionsNavigation,
+  MobileNavigation,
+  DesktopNavigation,
+  useModalControl,
+  useLogin,
+  useRegister,
+  useAuthNavigation,
+} from '@components/pages';
+
+const isLoggedIn = false;
 
 export const Header = () => {
-  const matchProfile = useMatch('/profile/:id');
-  const navigate = useNavigate();
-
-  const { dispatch, state } = useUserStore();
-
-  const logoutUser = useLogoutUser({
-    onSuccess: () => {
-      dispatch({ type: 'LOGOUT_USER' });
-      showSuccessToast('Logout successful');
-      if (matchProfile) navigate('/', { replace: true });
-    },
-  });
+  const navigate = useAuthNavigation();
+  const login = useLogin({ onSuccess: () => {}, status: 'idle' });
+  const register = useRegister({ onSuccess: () => {}, status: 'idle' });
+  const modal = useModalControl({ login: login.methods, register: register.methods });
+  const logoutUser = useLogoutUser({ onSuccess: navigate.navigateLogout });
 
   return (
     <AppBar className={styles.header}>
@@ -26,15 +29,32 @@ export const Header = () => {
         <Heading className={styles.heading} level={4}>
           Daily News
         </Heading>
-        <ButtonGroup spacing="normal">
-          <NavActions
-            isLoggedIn={false}
-            onBack={() => navigate('/', { viewTransition: true })}
-            onNavigateProfile={() => navigate(`profile/${state.user?.id}`)}
-          />
-          <NavAuth isLoggedIn={false} onLogout={logoutUser} />
-        </ButtonGroup>
+        <ActionsNavigation navigateBack={navigate.navigateBack} />
+        <MobileNavigation onLogout={logoutUser} navigateProfile={navigate.navigateProfile} />
+        <DesktopNavigation
+          isLoggedIn={isLoggedIn}
+          onLogout={logoutUser}
+          navigateProfile={navigate.navigateProfile}
+          onOpenModalSignIn={modal.handleOpenSignIn}
+          onOpenModalSignUp={modal.handleOpenSignUp}
+        />
       </nav>
+      {!isLoggedIn && (
+        <LoginModal
+          form={login}
+          isOpen={modal.isOpen && modal.modalType === 'login'}
+          isPending={false}
+          onClose={modal.handleClose}
+        />
+      )}
+      {!isLoggedIn && (
+        <RegisterModal
+          form={register}
+          isOpen={modal.isOpen && modal.modalType === 'register'}
+          isPending={false}
+          onClose={modal.handleClose}
+        />
+      )}
     </AppBar>
   );
 };
