@@ -11,10 +11,7 @@ const transports = [];
 if (isDevelopment) {
   transports.push(
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
-      ),
+      format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
     })
   );
 }
@@ -26,10 +23,7 @@ if (isProduction) {
     zippedArchive: true,
     maxSize: '5m',
     maxFiles: '14d',
-    format: winston.format.combine(
-      winston.format.timestamp(),
-      winston.format.json()
-    ),
+    format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   });
 
   transport.on('error', (error) => {
@@ -52,4 +46,4 @@ process.on('unhandledRejection', (error) => {
   logger.error('Unhandled Promise Rejection:', error);
 });
 
-export default logger;
+export { logger };
