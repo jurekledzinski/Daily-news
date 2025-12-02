@@ -1,7 +1,7 @@
 import { Field, Form, Message, PasswordInput, TextInput } from '@components/shared';
 import { RegisterFormProps } from './types';
 
-export const RegisterForm = ({ controls, isPending, onSubmit }: RegisterFormProps) => {
+export const RegisterForm = ({ controls, onSubmit }: RegisterFormProps) => {
   const { register, formState } = controls;
   const { errors } = formState;
 
@@ -12,7 +12,6 @@ export const RegisterForm = ({ controls, isPending, onSubmit }: RegisterFormProp
           autoComplete="given-name"
           label="Name"
           {...register('name', { required: 'Name is required' })}
-          isPending={isPending}
           variant="outlined"
         />
         {errors.name && <Message>{errors.name.message}</Message>}
@@ -22,7 +21,6 @@ export const RegisterForm = ({ controls, isPending, onSubmit }: RegisterFormProp
           autoComplete="family-name"
           label="Surname"
           {...register('surname', { required: 'Surname is required' })}
-          isPending={isPending}
           variant="outlined"
         />
         {errors.surname && <Message>{errors.surname.message}</Message>}
@@ -32,7 +30,6 @@ export const RegisterForm = ({ controls, isPending, onSubmit }: RegisterFormProp
           autoComplete="username"
           label="Email"
           {...register('email', { required: 'Email is required' })}
-          isPending={isPending}
           variant="outlined"
         />
         {errors.email && <Message>{errors.email.message}</Message>}
@@ -44,7 +41,6 @@ export const RegisterForm = ({ controls, isPending, onSubmit }: RegisterFormProp
           {...register('password', {
             required: 'Password is required',
           })}
-          isPending={isPending}
           variant="outlined"
         />
         {errors.password && <Message>{errors.password.message}</Message>}
@@ -54,7 +50,6 @@ export const RegisterForm = ({ controls, isPending, onSubmit }: RegisterFormProp
           autoComplete="new-password"
           label="Confirm Password"
           {...register('confirmPassword', { required: 'Confirm password is required' })}
-          isPending={isPending}
           variant="outlined"
         />
         {errors.password && <Message>{errors.password.message}</Message>}
