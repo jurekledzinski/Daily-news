@@ -1,9 +1,9 @@
 import { LoginFormValues, UseLoginFormProps } from './types';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useResetForm } from '@hooks';
 import { useSubmit } from 'react-router';
 
-export const useLogin = ({ onSuccess, status }: UseLoginFormProps) => {
+export const useLogin = ({ action, onFailed, onSuccess, status }: UseLoginFormProps) => {
   const methods = useForm<LoginFormValues>({ defaultValues: { email: '', password: '' } });
 
   const submit = useSubmit();
@@ -16,12 +16,14 @@ export const useLogin = ({ onSuccess, status }: UseLoginFormProps) => {
     submit(formData, { method: 'post' });
   };
 
-  useEffect(() => {
-    if (status === 'idle' && methods.formState.isSubmitSuccessful) {
-      onSuccess();
-      methods.reset();
-    }
-  }, [methods, onSuccess, status]);
+  useResetForm({
+    isSubmitSuccessful: methods.formState.isSubmitSuccessful,
+    isSuccess: !!action?.success,
+    onFailed,
+    onSuccess,
+    reset: methods.reset,
+    state: status.state,
+  });
 
   return { methods, onSubmit: methods.handleSubmit(onSubmit) };
 };
