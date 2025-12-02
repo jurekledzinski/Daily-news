@@ -1,4 +1,4 @@
-export default class CustomError extends Error {
+export class CustomError extends Error {
   statusCode: number;
   success: boolean;
   constructor(message: string, statusCode: number, success: boolean = false) {
@@ -7,3 +7,7 @@ export default class CustomError extends Error {
     this.success = success;
   }
 }
+
+export const throwError = (message: string, statusCode: number) => {
+  throw new CustomError(message, statusCode);
+};
