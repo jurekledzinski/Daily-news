@@ -4,6 +4,7 @@ import { ModalFormProps } from './types';
 export const ModalForm = ({
   children,
   form,
+  isPending,
   label,
   open,
   onClose,
@@ -21,6 +22,7 @@ export const ModalForm = ({
         title={label}
         type="submit"
         variant="contained"
+        isPending={isPending}
       >
         <Heading className="mb-xs" level={5}>
           {title}

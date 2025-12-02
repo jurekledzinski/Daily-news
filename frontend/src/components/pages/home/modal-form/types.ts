@@ -1,5 +1,6 @@
 export type ModalFormProps = {
   form: string;
+  isPending: boolean;
   label: string;
   onClose: () => void;
   open: boolean;
