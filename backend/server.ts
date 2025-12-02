@@ -1,11 +1,13 @@
 import app from './main';
 import { connectDB } from './config';
-import logger from './helpers/logger';
+import { logger } from './helpers';
+import { connectRateLimiters } from './middlewares';
 
 const PORT = process.env.PORT || 5000;
 
 const runServer = async () => {
   await connectDB();
+  await connectRateLimiters();
 
   try {
     app.listen(PORT, () => {
