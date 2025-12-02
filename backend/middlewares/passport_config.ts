@@ -2,12 +2,12 @@ import bcrypt from 'bcrypt';
 import LocalStrategy from 'passport-local';
 import passport from 'passport';
 import xss from 'xss';
-import { CustomError } from '../error';
 import { getCollectionDb } from '../config';
-import { User } from '../models';
 import { ObjectId } from 'mongodb';
-import { STATUS_CODE } from '../constants';
+import { STATUS_CODE, STATUS_MESSAGE } from '../constants';
+import { throwError } from '../error';
 import { transformDocument } from '../helpers';
+import { User } from '../models';
 
 passport.use(
   new LocalStrategy.Strategy(
@@ -20,10 +20,7 @@ passport.use(
         const collection = getCollectionDb('users');
 
         if (!collection) {
-          throw new CustomError(
-            'Internal server error',
-            STATUS_CODE.INTERNAL_SERVER_ERROR
-          );
+          throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
         }
 
         const user = await collection.findOne<User>({
@@ -36,10 +33,7 @@ passport.use(
           });
         }
 
-        const isPasswordSame = await bcrypt.compare(
-          xss(password),
-          user.password
-        );
+        const isPasswordSame = await bcrypt.compare(xss(password), user.password);
 
         if (isPasswordSame) {
           return done(null, user);
@@ -69,10 +63,7 @@ passport.deserializeUser(async (id: string, done) => {
     const collection = getCollectionDb('users');
 
     if (!collection) {
-      throw new CustomError(
-        'Internal server error',
-        STATUS_CODE.INTERNAL_SERVER_ERROR
-      );
+      throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
     }
 
     const user = await collection.findOne<User>(
@@ -84,9 +75,7 @@ passport.deserializeUser(async (id: string, done) => {
       return done(null, false);
     }
 
-    const formatUser = transformDocument([
-      { ...user, _id: new ObjectId(user._id) },
-    ]);
+    const formatUser = transformDocument([{ ...user, _id: new ObjectId(user._id) }]);
 
     done(null, formatUser[0] ?? []);
   } catch (error) {
@@ -94,4 +83,4 @@ passport.deserializeUser(async (id: string, done) => {
   }
 });
 
-export default passport;
+export { passport };
