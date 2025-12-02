@@ -17,6 +17,8 @@ app.disable('x-powered-by');
 const mongoStore = new MongoStore({
   mongoUrl: config.mongo_db_url_session,
   dbName: config.mongo_name_db_session,
+  collectionName: 'sessions',
+  ttl: 60 * 60,
 });
 
 app.use(morgan('dev'));
@@ -42,7 +44,7 @@ app.use(
       secure: config.node_env === 'production',
       sameSite: config.node_env === 'production' ? 'none' : 'strict',
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 1,
+      maxAge: 1000 * 60 * 60,
     },
   })
 );
@@ -57,7 +59,6 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/comments', commentRoutes);
 
 app.use((error: CustomError, _: Request, res: Response, next: NextFunction) => {
-  console.log('MAIN ERR----->', error);
   logger.error('Base error middleware', error.message);
   if (error instanceof z.ZodError) {
     res.status(500).json({
