@@ -1,8 +1,11 @@
 import styles from './Header.module.css';
+import { ActionData } from '@api';
 import { AppBar, Heading } from '@components/shared';
 import { LoginModal } from '../login-modal';
 import { RegisterModal } from '../register-modal';
+import { useActionData, useNavigation } from 'react-router';
 import { useLogoutUser } from '@pages/home';
+import { User } from '@models';
 
 import {
   ActionsNavigation,
@@ -12,16 +15,31 @@ import {
   useLogin,
   useRegister,
   useAuthNavigation,
+  useAuthCallbacks,
 } from '@components/pages';
 
-const isLoggedIn = false;
-
 export const Header = () => {
+  const status = useNavigation();
+  const action = useActionData<ActionData<User>>();
   const navigate = useAuthNavigation();
-  const login = useLogin({ onSuccess: () => {}, status: 'idle' });
-  const register = useRegister({ onSuccess: () => {}, status: 'idle' });
-  const modal = useModalControl({ login: login.methods, register: register.methods });
-  const logoutUser = useLogoutUser({ onSuccess: navigate.navigateLogout });
+  const modal = useModalControl();
+  const fn = useAuthCallbacks({ action, modal });
+
+  const login = useLogin({ onFailed: fn.failedLogin, onSuccess: fn.successLogin, status, action });
+  const register = useRegister({
+    onFailed: fn.failedRegister,
+    onSuccess: fn.successRegister,
+    status,
+    action,
+  });
+  const logoutUser = useLogoutUser({
+    onFailed: fn.failedLogout,
+    onSuccess: navigate.navigateLogout,
+    action,
+  });
+
+  console.log('action', action);
+  console.log('user', fn.state);
 
   return (
     <AppBar className={styles.header}>
@@ -31,33 +49,33 @@ export const Header = () => {
         </Heading>
         <ActionsNavigation navigateBack={navigate.navigateBack} />
         <MobileNavigation
-          isLoggedIn={isLoggedIn}
+          isLoggedIn={!!fn.state.user}
           navigateProfile={navigate.navigateProfile}
           onLogout={logoutUser}
           onOpenModalSignIn={modal.handleOpenSignIn}
           onOpenModalSignUp={modal.handleOpenSignUp}
         />
         <DesktopNavigation
-          isLoggedIn={isLoggedIn}
+          isLoggedIn={!!fn.state.user}
           onLogout={logoutUser}
           navigateProfile={navigate.navigateProfile}
           onOpenModalSignIn={modal.handleOpenSignIn}
           onOpenModalSignUp={modal.handleOpenSignUp}
         />
       </nav>
-      {!isLoggedIn && (
+      {!fn.state.user && (
         <LoginModal
           form={login}
           isOpen={modal.isOpen && modal.modalType === 'login'}
-          isPending={false}
+          isPending={status.state === 'submitting'}
           onClose={modal.handleClose}
         />
       )}
-      {!isLoggedIn && (
+      {!fn.state.user && (
         <RegisterModal
           form={register}
           isOpen={modal.isOpen && modal.modalType === 'register'}
-          isPending={false}
+          isPending={status.state === 'submitting'}
           onClose={modal.handleClose}
         />
       )}
