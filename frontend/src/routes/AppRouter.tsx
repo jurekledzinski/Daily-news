@@ -10,13 +10,7 @@ import { del, get, set } from 'idb-keyval';
 import { ErrorPage } from '@components/pages';
 import { Loader, ProtectedRoute } from '@components/shared';
 import { QueryClient } from '@tanstack/react-query';
-import {
-  actionDetailsArticle,
-  actionHome,
-  actionProfileUser,
-  loaderArticleDetailsPage,
-  loaderHomePage,
-} from '@api';
+import { actionDetailsArticle, actionHome, actionProfileUser, loaderArticleDetailsPage, loaderHomePage } from '@api';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
