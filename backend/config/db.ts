@@ -1,6 +1,6 @@
-import { MongoClient } from 'mongodb';
-import logger from '../helpers/logger';
 import { config } from './config';
+import { logger } from '../helpers';
+import { MongoClient } from 'mongodb';
 
 const url = config.mongo_db_atlas_url!;
 
