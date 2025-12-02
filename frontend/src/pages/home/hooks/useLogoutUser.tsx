@@ -1,7 +1,8 @@
+import { useEffect } from 'react';
 import { UseLogoutUserProps } from './types';
 import { useSubmit } from 'react-router';
 
-export const useLogoutUser = ({ onSuccess }: UseLogoutUserProps) => {
+export const useLogoutUser = ({ action, onFailed, onSuccess }: UseLogoutUserProps) => {
   const submit = useSubmit();
 
   const onSubmit = () => {
@@ -11,6 +12,10 @@ export const useLogoutUser = ({ onSuccess }: UseLogoutUserProps) => {
     submit(formData, { method: 'post' });
     onSuccess();
   };
+
+  useEffect(() => {
+    if (action && !action.success) onFailed();
+  }, [action, onFailed]);
 
   return onSubmit;
 };
