@@ -1,7 +1,7 @@
 import { Field, Form, Message, PasswordInput, TextInput } from '@components/shared';
 import { LoginFormProps } from './types';
 
-export const LoginForm = ({ controls, isPending, onSubmit }: LoginFormProps) => {
+export const LoginForm = ({ controls, onSubmit }: LoginFormProps) => {
   const { register, formState } = controls;
   const { errors } = formState;
 
@@ -12,7 +12,6 @@ export const LoginForm = ({ controls, isPending, onSubmit }: LoginFormProps) => 
           autoComplete="username"
           label="Email"
           {...register('email', { required: 'Email is required' })}
-          isPending={isPending}
           variant="outlined"
         />
         {errors.email && <Message>{errors.email.message}</Message>}
@@ -22,7 +21,6 @@ export const LoginForm = ({ controls, isPending, onSubmit }: LoginFormProps) => 
           autoComplete="current-password"
           label="Password"
           {...register('password', { required: 'Password is required' })}
-          isPending={isPending}
           variant="outlined"
         />
         {errors.password && <Message>{errors.password.message}</Message>}

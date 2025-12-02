@@ -4,6 +4,5 @@ import { UseFormReturn } from 'react-hook-form';
 
 export type LoginFormProps = {
   controls: UseFormReturn<LoginFormValues, unknown, LoginFormValues>;
-  isPending: boolean;
   onSubmit?: FormEventHandler<HTMLFormElement>;
 };
