@@ -14,8 +14,6 @@ export const createLimiterResponse = async ({ amountAttempts, limiter, message, 
     await limiter();
     if (message.includes('login')) next();
   } catch (error) {
-    console.log('limiter response', error);
-
     if (error instanceof RateLimiterRes) {
       if ((error.consumedPoints ?? 0) > amountAttempts) {
         return next({
