@@ -1,42 +1,40 @@
-import { ActionLoginUser, ActionRegisterUser } from './types';
+import { ActionFunctionData } from './types';
 import { formatDataToObject, queryInvalidate } from './helpers';
-import { invalidateQueryClient, setResponse } from '@/helpers';
-import { LoaderFunctionArgs } from 'react-router';
-import { loginUser, logoutUser, registerUser } from '../api-calls';
+import { invalidateQueryClient } from '@helpers';
+import { loginUser, logoutUser, registerUser, setActionResponse } from '../api-calls';
 import { queryClient } from '@routes';
 import { User } from '@models';
+import type { ActionFunction } from 'react-router';
 
-export const actionHome =
-  () =>
-  async ({ request }: LoaderFunctionArgs<unknown>) => {
-    const data = await request.formData();
-    const actionType = data.get('actionType');
+export const actionHome: ActionFunction = async ({ request }) => {
+  const data = await request.formData();
+  const actionType = data.get('actionType');
 
-    if (actionType === 'register-user') {
-      return actionRegisterUser({ data });
-    } else if (actionType === 'login-user') {
-      return actionLoginUser({ data });
-    } else if (actionType === 'logout-user') {
-      return actionLogoutUser();
-    }
-  };
+  if (actionType === 'register-user') {
+    return actionRegisterUser({ data });
+  } else if (actionType === 'login-user') {
+    return actionLoginUser({ data });
+  } else if (actionType === 'logout-user') {
+    return actionLogoutUser();
+  }
+};
 
-export const actionRegisterUser: ActionRegisterUser = async ({ data }) => {
+export const actionRegisterUser: ActionFunctionData = async ({ data }) => {
   data.delete('actionType');
   const newUser = formatDataToObject<User>(data);
   const result = await registerUser(newUser);
 
-  return setResponse('register-user', result, window.location.pathname);
+  return setActionResponse('register-user', result);
 };
 
-export const actionLoginUser: ActionLoginUser = async ({ data }) => {
+export const actionLoginUser: ActionFunctionData = async ({ data }) => {
   data.delete('actionType');
   const user = formatDataToObject<Omit<User, 'id' | 'name'>>(data);
   const result = await loginUser(user);
 
   await invalidateQueryClient(queryClient, ['user']);
 
-  return setResponse('login-user', result, window.location.pathname);
+  return setActionResponse('login-user', result);
 };
 
 export const actionLogoutUser = async () => {
@@ -44,5 +42,5 @@ export const actionLogoutUser = async () => {
 
   queryInvalidate(['user']);
 
-  return setResponse('logout-user', result, window.location.pathname);
+  return setActionResponse('logout-user', result);
 };
