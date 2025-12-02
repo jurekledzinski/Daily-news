@@ -1,3 +1,4 @@
+import { clearEnableCookie } from './cookies';
 import { config } from '../config';
 import { NextFunction, Request, Response } from 'express';
 import { STATUS_CODE, STATUS_MESSAGE } from '../constants';
@@ -6,9 +7,9 @@ import { throwError } from '../error';
 export const requestLogout = (req: Request, res: Response, next: NextFunction) => {
   req.logout((err: Error) => {
     if (err) return next(err);
-    if (!req.session) {
-      throwError(STATUS_MESSAGE[STATUS_CODE.NOT_FOUND], STATUS_CODE.NOT_FOUND);
-    }
+    if (!req.session) throwError(STATUS_MESSAGE[STATUS_CODE.NOT_FOUND], STATUS_CODE.NOT_FOUND);
+
+    clearEnableCookie(res);
 
     req.session.destroy((err: Error) => {
       if (err) return next(err);
