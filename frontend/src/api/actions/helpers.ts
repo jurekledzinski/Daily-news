@@ -1,18 +1,18 @@
 import { APIErrorResponse, APISuccessResponse } from '../api';
-import { queryClient as useQueryClient } from '@routes';
+import { queryClient } from '@routes';
 
 export const formatDataToObject = <T>(data: FormData) => {
   return Object.fromEntries(data.entries()) as T;
 };
 
 export const queryInvalidate = (queryKey: string[]) => {
-  useQueryClient.invalidateQueries({
+  queryClient.invalidateQueries({
     queryKey,
   });
 };
 
 export const queryRemove = (queryKey: string[]) => {
-  useQueryClient.removeQueries({
+  queryClient.removeQueries({
     queryKey,
   });
 };
