@@ -1,3 +1,4 @@
+import { APIErrorResponse, APISuccessResponse } from '../api';
 import { FetchAPIParameters } from './types';
 
 export const fetchApi = async ({
@@ -27,3 +28,11 @@ export const fetchApi = async ({
 
   return await response.json();
 };
+
+export function setActionResponse<T = unknown>(
+  action: string,
+  result: APISuccessResponse<T> | APIErrorResponse
+) {
+  if ('payload' in result && result.success) return { action, ...result };
+  return { action, ...result };
+}
