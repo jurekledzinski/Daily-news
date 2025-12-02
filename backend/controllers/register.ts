@@ -1,27 +1,21 @@
 import bcrypt from 'bcrypt';
-import CustomError from '../error/error';
 import xss from 'xss';
 import { getCollectionDb } from '../config';
 import { Request, Response } from 'express';
-import { STATUS_CODE } from '../constants';
-import { tryCatch } from '../helpers';
+import { STATUS_CODE, STATUS_MESSAGE, SUCCESS_MESSAGE } from '../constants';
+import { throwError } from '../error';
 import { User, UserSchema } from '../models';
 
-export const registerUser = tryCatch(async (req: Request, res: Response) => {
+export const registerUser = async (req: Request, res: Response) => {
   const collection = getCollectionDb<User>('users');
 
   if (!collection) {
-    throw new CustomError(
-      'Internal server error',
-      STATUS_CODE.INTERNAL_SERVER_ERROR
-    );
+    throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
   }
 
   const user = await collection.findOne({ email: xss(req.body.email) });
 
-  if (user) {
-    throw new CustomError('User already exist', STATUS_CODE.CONFLICT);
-  }
+  if (user) throwError('User already exist', STATUS_CODE.CONFLICT);
 
   const parsedData = UserSchema.parse(req.body);
 
@@ -38,11 +32,8 @@ export const registerUser = tryCatch(async (req: Request, res: Response) => {
   });
 
   if (!result.acknowledged) {
-    throw new CustomError(
-      'Internal server error',
-      STATUS_CODE.INTERNAL_SERVER_ERROR
-    );
+    throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
   }
 
-  return res.status(STATUS_CODE.OK).json({ success: true });
-});
+  return res.status(STATUS_CODE.OK).json({ message: SUCCESS_MESSAGE['register'], success: true });
+};
