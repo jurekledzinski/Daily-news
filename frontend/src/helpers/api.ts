@@ -1,8 +1,6 @@
-import { APIErrorResponse, APISuccessResponse } from '@/api';
-import { redirect } from 'react-router';
-import { removeCookie, setCookie } from './global';
-import type { QueryClient } from '@tanstack/react-query';
+import { APISuccessResponse } from '@/api';
 import { Content } from '@guardian/content-api-models/v1/content';
+import type { QueryClient } from '@tanstack/react-query';
 
 export const invalidateQueryClient = async (queryClient: QueryClient, queryKey: string[]) => {
   await queryClient.invalidateQueries({
@@ -21,34 +19,6 @@ export const tryCatch = <T, K, N = unknown>(
     }
   };
 };
-
-export const fetchOrCache = async <T>(
-  queryClient: QueryClient,
-  queryKey: string[],
-  queryFn: () => Promise<T>
-) => {
-  return (queryClient.getQueryData(queryKey) as T) ?? (await queryFn());
-};
-
-export function setResponse(
-  action: string,
-  result: Omit<APISuccessResponse<unknown>, 'payload'> | APIErrorResponse,
-  url: string
-) {
-  if ('message' in result && !result.success) {
-    const error = { message: result.message, action };
-    setCookie('serverError', error);
-    return redirect(url);
-  }
-
-  removeCookie('serverError');
-  return redirect(url);
-}
-
-export function getUrlQuery(request: Request, nameQuery: string, initial: string) {
-  const url = new URL(request.url);
-  return url.searchParams.get(nameQuery) ?? initial;
-}
 
 export const findTheBiggestImageInArticle = (data: APISuccessResponse<Content>) => {
   const elementsAssets = data.payload?.elements ?? [];
