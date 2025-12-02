@@ -1,4 +1,5 @@
 export * from './click-outside';
+export * from './fetch-user-data';
 export * from './infinite-query-fetch';
 export * from './page-search-params';
 export * from './persisted-scroll-page';
