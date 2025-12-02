@@ -5,18 +5,11 @@ import MongoStore from 'connect-mongo';
 import morgan from 'morgan';
 import passport from 'passport';
 import session from 'express-session';
-import { CustomError } from './error';
-import { z } from 'zod';
-import logger from './helpers/logger';
+import { commentRoutes, csrfRoutes, loginRoutes, registerRoutes, userRoutes } from './routes';
 import { config } from './config';
-
-import {
-  commentRoutes,
-  csrfRoutes,
-  loginRoutes,
-  registerRoutes,
-  userRoutes,
-} from './routes';
+import { logger } from './helpers';
+import { z } from 'zod';
+import type { CustomError } from './error';
 
 const app = express();
 app.disable('x-powered-by');
@@ -64,10 +57,12 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/comments', commentRoutes);
 
 app.use((error: CustomError, _: Request, res: Response, next: NextFunction) => {
+  console.log('MAIN ERR----->', error);
   logger.error('Base error middleware', error.message);
   if (error instanceof z.ZodError) {
-    res.status(error.statusCode || 500).json({
-      error: { message: 'Incorrect data types', success: false },
+    res.status(500).json({
+      message: 'Incorrect data types',
+      success: false,
     });
   } else {
     res.status(error.statusCode || 500).json({
