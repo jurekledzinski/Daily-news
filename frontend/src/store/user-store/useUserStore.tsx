@@ -1,4 +1,4 @@
-import { ContextUser } from './UserStore';
+import { ContextUser } from './context';
 import { useContext } from 'react';
 
 export const useUserStore = () => {
