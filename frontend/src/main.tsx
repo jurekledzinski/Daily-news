@@ -9,7 +9,7 @@ import './styles/main.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Toaster position="top-left" />
+    <Toaster position="top-left" toastOptions={{ duration: 2000 }} />
     <PersistQueryClientProvider
       client={queryClient}
       persistOptions={{ persister: asyncStoragePersister }}
