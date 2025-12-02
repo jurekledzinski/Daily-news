@@ -1,6 +1,6 @@
-import { FormHTMLAttributes } from 'react';
+import { FormProps as RouterFormProps } from 'react-router';
 import { Orientation } from '@types';
 
-export interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
+export interface FormProps extends RouterFormProps {
   orientation?: Orientation;
 }
