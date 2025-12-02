@@ -1,46 +1,49 @@
-import { buildResponseRateLimiter } from '../helpers';
 import { client } from '../config';
+import { createLimiterResponse } from '../helpers';
 import { IP_ATTEMPTS_LIMIT, LOGIN_ATTEMPTS_LIMIT } from '../constants';
 import { NextFunction, Request, Response } from 'express';
 import { RateLimiterMongo } from 'rate-limiter-flexible';
 
-const loginLimiter = new RateLimiterMongo({
-  storeClient: client,
-  points: LOGIN_ATTEMPTS_LIMIT,
-  duration: 60,
-  keyPrefix: 'login_limit',
-  dbName: 'news',
-});
+let loginLimiter: RateLimiterMongo;
+let ipLimiter: RateLimiterMongo;
 
-const ipLimiter = new RateLimiterMongo({
-  storeClient: client,
-  points: IP_ATTEMPTS_LIMIT,
-  duration: 86400,
-  keyPrefix: 'ip_limit',
-  dbName: 'news',
-});
+export const connectRateLimiters = async () => {
+  loginLimiter = new RateLimiterMongo({
+    storeClient: client,
+    points: LOGIN_ATTEMPTS_LIMIT,
+    duration: 60,
+    keyPrefix: 'login_limit',
+    dbName: 'news',
+  });
 
-export const loginRateLimiter = async (
-  req: Request,
-  _: Response,
-  next: NextFunction
-) => {
+  ipLimiter = new RateLimiterMongo({
+    storeClient: client,
+    points: IP_ATTEMPTS_LIMIT,
+    duration: 86400,
+    keyPrefix: 'ip_limit',
+    dbName: 'news',
+  });
+};
+
+export const loginRateLimiter = async (req: Request, _: Response, next: NextFunction) => {
   const ip = req.ip!;
   const email = req.body.email;
 
-  await buildResponseRateLimiter(
-    () => ipLimiter.consume(ip),
-    IP_ATTEMPTS_LIMIT,
-    'Too many attempts from this IP. Please try again later.',
-    next,
-    'ip'
-  );
+  if (!loginLimiter || !ipLimiter) {
+    throw new Error('Rate limiters not initialized');
+  }
 
-  await buildResponseRateLimiter(
-    () => loginLimiter.consume(`${email}_${ip}`),
-    LOGIN_ATTEMPTS_LIMIT,
-    'Too many login attempts. Please try again later.',
+  await createLimiterResponse({
+    amountAttempts: IP_ATTEMPTS_LIMIT,
+    message: 'Too many attempts from this IP. Please try again later.',
+    limiter: () => ipLimiter.consume(ip),
     next,
-    'login'
-  );
+  });
+
+  await createLimiterResponse({
+    amountAttempts: LOGIN_ATTEMPTS_LIMIT,
+    message: 'Too many login attempts. Please try again later.',
+    limiter: () => loginLimiter.consume(email + '_' + ip),
+    next,
+  });
 };
