@@ -7,9 +7,7 @@ export const getCookie = (name: string) => {
 
   const cookieValue = cookies.find((row) => row.trim().startsWith(name))?.split('=')[1];
 
-  if (cookieValue) {
-    return JSON.parse(cookieValue);
-  }
+  if (cookieValue) return JSON.parse(cookieValue);
 
   return null;
 };
