@@ -5,8 +5,8 @@ import { modalConfig } from './utils';
 
 export const RegisterModal = ({ form, isOpen, isPending, onClose }: RegisterModalProps) => {
   return (
-    <ModalForm onClose={onClose} open={isOpen} {...modalConfig}>
-      <RegisterForm controls={form.methods} isPending={isPending} onSubmit={form.onSubmit} />
+    <ModalForm onClose={onClose} open={isOpen} {...modalConfig} isPending={isPending}>
+      <RegisterForm controls={form.methods} onSubmit={form.onSubmit} />
     </ModalForm>
   );
 };

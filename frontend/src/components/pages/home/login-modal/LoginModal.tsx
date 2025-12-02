@@ -5,8 +5,8 @@ import { modalConfig } from './utils';
 
 export const LoginModal = ({ form, isOpen, isPending, onClose }: LoginModalProps) => {
   return (
-    <ModalForm onClose={onClose} open={isOpen} {...modalConfig}>
-      <LoginForm controls={form.methods} isPending={isPending} onSubmit={form.onSubmit} />
+    <ModalForm onClose={onClose} open={isOpen} {...modalConfig} isPending={isPending}>
+      <LoginForm controls={form.methods} onSubmit={form.onSubmit} />
     </ModalForm>
   );
 };
