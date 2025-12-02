@@ -17,7 +17,6 @@ export const useRegister = ({ action, onFailed, onSuccess, status }: UseRegister
     formData.set('name', data.name);
     formData.set('surname', data.surname);
     formData.set('password', data.password);
-    console.log('res', data);
     submit(formData, { method: 'post', viewTransition: true });
   };
 
