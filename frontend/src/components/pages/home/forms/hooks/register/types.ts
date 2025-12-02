@@ -1,3 +1,6 @@
+import { ActionData } from '@api';
+import { Navigation } from 'react-router';
+
 export type RegisterFormValues = {
   email: string;
   name: string;
@@ -7,6 +10,8 @@ export type RegisterFormValues = {
 };
 
 export type UseRegisterProps = {
+  onFailed: () => void;
   onSuccess: () => void;
-  status: 'idle' | 'loading' | 'submitting';
+  status: Navigation;
+  action?: ActionData;
 };

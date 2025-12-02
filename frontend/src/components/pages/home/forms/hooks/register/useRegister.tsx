@@ -1,9 +1,9 @@
 import { RegisterFormValues, UseRegisterProps } from './types';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useResetForm } from '@/hooks';
 import { useSubmit } from 'react-router';
 
-export const useRegister = ({ onSuccess, status }: UseRegisterProps) => {
+export const useRegister = ({ action, onFailed, onSuccess, status }: UseRegisterProps) => {
   const methods = useForm<RegisterFormValues>({
     defaultValues: { name: '', surname: '', email: '', password: '', confirmPassword: '' },
   });
@@ -17,15 +17,18 @@ export const useRegister = ({ onSuccess, status }: UseRegisterProps) => {
     formData.set('name', data.name);
     formData.set('surname', data.surname);
     formData.set('password', data.password);
-    submit(formData, { method: 'post' });
+    console.log('res', data);
+    submit(formData, { method: 'post', viewTransition: true });
   };
 
-  useEffect(() => {
-    if (status === 'idle' && methods.formState.isSubmitSuccessful) {
-      onSuccess();
-      methods.reset();
-    }
-  }, [methods, onSuccess, status]);
+  useResetForm({
+    isSubmitSuccessful: methods.formState.isSubmitSuccessful,
+    isSuccess: !!action?.success,
+    onFailed,
+    onSuccess,
+    reset: methods.reset,
+    state: status.state,
+  });
 
   return { methods, onSubmit: methods.handleSubmit(onSubmit) };
 };
