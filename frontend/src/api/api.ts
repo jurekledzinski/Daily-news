@@ -1,4 +1,4 @@
-export type APISuccessResponse<T> = {
+export type APISuccessResponse<T = unknown> = {
   payload: T;
   success: boolean;
   message?: string;
@@ -15,4 +15,11 @@ export interface APIPaginationSuccessResponse<T> extends APISuccessResponse<T> {
 
 export type APIGuardianSuccessResponse<T> = {
   response: T;
+};
+
+export type ActionData<T = unknown> = {
+  action: string;
+  message: string;
+  payload?: T;
+  success: boolean;
 };
