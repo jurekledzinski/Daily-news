@@ -11,8 +11,6 @@ export const useResetForm = <T extends FieldValues>({
   onSuccess,
 }: UseResetFormProps<T>) => {
   useEffect(() => {
-    console.log('state', state);
-    console.log('isSubmitSuccessful', isSubmitSuccessful);
     if (state !== 'idle' || !isSubmitSuccessful) return;
 
     if (isSuccess) {
