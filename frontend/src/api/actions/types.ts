@@ -7,8 +7,13 @@ export type ActionCreateComment = Action<Omit<Params, 'pageReply'>>;
 export type ActionCreateCommentReply = Action<Params>;
 export type ActionUpdateLikesComment = Action<Params>;
 
-export type ActionUpdateUserProfile = Action<WithFormData & WithId>;
-export type ActionChangeUserPassword = Action<WithFormData & WithId>;
-export type ActionDeleteUserAccount = Action<WithFormData & WithId>;
-export type ActionRegisterUser = Action<WithFormData>;
-export type ActionLoginUser = Action<WithFormData>;
+// export type ActionUpdateUserProfile = Action<WithFormData & WithId>;
+// export type ActionChangeUserPassword = Action<WithFormData & WithId>;
+// export type ActionDeleteUserAccount = Action<WithFormData & WithId>;
+// export type ActionRegisterUser = Action<WithFormData>;
+// export type ActionLoginUser = Action<WithFormData>;
+
+type NewAction<T> = (params: T) => Promise<{ message?: string } | Response>;
+
+export type ActionFunctionData = NewAction<WithFormData>;
+export type ActionFunctionDataId = Action<WithFormData & WithId>;
