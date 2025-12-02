@@ -4,7 +4,7 @@ import { AppBar, Heading } from '@components/shared';
 import { LoginModal } from '../login-modal';
 import { RegisterModal } from '../register-modal';
 import { useActionData, useNavigation } from 'react-router';
-import { useLogoutUser } from '@pages/home';
+import { useLogout } from '@components/pages';
 import { User } from '@models';
 
 import {
@@ -24,22 +24,9 @@ export const Header = () => {
   const navigate = useAuthNavigation();
   const modal = useModalControl();
   const fn = useAuthCallbacks({ action, modal });
-
   const login = useLogin({ onFailed: fn.failedLogin, onSuccess: fn.successLogin, status, action });
-  const register = useRegister({
-    onFailed: fn.failedRegister,
-    onSuccess: fn.successRegister,
-    status,
-    action,
-  });
-  const logoutUser = useLogoutUser({
-    onFailed: fn.failedLogout,
-    onSuccess: navigate.navigateLogout,
-    action,
-  });
-
-  console.log('action', action);
-  console.log('user', fn.state);
+  const register = useRegister({ onFailed: fn.failedRegister, onSuccess: fn.successRegister, status, action });
+  const logoutUser = useLogout({ onFailed: fn.failedLogout, onSuccess: navigate.navigateLogout, action });
 
   return (
     <AppBar className={styles.header}>
@@ -68,7 +55,7 @@ export const Header = () => {
           form={login}
           isOpen={modal.isOpen && modal.modalType === 'login'}
           isPending={status.state === 'submitting'}
-          onClose={modal.handleClose}
+          onClose={() => fn.closeModal(login.methods.reset)}
         />
       )}
       {!fn.state.user && (
@@ -76,7 +63,7 @@ export const Header = () => {
           form={register}
           isOpen={modal.isOpen && modal.modalType === 'register'}
           isPending={status.state === 'submitting'}
-          onClose={modal.handleClose}
+          onClose={() => fn.closeModal(register.methods.reset)}
         />
       )}
     </AppBar>
