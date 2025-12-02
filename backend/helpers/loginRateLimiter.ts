@@ -1,43 +1,35 @@
-import { CustomError } from '../error';
-import { IRateLimiterRes, RateLimiterRes } from 'rate-limiter-flexible';
+import { RateLimiterRes } from 'rate-limiter-flexible';
 import { NextFunction } from 'express';
 import { STATUS_CODE } from '../constants';
 
-export const buildResponseRateLimiter = async (
-  limiter: () => Promise<RateLimiterRes>,
-  limit: number,
-  message: string,
-  next: NextFunction,
-  type: 'ip' | 'login'
-) => {
+type Params = {
+  amountAttempts: number;
+  limiter: () => Promise<RateLimiterRes>;
+  message: string;
+  next: NextFunction;
+};
+
+export const createLimiterResponse = async ({ amountAttempts, limiter, message, next }: Params) => {
   try {
     await limiter();
-    type === 'login' ? next() : null;
+    if (message.includes('login')) next();
   } catch (error) {
-    if (error instanceof Error) {
-      throw new CustomError(
-        'Internal server error',
-        STATUS_CODE.INTERNAL_SERVER_ERROR
-      );
-    }
+    console.log('limiter response', error);
 
-    const limiterError = error as IRateLimiterRes;
-
-    if (
-      limiterError &&
-      limiterError.consumedPoints &&
-      limiterError.consumedPoints > limit
-    ) {
+    if (error instanceof RateLimiterRes) {
+      if ((error.consumedPoints ?? 0) > amountAttempts) {
+        return next({
+          message,
+          statusCode: STATUS_CODE.TOO_MANY_REQUESTS,
+          success: false,
+        });
+      }
+    } else if (error instanceof Error) {
       return next({
-        message,
-        statusCode: STATUS_CODE.TOO_MANY_REQUESTS,
+        message: 'Internal Server Error',
+        statusCode: STATUS_CODE.INTERNAL_ERROR,
         success: false,
       });
     }
-
-    throw new CustomError(
-      'Unexpected error',
-      STATUS_CODE.INTERNAL_SERVER_ERROR
-    );
   }
 };
