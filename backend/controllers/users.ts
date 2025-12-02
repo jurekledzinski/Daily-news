@@ -11,7 +11,7 @@ import { throwError } from '../error';
 const collection = getCollectionDb<UserData>('users');
 
 export const getUser = async (req: Request, res: Response) => {
-  return res.status(STATUS_CODE.OK).json({ success: true, payload: { result: req.user } });
+  return res.status(STATUS_CODE.OK).json({ success: true, payload: req.user });
 };
 
 export const logoutUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -54,10 +54,7 @@ export const changeUserPassword = async (req: Request, res: Response) => {
   const generatedSalt = await bcrypt.genSalt(salt);
   const hashedPassword = await bcrypt.hash(password, generatedSalt);
 
-  await collection.updateOne(
-    { _id: new ObjectId(req.params.id) },
-    { $set: { password: hashedPassword } }
-  );
+  await collection.updateOne({ _id: new ObjectId(req.params.id) }, { $set: { password: hashedPassword } });
 
   return res.status(STATUS_CODE.OK).json({ success: true });
 };
