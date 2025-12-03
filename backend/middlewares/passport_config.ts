@@ -2,12 +2,12 @@ import bcrypt from 'bcrypt';
 import LocalStrategy from 'passport-local';
 import passport from 'passport';
 import xss from 'xss';
+import { DataDB, User } from '../models';
+import { formatDBDocumentId } from '../helpers';
 import { getCollectionDb } from '../config';
 import { ObjectId } from 'mongodb';
 import { STATUS_CODE, STATUS_MESSAGE } from '../constants';
 import { throwError } from '../error';
-import { transformDocument } from '../helpers';
-import { User } from '../models';
 
 passport.use(
   new LocalStrategy.Strategy(
@@ -23,7 +23,7 @@ passport.use(
           throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
         }
 
-        const user = await collection.findOne<User>({
+        const user = await collection.findOne<DataDB<User>>({
           email: xss(email),
         });
 
@@ -60,13 +60,13 @@ passport.serializeUser(
 
 passport.deserializeUser(async (id: string, done) => {
   try {
-    const collection = getCollectionDb('users');
+    const collection = getCollectionDb<DataDB<User>>('users');
 
     if (!collection) {
       throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
     }
 
-    const user = await collection.findOne<User>(
+    const user = await collection.findOne(
       { _id: new ObjectId(id) },
       { projection: { password: 0 } }
     );
@@ -75,9 +75,9 @@ passport.deserializeUser(async (id: string, done) => {
       return done(null, false);
     }
 
-    const formatUser = transformDocument([{ ...user, _id: new ObjectId(user._id) }]);
+    const formatUser = formatDBDocumentId(user);
 
-    done(null, formatUser[0] ?? []);
+    done(null, formatUser);
   } catch (error) {
     done(error, null);
   }
