@@ -1,4 +1,4 @@
-import { ActionCreateComment } from './types';
+import { ActionComment } from './types';
 import { ActionFunction } from 'react-router';
 import { Comment } from '@models';
 import { createComment, setActionResponse } from '../api-calls';
@@ -16,7 +16,7 @@ export const actionDetailsArticle: ActionFunction = async ({ params, request }) 
   if (actionType === 'create-comment') return actionCreateComment(ctx);
 };
 
-export const actionCreateComment: ActionCreateComment = async ({ data, articleId }) => {
+export const actionCreateComment: ActionComment = async ({ data, articleId }) => {
   data.delete('actionType');
   const newComment = formatDataToObject<Omit<Comment, 'id'>>(data);
   const result = await createComment(newComment);
