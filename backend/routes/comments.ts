@@ -1,20 +1,14 @@
 import express from 'express';
 import { checkAuthentication } from '../middlewares/authorization';
+import { createComment, getComments } from '../controllers/comments';
 import { csrfSync } from 'csrf-sync';
 const router = express.Router();
-import {
-  getComments,
-  getCommentReplies,
-  createComment,
-  updateCommentLikes,
-} from '../controllers/comments';
-const { csrfSynchronisedProtection } = csrfSync();
+
+const { csrfSynchronisedProtection } = csrfSync({
+  errorConfig: { message: 'Your are unauthorized to this action!' },
+});
 
 router.route('/:article_id').get(getComments);
-router.route('/:article_id/:comment_id').get(getCommentReplies);
-router
-  .route('/create')
-  .post(checkAuthentication, csrfSynchronisedProtection, createComment);
-router.route('/likes/:article_id/:comment_id').patch(updateCommentLikes);
+router.route('/create').post(checkAuthentication, csrfSynchronisedProtection, createComment);
 
 export default router;
