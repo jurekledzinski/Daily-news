@@ -1,8 +1,8 @@
-import { changeUserPassword, deleteUserAccount, updateUserProfile } from '../api-calls';
-import { CSRFToken, User } from '@models';
-import { formatDataToObject, queryInvalidate, queryRemove, validateAction } from './helpers';
 import { ActionFunction, Params } from 'react-router';
-import { showSuccessToast } from '@helpers';
+import { ActionProfile } from './types';
+import { changeUserPassword, deleteUserAccount, setActionResponse, updateUserProfile } from '../api-calls';
+import { CSRFToken, User } from '@models';
+import { formatDataToObject, queryInvalidate, queryRemove } from './helpers';
 
 export const actionProfileUser: ActionFunction = async ({ params, request }) => {
   const { id } = params as Params;
@@ -19,49 +19,32 @@ export const actionProfileUser: ActionFunction = async ({ params, request }) => 
   }
 };
 
-const actionUpdateUserProfile: ActionUpdateUserProfile = async ({ data, id }) => {
+const actionUpdateUserProfile: ActionProfile = async ({ data, id }) => {
   data.delete('actionType');
   const dataProfile = formatDataToObject<Omit<User, 'id' | 'password'>>(data);
   const result = await updateUserProfile({ id, body: dataProfile });
 
   queryRemove(['user']);
-  queryInvalidate(['crsf-token']);
 
-  validateAction(result, 'update-profile');
-
-  showSuccessToast('Profile updated successfully!');
-
-  //   return redirect(window.location.pathname);
-  return {};
+  return setActionResponse('update-profile', result);
 };
 
-const actionChangeUserPassword: ActionChangeUserPassword = async ({ data, id }) => {
+const actionChangeUserPassword: ActionProfile = async ({ data, id }) => {
   data.delete('actionType');
   const dataPassword = formatDataToObject<Pick<User, 'password' | 'csrfToken'>>(data);
   const result = await changeUserPassword({ id, body: dataPassword });
 
   queryRemove(['user']);
-  queryInvalidate(['crsf-token']);
 
-  validateAction(result, 'change-password');
-
-  showSuccessToast('Password changed successfully!');
-
-  //   return redirect(window.location.pathname);
-  return {};
+  return setActionResponse('change-password', result);
 };
 
-const actionDeleteUserAccount: ActionDeleteUserAccount = async ({ data, id }) => {
+const actionDeleteUserAccount: ActionProfile = async ({ data, id }) => {
   data.delete('actionType');
   const deleteData = formatDataToObject<CSRFToken>(data);
   const result = await deleteUserAccount({ id, token: deleteData.csrfToken });
 
   queryInvalidate(['user']);
 
-  validateAction(result, 'delete-user-account');
-
-  showSuccessToast('Your account has been successfully deleted.');
-
-  //   return redirect('/');
-  return {};
+  return setActionResponse('delete-user-account', result);
 };
