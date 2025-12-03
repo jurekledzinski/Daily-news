@@ -1,5 +1,6 @@
 import { ActionData } from '@api';
-import { Navigation } from 'react-router';
+import { FetcherReset } from '@components/pages';
+import { User } from '@models';
 
 export type RegisterFormValues = {
   email: string;
@@ -10,8 +11,6 @@ export type RegisterFormValues = {
 };
 
 export type UseRegisterProps = {
-  onFailed: () => void;
-  onSuccess: () => void;
-  status: Navigation;
-  action?: ActionData;
+  onFailed: (reset: FetcherReset, data?: ActionData<User>) => void;
+  onSuccess: (reset: FetcherReset, data?: ActionData<User>) => void;
 };

@@ -1,14 +1,16 @@
+import { ActionData } from '@api';
 import { RegisterFormValues, UseRegisterProps } from './types';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useResetForm } from '@/hooks';
-import { useSubmit } from 'react-router';
+import { useFetcher } from 'react-router';
+import { User } from '@models';
+import { useResetForm } from '@hooks';
 
-export const useRegister = ({ action, onFailed, onSuccess, status }: UseRegisterProps) => {
+export const useRegister = ({ onFailed, onSuccess }: UseRegisterProps) => {
   const methods = useForm<RegisterFormValues>({
     defaultValues: { name: '', surname: '', email: '', password: '', confirmPassword: '' },
   });
 
-  const submit = useSubmit();
+  const fetcher = useFetcher<ActionData<User>>();
 
   const onSubmit: SubmitHandler<RegisterFormValues> = (data) => {
     const formData = new FormData();
@@ -17,17 +19,17 @@ export const useRegister = ({ action, onFailed, onSuccess, status }: UseRegister
     formData.set('name', data.name);
     formData.set('surname', data.surname);
     formData.set('password', data.password);
-    submit(formData, { method: 'post', viewTransition: true });
+    fetcher.submit(formData, { method: 'post', action: '/', preventScrollReset: true });
   };
 
   useResetForm({
     isSubmitSuccessful: methods.formState.isSubmitSuccessful,
-    isSuccess: !!action?.success,
-    onFailed,
-    onSuccess,
+    isSuccess: fetcher.data?.success,
+    onFailed: () => onFailed(fetcher.unstable_reset, fetcher.data),
+    onSuccess: () => onSuccess(fetcher.unstable_reset, fetcher.data),
     reset: methods.reset,
-    state: status.state,
+    state: fetcher.state,
   });
 
-  return { methods, onSubmit: methods.handleSubmit(onSubmit) };
+  return { methods, onSubmit: methods.handleSubmit(onSubmit), status: fetcher.state };
 };
