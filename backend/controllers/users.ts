@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import xss from 'xss';
-import { ChangeUserPasswordSchema, UpdateUserProfileSchema, UserData } from '../models';
+import { DataDB, User, UserSchema } from '../models';
 import { getCollectionDb } from '../config';
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
@@ -8,7 +8,7 @@ import { requestLogout } from '../helpers';
 import { STATUS_CODE, STATUS_MESSAGE } from '../constants';
 import { throwError } from '../error';
 
-const collection = getCollectionDb<UserData>('users');
+const collection = getCollectionDb<DataDB<User>>('users');
 
 export const getUser = async (req: Request, res: Response) => {
   return res.status(STATUS_CODE.OK).json({ success: true, payload: req.user });
@@ -23,9 +23,9 @@ export const updateUserProfile = async (req: Request, res: Response) => {
     throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
   }
 
-  const parsedData = UpdateUserProfileSchema.parse(req.body);
+  const parsedData = UserSchema.pick({ name: true, email: true }).parse(req.body);
 
-  const sessionUser = req.user! as UserData;
+  const sessionUser = req.user! as User;
 
   const isExist = (await collection.findOne({ email: req.body.email })) !== null;
 
@@ -46,7 +46,7 @@ export const changeUserPassword = async (req: Request, res: Response) => {
     throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
   }
 
-  const parsedData = ChangeUserPasswordSchema.parse(req.body);
+  const parsedData = UserSchema.pick({ password: true }).parse(req.body);
 
   const salt = 10;
   const password = xss(parsedData.password);
@@ -66,13 +66,8 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
 
   const id = req.params.id;
 
-  const result = await collection.deleteOne({
-    _id: new ObjectId(id),
-  });
+  const result = await collection.deleteOne({ _id: new ObjectId(id) });
 
-  if (result.deletedCount) {
-    requestLogout(req, res, next);
-  } else {
-    res.status(STATUS_CODE.OK).json({ success: false });
-  }
+  if (result.deletedCount) requestLogout(req, res, next);
+  else res.status(STATUS_CODE.OK).json({ success: false });
 };
