@@ -17,6 +17,7 @@ export * from './icon';
 export * from './image';
 export * from './input';
 export * from './label';
+export * from './load-more-button';
 export * from './loader';
 export * from './menu';
 export * from './message';
