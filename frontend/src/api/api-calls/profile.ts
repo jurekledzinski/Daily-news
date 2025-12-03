@@ -1,8 +1,8 @@
 import { APIErrorResponse, APISuccessResponse } from '../api';
 import { fetchApi } from './helpers';
-import { tryCatch } from '@/helpers';
+import { tryCatch } from '@helpers';
 import { URLS } from '../urls';
-import { User } from '@/models';
+import { User } from '@models';
 
 export const updateUserProfile = tryCatch<
   Omit<APISuccessResponse<unknown>, 'payload'>,
