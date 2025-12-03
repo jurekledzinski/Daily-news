@@ -10,21 +10,31 @@ export const useInfiniteQueryFetch = <T extends object>({
 }: useInfiniteQueryFetchProps) => {
   const { data, ...rest } = useInfiniteQuery<APIPaginationSuccessResponse<T>, APIErrorResponse>({
     queryKey,
-    getNextPageParam: (lastPage) => lastPage.currentPage! + 1,
+    getNextPageParam: (lastPage) => {
+      return lastPage.hasNextPage ? (lastPage.currentPage ?? 0) + 1 : undefined;
+    },
     queryFn: async ({ pageParam }) => {
+      if (!query) return Promise.reject('Query is undefined');
+
       const response = await fetchApi({ url: url(query, pageParam) });
+
       if ('payload' in response) return response;
-      return { payload: response.response.results, currentPage: response.response.currentPage };
+
+      return {
+        payload: response.response.results,
+        hasNextPage: response.response.pages > response.response.currentPage,
+        currentPage: response.response.currentPage,
+      };
     },
     enabled: !!query,
     initialPageParam: 1,
     refetchOnWindowFocus: false,
   });
 
-  const allData = useMemo(() => {
+  const loadedData = useMemo(() => {
     if (!data) return [];
     return data.pages.map((page) => page.payload).flat();
   }, [data]);
 
-  return { allData, ...rest };
+  return { loadedData, ...rest };
 };
