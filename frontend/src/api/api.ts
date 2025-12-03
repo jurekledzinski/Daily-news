@@ -11,6 +11,7 @@ export type APIErrorResponse = {
 
 export interface APIPaginationSuccessResponse<T> extends APISuccessResponse<T> {
   currentPage?: number;
+  hasNextPage?: boolean;
 }
 
 export type APIGuardianSuccessResponse<T> = {
