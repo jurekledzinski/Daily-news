@@ -1,31 +1,37 @@
 import styles from './GridArticles.module.css';
-import { Button, ButtonGroup, EmptyState, Loader } from '@components/shared';
 import { CardArticle } from '@components/pages';
+import { EmptyState, Loader, LoadMoreButton } from '@components/shared';
 import { SearchResponse } from '@guardian/content-api-models/v1/SearchResponse';
 import { URLS } from '@api';
-import { useInfiniteQueryFetch, usePageSearchParam, usePersistedScrollPage } from '@hooks';
+import { useInfiniteQueryFetch, useLoadMoreData } from '@hooks';
 import { useNavigateToDetailsArticle } from './hooks';
+import { useParams } from 'react-router';
 
 export const GridArticles = () => {
   const navigateDetailsArticle = useNavigateToDetailsArticle();
-  const { saveInLocalstoragePage } = usePersistedScrollPage();
-  const { page, params, setPage } = usePageSearchParam();
+  const { category } = useParams<{ category: string }>();
 
   const {
-    allData,
-    fetchNextPage,
+    loadedData,
     hasNextPage,
     isFetching,
-    isFetchingNextPage,
     isPending,
+    isFetchingNextPage,
+    fetchNextPage,
     isError,
   } = useInfiniteQueryFetch<SearchResponse['results']>({
-    query: params.category,
-    queryKey: ['list-articles', params.category],
-    url: (query, pageParam) => URLS.GET_ARTICLES(query!, String(pageParam)),
+    query: category,
+    queryKey: ['list-articles', category],
+    url: (query, pageParam) => URLS.GET_ARTICLES(query, String(pageParam)),
   });
 
-  if ((!allData.length && !isFetching && !isPending) || isError) {
+  const { loadMoreData } = useLoadMoreData({ param: category, fetchNextPage });
+
+  if (isError) {
+    return <EmptyState text="Failed to load articles." src="/info/article.png" />;
+  }
+
+  if (!isFetching && !isPending && loadedData.length === 0) {
     return <EmptyState text="No articles found." src="/info/article.png" />;
   }
 
@@ -33,26 +39,17 @@ export const GridArticles = () => {
     <>
       <div className={styles.grid}>
         {(isFetching || isPending) && <Loader position="viewport" />}
-        {allData?.map((article, i) => (
-          <CardArticle article={article} key={article.id + i} onReadMore={navigateDetailsArticle} />
+        {loadedData.map((article, i) => (
+          <CardArticle
+            article={article}
+            key={`${article.webUrl}-${i}`}
+            onReadMore={navigateDetailsArticle}
+          />
         ))}
       </div>
 
-      {!!params.category && hasNextPage && !isPending && (
-        <ButtonGroup className="mt-sm" justify="justify-center" fullWidth>
-          <Button
-            color="info"
-            isLoading={isFetchingNextPage}
-            label={isFetchingNextPage ? 'Loading more...' : 'Load more ...'}
-            onClick={() => {
-              fetchNextPage();
-              setPage(page);
-              saveInLocalstoragePage('pages', params.category!, page + 1);
-            }}
-            type="button"
-            variant="outlined"
-          />
-        </ButtonGroup>
+      {!!category && hasNextPage && !isPending && (
+        <LoadMoreButton isLoading={isFetchingNextPage} onClick={loadMoreData} />
       )}
     </>
   );
