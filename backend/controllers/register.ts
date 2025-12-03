@@ -27,6 +27,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
   const result = await collection.insertOne({
     name: xss(parsedData.name),
+    surname: xss(parsedData.surname),
     email: xss(parsedData.email),
     password: hashedPassword,
   });
