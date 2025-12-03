@@ -1,18 +1,13 @@
-import { ObjectId } from 'mongodb';
+import { DataDB } from '../models';
 
-export const transformDocument = <T extends { _id?: ObjectId }>(
-  result: T[]
-): (T & { id?: ObjectId })[] => {
-  if (!result || !result.length || !Array.isArray(result)) return [];
-
-  return result.map((data) => {
+export const formatDBDocumentId = <T extends DataDB<object>>(data: T[] | T) => {
+  if (Array.isArray(data)) {
+    return data.map<Omit<T, '_id'> & { id: string }>((item) => {
+      const { _id, ...rest } = item;
+      return { ...rest, id: _id?.toString() ?? '' };
+    });
+  } else {
     const { _id, ...rest } = data;
-
-    const item = {
-      ...rest,
-      ...(_id && { id: _id }),
-    };
-
-    return item as T & { id?: ObjectId };
-  });
+    return { ...rest, id: _id?.toString() ?? '' };
+  }
 };
