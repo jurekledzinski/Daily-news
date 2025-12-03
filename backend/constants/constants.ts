@@ -1,4 +1,4 @@
-export const PAGE_SIZE = 10;
+export const PAGE_SIZE = 4;
 
 export const IP_ATTEMPTS_LIMIT = 50;
 export const LOGIN_ATTEMPTS_LIMIT = 10;
