@@ -1,110 +1,52 @@
 import xss from 'xss';
-import { buildResponse, calculateSkipCount, commentAggergation } from '../helpers';
-import { CommentSchema, IComment, LikesSchema } from '../models';
+import { Comment, CommentSchema, DataDB } from '../models';
+import { commentAggergation, formatDBDocumentId } from '../helpers';
 import { getCollectionDb } from '../config';
-import { ObjectId } from 'mongodb';
-import { PAGE_SIZE, STATUS_CODE, STATUS_MESSAGE } from '../constants';
+import { PAGE_SIZE, STATUS_CODE, STATUS_MESSAGE, SUCCESS_MESSAGE } from '../constants';
 import { Request, Response } from 'express';
 import { throwError } from '../error';
-import { transformDocument } from '../helpers';
 
-const collection = getCollectionDb<IComment>('comments');
+const collection = getCollectionDb<DataDB<Comment>>('comments');
 
 export const getComments = async (req: Request, res: Response) => {
   if (!collection) {
     throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
   }
 
-  const idArticle = decodeURIComponent(req.params.article_id);
-  const page = (req.query.page ?? '1') as string;
-  const skipCount = calculateSkipCount(page);
+  const articleId = decodeURIComponent(req.params.article_id);
+  const page = (req.query.page ?? '1').toString();
+  const skipCount = (parseInt(page) - 1) * PAGE_SIZE;
 
-  const total = await collection.countDocuments({
-    idArticle,
-    parentCommentId: null,
-  });
+  const total = await collection.countDocuments({ articleId });
 
-  const result = await commentAggergation(idArticle, null, skipCount, PAGE_SIZE);
+  const result = await commentAggergation(articleId, skipCount, PAGE_SIZE);
 
-  const formatResults = transformDocument<IComment>(result);
+  const formatResults = formatDBDocumentId(result);
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
   return res.status(STATUS_CODE.OK).json({
-    ...buildResponse(formatResults, page, totalPages),
-  });
-};
-
-export const getCommentReplies = async (req: Request, res: Response) => {
-  if (!collection) {
-    throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
-  }
-
-  const idArticle = decodeURIComponent(req.params.article_id);
-  const comment_id = req.params.comment_id;
-  const page = (req.query.page_reply ?? '1') as string;
-  const skipCount = calculateSkipCount(page);
-
-  const total = await collection.countDocuments({
-    idArticle,
-    parentCommentId: comment_id,
-  });
-
-  const result = await commentAggergation(idArticle, comment_id, skipCount, PAGE_SIZE);
-
-  const formatResults = transformDocument<IComment>(result);
-
-  const totalPages = Math.ceil(total / PAGE_SIZE);
-
-  return res.status(STATUS_CODE.OK).json({
-    ...buildResponse(formatResults, page, totalPages),
-    replyCount: total,
+    payload: formatResults,
+    currentPage: parseInt(page),
+    hasNextPage: totalPages > parseInt(page),
+    totalPages,
   });
 };
 
 export const createComment = async (req: Request, res: Response) => {
-  const parsedData = CommentSchema.parse(req.body);
-
-  const parentId = req.body.parentCommentId === 'null';
+  const parsedData = CommentSchema.omit({ createdAt: true }).parse(req.body);
 
   if (!collection) {
     throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
   }
 
-  const likes = xss(parsedData.likes.toString());
-
   await collection.insertOne({
-    createdAt: xss(parsedData.createdAt),
-    idArticle: xss(parsedData.idArticle),
-    likes: parseInt(likes),
+    createdAt: new Date(),
+    articleId: xss(parsedData.articleId),
     text: xss(parsedData.text),
     user: xss(parsedData.user),
     userId: xss(parsedData.userId),
-    parentCommentId: parentId ? null : xss(parsedData.parentCommentId ?? ''),
   });
 
-  return res.status(STATUS_CODE.OK).json({ success: true });
-};
-
-export const updateCommentLikes = async (req: Request, res: Response) => {
-  const parsedData = LikesSchema.parse(req.body);
-
-  if (!collection) {
-    throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
-  }
-
-  const articleId = decodeURIComponent(req.params.article_id);
-  const commentId = req.params.comment_id;
-
-  const likes = xss(parsedData.likes.toString());
-
-  await collection.updateOne(
-    {
-      _id: new ObjectId(commentId),
-      idArticle: articleId,
-    },
-    { $inc: { likes: parseInt(likes) } }
-  );
-
-  return res.status(STATUS_CODE.OK).json({ success: true });
+  return res.status(STATUS_CODE.OK).json({ message: SUCCESS_MESSAGE['addComment'], success: true });
 };
