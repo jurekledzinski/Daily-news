@@ -1,13 +1,11 @@
-import { APIErrorResponse, APISuccessResponse } from '../api';
-import { fetchApi } from '../api-calls';
-import { findTheBiggestImageInArticle } from '@helpers';
+import { APIErrorResponse, APISuccessResponse, fetchApi, URLS } from '@api';
+import { findTheBiggestImageInArticle, getCookie } from '@helpers';
 import { queryClient } from '@routes';
-import { URLS } from '../urls';
-import type { LoaderFunction } from 'react-router';
+import type { LoaderFunction, Params } from 'react-router';
 import type { Content } from '@guardian/content-api-models/v1/content';
 
-export const loaderArticleDetailsPage: LoaderFunction = async ({ params }) => {
-  const category = params.category ?? 'about';
+const loadDetailsArticles = async (params: Params<string>) => {
+  const category = params.category ?? '';
   const id = decodeURIComponent(params.id ?? '');
 
   try {
@@ -25,4 +23,21 @@ export const loaderArticleDetailsPage: LoaderFunction = async ({ params }) => {
   } catch {
     return { success: false };
   }
+};
+
+const loadToken = async () => {
+  const enabled = getCookie('enable');
+  if (!enabled) return { success: false };
+
+  const data = await fetchApi({ url: URLS.GET_CSRF_TOKEN() });
+
+  if ('message' in data) return { success: false };
+  return { data: data.payload, success: true };
+};
+
+export const loaderArticleDetailsPage: LoaderFunction = async ({ params }) => {
+  return {
+    article: await loadDetailsArticles(params),
+    token: await loadToken(),
+  };
 };
