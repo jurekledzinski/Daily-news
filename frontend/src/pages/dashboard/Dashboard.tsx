@@ -17,9 +17,7 @@ export const Dashboard = () => {
         <Heading className={styles.title} level={4}>
           News Dashboard
         </Heading>
-        <p className={styles.subTitle}>
-          Drag categories from the sidebar to organize your news feeds
-        </p>
+        <p className={styles.subTitle}>Drag categories from the sidebar to organize your news feeds</p>
         <GridLayout>
           {!gridItemIds.length && (
             <EmptyState text="Drag categories here to view articles" src="/info/mouse.png" />
@@ -28,10 +26,7 @@ export const Dashboard = () => {
       </Box>
       <Aside>
         {!sortedCategories.length && (
-          <EmptyState
-            text="API limit has been reached. Please try again later."
-            src="/info/api-limit.png"
-          />
+          <EmptyState text="API limit has been reached. Please try again later." src="/info/api-limit.png" />
         )}
         {sortedCategories.map((item) => (
           <GridItem item={item} gridItemIds={gridItemIds} key={item.id} />

@@ -13,11 +13,7 @@ export const CategoriesArticles = () => {
 
   return (
     <section className={styles.section}>
-      <TabsCategories
-        categories={categories}
-        category={category}
-        navigateCategory={navigateCategory}
-      />
+      <TabsCategories categories={categories} category={category} navigateCategory={navigateCategory} />
     </section>
   );
 };

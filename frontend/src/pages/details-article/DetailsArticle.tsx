@@ -18,11 +18,7 @@ export const DetailsArticle = () => {
   return (
     <Container className={styles.container}>
       <Article article={loader.article.data} />
-      <ArticleComments
-        action={action}
-        articleId={loader.article.data.id}
-        token={loader.token.data}
-      />
+      <ArticleComments action={action} articleId={loader.article.data.id} token={loader.token.data} />
     </Container>
   );
 };

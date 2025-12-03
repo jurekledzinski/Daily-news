@@ -11,19 +11,12 @@ export const GridArticles = () => {
   const navigateDetailsArticle = useNavigateToDetailsArticle();
   const { category } = useParams<{ category: string }>();
 
-  const {
-    loadedData,
-    hasNextPage,
-    isFetching,
-    isPending,
-    isFetchingNextPage,
-    fetchNextPage,
-    isError,
-  } = useInfiniteQueryFetch<SearchResponse['results']>({
-    query: category,
-    queryKey: ['list-articles', category],
-    url: (query, pageParam) => URLS.GET_ARTICLES(query, String(pageParam)),
-  });
+  const { loadedData, hasNextPage, isFetching, isPending, isFetchingNextPage, fetchNextPage, isError } =
+    useInfiniteQueryFetch<SearchResponse['results']>({
+      query: category,
+      queryKey: ['list-articles', category],
+      url: (query, pageParam) => URLS.GET_ARTICLES(query, String(pageParam)),
+    });
 
   const { loadMoreData } = useLoadMoreData({ param: category, fetchNextPage });
 
@@ -40,11 +33,7 @@ export const GridArticles = () => {
       <div className={styles.grid}>
         {(isFetching || isPending) && <Loader position="viewport" />}
         {loadedData.map((article, i) => (
-          <CardArticle
-            article={article}
-            key={`${article.webUrl}-${i}`}
-            onReadMore={navigateDetailsArticle}
-          />
+          <CardArticle article={article} key={`${article.webUrl}-${i}`} onReadMore={navigateDetailsArticle} />
         ))}
       </div>
 
