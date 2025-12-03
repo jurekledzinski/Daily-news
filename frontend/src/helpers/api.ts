@@ -1,16 +1,7 @@
-import { APISuccessResponse } from '@/api';
-import { Content } from '@guardian/content-api-models/v1/content';
-import type { QueryClient } from '@tanstack/react-query';
+import { APISuccessResponse } from '@api';
+import type { Content } from '@guardian/content-api-models/v1/content';
 
-export const invalidateQueryClient = async (queryClient: QueryClient, queryKey: string[]) => {
-  await queryClient.invalidateQueries({
-    queryKey,
-  });
-};
-
-export const tryCatch = <T, K, N = unknown>(
-  fn: (body: N) => Promise<T>
-): ((body: N) => Promise<T | K>) => {
+export const tryCatch = <T, K, N = unknown>(fn: (body: N) => Promise<T>): ((body: N) => Promise<T | K>) => {
   return async (body: N): Promise<T | K> => {
     try {
       return await fn(body);
