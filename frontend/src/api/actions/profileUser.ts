@@ -1,15 +1,10 @@
 import { changeUserPassword, deleteUserAccount, updateUserProfile } from '../api-calls';
 import { CSRFToken, User } from '@models';
 import { formatDataToObject, queryInvalidate, queryRemove, validateAction } from './helpers';
-import { LoaderFunctionArgs, Params, redirect } from 'react-router';
+import { ActionFunction, Params } from 'react-router';
 import { showSuccessToast } from '@helpers';
-import {
-  ActionChangeUserPassword,
-  ActionDeleteUserAccount,
-  ActionUpdateUserProfile,
-} from './types';
 
-export const actionProfileUser = async ({ params, request }: LoaderFunctionArgs<unknown>) => {
+export const actionProfileUser: ActionFunction = async ({ params, request }) => {
   const { id } = params as Params;
   if (!id) return;
   const data = await request.formData();
@@ -36,7 +31,8 @@ const actionUpdateUserProfile: ActionUpdateUserProfile = async ({ data, id }) =>
 
   showSuccessToast('Profile updated successfully!');
 
-  return redirect(window.location.pathname);
+  //   return redirect(window.location.pathname);
+  return {};
 };
 
 const actionChangeUserPassword: ActionChangeUserPassword = async ({ data, id }) => {
@@ -51,7 +47,8 @@ const actionChangeUserPassword: ActionChangeUserPassword = async ({ data, id }) 
 
   showSuccessToast('Password changed successfully!');
 
-  return redirect(window.location.pathname);
+  //   return redirect(window.location.pathname);
+  return {};
 };
 
 const actionDeleteUserAccount: ActionDeleteUserAccount = async ({ data, id }) => {
@@ -65,5 +62,6 @@ const actionDeleteUserAccount: ActionDeleteUserAccount = async ({ data, id }) =>
 
   showSuccessToast('Your account has been successfully deleted.');
 
-  return redirect('/');
+  //   return redirect('/');
+  return {};
 };
