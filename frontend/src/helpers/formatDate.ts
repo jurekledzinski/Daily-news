@@ -13,7 +13,7 @@ export const formatDateLocalString = ({
 
   if (isNaN(parsedDate.getTime())) return 'Invalid date';
 
-  return new Intl.DateTimeFormat(locales, options).format(parsedDate);
+  return new Intl.DateTimeFormat(locales, options).format(parsedDate).replace(/[-/]/g, '.');
 };
 
 // Monday, 29/09/2025, 17:09:20
