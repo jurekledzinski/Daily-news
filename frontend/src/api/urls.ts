@@ -37,7 +37,7 @@ export const URLS = {
     const url = `/api/v1/users/delete_user/${id}`;
     return url;
   },
-  GET_CSRF_TOKEN: () => `/api/v1/csrf-token`,
+  GET_CSRF_TOKEN: () => `/api/v1/token`,
   GET_CATEGORIES_ARTICLES: () => {
     const url = `https://content.guardianapis.com/sections?q=${sections.join()}&format=json&api-key=${
       import.meta.env.VITE_API_KEY
@@ -57,16 +57,8 @@ export const URLS = {
     return url;
   },
   GET_COMMENTS: (id: string, page: string) => {
-    const url = `/api/v1/comments/${id}?page=${page}`;
-    return url;
-  },
-  GET_COMMENT_REPLIES: (id: string, commentId: string, page: string) => {
-    const url = `/api/v1/comments/${id}/${commentId}?page_reply=${page}`;
+    const url = `/api/v1/comments/${encodeURIComponent(id)}?page=${page}`;
     return url;
   },
   CREATE_COMMENT: () => `/api/v1/comments/create`,
-  UPDATE_COMMENT_LIKE: (id: string, commentId: string) => {
-    const url = `/api/v1/comments/likes/${id}/${commentId}`;
-    return url;
-  },
 };
