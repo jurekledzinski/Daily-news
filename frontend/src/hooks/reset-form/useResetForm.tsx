@@ -17,7 +17,6 @@ export const useResetForm = <T extends FieldValues>({
       onSuccess();
       reset();
     }
-
-    if (!isSuccess) onFailed();
+    if (isSuccess === false) onFailed();
   }, [isSuccess, isSubmitSuccessful, reset, onFailed, onSuccess, state]);
 };
