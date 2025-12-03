@@ -52,7 +52,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/api/v1/csrf-token', csrfRoutes);
+app.use('/api/v1/token', csrfRoutes);
 app.use('/api/v1/login', loginRoutes);
 app.use('/api/v1/register', registerRoutes);
 app.use('/api/v1/users', userRoutes);
