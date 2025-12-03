@@ -5,5 +5,5 @@ import { STATUS_CODE } from '../constants';
 const { generateToken } = csrfSync();
 
 export const csrfController = (req: Request, res: Response) => {
-  return res.status(STATUS_CODE.OK).json({ token: generateToken(req, true) });
+  return res.status(STATUS_CODE.OK).json({ payload: generateToken(req, true) });
 };
