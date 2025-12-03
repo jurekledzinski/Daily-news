@@ -1,29 +1,31 @@
+import { ActionData } from '@api';
 import { LoginFormValues, UseLoginFormProps } from './types';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useFetcher } from 'react-router';
+import { User } from '@models';
 import { useResetForm } from '@hooks';
-import { useSubmit } from 'react-router';
 
-export const useLogin = ({ action, onFailed, onSuccess, status }: UseLoginFormProps) => {
+export const useLogin = ({ onFailed, onSuccess }: UseLoginFormProps) => {
   const methods = useForm<LoginFormValues>({ defaultValues: { email: '', password: '' } });
 
-  const submit = useSubmit();
+  const fetcher = useFetcher<ActionData<User>>();
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
     const formData = new FormData();
     formData.append('actionType', 'login-user');
     formData.set('email', data.email);
     formData.set('password', data.password);
-    submit(formData, { method: 'post' });
+    fetcher.submit(formData, { method: 'post', action: '/', preventScrollReset: true });
   };
 
   useResetForm({
     isSubmitSuccessful: methods.formState.isSubmitSuccessful,
-    isSuccess: !!action?.success,
-    onFailed,
-    onSuccess,
+    isSuccess: fetcher.data?.success,
+    onFailed: () => onFailed(fetcher.unstable_reset, fetcher.data),
+    onSuccess: () => onSuccess(fetcher.unstable_reset, fetcher.data),
     reset: methods.reset,
-    state: status.state,
+    state: fetcher.state,
   });
 
-  return { methods, onSubmit: methods.handleSubmit(onSubmit) };
+  return { methods, onSubmit: methods.handleSubmit(onSubmit), status: fetcher.state };
 };
