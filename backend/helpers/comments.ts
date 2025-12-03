@@ -1,44 +1,16 @@
+import { Comment, DataDB } from '../models';
 import { getCollectionDb } from '../config';
-import { PAGE_SIZE } from '../constants';
-import { IComment } from '../models';
 
-export const calculateSkipCount = (
-  page: string | string[] | qs.ParsedQs | qs.ParsedQs[]
-) => {
-  return (parseInt(page.toString()) - 1) * PAGE_SIZE;
-};
-
-const collection = getCollectionDb<IComment>('comments');
+const collection = getCollectionDb<DataDB<Comment>>('comments');
 
 export const commentAggergation = async (
-  idArticle: string,
-  parentCommentId: string | null,
+  articleId: string,
   skipCount: number,
   pageSize: number
 ) => {
   const result = await collection
-    .aggregate<IComment>([
-      { $match: { idArticle, parentCommentId } },
-      {
-        $lookup: {
-          from: 'comments',
-          let: { topCommentId: { $toString: '$_id' } },
-          pipeline: [
-            {
-              $match: {
-                $expr: { $eq: ['$parentCommentId', '$$topCommentId'] },
-              },
-            },
-          ],
-          as: 'replies',
-        },
-      },
-      {
-        $addFields: {
-          replyCount: { $size: '$replies' },
-        },
-      },
-      { $project: { replies: 0 } },
+    .aggregate<DataDB<Comment>>([
+      { $match: { articleId } },
       { $sort: { createdAt: -1 } },
       { $skip: skipCount },
       { $limit: pageSize },
@@ -47,14 +19,3 @@ export const commentAggergation = async (
 
   return result;
 };
-
-export const buildResponse = <T>(
-  result: T,
-  page: string | string[] | qs.ParsedQs | qs.ParsedQs[],
-  totalPages: number
-) => ({
-  payload: { result },
-  success: true,
-  totalPages: totalPages ? totalPages : 1,
-  page: parseInt(page.toString()),
-});
