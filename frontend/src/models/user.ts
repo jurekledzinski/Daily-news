@@ -5,9 +5,10 @@ export type CSRFToken = {
 };
 
 const UserSchema = z.object({
-  email: z.string(),
+  email: z.email({ error: 'Email is invalid' }).min(1, { message: 'Email is required' }),
   id: z.string(),
   name: z.string(),
+  surname: z.string(),
   password: z.string(),
   csrfToken: z.string(),
 });
