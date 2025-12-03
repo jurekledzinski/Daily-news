@@ -4,9 +4,7 @@ import { tryCatch } from '@helpers';
 import { URLS } from '../urls';
 import { User } from '@models';
 
-type APISuccessWithoutPayload = Omit<APISuccessResponse, 'payload'>;
-
-export const registerUser = tryCatch<APISuccessWithoutPayload, APIErrorResponse, User>(
+export const registerUser = tryCatch<Omit<APISuccessResponse, 'payload'>, APIErrorResponse, User>(
   async (body: User) => {
     return await fetchApi({
       url: URLS.CREATE_USER(),
@@ -30,11 +28,13 @@ export const loginUser = tryCatch<APISuccessResponse, APIErrorResponse, Omit<Use
   }
 );
 
-export const logoutUser = tryCatch<APISuccessWithoutPayload, APIErrorResponse>(async () => {
-  return await fetchApi({
-    url: URLS.LOGOUT_USER(),
-    method: 'POST',
-    mode: 'cors',
-    credentials: 'include',
-  });
-});
+export const logoutUser = tryCatch<Omit<APISuccessResponse, 'payload'>, APIErrorResponse>(
+  async () => {
+    return await fetchApi({
+      url: URLS.LOGOUT_USER(),
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+    });
+  }
+);
