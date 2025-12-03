@@ -2,6 +2,7 @@ import express from 'express';
 import { checkAuthentication } from '../middlewares/authorization';
 import { createComment, getComments } from '../controllers/comments';
 import { csrfSync } from 'csrf-sync';
+
 const router = express.Router();
 
 const { csrfSynchronisedProtection } = csrfSync({
