@@ -1,11 +1,8 @@
 import styles from './Header.module.css';
-import { ActionData } from '@api';
 import { AppBar, Heading } from '@components/shared';
 import { LoginModal } from '../login-modal';
 import { RegisterModal } from '../register-modal';
-import { useActionData, useNavigation } from 'react-router';
 import { useLogout } from '@components/pages';
-import { User } from '@models';
 
 import {
   ActionsNavigation,
@@ -19,14 +16,12 @@ import {
 } from '@components/pages';
 
 export const Header = () => {
-  const status = useNavigation();
-  const action = useActionData<ActionData<User>>();
   const navigate = useAuthNavigation();
   const modal = useModalControl();
-  const fn = useAuthCallbacks({ action, modal });
-  const login = useLogin({ onFailed: fn.failedLogin, onSuccess: fn.successLogin, status, action });
-  const register = useRegister({ onFailed: fn.failedRegister, onSuccess: fn.successRegister, status, action });
-  const logoutUser = useLogout({ onFailed: fn.failedLogout, onSuccess: navigate.navigateLogout, action });
+  const fn = useAuthCallbacks({ modal });
+  const login = useLogin({ onFailed: fn.failedLogin, onSuccess: fn.successLogin });
+  const register = useRegister({ onFailed: fn.failedRegister, onSuccess: fn.successRegister });
+  const logoutUser = useLogout({ onFailed: fn.failedLogout, onSuccess: navigate.navigateLogout });
 
   return (
     <AppBar className={styles.header}>
@@ -54,7 +49,7 @@ export const Header = () => {
         <LoginModal
           form={login}
           isOpen={modal.isOpen && modal.modalType === 'login'}
-          isPending={status.state === 'submitting'}
+          isPending={login.status === 'submitting'}
           onClose={() => fn.closeModal(login.methods.reset)}
         />
       )}
@@ -62,7 +57,7 @@ export const Header = () => {
         <RegisterModal
           form={register}
           isOpen={modal.isOpen && modal.modalType === 'register'}
-          isPending={status.state === 'submitting'}
+          isPending={register.status === 'submitting'}
           onClose={() => fn.closeModal(register.methods.reset)}
         />
       )}
