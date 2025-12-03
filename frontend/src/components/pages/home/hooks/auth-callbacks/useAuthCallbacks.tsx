@@ -1,49 +1,46 @@
+import { ActionData } from '@/api';
 import { FieldValues, UseFormReset } from 'react-hook-form';
 import { removeCookie, showErrorToast, showSuccessToast } from '@helpers';
-import { UseAuthCallbacksProps } from './types';
-import { useNavigate } from 'react-router';
+import { FetcherReset, UseAuthCallbacksProps } from './types';
+import { User, useUserStore } from '@store';
 import { useRef } from 'react';
-import { useUserStore } from '@store';
 
-export const useAuthCallbacks = ({ action, modal }: UseAuthCallbacksProps) => {
+export const useAuthCallbacks = ({ modal }: UseAuthCallbacksProps) => {
   const timeoutId = useRef<ReturnType<typeof setTimeout>>(null);
-  const navigate = useNavigate();
   const { dispatch, state } = useUserStore();
 
-  const navigateUrl = () => {
-    navigate(window.location.pathname, { replace: true });
-  };
-
-  const successLogin = () => {
-    if (!action || !action.payload) return;
-    dispatch({ type: 'SET_USER', payload: action?.payload });
-    showSuccessToast(action.message);
+  const successLogin = (reset: FetcherReset, data?: ActionData<User>) => {
+    if (!data || !data.payload) return;
+    dispatch({ type: 'SET_USER', payload: data.payload });
+    showSuccessToast(data.message);
+    reset();
     modal.handleClose();
   };
 
-  const successRegister = () => {
-    if (!action) return;
-    showSuccessToast(action.message);
+  const successRegister = (reset: FetcherReset, data?: ActionData<User>) => {
+    if (!data) return;
+    showSuccessToast(data.message);
+    reset();
     modal.handleClose();
   };
 
-  const failedLogin = () => {
-    if (!action) return;
-    navigateUrl();
-    showErrorToast(action.message);
+  const failedLogin = (reset: FetcherReset, data?: ActionData<User>) => {
+    if (!data) return;
+    showErrorToast(data.message);
+    reset();
   };
 
-  const failedRegister = () => {
-    if (!action) return;
-    navigateUrl();
-    showErrorToast(action.message);
+  const failedRegister = (reset: FetcherReset, data?: ActionData<User>) => {
+    if (!data) return;
+    showErrorToast(data.message);
+    reset();
   };
 
-  const failedLogout = () => {
-    if (!action) return;
+  const failedLogout = (reset: FetcherReset, data?: ActionData<User>) => {
+    if (!data) return;
     removeCookie('enable');
-    navigateUrl();
-    showErrorToast(action.message);
+    showErrorToast(data.message);
+    reset();
   };
 
   const closeModal = <T extends FieldValues>(resetCallback: UseFormReset<T>) => {
@@ -58,5 +55,13 @@ export const useAuthCallbacks = ({ action, modal }: UseAuthCallbacksProps) => {
     modal.handleClose();
   };
 
-  return { closeModal, failedLogin, failedRegister, failedLogout, successLogin, successRegister, state };
+  return {
+    closeModal,
+    failedLogin,
+    failedRegister,
+    failedLogout,
+    successLogin,
+    successRegister,
+    state,
+  };
 };
