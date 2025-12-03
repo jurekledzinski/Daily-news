@@ -1,19 +1,6 @@
-type Params = { data: FormData; articleId: string; page: string; pageReply: string };
-type WithFormData = { data: FormData };
-type WithId = { id: string };
-type Action<T> = (params: T) => Promise<Response>;
+type Params = { data: FormData; articleId: string; page: string };
 
-export type ActionCreateComment = Action<Omit<Params, 'pageReply'>>;
-export type ActionCreateCommentReply = Action<Params>;
-export type ActionUpdateLikesComment = Action<Params>;
+type Action<T> = (params: T) => Promise<{ message?: string } | Response>;
 
-// export type ActionUpdateUserProfile = Action<WithFormData & WithId>;
-// export type ActionChangeUserPassword = Action<WithFormData & WithId>;
-// export type ActionDeleteUserAccount = Action<WithFormData & WithId>;
-// export type ActionRegisterUser = Action<WithFormData>;
-// export type ActionLoginUser = Action<WithFormData>;
-
-type NewAction<T> = (params: T) => Promise<{ message?: string } | Response>;
-
-export type ActionFunctionData = NewAction<WithFormData>;
-export type ActionFunctionDataId = Action<WithFormData & WithId>;
+export type ActionFunctionData = Action<Pick<Params, 'data'>>;
+export type ActionCreateComment = Action<Params>;
