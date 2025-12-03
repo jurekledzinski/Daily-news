@@ -4,7 +4,6 @@ const CommentSchema = z.object({
   createdAt: z.string(),
   id: z.string(),
   articleId: z.string(),
-  likes: z.number(),
   text: z.string(),
   user: z.string(),
   userId: z.string(),
