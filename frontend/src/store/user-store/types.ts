@@ -3,6 +3,7 @@ import { Dispatch } from 'react';
 export type User = {
   email: string;
   name: string;
+  surname: string;
   id?: string;
 };
 
@@ -13,8 +14,8 @@ export type UserState = {
 export type UserAction = { type: 'SET_USER'; payload: User | null } | { type: 'LOGOUT_USER' };
 
 export type UserStoreContext = {
-  state: UserState;
   dispatch: Dispatch<UserAction>;
+  state: UserState;
 };
 
 export type UserProviderProps = {
