@@ -1,2 +1,3 @@
-export * from './articleDetailsPage';
-export * from './homePage';
+export * from './article';
+export * from './home';
+export * from './profile';
