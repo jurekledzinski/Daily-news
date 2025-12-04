@@ -5,7 +5,7 @@ import { useUserStore } from '@/store';
 export const useAuthNavigation = () => {
   const navigate = useNavigate();
   const matchProfile = useMatch('/profile/:id');
-  const { dispatch } = useUserStore();
+  const { dispatch, state } = useUserStore();
 
   const navigateLogout = () => {
     dispatch({ type: 'LOGOUT_USER' });
@@ -14,7 +14,7 @@ export const useAuthNavigation = () => {
     else navigate(window.location.pathname, { replace: true });
   };
 
-  const navigateProfile = () => navigate(`profile/${'userId'}`);
+  const navigateProfile = () => navigate(`profile/${state.user?.id}`);
   const navigateBack = () => navigate('/', { viewTransition: true });
 
   return { navigateBack, navigateLogout, navigateProfile };
