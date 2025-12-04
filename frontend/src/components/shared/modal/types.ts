@@ -1,5 +1,6 @@
 export type ModalProps = {
-  open: boolean;
   children: React.ReactNode;
+  open: boolean;
+  className?: string;
   portal?: boolean;
 };

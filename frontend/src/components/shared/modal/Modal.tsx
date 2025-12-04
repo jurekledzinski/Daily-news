@@ -5,10 +5,10 @@ import { ModalProps } from './types';
 import { Popover } from '../pop-over';
 import { useState } from 'react';
 
-export const Modal = ({ children, open = false, portal }: ModalProps) => {
+export const Modal = ({ children, className, open = false, portal }: ModalProps) => {
   const [showBackdrop, setShowBackdrop] = useState(false);
 
-  const classNames = modalClassNames();
+  const classNames = modalClassNames(className);
 
   const modalElement = (
     <Popover
