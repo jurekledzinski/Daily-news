@@ -16,6 +16,7 @@ import {
   actionProfileUser,
   loaderArticleDetailsPage,
   loaderHomePage,
+  loaderProfilePage,
 } from '@api';
 
 export const queryClient = new QueryClient({
@@ -75,6 +76,7 @@ const router = createBrowserRouter([
             <Profile />
           </ProtectedRoute>
         ),
+        loader: loaderProfilePage,
         action: actionProfileUser,
         errorElement: <ErrorPage />,
       },
