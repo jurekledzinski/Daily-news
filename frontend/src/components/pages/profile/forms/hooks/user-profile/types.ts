@@ -11,4 +11,6 @@ export type UserProfileFormValues = {
 export type UseUserProfileFormProps = {
   onFailed: (reset: FetcherReset, data?: ActionData<unknown>) => void;
   onSuccess: (reset: FetcherReset, data?: ActionData<Pick<User, 'email' | 'name' | 'surname'>>) => void;
+  user: Pick<User, 'email' | 'name' | 'surname'> | null;
+  token?: string;
 };
