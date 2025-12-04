@@ -1,0 +1,37 @@
+.dropZone {
+  padding: 0.5rem;
+  border: 1px solid var(--color-secondary-50);
+  width: 100%;
+}
+
+.title {
+  margin-bottom: 0.25rem;
+  color: var(--color-negative-700);
+  font-size: 1rem;
+  font-family: Oswald, sans-serif;
+}
+
+.textTitle {
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+}
+
+.subTitle {
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  font-family: Oswald, sans-serif;
+}
+
+.textSubTitle {
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+}
+
+.text {
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.modalElement {
+  width: min(500px, calc(100% - 2rem));
+}
