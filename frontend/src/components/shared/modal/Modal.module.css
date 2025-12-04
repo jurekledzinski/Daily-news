@@ -1,6 +1,6 @@
 .modalElement {
   position: fixed;
-  width: min(calc(100% - 2rem), 340px);
+  width: min(340px, calc(100% - 2rem));
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
