@@ -1,0 +1,11 @@
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 575px) {
+  .formGroup {
+    flex-direction: row;
+  }
+}

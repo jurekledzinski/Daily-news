@@ -1,4 +1,5 @@
-import { Button, ButtonGroup, Field, Form, Message, PasswordInput, TextInput } from '@components/shared';
+import styles from './UserProfileForm.module.css';
+import { Button, ButtonGroup, Field, Form, FormGroup, Message, TextInput } from '@components/shared';
 import { UserProfileFormProps } from './types';
 
 export const UserProfileForm = ({ controls, isPending, onSubmit }: UserProfileFormProps) => {
@@ -7,26 +8,29 @@ export const UserProfileForm = ({ controls, isPending, onSubmit }: UserProfileFo
 
   return (
     <Form className="g-sm" onSubmit={onSubmit} noValidate>
+      <FormGroup className={styles.formGroup}>
+        <Field>
+          <TextInput
+            autoComplete="username"
+            label="Name"
+            {...register('name', { required: 'Name is required' })}
+            variant="outlined"
+          />
+          {errors.name && <Message>{errors.name.message}</Message>}
+        </Field>
+        <Field>
+          <TextInput
+            autoComplete="username"
+            label="Surname"
+            {...register('surname', { required: 'Surname is required' })}
+            variant="outlined"
+          />
+          {errors.surname && <Message>{errors.surname.message}</Message>}
+        </Field>
+      </FormGroup>
+
       <Field>
         <TextInput
-          autoComplete="username"
-          label="Name"
-          {...register('name', { required: 'Name is required' })}
-          variant="outlined"
-        />
-        {errors.name && <Message>{errors.name.message}</Message>}
-      </Field>
-      <Field>
-        <TextInput
-          autoComplete="username"
-          label="Surname"
-          {...register('surname', { required: 'Surname is required' })}
-          variant="outlined"
-        />
-        {errors.surname && <Message>{errors.surname.message}</Message>}
-      </Field>
-      <Field>
-        <PasswordInput
           autoComplete="email"
           label="Email"
           {...register('email', { required: 'Email is required' })}
@@ -34,8 +38,8 @@ export const UserProfileForm = ({ controls, isPending, onSubmit }: UserProfileFo
         />
         {errors.email && <Message>{errors.email.message}</Message>}
       </Field>
-      <ButtonGroup justify="justify-end" fullWidth>
-        <Button label="Update profile" isLoading={isPending} type="submit" />
+      <ButtonGroup className="mt-sm" justify="justify-end" fullWidth>
+        <Button color="info" label="Update profile" isLoading={isPending} type="submit" />
       </ButtonGroup>
     </Form>
   );
