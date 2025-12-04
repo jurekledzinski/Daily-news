@@ -1,14 +1,15 @@
 import bcrypt from 'bcrypt';
 import xss from 'xss';
-import { DataDB, User, UserSchema } from '../models';
+import { Comment, DataDB, User, UserSchema } from '../models';
+import { formatDBDocumentId, requestLogout } from '../helpers';
 import { getCollectionDb } from '../config';
 import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { requestLogout } from '../helpers';
 import { STATUS_CODE, STATUS_MESSAGE, SUCCESS_MESSAGE } from '../constants';
 import { throwError } from '../error';
 
 const collection = getCollectionDb<DataDB<User>>('users');
+const collectionComments = getCollectionDb<DataDB<Comment>>('comments');
 
 export const getUser = async (req: Request, res: Response) => {
   return res.status(STATUS_CODE.OK).json({ success: true, payload: req.user });
@@ -25,20 +26,27 @@ export const updateUserProfile = async (req: Request, res: Response) => {
 
   const parsedData = UserSchema.pick({ name: true, email: true }).parse(req.body);
 
-  const sessionUser = req.user! as DataDB<User>;
+  const sessionUser = req.user as User & { id: string };
 
   const existingUser = await collection.findOne({ email: parsedData.email });
 
-  if (existingUser && existingUser._id.toString() !== sessionUser._id?.toString()) {
+  if (existingUser && existingUser._id.toString() !== sessionUser.id.toString()) {
     throwError('User already exists', STATUS_CODE.CONFLICT);
   }
 
-  await collection.updateOne(
+  const updatedUser = await collection.findOneAndUpdate(
     { _id: new ObjectId(req.params.id) },
-    { $set: { email: xss(parsedData.email), name: xss(parsedData.name) } }
+    { $set: { email: xss(parsedData.email), name: xss(parsedData.name) } },
+    { returnDocument: 'after', projection: { email: true, _id: true, name: true, surname: true } }
   );
 
-  return res.status(STATUS_CODE.OK).json({ message: SUCCESS_MESSAGE['updateProfile'], success: true });
+  if (!updatedUser) return throwError(STATUS_MESSAGE[STATUS_CODE.NOT_FOUND], STATUS_CODE.NOT_FOUND);
+
+  const formatResults = formatDBDocumentId(updatedUser);
+
+  return res
+    .status(STATUS_CODE.OK)
+    .json({ message: SUCCESS_MESSAGE['updateProfile'], payload: formatResults, success: true });
 };
 
 export const changeUserPassword = async (req: Request, res: Response) => {
@@ -66,8 +74,14 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
 
   const id = req.params.id;
 
-  const result = await collection.deleteOne({ _id: new ObjectId(id) });
+  if (!id) throwError(STATUS_MESSAGE[STATUS_CODE.UNAUTHORIZED], STATUS_CODE.UNAUTHORIZED);
 
-  if (result.deletedCount) requestLogout(req, res, next);
-  else res.status(STATUS_CODE.OK).json({ messge: SUCCESS_MESSAGE['deleteUser'], success: false });
+  const resultUserDelete = await collection.deleteOne({ _id: new ObjectId(id) });
+  await collectionComments.deleteMany({ userId: id });
+
+  if (resultUserDelete.deletedCount === 1) return requestLogout(req, res, next);
+
+  return res
+    .status(STATUS_CODE.INTERNAL_ERROR)
+    .json({ message: STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], success: false });
 };
