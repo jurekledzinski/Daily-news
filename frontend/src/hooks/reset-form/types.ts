@@ -4,7 +4,7 @@ export type UseResetFormProps<T extends FieldValues> = {
   isSubmitSuccessful: boolean;
   onFailed: () => void;
   onSuccess: () => void;
-  reset: UseFormReturn<T, unknown, T>['reset'];
+  reset?: UseFormReturn<T, unknown, T>['reset'];
   state: 'idle' | 'loading' | 'submitting';
   isSuccess?: boolean;
 };

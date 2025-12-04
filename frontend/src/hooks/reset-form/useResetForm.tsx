@@ -12,11 +12,8 @@ export const useResetForm = <T extends FieldValues>({
 }: UseResetFormProps<T>) => {
   useEffect(() => {
     if (state !== 'idle' || !isSubmitSuccessful) return;
-
-    if (isSuccess) {
-      onSuccess();
-      reset();
-    }
+    if (isSuccess) onSuccess();
+    if (isSuccess && reset) reset();
     if (isSuccess === false) onFailed();
   }, [isSuccess, isSubmitSuccessful, reset, onFailed, onSuccess, state]);
 };
