@@ -1,4 +1,4 @@
-import { showErrorToast, showSuccessToast } from '@helpers';
+import { defaultErrorMessage, showErrorToast, showSuccessToast } from '@helpers';
 import { UseCommentCallbacksProps } from './types';
 import { useNavigate } from 'react-router';
 
@@ -10,12 +10,12 @@ export const useCommentCallbacks = ({ action }: UseCommentCallbacksProps) => {
   };
 
   const successAddComment = () => {
-    if (!action) return;
+    if (!action) return showErrorToast(defaultErrorMessage('add comment'));
     showSuccessToast(action.message);
   };
 
   const failedAddComment = () => {
-    if (!action) return;
+    if (!action) return showErrorToast(defaultErrorMessage('add comment'));
     navigateUrl();
     showErrorToast(action.message);
   };
