@@ -1,7 +1,7 @@
 import { clearEnableCookie } from './cookies';
 import { config } from '../config';
 import { NextFunction, Request, Response } from 'express';
-import { STATUS_CODE, STATUS_MESSAGE } from '../constants';
+import { STATUS_CODE, STATUS_MESSAGE, SUCCESS_MESSAGE } from '../constants';
 import { throwError } from '../error';
 
 export const requestLogout = (req: Request, res: Response, next: NextFunction) => {
@@ -21,7 +21,7 @@ export const requestLogout = (req: Request, res: Response, next: NextFunction) =
         sameSite: config.node_env === 'production' ? 'none' : 'strict',
       });
 
-      return res.status(STATUS_CODE.OK).json({ success: true });
+      return res.status(STATUS_CODE.OK).json({ message: SUCCESS_MESSAGE['deleteUser'], success: true });
     });
   });
 };
