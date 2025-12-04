@@ -10,11 +10,11 @@ export const useAuthNavigation = () => {
   const navigateLogout = () => {
     dispatch({ type: 'LOGOUT_USER' });
     showSuccessToast('Logout successful');
-    if (matchProfile) navigate('/', { replace: true });
-    else navigate(window.location.pathname, { replace: true });
+    if (matchProfile) navigate('/', { replace: true, viewTransition: true });
+    else navigate(window.location.pathname, { replace: true, viewTransition: true });
   };
 
-  const navigateProfile = () => navigate(`profile/${state.user?.id}`);
+  const navigateProfile = () => navigate(`profile/${state.user?.id}`, { viewTransition: true });
   const navigateBack = () => navigate('/', { viewTransition: true });
 
   return { navigateBack, navigateLogout, navigateProfile };
