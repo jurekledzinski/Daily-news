@@ -8,9 +8,11 @@ import { DataDB, User } from '../models';
 const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
   return new Promise<{ user: DataDB<User>; info: { message?: string } }>((resolve, reject) => {
     passport.authenticate('local', (error: Error, user: DataDB<User>, info: { message?: string }) => {
-      if (error) return reject(new CustomError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR));
+      if (error)
+        return reject(new CustomError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR));
 
-      if (!user) return reject(new CustomError(`Authentication failed, ${info?.message ?? ''}`, STATUS_CODE.NOT_FOUND));
+      if (!user)
+        return reject(new CustomError(`Authentication failed, ${info?.message ?? ''}`, STATUS_CODE.NOT_FOUND));
 
       resolve({ user, info });
     })(req, res, next);
@@ -27,7 +29,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
 
     return res.status(STATUS_CODE.OK).json({
       message: SUCCESS_MESSAGE['login'],
-      payload: { email: user.email, id: user._id, name: user.name },
+      payload: { email: user.email, id: user._id, name: user.name, surname: user.surname },
       success: true,
     });
   });
