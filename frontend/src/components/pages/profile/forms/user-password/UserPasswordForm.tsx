@@ -26,7 +26,7 @@ export const UserPasswordForm = ({ controls, isPending, onSubmit }: UserPassword
         {errors.confirmPassword && <Message>{errors.confirmPassword.message}</Message>}
       </Field>
       <ButtonGroup justify="justify-end" fullWidth>
-        <Button label="Update profile" isLoading={isPending} type="submit" />
+        <Button color="info" label="Change password" isLoading={isPending} type="submit" />
       </ButtonGroup>
     </Form>
   );
