@@ -1,15 +1,18 @@
 import { ActionData } from '@api';
+import { initialTokenFailed } from '@components/pages';
 import { useEffect } from 'react';
 import { useFetcher } from 'react-router';
 import { UseUserDeleteProps } from './types';
 
-export const useUserDelete = ({ onFailed, onSuccess }: UseUserDeleteProps) => {
+export const useUserDelete = ({ onFailed, onSuccess, token }: UseUserDeleteProps) => {
   const fetcher = useFetcher<ActionData<unknown>>();
 
   const onSubmit = () => {
+    if (!token) return onFailed(fetcher.unstable_reset, initialTokenFailed);
     const formData = new FormData();
     formData.append('actionType', 'delete-user-account');
-    fetcher.submit(formData, { method: 'post' });
+    formData.set('csrfToken', token);
+    fetcher.submit(formData, { method: 'DELETE' });
   };
 
   useEffect(() => {
@@ -22,5 +25,5 @@ export const useUserDelete = ({ onFailed, onSuccess }: UseUserDeleteProps) => {
     }
   }, [fetcher, onFailed, onSuccess]);
 
-  return onSubmit;
+  return { onSubmit, status: fetcher.state };
 };
