@@ -1,19 +1,22 @@
 import { ActionData } from '@api';
+import { initialTokenFailed } from '../../../utils';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useFetcher } from 'react-router';
 import { useResetForm } from '@hooks';
 import { UserPasswordFormValues, UseUserPasswordFormProps } from './types';
 
-export const useUserPassword = ({ onFailed, onSuccess }: UseUserPasswordFormProps) => {
+export const useUserPassword = ({ onFailed, onSuccess, token }: UseUserPasswordFormProps) => {
   const methods = useForm<UserPasswordFormValues>({ defaultValues: { confirmPassword: '', password: '' } });
 
   const fetcher = useFetcher<ActionData<unknown>>();
 
   const onSubmit: SubmitHandler<UserPasswordFormValues> = (data) => {
+    if (!token) return onFailed(fetcher.unstable_reset, initialTokenFailed);
     const formData = new FormData();
     formData.append('actionType', 'change-password');
     formData.set('password', data.password);
-    fetcher.submit(formData, { method: 'post', action: '/', preventScrollReset: true });
+    formData.set('csrfToken', token);
+    fetcher.submit(formData, { method: 'PATCH', preventScrollReset: true });
   };
 
   useResetForm({

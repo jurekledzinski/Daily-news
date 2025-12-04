@@ -9,4 +9,5 @@ export type UserPasswordFormValues = {
 export type UseUserPasswordFormProps = {
   onFailed: (reset: FetcherReset, data?: ActionData<unknown>) => void;
   onSuccess: (reset: FetcherReset, data?: ActionData<unknown>) => void;
+  token?: string;
 };
