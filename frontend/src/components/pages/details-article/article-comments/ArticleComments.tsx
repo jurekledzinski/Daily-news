@@ -9,14 +9,7 @@ import { useCommentCallbacks, useFormatComments } from '../hooks';
 import { useInfiniteQueryFetch, useLoadMoreData } from '@hooks';
 import { useNavigation } from 'react-router';
 import { useUserStore } from '@store';
-import {
-  Alert,
-  AlertIcon,
-  AlertMessage,
-  Comment,
-  Heading,
-  LoadMoreButton,
-} from '@components/shared';
+import { Alert, AlertIcon, AlertMessage, Comment, Heading, LoadMoreButton } from '@components/shared';
 
 export const ArticleComments = ({ action, articleId, token }: ArticleCommentsProps) => {
   const { state } = useUserStore();
@@ -57,18 +50,12 @@ export const ArticleComments = ({ action, articleId, token }: ArticleCommentsPro
         </Heading>
       )}
       {!!state.user && (
-        <CommentForm
-          controls={form.methods}
-          isPending={status.state === 'submitting'}
-          onSubmit={form.onSubmit}
-        />
+        <CommentForm controls={form.methods} isPending={status.state === 'submitting'} onSubmit={form.onSubmit} />
       )}
       {comments.map((comment) => (
         <Comment key={comment.createdAt} comment={comment} />
       ))}
-      {hasNextPage && !isPending && (
-        <LoadMoreButton isLoading={isFetchingNextPage} onClick={loadMoreData} />
-      )}
+      {hasNextPage && !isPending && <LoadMoreButton isLoading={isFetchingNextPage} onClick={loadMoreData} />}
     </CommentsSection>
   );
 };
