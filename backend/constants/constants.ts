@@ -28,10 +28,10 @@ export const STATUS_MESSAGE: Record<STATUS_CODE, string> = {
 };
 
 export const SUCCESS_MESSAGE = {
-  login: `Welcome back! You're logged in`,
+  login: `Welcome back! You're logged in.`,
   register: `Your account is all set. Welcome aboard!`,
   updateProfile: `Your profile has been updated!`,
   updatePassword: `Your password has been changed safely`,
-  deleteUser: `Your account has been removed. We're sad to see you go`,
+  deleteUser: `Your account has been removed.`,
   addComment: `Your comment has been posted!`,
 };
