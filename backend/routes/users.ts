@@ -3,7 +3,9 @@ import { csrfSync } from 'csrf-sync';
 import { Router } from 'express';
 import { changeUserPassword, getUser, deleteUser, logoutUser, updateUserProfile } from '../controllers/users';
 
-const { csrfSynchronisedProtection } = csrfSync();
+const { csrfSynchronisedProtection } = csrfSync({
+  errorConfig: { message: 'Your are unauthorized to this action!' },
+});
 
 const router = Router();
 
