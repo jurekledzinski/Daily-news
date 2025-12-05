@@ -29,10 +29,6 @@ export const fetchApi = async ({
   return await response.json();
 };
 
-export function setActionResponse<T = unknown>(
-  action: string,
-  result: APISuccessResponse<T> | APIErrorResponse
-) {
-  if ('payload' in result && result.success) return { action, ...result };
+export function setActionResponse<T = unknown>(action: string, result: APISuccessResponse<T> | APIErrorResponse) {
   return { action, ...result };
 }
