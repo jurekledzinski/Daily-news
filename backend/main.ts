@@ -71,7 +71,6 @@ app.use((error: CustomError, _: Request, res: Response, next: NextFunction) => {
       success: error.success,
     });
   }
-  next();
 });
 
 export default app;
