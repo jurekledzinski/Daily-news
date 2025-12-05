@@ -11,6 +11,14 @@ export const tryCatch = <T, K, N = unknown>(fn: (body: N) => Promise<T>): ((body
   };
 };
 
+export const loaderTryCatch = async <F>(promise: Promise<F>): Promise<F | { success: false }> => {
+  try {
+    return await promise;
+  } catch {
+    return { success: false };
+  }
+};
+
 export const findTheBiggestImageInArticle = (data: APISuccessResponse<Content>) => {
   const elementsAssets = data.payload?.elements ?? [];
   const mainAssets = elementsAssets.find((item) => item.relation === 'main');
