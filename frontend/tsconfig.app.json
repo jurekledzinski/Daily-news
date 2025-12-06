@@ -57,6 +57,6 @@
       "@store": ["./src/store/index.ts"]
     }
   },
-  "include": ["src/**/*", "vite-env.d.ts"],
+  "include": ["src/**/*", "vite-env.d.ts", "dts/**/*.d.ts"],
   "exclude": ["node_modules"]
 }
