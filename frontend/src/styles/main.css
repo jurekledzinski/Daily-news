@@ -173,6 +173,15 @@
   --color-info-alpha-10: rgba(0, 148, 251, 0.1);
   --color-white-alpha-10: rgba(255, 255, 255, 0.1);
 
+  --color-info-alpha-20: rgba(0, 116, 217, 0.2);
+  --color-primary-alpha-20: rgba(69, 182, 73, 0.2);
+  --color-secondary-alpha-20: rgba(151, 151, 151, 0.2);
+  --color-negative-alpha-20: rgba(255, 64, 54, 0.2);
+  --color-success-alpha-20: rgba(0, 194, 0, 0.2);
+  --color-warning-alpha-20: rgba(251, 231, 49, 0.2);
+  --color-info-alpha-20: rgba(0, 148, 251, 0.2);
+  --color-white-alpha-20: rgba(255, 255, 255, 0.2);
+
   /* Hover */
   --color-surface-hover: var(--color-black-50);
 
