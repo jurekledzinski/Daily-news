@@ -22,4 +22,6 @@ export const initialOptions: GridStackOptions = {
     breakpoints,
     breakpointForWindow: true,
   },
+  handle: '.grip-handle, .grip-handle *',
+  lazyLoad: true,
 };
