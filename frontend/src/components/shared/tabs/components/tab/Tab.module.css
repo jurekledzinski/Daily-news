@@ -35,35 +35,35 @@
 
 .outlined.info.active,
 .text.info.active {
-  background-color: var(--color-info-alpha-10);
+  background-color: var(--color-info-alpha-20);
 }
 
 .outlined.primary.active,
 .text.primary.active {
-  background-color: var(--color-primary-alpha-10);
+  background-color: var(--color-primary-alpha-20);
 }
 
 .outlined.secondary.active,
 .text.secondary.active {
-  background-color: var(--color-secondary-alpha-10);
+  background-color: var(--color-secondary-alpha-20);
 }
 
 .outlined.success.active,
 .text.success.active {
-  background-color: var(--color-success-alpha-10);
+  background-color: var(--color-success-alpha-20);
 }
 
 .outlined.negative.active,
 .text.negative.active {
-  background-color: var(--color-negative-alpha-10);
+  background-color: var(--color-negative-alpha-20);
 }
 
 .outlined.warning.active,
 .text.warning.active {
-  background-color: var(--color-warning-alpha-10);
+  background-color: var(--color-warning-alpha-20);
 }
 
 .outlined.white.active,
 .text.white.active {
-  background-color: var(--color-white-alpha-10);
+  background-color: var(--color-white-alpha-20);
 }
