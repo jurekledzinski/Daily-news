@@ -117,13 +117,13 @@ button.button {
   font-size: 10px;
 }
 
-.container:hover button.closeButton {
+.container:hover button.removeButton {
   display: block;
   pointer-events: all;
   user-select: all;
 }
 
-button.closeButton {
+button.removeButton {
   display: none;
   position: absolute;
   top: 0rem;
@@ -132,11 +132,27 @@ button.closeButton {
   user-select: none;
 }
 
-button.closeButton svg {
+button.removeButton svg {
   transition: color 300ms linear;
   color: var(--color-negative-300);
 }
 
-button.closeButton:hover svg {
+button.removeButton:hover svg {
   color: var(--color-negative-700);
+}
+
+.container button.grip {
+  min-width: 24px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+}
+
+.container button.grip:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+@media (hover: none) {
+  button.removeButton {
+    display: block;
+  }
 }
