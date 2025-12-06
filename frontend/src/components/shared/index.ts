@@ -5,6 +5,7 @@ export * from './box';
 export * from './button-group';
 export * from './button';
 export * from './card';
+export * from './carousel-thumbnails';
 export * from './comment';
 export * from './container';
 export * from './control-layout';
