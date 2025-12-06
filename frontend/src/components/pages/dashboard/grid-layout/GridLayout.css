@@ -22,3 +22,11 @@
 div.grid-stack-item-content {
   touch-action: none;
 }
+
+button.grip-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  touch-action: none;
+  cursor: default;
+}
