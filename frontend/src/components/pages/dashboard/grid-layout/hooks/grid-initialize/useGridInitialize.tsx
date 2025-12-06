@@ -14,9 +14,7 @@ import {
 } from '../../utils';
 
 export const useGridInitialize = ({ navigateArticles }: UseGridInitializeProps) => {
-  const [gridItemIds, setGridItemIds] = useState<string[]>(() =>
-    getLocalItems().map((item) => item.id!)
-  );
+  const [gridItemIds, setGridItemIds] = useState<string[]>(() => getLocalItems().map((item) => item.id!));
 
   useLayoutEffect(() => {
     const grid = GridStackLayout.init(initialOptions);
@@ -37,6 +35,8 @@ export const useGridInitialize = ({ navigateArticles }: UseGridInitializeProps) 
           onRemoveGridItem={() => grid.removeWidget(data.domNode)}
         />
       );
+
+      grid.makeWidget(data.domNode);
     };
 
     grid.on('change', () => commonChangeAndDropped());
@@ -53,10 +53,12 @@ export const useGridInitialize = ({ navigateArticles }: UseGridInitializeProps) 
 
     loadItems(grid).forEach((item) => commonInitLoadAndDropped(item));
 
+    GridStackLayout.renderCB = () => true;
     return () => {
       grid.off('change');
       grid.off('dropped');
       grid.off('removed');
+      grid.offAll();
     };
   }, [navigateArticles]);
 
