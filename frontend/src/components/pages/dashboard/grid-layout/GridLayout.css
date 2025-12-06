@@ -19,10 +19,6 @@
   background-color: transparent;
 }
 
-div.grid-stack-item-content {
-  touch-action: none;
-}
-
 button.grip-handle {
   position: absolute;
   bottom: 0;
