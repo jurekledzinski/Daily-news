@@ -10,6 +10,7 @@ import { useTabsListSlide } from '../hooks';
 export const TabsCategories = ({ categories, category, navigateCategory }: TabsCategoriesProps) => {
   const { isTabslistVisible, ref } = useTabsListSlide();
   const classNames = useMemo(() => tablistClassNames(isTabslistVisible), [isTabslistVisible]);
+  const selectedIndex = useMemo(() => categories.findIndex((c) => c.id === category), [categories, category]);
 
   return (
     <Tabs
@@ -22,11 +23,11 @@ export const TabsCategories = ({ categories, category, navigateCategory }: TabsC
     >
       <div ref={ref}></div>
       <TabsList className={classNames}>
-        <CarouselThumbnails>
+        <CarouselThumbnails onReady={(splide) => splide.go(selectedIndex)}>
           {(categories ?? []).map((category) => {
             const content = JSON.parse(category.content!) as Section;
             return (
-              <SplideSlide key={category.id} aria-hidden="false">
+              <SplideSlide key={category.id} data-id={category.id}>
                 <Tab key={category.id} id={category.id} label={content.webTitle} />
               </SplideSlide>
             );
