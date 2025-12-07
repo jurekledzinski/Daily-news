@@ -4,10 +4,10 @@ import { GroupThumbnailsProps } from './types';
 import { Splide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
-export const CarouselThumbnails = ({ children }: GroupThumbnailsProps) => {
+export const CarouselThumbnails = ({ children, onReady }: GroupThumbnailsProps) => {
   return (
     <div className={styles.container}>
-      <Splide aria-label="Advert images" className={styles.splide} options={carouselOptions}>
+      <Splide aria-label="Advert images" className={styles.splide} options={carouselOptions} onReady={onReady}>
         {children}
       </Splide>
     </div>
