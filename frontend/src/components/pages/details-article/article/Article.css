@@ -119,6 +119,7 @@
 }
 
 .article img {
+  width: 100%;
   object-fit: cover;
   margin-bottom: 0.5rem;
   border-radius: 2px;
@@ -170,20 +171,21 @@
 
 .article .element-video {
   position: relative;
+  width: 100%;
   margin-bottom: 0.5rem;
   border-radius: 2px;
   background: white;
   aspect-ratio: 16 / 9;
-  width: 100%;
   overflow: hidden;
 }
 
 .article .element-atom {
   position: relative;
+  width: 100%;
   margin-bottom: 0.5rem;
   border-radius: 2px;
   background: white;
-  width: 100%;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
 }
 
