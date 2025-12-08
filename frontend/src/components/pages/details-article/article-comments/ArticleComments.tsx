@@ -44,8 +44,8 @@ export const ArticleComments = ({ action, articleId, token }: ArticleCommentsPro
           <AlertMessage message="Sign in to add comments" />
         </Alert>
       )}
-      {comments.length !== 0 && (
-        <Heading className={styles.header} level={6}>
+      {state.user && (
+        <Heading className={styles.header} level={5}>
           Comments
         </Heading>
       )}
