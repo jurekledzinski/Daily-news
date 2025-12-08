@@ -16,7 +16,7 @@ export const Article = ({ article }: ArticleProps) => {
         {article.webTitle}
       </Heading>
 
-      <i>{htmlToText(article.fields?.trailText ?? '')}</i>
+      <i className="trailText">{htmlToText(article.fields?.trailText ?? '')}</i>
 
       <span className="datePublish">Publish date: {createdAt}</span>
 
@@ -30,7 +30,7 @@ export const Article = ({ article }: ArticleProps) => {
         </div>
       )}
 
-      <div dangerouslySetInnerHTML={{ __html: article.fields?.body ?? '' }}></div>
+      <div className="content" dangerouslySetInnerHTML={{ __html: article.fields?.body ?? '' }}></div>
     </div>
   );
 };

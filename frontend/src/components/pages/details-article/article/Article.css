@@ -1,38 +1,60 @@
 /* Headings */
 .article .headling {
-  margin-bottom: 0.25rem;
+  width: min(768px, 100%);
+  margin: 0 auto;
+  margin-bottom: 0.5rem;
   font-size: 1.25rem;
   line-height: 1;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
 }
 
-.article h1 {
+.article .article h1 {
   font-weight: 700;
   font-size: 1.25rem;
+  font-family: 'Oswald', sans-serif;
 }
 
 .article h2 {
   font-weight: 600;
   font-size: 1.25rem;
+  font-family: 'Oswald', sans-serif;
 }
 
 .article h3 {
   font-weight: 600;
   font-size: 1.25rem;
+  font-family: 'Oswald', sans-serif;
 }
 
 .article h4 {
   font-weight: 600;
   font-size: 1.125rem;
+  font-family: 'Oswald', sans-serif;
 }
 
 .article h5 {
   font-weight: 600;
   font-size: 1rem;
+  font-family: 'Oswald', sans-serif;
 }
 
 .article h6 {
   font-weight: 600;
   font-size: 0.875rem;
+  font-family: 'Oswald', sans-serif;
+}
+
+.article .trailText {
+  display: block;
+  width: min(768px, 100%);
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+
+.article .content {
+  width: min(768px, 100%);
+  margin: 0 auto;
 }
 
 /* Paragraphs */
@@ -92,6 +114,8 @@
 
 .article .container-image {
   position: relative;
+  width: min(768px, 100%);
+  margin: 0 auto;
 }
 
 .article img {
@@ -102,6 +126,8 @@
 
 .article .datePublish {
   display: block;
+  width: min(768px, 100%);
+  margin: 0 auto;
   font-size: 0.75rem;
   text-align: right;
 }
