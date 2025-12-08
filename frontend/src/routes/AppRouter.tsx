@@ -4,6 +4,7 @@ import DetailsArticle from '@pages/details-article';
 import GridArticles from '@pages/grid-articles';
 import Home from '@pages/home';
 import Profile from '@pages/profile';
+import { App } from '@/App';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { createBrowserRouter } from 'react-router';
 import { del, get, set } from 'idb-keyval';
@@ -38,47 +39,52 @@ export const asyncStoragePersister = createAsyncStoragePersister({
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Home />,
-    errorElement: <ErrorPage />,
-    action: actionHome,
-    hydrateFallbackElement: <Loader position="viewport" />,
+    element: <App />,
     children: [
       {
-        index: true,
-        element: <Dashboard />,
+        path: '/',
+        element: <Home />,
         errorElement: <ErrorPage />,
-        loader: loaderHomePage,
-      },
-      {
-        path: 'categories/:category/articles',
-        element: <CategoriesArticles />,
-        errorElement: <ErrorPage />,
+        action: actionHome,
+        hydrateFallbackElement: <Loader position="viewport" />,
         children: [
           {
             index: true,
-            element: <GridArticles />,
+            element: <Dashboard />,
             errorElement: <ErrorPage />,
+            loader: loaderHomePage,
           },
           {
-            path: ':id',
-            element: <DetailsArticle />,
+            path: 'categories/:category/articles',
+            element: <CategoriesArticles />,
             errorElement: <ErrorPage />,
-            loader: loaderArticleDetailsPage,
-            action: actionDetailsArticle,
+            children: [
+              {
+                index: true,
+                element: <GridArticles />,
+                errorElement: <ErrorPage />,
+              },
+              {
+                path: ':id',
+                element: <DetailsArticle />,
+                errorElement: <ErrorPage />,
+                loader: loaderArticleDetailsPage,
+                action: actionDetailsArticle,
+              },
+            ],
+          },
+          {
+            path: 'profile/:id',
+            element: (
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            ),
+            loader: loaderProfilePage,
+            action: actionProfileUser,
+            errorElement: <ErrorPage />,
           },
         ],
-      },
-      {
-        path: 'profile/:id',
-        element: (
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        ),
-        loader: loaderProfilePage,
-        action: actionProfileUser,
-        errorElement: <ErrorPage />,
       },
     ],
   },
