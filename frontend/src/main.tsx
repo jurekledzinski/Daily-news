@@ -9,14 +9,8 @@ import './styles/main.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Toaster
-      position="top-left"
-      toastOptions={{ duration: 2000, style: { borderRadius: '2px' } }}
-    />
-    <PersistQueryClientProvider
-      client={queryClient}
-      persistOptions={{ persister: asyncStoragePersister }}
-    >
+    <Toaster position="top-left" toastOptions={{ duration: 2000, style: { borderRadius: '2px' } }} />
+    <PersistQueryClientProvider client={queryClient} persistOptions={{ persister: asyncStoragePersister }}>
       <UserProvider>
         <RouterProvider router={router} />
       </UserProvider>
