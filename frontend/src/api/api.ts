@@ -21,6 +21,6 @@ export type APIGuardianSuccessResponse<T> = {
 export type ActionData<T = unknown> = {
   action: string;
   message: string;
-  payload?: T;
   success: boolean;
+  payload?: T;
 };
