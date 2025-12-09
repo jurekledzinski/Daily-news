@@ -9,7 +9,7 @@ export const useItemDrop = ({ item }: UseItemDropProps) => {
 
   useEffect(() => {
     if (!gridItemRef.current) return;
-    GridStackLayout.setupDragIn([gridItemRef.current], undefined, [
+    GridStackLayout.setupDragIn([gridItemRef.current], { handle: '.drag-grid-item', scroll: false }, [
       {
         id: item.id,
         content: JSON.stringify(item),
