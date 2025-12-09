@@ -28,13 +28,11 @@ export const loginUser = tryCatch<APISuccessResponse, APIErrorResponse, Omit<Use
   }
 );
 
-export const logoutUser = tryCatch<Omit<APISuccessResponse, 'payload'>, APIErrorResponse>(
-  async () => {
-    return await fetchApi({
-      url: URLS.LOGOUT_USER(),
-      method: 'POST',
-      mode: 'cors',
-      credentials: 'include',
-    });
-  }
-);
+export const logoutUser = tryCatch<Omit<APISuccessResponse, 'payload'>, APIErrorResponse>(async () => {
+  return await fetchApi({
+    url: URLS.LOGOUT_USER(),
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'include',
+  });
+});
