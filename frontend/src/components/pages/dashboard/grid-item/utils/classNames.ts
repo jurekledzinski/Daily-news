@@ -16,6 +16,7 @@ export const gridItemClassNames: GridItemClassNames = (params) => {
     ),
     icon: styles.icon,
     image: styles.image,
+    grip: styles.grip,
     title: styles.title,
     text: styles.text,
   };
