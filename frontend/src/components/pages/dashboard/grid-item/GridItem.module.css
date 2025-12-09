@@ -13,6 +13,7 @@
   min-height: 1.5rem;
   color: #555555;
   user-select: none;
+  touch-action: auto;
 }
 
 .gridItem.disabled::before {
