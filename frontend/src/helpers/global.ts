@@ -1,7 +1,3 @@
-import DOMPurify from 'dompurify';
-
-export const sanitizeContent = (content: string) => DOMPurify.sanitize(content);
-
 export const getCookie = (name: string) => {
   const cookies = document.cookie.split(';');
 
@@ -14,8 +10,4 @@ export const getCookie = (name: string) => {
 
 export const removeCookie = (name: string) => {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-};
-
-export const setCookie = (name: string, data: unknown) => {
-  document.cookie = `${name}=${JSON.stringify(data)}`;
 };
