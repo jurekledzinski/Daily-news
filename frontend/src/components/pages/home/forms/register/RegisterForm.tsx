@@ -1,6 +1,6 @@
-import { ConfirmPasswordField, PasswordValidation } from '@components/pages';
+import { ConfirmPasswordField } from '@components/pages';
 import { emailRules, passwordRules } from '../utils';
-import { Field, Form, Message, PasswordInput, TextInput } from '@components/shared';
+import { Field, Form, Message, PasswordInput, PasswordValidationStatus, TextInput } from '@components/shared';
 import { RegisterFormProps } from './types';
 import { useFormState } from 'react-hook-form';
 
@@ -54,7 +54,14 @@ export const RegisterForm = ({ controls, onSubmit }: RegisterFormProps) => {
         {passwordError.password && <Message>{passwordError.password?.message}</Message>}
       </Field>
       <ConfirmPasswordField control={control} register={register} />
-      <PasswordValidation control={control} getValues={getValues} trigger={trigger} />
+      <PasswordValidationStatus
+        control={control}
+        getValues={getValues}
+        nameConfirmPassword="confirmPassword"
+        namePassword="password"
+        passwordRules={passwordRules}
+        trigger={trigger}
+      />
     </Form>
   );
 };
