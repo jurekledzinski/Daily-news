@@ -1,6 +1,6 @@
 import cardStyles from '../../../shared/card/Card.module.css';
 import styles from './CardArticle.module.css';
-import { Button, Card, CardContent, CardFooter, CardHeader, Heading } from '@components/shared';
+import { Button, Card, CardContent, CardFooter, CardHeader, Heading, ImageWithLoader } from '@components/shared';
 import { CardArticleProps } from './types';
 import { htmlToText } from 'html-to-text';
 
@@ -13,7 +13,8 @@ export const CardArticle = ({ article, onReadMore }: CardArticleProps) => {
 
   return (
     <Card className={cardStyles.card}>
-      <CardHeader className={cardStyles.header} style={{ backgroundImage: `url(${imageUrl})` }}>
+      <CardHeader className={cardStyles.header}>
+        <ImageWithLoader src={imageUrl} />
         {imageCredit && <span className={styles.photograph}>{imageCredit}</span>}
       </CardHeader>
       <CardContent className={cardStyles.content}>

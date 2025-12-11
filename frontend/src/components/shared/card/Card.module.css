@@ -10,11 +10,7 @@
   position: relative;
   height: 140px;
   transition: 0.3s linear;
-  background-position: bottom center;
-  background-size: cover;
-  background-repeat: no-repeat;
   background-color: var(--color-surface-10);
-  aspect-ratio: 16 / 9;
   color: var(--color-text-primary);
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
@@ -27,8 +23,6 @@
 .content {
   height: 80px;
   padding: 0.5rem;
-  /* border-right: 1px solid var(--color-secondary-50);
-  border-left: 1px solid var(--color-secondary-50); */
   color: var(--color-text-primary);
   font-size: 14px;
   overflow: hidden;
@@ -37,11 +31,7 @@
 
 .footer {
   display: flex;
-  /* justify-content: flex-end; */
   padding: 0.5rem;
-  /* border-right: 1px solid var(--color-secondary-50);
-  border-bottom: 1px solid var(--color-secondary-50);
-  border-left: 1px solid var(--color-secondary-50); */
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
 }
