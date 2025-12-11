@@ -24,6 +24,7 @@ export * from './menu';
 export * from './message';
 export * from './modal';
 export * from './password-input';
+export * from './password-validation-status';
 export * from './pop-over';
 export * from './protected-route';
 export * from './tabs';
