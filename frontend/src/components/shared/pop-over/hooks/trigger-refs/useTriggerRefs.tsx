@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react';
 
 export const useTriggerRefs = () => {
   const trigger = useRef<HTMLElement | null>(null);
-  const triggerRects = useRef<DOMRect>();
+  const triggerRects = useRef<DOMRect>(undefined);
 
   const setTrigger = useCallback((node: HTMLElement | null) => {
     if (node) {
