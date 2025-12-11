@@ -30,7 +30,7 @@ export const useComment = ({
 
   useResetForm({
     isSubmitSuccessful: methods.formState.isSubmitSuccessful,
-    isSuccess: !!action?.success,
+    isSuccess: action?.success,
     onFailed,
     onSuccess,
     reset: methods.reset,
