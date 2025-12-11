@@ -8,6 +8,7 @@ import { useResetForm } from '@hooks';
 export const useRegister = ({ onFailed, onSuccess }: UseRegisterProps) => {
   const methods = useForm<RegisterFormValues>({
     defaultValues: { name: '', surname: '', email: '', password: '', confirmPassword: '' },
+    mode: 'onChange',
   });
 
   const fetcher = useFetcher<ActionData<User>>();
