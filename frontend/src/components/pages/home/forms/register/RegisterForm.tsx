@@ -16,7 +16,7 @@ export const RegisterForm = ({ controls, onSubmit }: RegisterFormProps) => {
     <Form autoComplete="off" className="g-sm" id="registerForm" onSubmit={onSubmit} noValidate>
       <Field>
         <TextInput
-          autoComplete="given-name"
+          autoComplete="off"
           label="Name"
           {...register('name', { required: 'Name is required' })}
           variant="outlined"
@@ -25,7 +25,7 @@ export const RegisterForm = ({ controls, onSubmit }: RegisterFormProps) => {
       </Field>
       <Field>
         <TextInput
-          autoComplete="family-name"
+          autoComplete="off"
           label="Surname"
           {...register('surname', { required: 'Surname is required' })}
           variant="outlined"
@@ -34,7 +34,7 @@ export const RegisterForm = ({ controls, onSubmit }: RegisterFormProps) => {
       </Field>
       <Field>
         <TextInput
-          autoComplete="username"
+          autoComplete="off"
           label="Email"
           {...register('email', { required: 'Email is required', validate: emailRules })}
           variant="outlined"
@@ -43,7 +43,7 @@ export const RegisterForm = ({ controls, onSubmit }: RegisterFormProps) => {
       </Field>
       <Field>
         <PasswordInput
-          autoComplete="new-password"
+          autoComplete="off"
           label="Password"
           {...register('password', {
             required: 'Password is required',

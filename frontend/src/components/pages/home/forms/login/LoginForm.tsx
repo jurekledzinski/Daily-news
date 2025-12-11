@@ -6,10 +6,10 @@ export const LoginForm = ({ controls, onSubmit }: LoginFormProps) => {
   const { errors } = formState;
 
   return (
-    <Form className="g-sm" id="loginForm" onSubmit={onSubmit} noValidate>
+    <Form autoComplete="off" className="g-sm" id="loginForm" onSubmit={onSubmit} noValidate>
       <Field>
         <TextInput
-          autoComplete="username"
+          autoComplete="off"
           label="Email"
           {...register('email', { required: 'Email is required' })}
           variant="outlined"
@@ -18,7 +18,7 @@ export const LoginForm = ({ controls, onSubmit }: LoginFormProps) => {
       </Field>
       <Field>
         <PasswordInput
-          autoComplete="current-password"
+          autoComplete="off"
           label="Password"
           {...register('password', { required: 'Password is required' })}
           variant="outlined"

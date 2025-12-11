@@ -8,7 +8,7 @@ export const ConfirmPasswordField = ({ control, register }: ConfirmPasswordField
   return (
     <Field>
       <PasswordInput
-        autoComplete="new-password"
+        autoComplete="off"
         label="Confirm Password"
         {...register('confirmPassword', {
           required: 'Confirm password is required',
