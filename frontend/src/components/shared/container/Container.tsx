@@ -1,8 +1,9 @@
 import { containerClassNames } from './utils';
 import { ContainerProps } from './types';
+import { ElementType } from 'react';
 
-export const Container = ({ as = 'div', children, ...props }: ContainerProps) => {
-  const Tag = `${as}` as keyof JSX.IntrinsicElements;
+export const Container = <T extends ElementType = 'div'>({ as, children, ...props }: ContainerProps<T>) => {
+  const Tag = as || 'div';
   const classNames = containerClassNames(props);
 
   return (
