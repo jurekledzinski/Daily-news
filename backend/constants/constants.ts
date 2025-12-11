@@ -34,4 +34,5 @@ export const SUCCESS_MESSAGE = {
   updatePassword: `Your password has been changed safely`,
   deleteUser: `Your account has been removed.`,
   addComment: `Your comment has been posted!`,
+  logout: `You have been logged out successfully.`,
 };
