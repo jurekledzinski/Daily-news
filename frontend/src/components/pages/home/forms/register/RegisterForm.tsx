@@ -1,12 +1,19 @@
+import { ConfirmPasswordField, PasswordValidation } from '@components/pages';
+import { emailRules, passwordRules } from '../utils';
 import { Field, Form, Message, PasswordInput, TextInput } from '@components/shared';
 import { RegisterFormProps } from './types';
+import { useFormState } from 'react-hook-form';
 
 export const RegisterForm = ({ controls, onSubmit }: RegisterFormProps) => {
-  const { register, formState } = controls;
-  const { errors } = formState;
+  const { control, getValues, register, trigger } = controls;
+
+  const { errors: nameError } = useFormState({ control, name: 'name' });
+  const { errors: surnameError } = useFormState({ control, name: 'surname' });
+  const { errors: emailError } = useFormState({ control, name: 'email' });
+  const { errors: passwordError } = useFormState({ control, name: 'password' });
 
   return (
-    <Form className="g-sm" id="registerForm" onSubmit={onSubmit} noValidate>
+    <Form autoComplete="off" className="g-sm" id="registerForm" onSubmit={onSubmit} noValidate>
       <Field>
         <TextInput
           autoComplete="given-name"
@@ -14,7 +21,7 @@ export const RegisterForm = ({ controls, onSubmit }: RegisterFormProps) => {
           {...register('name', { required: 'Name is required' })}
           variant="outlined"
         />
-        {errors.name && <Message>{errors.name.message}</Message>}
+        {nameError.name && <Message>{nameError.name?.message}</Message>}
       </Field>
       <Field>
         <TextInput
@@ -23,16 +30,16 @@ export const RegisterForm = ({ controls, onSubmit }: RegisterFormProps) => {
           {...register('surname', { required: 'Surname is required' })}
           variant="outlined"
         />
-        {errors.surname && <Message>{errors.surname.message}</Message>}
+        {surnameError.surname && <Message>{surnameError.surname?.message}</Message>}
       </Field>
       <Field>
         <TextInput
           autoComplete="username"
           label="Email"
-          {...register('email', { required: 'Email is required' })}
+          {...register('email', { required: 'Email is required', validate: emailRules })}
           variant="outlined"
         />
-        {errors.email && <Message>{errors.email.message}</Message>}
+        {emailError.email && <Message>{emailError.email?.message}</Message>}
       </Field>
       <Field>
         <PasswordInput
@@ -40,20 +47,14 @@ export const RegisterForm = ({ controls, onSubmit }: RegisterFormProps) => {
           label="Password"
           {...register('password', {
             required: 'Password is required',
+            validate: passwordRules,
           })}
           variant="outlined"
         />
-        {errors.password && <Message>{errors.password.message}</Message>}
+        {passwordError.password && <Message>{passwordError.password?.message}</Message>}
       </Field>
-      <Field>
-        <PasswordInput
-          autoComplete="new-password"
-          label="Confirm Password"
-          {...register('confirmPassword', { required: 'Confirm password is required' })}
-          variant="outlined"
-        />
-        {errors.password && <Message>{errors.password.message}</Message>}
-      </Field>
+      <ConfirmPasswordField control={control} register={register} />
+      <PasswordValidation control={control} getValues={getValues} trigger={trigger} />
     </Form>
   );
 };
