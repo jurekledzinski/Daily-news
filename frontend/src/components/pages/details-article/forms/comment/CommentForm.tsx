@@ -7,11 +7,12 @@ export const CommentForm = ({ controls, isPending, onSubmit }: CommentFormProps)
   const { errors } = formState;
 
   return (
-    <Form className="g-sm" id="loginForm" onSubmit={onSubmit} noValidate>
+    <Form autoComplete="off" className="g-sm" id="loginForm" onSubmit={onSubmit} noValidate>
       <Field>
         <TextInput
           {...register('user', { required: 'Name is required' })}
-          autoComplete="username"about=''
+          autoComplete="off"
+          about=""
           label="Name"
           variant="outlined"
         />
@@ -20,7 +21,7 @@ export const CommentForm = ({ controls, isPending, onSubmit }: CommentFormProps)
       <Field>
         <TextareaInput
           {...register('text', { required: 'Comment is required' })}
-          autoComplete="comment"
+          autoComplete="off"
           label="Comment"
           rows={5}
           variant="outlined"
@@ -28,7 +29,13 @@ export const CommentForm = ({ controls, isPending, onSubmit }: CommentFormProps)
         {errors.text && <Message>{errors.text.message}</Message>}
       </Field>
       <ButtonGroup fullWidth justify="justify-end">
-        <Button isLoading={isPending} iconEnd={[faCommentAlt]} label="Add comment" type="submit" />
+        <Button
+          className="r-xs"
+          isLoading={isPending}
+          iconEnd={[faCommentAlt]}
+          label="Add comment"
+          type="submit"
+        />
       </ButtonGroup>
     </Form>
   );
