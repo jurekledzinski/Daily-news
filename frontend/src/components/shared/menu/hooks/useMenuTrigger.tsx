@@ -30,18 +30,10 @@ export const useMenuTrigger = ({ autoWidth = true, children }: useMenuTriggerPro
 
   return (
     <>
-      <div
-        onClick={() => setOpen((prev) => !prev)}
-        ref={triggerRef}
-        style={{ width: 'fit-content' }}
-      >
+      <div onClick={() => setOpen((prev) => !prev)} ref={triggerRef} style={{ width: 'fit-content' }}>
         {menuTrigger}
       </div>
-      <Popover
-        ref={panelRef}
-        open={open}
-        onEntering={() => onSetPosition(undefined, undefined, getTriggerRect())}
-      >
+      <Popover ref={panelRef} open={open} onEntering={() => onSetPosition(undefined, undefined, getTriggerRect())}>
         {menu}
       </Popover>
     </>
