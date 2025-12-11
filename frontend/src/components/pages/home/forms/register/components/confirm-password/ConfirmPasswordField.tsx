@@ -5,6 +5,7 @@ import { useFormState } from 'react-hook-form';
 
 export const ConfirmPasswordField = ({ control, register }: ConfirmPasswordFieldProps) => {
   const { errors: confirmPasswordError } = useFormState({ control, name: 'confirmPassword' });
+
   return (
     <Field>
       <PasswordInput
