@@ -1,5 +1,6 @@
 import styles from './UserProfileForm.module.css';
 import { Button, ButtonGroup, Field, Form, FormGroup, Message, TextInput } from '@components/shared';
+import { emailRules } from '../utils';
 import { UserProfileFormProps } from './types';
 
 export const UserProfileForm = ({ controls, isPending, onSubmit }: UserProfileFormProps) => {
@@ -7,11 +8,11 @@ export const UserProfileForm = ({ controls, isPending, onSubmit }: UserProfileFo
   const { errors } = formState;
 
   return (
-    <Form className="g-sm" onSubmit={onSubmit} noValidate>
+    <Form autoComplete="off" className="g-sm" onSubmit={onSubmit} noValidate>
       <FormGroup className={styles.formGroup}>
         <Field>
           <TextInput
-            autoComplete="username"
+            autoComplete="off"
             label="Name"
             {...register('name', { required: 'Name is required' })}
             variant="outlined"
@@ -20,7 +21,7 @@ export const UserProfileForm = ({ controls, isPending, onSubmit }: UserProfileFo
         </Field>
         <Field>
           <TextInput
-            autoComplete="username"
+            autoComplete="off"
             label="Surname"
             {...register('surname', { required: 'Surname is required' })}
             variant="outlined"
@@ -28,18 +29,24 @@ export const UserProfileForm = ({ controls, isPending, onSubmit }: UserProfileFo
           {errors.surname && <Message>{errors.surname.message}</Message>}
         </Field>
       </FormGroup>
-
       <Field>
         <TextInput
-          autoComplete="email"
+          autoComplete="off"
           label="Email"
-          {...register('email', { required: 'Email is required' })}
+          {...register('email', { required: 'Email is required', validate: emailRules })}
           variant="outlined"
         />
         {errors.email && <Message>{errors.email.message}</Message>}
       </Field>
       <ButtonGroup className="mt-sm" justify="justify-end" fullWidth>
-        <Button color="info" label="Update profile" isLoading={isPending} type="submit" />
+        <Button
+          className="r-xs"
+          color="info"
+          label="Update profile"
+          isLoading={isPending}
+          size="size-xs"
+          type="submit"
+        />
       </ButtonGroup>
     </Form>
   );
