@@ -7,8 +7,8 @@
   transform-origin: center;
   z-index: var(--z-modal);
   background-color: var(--color-surface-elevated-1);
-  will-change: opacity, transform;
   border-radius: 2px;
+  will-change: transform;
 }
 
 .enter {
