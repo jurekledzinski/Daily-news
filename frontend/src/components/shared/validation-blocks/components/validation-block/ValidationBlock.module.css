@@ -1,7 +1,6 @@
 .block {
   position: relative;
   width: 25%;
-  padding: 2px;
   background-color: var(--color-secondary-50);
   color: var(--color-text-white);
   font-size: 0.7rem;
