@@ -16,7 +16,7 @@ export const getUser = async (req: Request, res: Response) => {
 };
 
 export const logoutUser = async (req: Request, res: Response, next: NextFunction) => {
-  requestLogout(req, res, next);
+  requestLogout(req, res, next, 'logout');
 };
 
 export const updateUserProfile = async (req: Request, res: Response) => {
@@ -79,7 +79,7 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
   const resultUserDelete = await collection.deleteOne({ _id: new ObjectId(id) });
   await collectionComments.deleteMany({ userId: id });
 
-  if (resultUserDelete.deletedCount === 1) return requestLogout(req, res, next);
+  if (resultUserDelete.deletedCount === 1) return requestLogout(req, res, next, 'deleteUser');
 
   return res
     .status(STATUS_CODE.INTERNAL_ERROR)
