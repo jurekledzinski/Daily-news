@@ -8,7 +8,8 @@
     "build": "tsc",
     "dev": "nodemon -r dotenv/config build/server.js",
     "start": "node build/server.js",
-    "postinstall": "npm list @types/node"
+    "postinstall": "npm list @types/node",
+    "type-check": "tsc --noEmit"
   },
   "author": "Jerzy Ledziński",
   "license": "ISC",
