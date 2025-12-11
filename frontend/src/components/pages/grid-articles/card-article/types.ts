@@ -1,4 +1,4 @@
-import { Content } from '@guardian/content-api-models/v1/content';
+import type { Content } from '@guardian/content-api-models/v1/content';
 
 export type CardArticleProps = {
   article: Content;

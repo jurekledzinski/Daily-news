@@ -1,11 +1,11 @@
 import styles from './GridArticles.module.css';
 import { CardArticle } from '@components/pages';
 import { EmptyState, Loader, LoadMoreButton } from '@components/shared';
-import { SearchResponse } from '@guardian/content-api-models/v1/SearchResponse';
 import { URLS } from '@api';
 import { useInfiniteQueryFetch, useLoadMoreData } from '@hooks';
 import { useNavigateToDetailsArticle } from './hooks';
 import { useParams } from 'react-router';
+import type { SearchResponse } from '@guardian/content-api-models/v1/SearchResponse';
 
 export const GridArticles = () => {
   const navigateDetailsArticle = useNavigateToDetailsArticle();
