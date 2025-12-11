@@ -6,7 +6,10 @@ import { useResetForm } from '@hooks';
 import { UserPasswordFormValues, UseUserPasswordFormProps } from './types';
 
 export const useUserPassword = ({ onFailed, onSuccess, token }: UseUserPasswordFormProps) => {
-  const methods = useForm<UserPasswordFormValues>({ defaultValues: { confirmPassword: '', password: '' } });
+  const methods = useForm<UserPasswordFormValues>({
+    defaultValues: { confirmPassword: '', password: '' },
+    mode: 'onChange',
+  });
 
   const fetcher = useFetcher<ActionData<unknown>>();
 
