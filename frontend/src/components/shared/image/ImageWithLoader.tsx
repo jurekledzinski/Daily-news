@@ -1,3 +1,5 @@
+import { Alert, AlertButton, AlertIcon, AlertMessage } from '../alert';
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { Image } from './Image';
 import { ImageContainer } from './components';
 import { ImageWithLoaderProps } from './types';
@@ -11,7 +13,11 @@ export const ImageWithLoader = ({ src }: ImageWithLoaderProps) => {
           <>
             {isLoading && <Loader position="element" />}
             {isError && !isLoading ? (
-              <>Error</>
+              <Alert color="negative" variant="contained" fullWidth>
+                <AlertIcon icon={faTriangleExclamation} color="negative" />
+                <AlertMessage message="Failed to load image" />
+                <AlertButton color="negative" variant="text" />
+              </Alert>
             ) : (
               <Image src={src === undefined ? undefined : src} onLoad={onLoad} onError={onError} />
             )}

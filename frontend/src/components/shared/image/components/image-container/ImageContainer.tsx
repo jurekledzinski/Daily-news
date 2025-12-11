@@ -8,9 +8,7 @@ export const ImageContainer = ({ children, className, loader, ...props }: ImageC
 
   return (
     <div {...props} className={classNames}>
-      {children && typeof children === 'function'
-        ? children({ isError, isLoading, onLoad, onError })
-        : null}
+      {children && typeof children === 'function' ? children({ isError, isLoading, onLoad, onError }) : null}
     </div>
   );
 };
