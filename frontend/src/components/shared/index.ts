@@ -30,3 +30,4 @@ export * from './tabs';
 export * from './text-input';
 export * from './textarea-input';
 export * from './textarea';
+export * from './validation-blocks';
