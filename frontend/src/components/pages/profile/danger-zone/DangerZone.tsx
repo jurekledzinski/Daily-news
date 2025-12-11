@@ -37,7 +37,14 @@ export const DangerZone = ({ token }: DangerZoneProps) => {
         </ModalLayout>
       </Modal>
       <ButtonGroup className="mt-sm" justify="justify-end" fullWidth>
-        <Button color="negative" label="Delete account" onClick={onOpen} type="button" />
+        <Button
+          className="r-xs"
+          color="negative"
+          label="Delete account"
+          onClick={onOpen}
+          size="size-xs"
+          type="button"
+        />
       </ButtonGroup>
     </Box>
   );
