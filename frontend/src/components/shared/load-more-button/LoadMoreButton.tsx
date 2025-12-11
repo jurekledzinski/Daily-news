@@ -10,6 +10,7 @@ export const LoadMoreButton = ({ isLoading, onClick }: LoadMoreButtonProps) => {
         isLoading={isLoading}
         label={isLoading ? 'Loading more...' : 'Load more ...'}
         onClick={onClick}
+        size="size-xs"
         type="button"
         variant="outlined"
       />
