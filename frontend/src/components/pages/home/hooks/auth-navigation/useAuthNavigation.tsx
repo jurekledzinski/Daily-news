@@ -1,8 +1,11 @@
+import { ActionData } from '@api';
 import { asyncStoragePersister, queryClient } from '@routes';
 import { clear } from 'idb-keyval';
-import { showSuccessToast } from '@helpers';
-import { useRef } from 'react';
+import { defaultErrorMessage, showErrorToast, showSuccessToast } from '@helpers';
+import { FetcherReset } from '../auth-callbacks';
 import { useMatch, useNavigate } from 'react-router';
+import { User } from '@models';
+import { useRef } from 'react';
 import { useUserStore } from '@store';
 
 export const useAuthNavigation = () => {
@@ -11,7 +14,10 @@ export const useAuthNavigation = () => {
   const matchProfile = useMatch('/profile/:id');
   const { dispatch, state } = useUserStore();
 
-  const navigateLogout = async () => {
+  const navigateLogout = async (reset: FetcherReset, data?: ActionData<User>) => {
+    if (!data) return showErrorToast(defaultErrorMessage('logout'));
+    reset();
+
     queryClient.clear();
     await asyncStoragePersister.removeClient();
 
@@ -21,11 +27,12 @@ export const useAuthNavigation = () => {
     }, 1500);
 
     dispatch({ type: 'LOGOUT_USER' });
-    showSuccessToast('Logout successful');
+
+    showSuccessToast(data.message);
+
     localStorage.clear();
 
     if (matchProfile) navigate('/', { replace: true, viewTransition: true });
-    else navigate(window.location.pathname, { replace: true, viewTransition: true });
   };
 
   const navigateProfile = () => navigate(`profile/${state.user?.id}`, { viewTransition: true });
