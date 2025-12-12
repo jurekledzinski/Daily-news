@@ -5,13 +5,13 @@ import { ImageContainer } from './components';
 import { ImageWithLoaderProps } from './types';
 import { Loader } from '../loader';
 
-export const ImageWithLoader = ({ src }: ImageWithLoaderProps) => {
+export const ImageWithLoader = ({ loader, src }: ImageWithLoaderProps) => {
   return (
-    <ImageContainer loader="loader" style={{ aspectRatio: '16/9' }}>
+    <ImageContainer loader={loader} style={{ aspectRatio: '16/9' }}>
       {({ onLoad, onError, isLoading, isError }) => {
         return (
           <>
-            {isLoading && <Loader position="element" />}
+            {isLoading && loader === 'loader' && <Loader position="element" />}
             {isError && !isLoading ? (
               <Alert color="negative" variant="contained" fullWidth>
                 <AlertIcon icon={faTriangleExclamation} color="negative" />
