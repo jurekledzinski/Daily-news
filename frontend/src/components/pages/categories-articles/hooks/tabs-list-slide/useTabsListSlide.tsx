@@ -6,6 +6,8 @@ export const useTabsListSlide = () => {
   const [isTabslistVisible, setIsTablistVisible] = useState(true);
 
   useEffect(() => {
+    console.log('ref --->', ref.current);
+    console.log('isMounted --->', isMounted.current);
     if (!ref.current) return;
 
     if (!isMounted.current) {
