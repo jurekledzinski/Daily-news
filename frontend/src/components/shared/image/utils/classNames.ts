@@ -11,7 +11,8 @@ export const imageContainerClassNames: ImageContainerClassNames = (params) => {
       ['image-wrapper']: true,
     }),
     className ?? '',
-    isLoading && loader === 'skeleton' ? 'skeleton' : ''
+    isLoading && loader === 'skeleton' ? 'skeleton' : '',
+    isLoading && loader === 'skeleton' ? 'wave' : ''
   );
 };
 
