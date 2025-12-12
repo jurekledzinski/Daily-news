@@ -21,8 +21,18 @@
   color: var(--color-text-white);
 }
 
+.user {
+  margin-right: 0.5rem;
+  color: var(--color-white);
+  font-size: 1rem;
+}
+
 @media (max-width: 575px) {
   .heading {
     font-size: 1rem;
+  }
+
+  .user {
+    display: none;
   }
 }

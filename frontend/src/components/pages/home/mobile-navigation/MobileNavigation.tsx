@@ -9,17 +9,15 @@ export const MobileNavigation = ({
   onLogout,
   onOpenModalSignIn,
   onOpenModalSignUp,
+  userName,
 }: MobileNavigationProps) => {
   return (
-    <MenuTrigger>
-      <Button
-        className={styles.button}
-        color="info"
-        iconEnd={[faBars]}
-        label="Menu"
-        size="size-xs"
-      />
+    <MenuTrigger autoWidth={false}>
+      <Button className={styles.button} color="info" iconEnd={[faBars]} label="Menu" size="size-xs" />
+
       <Menu className={styles.menu} size="size-xs">
+        {isLoggedIn && userName && <MenuItem>Welcome, {userName}!</MenuItem>}
+
         {isLoggedIn && (
           <MenuItem id="profile" onClick={navigateProfile}>
             Profile

@@ -29,6 +29,7 @@ export const Header = () => {
         <Heading className={styles.heading} level={4}>
           Daily News
         </Heading>
+        {!!fn.state.user && <p className={styles.user}>Welcome, {fn.state.user.name}!</p>}
         <ActionsNavigation navigateBack={navigate.navigateBack} />
         <MobileNavigation
           isLoggedIn={!!fn.state.user}
@@ -36,6 +37,7 @@ export const Header = () => {
           onLogout={logoutUser}
           onOpenModalSignIn={modal.handleOpenSignIn}
           onOpenModalSignUp={modal.handleOpenSignUp}
+          userName={fn.state.user?.name}
         />
         <DesktopNavigation
           isLoggedIn={!!fn.state.user}

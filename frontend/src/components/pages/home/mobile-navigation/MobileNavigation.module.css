@@ -1,3 +1,7 @@
+.menu {
+  min-width: 76px;
+}
+
 @media (min-width: 575px) {
   .button,
   .menu {
