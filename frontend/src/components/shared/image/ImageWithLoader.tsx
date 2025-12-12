@@ -19,7 +19,7 @@ export const ImageWithLoader = ({ loader, src }: ImageWithLoaderProps) => {
                 <AlertButton color="negative" variant="text" />
               </Alert>
             ) : (
-              <Image src={src === undefined ? undefined : src} onLoad={onLoad} onError={onError} />
+              <Image loading="lazy" src={src === undefined ? undefined : src} onLoad={onLoad} onError={onError} />
             )}
           </>
         );
