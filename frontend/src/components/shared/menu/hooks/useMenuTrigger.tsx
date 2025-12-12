@@ -18,7 +18,7 @@ export const useMenuTrigger = ({ autoWidth = true, children }: useMenuTriggerPro
     autoWidth,
     open,
     panelRef,
-    placement: 'bottom',
+    placement: 'bottom end',
     getTriggerRect,
     updateTriggerRect,
   });
