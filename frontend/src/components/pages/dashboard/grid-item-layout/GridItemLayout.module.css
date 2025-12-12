@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--color-white);
-  /* background-image: url('/images/world.png'); */
+  background-image: url('/images/world.webp');
   background-position: bottom center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -12,7 +12,7 @@
   height: 100%;
 }
 
-/* .artanddesign {
+.artanddesign {
   background-image: url('/images/artanddesign.webp');
 }
 
@@ -90,7 +90,7 @@
 
 .world {
   background-image: url('/images/world.webp');
-} */
+}
 
 .header {
   padding: 0.5rem;

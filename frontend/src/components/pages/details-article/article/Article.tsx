@@ -1,4 +1,3 @@
-import emptyImage from '@/assets/images/empty-image.webp';
 import { ArticleProps } from './types';
 import { formatDateLocalString, optionsFormatDate1 } from '@helpers';
 import { Heading, ImageWithLoader } from '@components/shared';
@@ -23,7 +22,7 @@ export const Article = ({ article }: ArticleProps) => {
 
       {Boolean(article?.image) && (
         <div className="container-image">
-          <ImageWithLoader loader="skeleton" src={article.image.file ?? emptyImage} />
+          <ImageWithLoader loader="skeleton" src={article.image.file ?? '/images/empty-image.webp'} />
 
           {article.image.typeData?.photographer && (
             <span className="caption">{article.image.typeData?.credit}</span>
