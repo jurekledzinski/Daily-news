@@ -1,4 +1,5 @@
 import cardStyles from '../../../shared/card/Card.module.css';
+import emptyImage from '@/assets/images/empty-image.webp';
 import styles from './CardArticle.module.css';
 import { Button, Card, CardContent, CardFooter, CardHeader, Heading, ImageWithLoader } from '@components/shared';
 import { CardArticleProps } from './types';
@@ -8,7 +9,7 @@ export const CardArticle = ({ article, onReadMore }: CardArticleProps) => {
   const { elements, fields, id } = article;
   const asset = elements?.[0]?.assets?.[1] ?? elements?.[0]?.assets?.[0];
 
-  const imageUrl = asset?.file ?? '/images/empty-image.webp';
+  const imageUrl = asset?.file ?? emptyImage;
   const imageCredit = asset?.typeData?.credit ?? '';
 
   return (
