@@ -12,9 +12,6 @@ export const TabsCategories = ({ categories, category, navigateCategory }: TabsC
   const classNames = useMemo(() => tablistClassNames(isTabslistVisible), [isTabslistVisible]);
   const selectedIndex = useMemo(() => categories.findIndex((c) => c.id === category), [categories, category]);
 
-  console.log('isTabslistVisible', isTabslistVisible);
-  console.log('classNames', classNames);
-
   return (
     <Tabs
       color="secondary"
