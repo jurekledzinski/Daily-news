@@ -13,7 +13,7 @@ export const GridItem = ({ item, gridItemIds }: GridItemProps) => {
   return (
     <div className={classNames.gridItem} ref={gridItemRef}>
       <div className={classNames.icon}>
-        <img className={classNames.image} src={`icons/${item.id}.png`} alt={item.webTitle} />
+        <img className={classNames.image} src={`icons/${item.id}.webp`} alt={item.webTitle} />
       </div>
       <div className={classNames.title}>{item.webTitle}</div>
       {description ? <div className={classNames.text}>{description}</div> : null}

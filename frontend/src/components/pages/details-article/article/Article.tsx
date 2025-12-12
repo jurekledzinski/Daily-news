@@ -22,7 +22,7 @@ export const Article = ({ article }: ArticleProps) => {
 
       {Boolean(article?.image) && (
         <div className="container-image">
-          <ImageWithLoader src={article.image.file ?? '/images/empty-image.jpg'} />
+          <ImageWithLoader loader="skeleton" src={article.image.file ?? '/images/empty-image.webp'} />
 
           {article.image.typeData?.photographer && (
             <span className="caption">{article.image.typeData?.credit}</span>

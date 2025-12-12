@@ -21,11 +21,11 @@ export const GridArticles = () => {
   const { loadMoreData } = useLoadMoreData({ param: category, fetchNextPage });
 
   if (isError) {
-    return <EmptyState text="Failed to load articles." src="/info/article.png" />;
+    return <EmptyState text="Failed to load articles." src="/info/article.webp" />;
   }
 
   if (!isFetching && !isPending && loadedData.length === 0) {
-    return <EmptyState text="No articles found." src="/info/article.png" />;
+    return <EmptyState text="No articles found." src="/info/article.webp" />;
   }
 
   return (

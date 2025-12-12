@@ -8,13 +8,13 @@ export const CardArticle = ({ article, onReadMore }: CardArticleProps) => {
   const { elements, fields, id } = article;
   const asset = elements?.[0]?.assets?.[1] ?? elements?.[0]?.assets?.[0];
 
-  const imageUrl = asset?.file ?? '/images/empty-image.jpg';
+  const imageUrl = asset?.file ?? '/images/empty-image.webp';
   const imageCredit = asset?.typeData?.credit ?? '';
 
   return (
     <Card className={cardStyles.card}>
       <CardHeader className={cardStyles.header}>
-        <ImageWithLoader src={imageUrl} />
+        <ImageWithLoader loader="skeleton" src={imageUrl} />
         {imageCredit && <span className={styles.photograph}>{imageCredit}</span>}
       </CardHeader>
       <CardContent className={cardStyles.content}>

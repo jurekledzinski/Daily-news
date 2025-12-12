@@ -12,7 +12,7 @@ export const DetailsArticle = () => {
   const loader = useLoaderData<DetailsPageLoader>();
 
   if (!loader.article.success) {
-    return <EmptyState text="No article found." src="/info/article.png" />;
+    return <EmptyState text="No article found." src="/info/article.webp" />;
   }
 
   return (
