@@ -2,18 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 
 export const useTabsListSlide = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const isMounted = useRef(false);
   const [isTabslistVisible, setIsTablistVisible] = useState(true);
 
   useEffect(() => {
     console.log('ref --->', ref.current);
-    console.log('isMounted --->', isMounted.current);
     if (!ref.current) return;
-
-    // if (!isMounted.current) {
-    //   isMounted.current = true;
-    //   return;
-    // }
 
     console.log('check --->');
 
