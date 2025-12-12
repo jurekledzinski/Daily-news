@@ -237,7 +237,7 @@
   --icon-color-active: #111111;
 
   /* Fonts */
-  --font-family: Roboto, sans-serif;
+  --font-family: Roboto, Arial, sans-serif;
 }
 
 html[data-theme='dark'] {
