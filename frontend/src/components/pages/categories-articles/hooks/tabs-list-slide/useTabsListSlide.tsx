@@ -10,10 +10,10 @@ export const useTabsListSlide = () => {
     console.log('isMounted --->', isMounted.current);
     if (!ref.current) return;
 
-    if (!isMounted.current) {
-      isMounted.current = true;
-      return;
-    }
+    // if (!isMounted.current) {
+    //   isMounted.current = true;
+    //   return;
+    // }
 
     console.log('check --->');
 
