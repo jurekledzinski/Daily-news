@@ -16,7 +16,6 @@
 .text {
   padding-top: 0.25rem;
   font-size: 0.6125rem;
-  font-family: Robot, sans-serif;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
