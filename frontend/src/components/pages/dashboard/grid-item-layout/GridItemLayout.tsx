@@ -1,8 +1,10 @@
 import { Button, Card, CardFooter, CardHeader, IconButton } from '@components/shared';
 import { categoryInfo } from '../grid-layout';
 import { faGripLines, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { gridCardImages } from '@/utils';
 import { gridItemLayoutClassNames } from './utils/classNames';
 import { GridItemLayoutProps } from './types';
+import { useMemo } from 'react';
 import type { Section } from '@guardian/content-api-models/v1/section';
 
 export const GridItemLayout = ({ data, navigateArticles, onRemoveGridItem }: GridItemLayoutProps) => {
@@ -10,8 +12,13 @@ export const GridItemLayout = ({ data, navigateArticles, onRemoveGridItem }: Gri
   const description = categoryInfo[parsedData.id as keyof typeof categoryInfo];
   const classNames = gridItemLayoutClassNames({ id: parsedData.id });
 
+  const src = useMemo(() => {
+    const keyImage = parsedData.id.replace(/-(\w)/g, (_, c) => c.toUpperCase());
+    return gridCardImages[keyImage as keyof typeof gridCardImages];
+  }, [parsedData.id]);
+
   return (
-    <Card className={classNames.gridItemLayout}>
+    <Card className={classNames.gridItemLayout} style={{ backgroundImage: `url(${src})` }}>
       <CardHeader className={classNames.header}>
         <p className={classNames.title}>{parsedData.webTitle}</p>
         {description ? <p className={classNames.subTitle}>{description}</p> : null}
