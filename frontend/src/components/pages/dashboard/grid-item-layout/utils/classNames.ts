@@ -2,10 +2,11 @@ import styles from '../GridItemLayout.module.css';
 import { classNames, generateClassNames } from '@helpers';
 import { GridItemLayoutClassNames } from './types';
 
-export const gridItemLayoutClassNames: GridItemLayoutClassNames = () => {
+export const gridItemLayoutClassNames: GridItemLayoutClassNames = ({ id }) => {
   return {
     gridItemLayout: generateClassNames(styles, {
       container: true,
+      [id]: !!id,
     }),
     header: styles.header,
     title: styles.title,
