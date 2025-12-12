@@ -18,15 +18,6 @@
   font-display: swap;
   font-family: 'Roboto';
   font-style: normal;
-  font-weight: 300;
-  src: url('../assets/fonts/roboto-300.woff2') format('woff2'),
-    url('../assets/fonts/roboto-300.woff') format('woff');
-}
-
-@font-face {
-  font-display: swap;
-  font-family: 'Roboto';
-  font-style: normal;
   font-weight: 400;
   src: url('../assets/fonts/roboto-regular.woff2') format('woff2'),
     url('../assets/fonts/roboto-regular.woff') format('woff');
