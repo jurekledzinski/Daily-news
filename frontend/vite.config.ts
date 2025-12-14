@@ -23,6 +23,7 @@ export default defineConfig({
       '@helpers': path.resolve(__dirname, 'src/helpers'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
       '@images': path.resolve(__dirname, 'src/images'),
+      '@middlewares': path.resolve(__dirname, 'src/middlewares'),
       '@models': path.resolve(__dirname, 'src/models'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@routes': path.resolve(__dirname, 'src/routes'),

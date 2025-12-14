@@ -44,6 +44,9 @@
       "@images/*": ["./src/images/*"],
       "@images": ["./src/images/index.ts"],
 
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@middlewares": ["./src/middlewares/index.ts"],
+
       "@models/*": ["./src/models/*"],
       "@models": ["./src/models/index.ts"],
 
