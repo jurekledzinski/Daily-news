@@ -26,6 +26,8 @@ export const fetchApi = async ({
 
   const response = await fetch(url, options);
 
+  if (!response.ok) return { message: response.statusText, success: false };
+
   return await response.json();
 };
 
