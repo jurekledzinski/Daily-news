@@ -5,11 +5,12 @@ import GridArticles from '@pages/grid-articles';
 import Home from '@pages/home';
 import Profile from '@pages/profile';
 import { App } from '@/App';
+import { authMiddleware } from '@middlewares';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { createBrowserRouter } from 'react-router';
 import { del, get, set } from 'idb-keyval';
 import { ErrorPage } from '@components/pages';
-import { Loader, ProtectedRoute } from '@components/shared';
+import { Loader } from '@components/shared';
 import { QueryClient } from '@tanstack/react-query';
 import {
   actionDetailsArticle,
@@ -74,12 +75,9 @@ const router = createBrowserRouter([
             ],
           },
           {
+            middleware: [authMiddleware],
             path: 'profile/:id',
-            element: (
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            ),
+            element: <Profile />,
             loader: loaderProfilePage,
             action: actionProfileUser,
             errorElement: <ErrorPage />,
