@@ -1,4 +1,4 @@
-# ![WebApp](https://github.com/jurekledzinski/Daily-news/blob/media/images/daily_news.png?raw=true)
+# ![WebApp](https://github.com/jurekledzinski/Daily-news/blob/media/images/news-dashboard.webp?raw=true)
 
 # Daily-news
 
