@@ -10,8 +10,6 @@ export const useAuthCallbacks = ({ modal }: UseAuthCallbacksProps) => {
   const timeoutId = useRef<ReturnType<typeof setTimeout>>(null);
   const { setUser, user } = useUserStore();
 
-  console.log('user zustand', user);
-
   const successLogin = (reset: FetcherReset, data?: ActionData<User>) => {
     if (!data) return showErrorToast(defaultErrorMessage('login'));
     if (data.payload) setUser(data.payload);
