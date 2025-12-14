@@ -30,7 +30,7 @@ export const useAuthNavigation = () => {
 
     showSuccessToast(data.message);
 
-    localStorage.clear();
+    localStorage.removeItem('pages');
 
     if (matchProfile) navigate('/', { replace: true, viewTransition: true });
   };
