@@ -2,9 +2,8 @@ import { ActionData } from '@/api';
 import { defaultErrorMessage, removeCookie, showErrorToast, showSuccessToast } from '@helpers';
 import { FetcherReset, UseAuthCallbacksProps } from './types';
 import { FieldValues, UseFormReset } from 'react-hook-form';
-import { User } from '@store';
 import { useRef } from 'react';
-import { useUserStore } from '@store';
+import { User, useUserStore } from '@store';
 
 export const useAuthCallbacks = ({ modal }: UseAuthCallbacksProps) => {
   const timeoutId = useRef<ReturnType<typeof setTimeout>>(null);

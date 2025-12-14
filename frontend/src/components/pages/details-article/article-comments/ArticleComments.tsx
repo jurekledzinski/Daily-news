@@ -12,12 +12,12 @@ import { useUserStore } from '@store';
 import { Alert, AlertIcon, AlertMessage, Comment, Heading, LoadMoreButton } from '@components/shared';
 
 export const ArticleComments = ({ action, articleId, token }: ArticleCommentsProps) => {
-  const { state } = useUserStore();
+  const { user } = useUserStore();
   const status = useNavigation();
   const { failedAddComment, successAddComment } = useCommentCallbacks({ action });
   const form = useComment({
     articleId,
-    userId: state.user?.id,
+    userId: user?.id,
     onFailed: failedAddComment,
     onSuccess: successAddComment,
     action,
@@ -38,18 +38,18 @@ export const ArticleComments = ({ action, articleId, token }: ArticleCommentsPro
 
   return (
     <CommentsSection>
-      {!state.user && (
+      {!user && (
         <Alert fullWidth color="info" variant="outlined">
           <AlertIcon icon={faLock} color="info" />
           <AlertMessage message="Sign in to add comments" />
         </Alert>
       )}
-      {state.user && (
+      {user && (
         <Heading className={styles.header} level={5}>
           Comments
         </Heading>
       )}
-      {!!state.user && (
+      {!!user && (
         <CommentForm controls={form.methods} isPending={status.state === 'submitting'} onSubmit={form.onSubmit} />
       )}
       {comments.map((comment) => (
