@@ -5,14 +5,14 @@ import { User } from '@models';
 import { useUserStore } from '@store';
 
 export const useProfileCallbacks = () => {
-  const { dispatch, state } = useUserStore();
+  const { setUser, user } = useUserStore();
 
   const successUpdateProfile = (
     reset: FetcherReset,
     data?: ActionData<Pick<User, 'email' | 'name' | 'surname'>>
   ) => {
     if (!data) return showErrorToast(defaultErrorMessage('update profile'));
-    if (data.payload) dispatch({ type: 'SET_USER', payload: data.payload });
+    if (data.payload) setUser(data.payload);
     showSuccessToast(data.message);
     reset();
   };
@@ -26,6 +26,6 @@ export const useProfileCallbacks = () => {
   return {
     failedUpdateProfile,
     successUpdateProfile,
-    state,
+    state: { user },
   };
 };

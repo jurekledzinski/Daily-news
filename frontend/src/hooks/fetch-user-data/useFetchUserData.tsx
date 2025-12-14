@@ -4,7 +4,7 @@ import { useCallback, useEffect } from 'react';
 import { useUserStore } from '@store';
 
 export const useFetchUserData = () => {
-  const { dispatch } = useUserStore();
+  const { setUser } = useUserStore();
 
   const loadUser = useCallback(async () => {
     const result = await fetchApi({
@@ -13,8 +13,8 @@ export const useFetchUserData = () => {
       mode: 'cors',
     });
 
-    if (result.success) dispatch({ type: 'SET_USER', payload: result.payload });
-  }, [dispatch]);
+    if (result.success) setUser(result.payload);
+  }, [setUser]);
 
   useEffect(() => {
     const enabled = getCookie('enable');

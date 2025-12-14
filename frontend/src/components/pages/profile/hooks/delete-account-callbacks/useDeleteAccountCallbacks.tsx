@@ -6,7 +6,7 @@ import { useUserStore } from '@store';
 
 export const useDeleteAccountCallbacks = () => {
   const navigate = useNavigate();
-  const { dispatch } = useUserStore();
+  const { logoutUser } = useUserStore();
 
   const failedDelete = (reset: FetcherReset, data?: ActionData<unknown>) => {
     if (!data) return showErrorToast(defaultErrorMessage('delete account'));
@@ -17,7 +17,7 @@ export const useDeleteAccountCallbacks = () => {
   const successDelete = (reset: FetcherReset, data?: ActionData<unknown>) => {
     if (!data) return showErrorToast(defaultErrorMessage('delete account'));
     removeCookie('enable');
-    dispatch({ type: 'LOGOUT_USER' });
+    logoutUser();
     showSuccessToast(data.message);
     reset();
     navigate('/', { replace: true, viewTransition: true });

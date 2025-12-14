@@ -12,7 +12,7 @@ export const useAuthNavigation = () => {
   const timeoutId = useRef<ReturnType<typeof setTimeout>>(null);
   const navigate = useNavigate();
   const matchProfile = useMatch('/profile/:id');
-  const { dispatch, state } = useUserStore();
+  const { user, logoutUser } = useUserStore();
 
   const navigateLogout = async (reset: FetcherReset, data?: ActionData<User>) => {
     if (!data) return showErrorToast(defaultErrorMessage('logout'));
@@ -26,7 +26,7 @@ export const useAuthNavigation = () => {
       if (timeoutId.current) clearTimeout(timeoutId.current);
     }, 1500);
 
-    dispatch({ type: 'LOGOUT_USER' });
+    logoutUser();
 
     showSuccessToast(data.message);
 
@@ -35,7 +35,7 @@ export const useAuthNavigation = () => {
     if (matchProfile) navigate('/', { replace: true, viewTransition: true });
   };
 
-  const navigateProfile = () => navigate(`profile/${state.user?.id}`, { viewTransition: true });
+  const navigateProfile = () => navigate(`profile/${user?.id}`, { viewTransition: true });
   const navigateBack = () => navigate('/', { viewTransition: true });
 
   return { navigateBack, navigateLogout, navigateProfile };

@@ -2,16 +2,19 @@ import { ActionData } from '@/api';
 import { defaultErrorMessage, removeCookie, showErrorToast, showSuccessToast } from '@helpers';
 import { FetcherReset, UseAuthCallbacksProps } from './types';
 import { FieldValues, UseFormReset } from 'react-hook-form';
-import { User, useUserStore } from '@store';
+import { User } from '@store';
 import { useRef } from 'react';
+import { useUserStore } from '@store';
 
 export const useAuthCallbacks = ({ modal }: UseAuthCallbacksProps) => {
   const timeoutId = useRef<ReturnType<typeof setTimeout>>(null);
-  const { dispatch, state } = useUserStore();
+  const { setUser, user } = useUserStore();
+
+  console.log('user zustand', user);
 
   const successLogin = (reset: FetcherReset, data?: ActionData<User>) => {
     if (!data) return showErrorToast(defaultErrorMessage('login'));
-    if (data.payload) dispatch({ type: 'SET_USER', payload: data.payload });
+    if (data.payload) setUser(data.payload);
     showSuccessToast(data.message);
     reset();
     modal.handleClose();
@@ -62,6 +65,6 @@ export const useAuthCallbacks = ({ modal }: UseAuthCallbacksProps) => {
     failedLogout,
     successLogin,
     successRegister,
-    state,
+    state: { user },
   };
 };
