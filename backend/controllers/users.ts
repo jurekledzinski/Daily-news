@@ -24,7 +24,7 @@ export const updateUserProfile = async (req: Request, res: Response) => {
     throwError(STATUS_MESSAGE[STATUS_CODE.INTERNAL_ERROR], STATUS_CODE.INTERNAL_ERROR);
   }
 
-  const parsedData = UserSchema.pick({ name: true, email: true }).parse(req.body);
+  const parsedData = UserSchema.pick({ name: true, email: true, surname: true }).parse(req.body);
 
   const sessionUser = req.user as User & { id: string };
 
@@ -36,7 +36,7 @@ export const updateUserProfile = async (req: Request, res: Response) => {
 
   const updatedUser = await collection.findOneAndUpdate(
     { _id: new ObjectId(req.params.id) },
-    { $set: { email: xss(parsedData.email), name: xss(parsedData.name) } },
+    { $set: { email: xss(parsedData.email), name: xss(parsedData.name), surname: xss(parsedData.surname) } },
     { returnDocument: 'after', projection: { email: true, _id: true, name: true, surname: true } }
   );
 
