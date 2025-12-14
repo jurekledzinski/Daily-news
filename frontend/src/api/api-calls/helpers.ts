@@ -26,7 +26,12 @@ export const fetchApi = async ({
 
   const response = await fetch(url, options);
 
-  if (!response.ok) return { message: response.statusText, success: false };
+  if (!response.ok) {
+    return {
+      message: response.statusText || 'Server is in idle mode to save resources. Response may be delayed.',
+      success: false,
+    };
+  }
 
   return await response.json();
 };
