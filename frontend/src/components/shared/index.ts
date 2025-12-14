@@ -26,7 +26,6 @@ export * from './modal';
 export * from './password-input';
 export * from './password-validation-status';
 export * from './pop-over';
-export * from './protected-route';
 export * from './tabs';
 export * from './text-input';
 export * from './textarea-input';
