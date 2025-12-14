@@ -26,7 +26,7 @@ export const fetchApi = async ({
 
   const response = await fetch(url, options);
 
-  if (!response.ok) {
+  if (!response.ok && response.status >= 500) {
     return {
       message: response.statusText || 'Server is in idle mode to save resources. Response may be delayed.',
       success: false,
